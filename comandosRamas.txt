@@ -1,2 +1,6 @@
 git branch nombre //creacion de una nueva rama
 git checkout nombre //desplazamiento hacia una rama
+
+git add -A //Agrega los nuevos elmentos
+git commit -m "Etiqueta"
+
