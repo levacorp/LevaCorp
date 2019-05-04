@@ -4,3 +4,7 @@ git checkout nombre //desplazamiento hacia una rama
 git add -A //Agrega los nuevos elmentos
 git commit -m "Etiqueta"
 
+//para unir la nueva rama con la rama master ubicase en la rama principal con 
+git checkout master
+
+git merge nombre //une la rama nueva con la principal
