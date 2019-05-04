@@ -1,0 +1,2 @@
+git branch nombre //creacion de una nueva rama
+git checkout nombre //desplazamiento hacia una rama
