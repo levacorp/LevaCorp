@@ -20,8 +20,8 @@ export class InicioSesionComponent implements OnInit {
   ngOnInit() {
   }
   onSubmit() {
-    // TODO: Use EventEmitter with form value
-    console.warn(this.usuario.value);
+    // TODO: Use EventEmitter with foconsole.warn(this.usuario.value);rm value
+    
   }
 
 }
