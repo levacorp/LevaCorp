@@ -5,14 +5,12 @@ import { AppRoutingModule } from './app-routing.module';
 import { AppComponent } from './app.component';
 import {NgbModule} from '@ng-bootstrap/ng-bootstrap';
 import {ReactiveFormsModule} from '@angular/forms';
-import { PagClipioComponent } from './pag-InicioSesion/pag-clipio.component';
-import { PagPrincipalComponent } from './pag-principal/pag-principal.component';
+import { InicioSesionComponent } from './inicio-sesion/inicio-sesion.component';
 
 @NgModule({
   declarations: [
     AppComponent,
-    PagClipioComponent,
-    PagPrincipalComponent
+    InicioSesionComponent
   ],
   imports: [
     BrowserModule,
