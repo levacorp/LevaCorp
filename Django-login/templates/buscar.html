@@ -1,0 +1,20 @@
+{% extends "base.html" %}
+
+{% block content %}
+    <p>Buscar Dispositivo</p>
+    <div class="container">
+        <form method="POST">
+            {% csrf_token %}
+            {{form.as_p}}
+            <button type="submit">Buscar</button>
+        </form>
+    </div>
+    {% for dis in disp %}
+        <h1>Dispositivo encontrado</h1>
+        <p>{{ dis.id }}</p>
+        <p>{{ dis.nombre }}</p>
+        <p>{{ dis.descripcion }}</p>
+        <p>{{ dis.concepto }}</p>
+    {% endfor %}
+
+{% endblock %}
