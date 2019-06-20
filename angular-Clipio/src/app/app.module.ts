@@ -6,11 +6,13 @@ import { AppComponent } from './app.component';
 import {NgbModule} from '@ng-bootstrap/ng-bootstrap';
 import {ReactiveFormsModule} from '@angular/forms';
 import { InicioSesionComponent } from './inicio-sesion/inicio-sesion.component';
+import { MenuSliderComponent } from './menu-slider/menu-slider.component';
 
 @NgModule({
   declarations: [
     AppComponent,
-    InicioSesionComponent
+    InicioSesionComponent,
+    MenuSliderComponent
   ],
   imports: [
     BrowserModule,
