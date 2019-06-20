@@ -39,7 +39,8 @@ INSTALLED_APPS = [
     'django.contrib.staticfiles',
     'usuarios.apps.UsuariosConfig',
     'dispositivos_usuarios.apps.Dispositivos_UsuariosConfig',
-    'dispositivos.apps.DevicesisConfig',
+    # 'rest_framework',
+    # 'rest_framework.authtoken',
 ]
 
 MIDDLEWARE = [
@@ -83,18 +84,8 @@ DATABASES = {
         'PASSWORD': '',
         'HOST': 'localhost',  # Or an IP Address that your DB is hosted on
         'PORT': '3306',
-    },
-    'indiceSemantico': {
-        'ENGINE': 'django.db.backends.mysql',
-        'NAME': 'BDIndiceSemantico',
-        'USER': 'root',
-        'PASSWORD': '',
-        'HOST': 'localhost',  # Or an IP Address that your DB is hosted on
-        'PORT': '3306',
     }
 }
-
-DATABASE_ROUTERS = ['dispositivos.dbRoute.DispositivosRoute']
 
 # Password validation
 # https://docs.djangoproject.com/en/2.2/ref/settings/#auth-password-validators
@@ -137,6 +128,8 @@ STATIC_URL = '/static/'
 LOGIN_REDIRECT_URL = '/'
 
 LOGOUT_REDIRECT_URL = '/'
+
+LOGIN_URL = '/login'
 
 # Block of code for Heroku
 #PROJECT_ROOT = os.path.join(os.path.abspath(__file__))

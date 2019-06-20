@@ -12,4 +12,10 @@
             <p><a href="{% url 'buscar' %}">Buscar</a></p>
         </form>
     </div>
+    <div>
+        {% for dispositivo in dispositivos %}
+            <p>{{ dispositivo.getId}}</p>
+            <p>{{ dispositivo.getTitle}}</p>
+        {% endfor %}
+    </div>
 {% endblock %}

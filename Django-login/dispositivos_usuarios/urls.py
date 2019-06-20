@@ -1,7 +1,9 @@
 
-# from django.urls import path
-# from . import views
-#
-# urlpatterns = [
-#     path('', views.buscarDispostivo, name="buscar")
-# ]
+from django.urls import path
+from . import views
+from .views import buscarView
+
+urlpatterns = [
+    # path('', views.agregarDispositivo, name="agregar")
+    path('', buscarView.as_view(), name="buscar")
+]

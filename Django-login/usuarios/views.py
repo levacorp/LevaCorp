@@ -9,6 +9,7 @@ from django.contrib.auth import *
 from django.contrib import messages
 from django.contrib.auth.decorators import login_required
 from usuarios.forms import LoginForm
+from dispositivos_usuarios.views import listarDispositivos
 
 
 def root(request):
@@ -20,9 +21,10 @@ def root(request):
     return redirect(view)
 
 
-@login_required(login_url="login")
+@login_required()
 def homepage(request):
-    return render(request, "home.html", {})
+    dispositivos = listarDispositivos(request)
+    return render(request, "home.html", {'dispositivos': dispositivos})
 
 
 def logout_request(request):
