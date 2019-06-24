@@ -1,0 +1,16 @@
+{% block navBar %}
+<div id="sidebar-wrapper">
+    <p>
+        <b>Hola soy el navbar y espero que Gomez me mejore ;) :*</b>
+    </p>
+    <p><a href="{% url 'logout' %}">Cerrar Sesión</a></p>
+
+    <div class="container">
+        <form method="POST">
+            {% csrf_token %}
+            {{form.as_p}}
+            <p><a href="{% url 'buscar' %}">Buscar</a></p>
+        </form>
+    </div>
+</div>
+{% endblock %}

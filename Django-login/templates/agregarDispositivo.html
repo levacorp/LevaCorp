@@ -1,0 +1,61 @@
+{% extends 'base.html' %}
+
+{% block content %}
+
+<div id="wrapper" class="active">
+    <!-- Sidebar -->
+    {% include 'navBar.html' %}
+    <!-- Fin Navbar -->
+
+    <!-- Page content -->
+    <div id="page-content-wrapper">
+        <!-- Keep all page content within the page-content inset div! -->
+        <div class="page-content inset">
+            <ul class="list-group">
+                <li class="list-group-item">
+                    <div class="text-center font-weight-bold display-4">
+                        <h1>Agregar Dispositivo</h1>
+                    </div>
+                </li>
+                <li class="list-group-item">
+                    <div class="card">
+                        <div class="card-body">
+                            <form>
+                                <div class="form-row">
+                                    <div class="col-md-4 mb-3">
+                                        <label for="validationDefault01">Buscar dispositivo existente:</label>
+                                        <div class="row">
+                                            <div class="col">
+                                                <input type="text" class="form-control" id="validationDefault01"
+                                                    placeholder="ID" value="ID" required>
+                                            </div>
+                                            <div class="col-md-auto"></div>
+                                            <div class="col col-lg-2">
+                                                <button type="submit" class="btn btn-outline-primary"
+                                                    name="Buscar">Buscar</button>
+                                            </div>
+                                        </div>
+                                    </div>
+                                </div>
+                                <div class="form-row">
+                                    <div class="col-md-4">
+                                        <label for="">Crear un nuevo dispositivo:</label>
+                                    </div>
+                                </div>
+
+                                <div class="form-row">
+                                    <div class="col-md-4 mb-3">
+                                        <button type="submit" class="btn btn-outline-primary"
+                                            name="Crear">Crear</button>
+                                    </div>
+                                </div>
+                            </form>
+                        </div>
+                    </div>
+                </li>
+            </ul>
+        </div>
+    </div>
+
+</div>
+{% endblock %}

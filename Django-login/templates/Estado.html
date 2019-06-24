@@ -1,69 +1,105 @@
-<!DOCTYPE html>
-<html lang="en">
-<head>
-    <meta charset="UTF-8">
-    <meta name="viewport" content="width=device-width, initial-scale=1.0">
-    <meta http-equiv="X-UA-Compatible" content="ie=edge">
-    <title>Inicio</title>
-    <link rel="stylesheet" href="https://stackpath.bootstrapcdn.com/bootstrap/4.3.1/css/bootstrap.min.css" integrity="sha384-ggOyR0iXCbMQv3Xipma34MD+dH/1fQ784/j6cY/iJTQUOhcWr7x9JvoRxT2MZw1T" crossorigin="anonymous">
-    <script src="https://stackpath.bootstrapcdn.com/bootstrap/4.3.1/js/bootstrap.min.js" integrity="sha384-JjSmVgyd0p3pXB1rRibZUAYoIIy6OrQ6VrjIEaFf/nJGzIxFDsf4x0xIM+B07jRM" crossorigin="anonymous"></script>
-</head>
-<body>
-    
-    <ul class="list-group list-group-horizontal">
-        <li class="list-group-item">  
-            <ul class="list-group">
+{% extends 'base.html' %}
+
+{% block content %}
+<div id="wrapper" class="active">
+    <!-- Sidebar -->
+    {% include 'navBar.html' %}
+    <!-- Fin Navbar -->
+
+    <!-- Page content -->
+    <div id="page-content-wrapper">
+        <!-- Keep all page content within the page-content inset div! -->
+        <div class="page-content inset">
+            <div class="fondo"></div>
+            <ul class="list-group p-5">
                 <li class="list-group-item">
                     <div class="text-center font-weight-bold display-4">
-                        Estado
+                        <h1>Estado</h1>
                     </div>
                 </li>
                 <li class="list-group-item">
                     <div class="card">
                         <div class="card-body">
-                        <h5 class="card-title">Estado de los dispositivos</h5>
-                        <div class="card-columns">
-                            <div class="card">
-                                <div class="card-body">
-                                    <h5 class="card-title">
-                                        <div class="row">
-                                            <div class="col-8">Dispositivo 3</div>
-                                            <div class="col-4">On/Off</div>
+                            <h5 class="card-title">Estado del dispositivo <b>NOMBRE DEL DISPOSITIVO</b></h5>
+                            <div class="card-columns">
+                                <div class="card">
+                                    <div class="card-body">
+                                        <h5 class="card-title">
+                                            <div class="row">
+                                                <div class="col-8">Dispositivo 1</div>
+                                                <div class="col-4">
+                                                    <div class="custom-control custom-switch">
+                                                        <input type="checkbox" class="custom-control-input"
+                                                            id="customSwitch1">
+                                                        <label class="custom-control-label" for="customSwitch1"></label>
+                                                    </div>
+                                                </div>
+                                            </div>
+                                        </h5>
+                                        <div class="container-fluid">
+                                            <div class="row">
+                                                <label for="valor">Valor:</label>
+                                                <div class="col-sm" id="valor">
+                                                    <p><b>27º C</b></p>
+                                                </div>
+                                            </div>
                                         </div>
-                                    </h5>
-                                    <p class="card-text">This is a longer card with supporting text below as a natural lead-in to additional content. This content is a little bit longer.</p>
+                                    </div>
+                                </div>
+                                <div class="card">
+                                    <div class="card-body">
+                                        <h5 class="card-title">
+                                            <div class="row">
+                                                <div class="col-8">Dispositivo 2</div>
+                                                <div class="col-4">
+                                                    <div class="custom-control custom-switch">
+                                                        <input type="checkbox" class="custom-control-input"
+                                                            id="customSwitch2">
+                                                        <label class="custom-control-label" for="customSwitch2"></label>
+                                                    </div>
+                                                </div>
+                                            </div>
+                                        </h5>
+                                        <div class="container-fluid">
+                                            <div class="row">
+                                                <label for="valor">Valor:</label>
+                                                <div class="col-sm" id="valor">
+                                                    <p><b>ON</b></p>
+                                                </div>
+                                            </div>
+                                        </div>
+                                    </div>
+                                </div>
+                                <div class="card">
+                                    <div class="card-body">
+                                        <h5 class="card-title">
+                                            <div class="row">
+                                                <div class="col-8">Dispositivo 3</div>
+                                                <div class="col-4">
+                                                    <div class="custom-control custom-switch">
+                                                        <input type="checkbox" class="custom-control-input"
+                                                            id="customSwitch3">
+                                                        <label class="custom-control-label" for="customSwitch3"></label>
+                                                    </div>
+                                                </div>
+                                            </div>
+                                        </h5>
+                                        <div class="container-fluid">
+                                            <div class="row">
+                                                <label for="valor">Valor:</label>
+                                                <div class="col-sm" id="valor">
+                                                    <p><b>27º C</b></p>
+                                                </div>
+                                            </div>
+                                        </div>
+                                    </div>
                                 </div>
                             </div>
-                            <div class="card">
-                                <div class="card-body">
-                                    <h5 class="card-title">
-                                        <div class="row">
-                                            <div class="col-8">Dispositivo 3</div>
-                                            <div class="col-4">On/Off</div>
-                                        </div>
-                                    </h5>
-                                    <p class="card-text">This is a longer card with supporting text below as a natural lead-in to additional content. This content is a little bit longer.</p>
-                                </div>
-                            </div>
-                            <div class="card">
-                                <div class="card-body">
-                                    <h5 class="card-title">
-                                        <div class="row">
-                                            <div class="col-8">Dispositivo 3</div>
-                                            <div class="col-4">On/Off</div>
-                                        </div>
-                                    </h5>
-                                    <p class="card-text">This is a longer card with supporting text below as a natural lead-in to additional content. This content is a little bit longer.</p>
-                                </div>
-                            </div>
-                        </div>
                         </div>
                     </div>
                 </li>
             </ul>
-        </li>
-    </ul>
-    <script src="https://code.jquery.com/jquery-3.3.1.slim.min.js" integrity="sha384-q8i/X+965DzO0rT7abK41JStQIAqVgRVzpbzo5smXKp4YfRvH+8abtTE1Pi6jizo" crossorigin="anonymous"></script>
-    <script src="https://cdnjs.cloudflare.com/ajax/libs/popper.js/1.14.7/umd/popper.min.js" integrity="sha384-UO2eT0CpHqdSJQ6hJty5KVphtPhzWj9WO1clHTMGa3JDZwrnQq4sF86dIHNDz0W1" crossorigin="anonymous"></script>
-</body>
-</html>
+        </div>
+    </div>
+</div>
+{% endblock %}

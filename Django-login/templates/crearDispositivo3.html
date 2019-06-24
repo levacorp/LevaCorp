@@ -1,0 +1,137 @@
+{% extends 'base.html' %}
+
+{% block content %}
+<div id="wrapper" class="active">
+    <!-- Sidebar -->
+    {% include 'navBar.html' %}
+    <!-- Fin Navbar -->
+
+    <!-- Page content -->
+    <div id="page-content-wrapper">
+        <!-- Keep all page content within the page-content inset div! -->
+        <div class="page-content inset">
+            <div class="fondo"></div>
+            <ul class="list-group p-5">
+                <li class="list-group-item">
+                    <div class="text-center font-weight-bold display-4">
+                        <h1>Agregar Dispositivo</h1>
+                    </div>
+                </li>
+                <li class="list-group-item contenido2">
+                    <div class="card">
+                        <div class="card-body contenido2">
+                            <h5 class="card-title">Datastreams</h5>
+                            <form>
+                                <div class="form-row">
+                                    <div class="col mb-3">
+                                        <label for="validationDefault01">Nombre</label>
+                                        <input type="text" class="form-control" id="validationDefault01"
+                                            placeholder="Nombre" value="Nombre" required>
+                                    </div>
+                                </div>
+
+                                <div class="form-row">
+                                    <div class="col-md-4 mb-3">
+                                        <label for="validationDefault02">Valor Maximo</label>
+                                        <input type="text" class="form-control" id="validationDefault02"
+                                            placeholder="ValorMaximo" value="Valor Maximo" required>
+                                    </div>
+                                    <div class="col-md-4 mb-3">
+                                        <label for="validationDefault03">Valor Minimo</label>
+                                        <input type="text" class="form-control" id="validationDefault03"
+                                            placeholder="ValorMinimo" value="Valor Minimo" required>
+                                    </div>
+                                </div>
+
+                                <div class="form-row">
+                                    <div class="col col-6 col-md-3">
+                                        <label for="validationDefault04">Unidad</label>
+                                    </div>
+                                </div>
+
+                                <div class="form-row">
+                                    <div class="col-md-4 mb-3">
+                                        <input type="text" class="form-control" id="validationDefault05"
+                                            placeholder="Simbolo" value="Símbolo" required>
+                                    </div>
+                                    <div class="col-md-4 mb-3">
+                                        <input type="text" class="form-control" id="validationDefault06"
+                                            placeholder="Etiqueta" value="Etiqueta" required>
+                                    </div>
+                                    <div class="col-md-4 mb-3">
+                                        <input type="text" class="form-control" id="validationDefault07"
+                                            placeholder="Tipo" value="Tipo" required>
+                                    </div>
+                                </div>
+
+                                <div class="form-row">
+                                    <div class="container border rounded-lg">
+
+                                        <div class="row">
+                                            <div class="col-md-4 mb-3">
+                                                <label for="validationDefault02">Añadir Tags</label>
+                                            </div>
+                                        </div>
+
+                                        <div class="row">
+                                            <div class="col col-6 col-md-1">
+                                                <label for="validationDefault02">Tags</label>
+                                            </div>
+                                            <div class="col col-12 col-md-8">
+                                                <div class="row">
+                                                    <div class="col-md-6 mb-3">
+                                                        <input type="text" class="form-control" id="validationDefault05"
+                                                            placeholder="Longitud" value="Español" required>
+                                                    </div>
+                                                    <div class="col-md-6 mb-3">
+                                                        <input type="text" class="form-control" id="validationDefault05"
+                                                            placeholder="Longitud" value="English" required>
+                                                    </div>
+                                                </div>
+                                            </div>
+                                        </div>
+
+                                        <div class="row">
+                                            <div class="col col-6 col-md-1">
+                                                <div class="row col-md-4 mb-3">
+                                                    <button type="button"
+                                                        class="rounded-circle btn btn-outline-success">+</button>
+                                                </div>
+                                            </div>
+                                            <div class="col col-12 col-md-8">
+                                                <div class="row">
+                                                    <div class="col-md-6 mb-3">
+                                                        <input type="text" class="form-control" id="validationDefault05"
+                                                            placeholder="Longitud" value="Español" required>
+                                                    </div>
+                                                    <div class="col-md-6 mb-3">
+                                                        <input type="text" class="form-control" id="validationDefault05"
+                                                            placeholder="Longitud" value="English" required>
+                                                    </div>
+                                                </div>
+                                            </div>
+                                            <div class="col col-6 col-md-1">
+                                                <div class="row col-md-4 mb-3">
+                                                    <button type="button"
+                                                        class="rounded-circle btn btn-outline-danger">-</button>
+                                                </div>
+                                            </div>
+                                        </div>
+                                    </div>
+                                </div>
+                                <div class="container p-3">
+                                    <div class="row justify-content-end">
+                                        <button type="button" class="btn btn-outline-secondary">Añadir otro
+                                            datastream</button>
+                                        <button type="button" class="btn btn-outline-success">Success</button>
+                                    </div>
+                                </div>
+                            </form>
+                        </div>
+                    </div>
+                </li>
+            </ul>
+        </div>
+    </div>
+</div>
+{% endblock %}
