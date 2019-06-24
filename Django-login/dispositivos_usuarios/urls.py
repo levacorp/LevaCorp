@@ -7,4 +7,5 @@ urlpatterns = [
     path('agregar/<int:id>', agregarView.as_view(), name="agregar"),
     path('buscar', buscarView.as_view(), name="buscar"),
     path('crear', views.crearDispositivo, name='crear'),
+    path('estado', views.estadoDispositivos, name='estado'),
 ]

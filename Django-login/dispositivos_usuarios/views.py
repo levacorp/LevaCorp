@@ -66,6 +66,10 @@ class buscarView(View):
 
 
 @login_required()
+def estadoDispositivos(request):
+    return render(request, "Estado.html")
+
+@login_required()
 def listarDispositivos(request):
 
     listaDisp = obtenerDispositivos(request.user.id)

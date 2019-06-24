@@ -107,13 +107,13 @@ img{
 #sidebar ul li  button {
 
     padding:10px;
-    background:black;
-    color:white;
+    /*background:orange*/;
+    /*color:white*/;
     margin:5%; 
     margin-left: 13%; 
     width:180px;
     text-align:center;
-    border: 1 px solid black;
+    /*border: 1 px solid black*/;
 }
 
 
