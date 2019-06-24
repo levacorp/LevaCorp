@@ -26,10 +26,9 @@ def homepage(request):
     dispositivos = listarDispositivos(request)
     return render(request, "home.html", {'dispositivos': dispositivos})
 
-
+@login_required()
 def logout_request(request):
     logout(request)
-    messages.info(request, "Logged out successfully!")
     return redirect("/")
 
 

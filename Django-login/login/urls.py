@@ -17,5 +17,5 @@ from django.urls import include, path
 
 urlpatterns = [
     path('', include('usuarios.urls')),
-    path('buscar', include('dispositivos_usuarios.urls')),
+    path('dispositivos/', include('dispositivos_usuarios.urls')),
 ]
