@@ -2,14 +2,24 @@
 {% block content %}
     <p>Agregrar Dispositivo</p>
 
-    <h2>{{ mensaje }}</h2>
+    {% if disp.getId is not None %}
+        <h2>Se encontró el dispositivo</h2>
+        <p>{{ disp.getId }}</p>
+        <p>{{ disp.getTitle }}</p>
+        <p>{{ disp.getDescription }}</p>
+        <p>{{ disp.getConceptos }}</p>
+        <div class="container">
+            <form method="POST">
+                {% csrf_token %}
+                {{ form.idDispositivo.as_hidden }}
+                <button type="submit">Agregar</button>
+            </form>
+        </div>
 
-    <p>{{ disp.getId }}</p>
-    <p>{{ disp.getTitle }}</p>
-    <p>{{ disp.getDescription }}</p>
-    <p>{{ disp.getConceptos }}</p>
 
+    {% else %}
+        <h2>El dispositivo no existe</h2>
+    {% endif %}
 
-    <button type="submit">Agregar</button>
 
 {% endblock %}
