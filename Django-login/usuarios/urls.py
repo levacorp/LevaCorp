@@ -11,4 +11,3 @@ urlpatterns = [
 
     # path('login', ObtainAuthToken.as_view())
 ]
-

@@ -10,12 +10,14 @@ from .ConexionIndiceSemantico import ConexionIndiceSemantico
 from django.views import View
 from django.utils.decorators import method_decorator
 
+
 def agregarDispositivo(request):
     if request.method == "POST":
         form = AgregarDispositivoForm(request.POST)
         if form.is_valid():
             form.save(commit=False)
             form.idUsuario = request.user.id
+
 
 class buscarView(View):
 
@@ -39,15 +41,32 @@ class buscarView(View):
             args = {'disp': disp, 'mensaje': 'Se encontró el dispositivo'}
             return render(request, "agregar.html", args)
 
-
-
-def listarDispositivos(request):
-    idDispositivos = Dispositivo_Usuario.objects.filter(idUsuario=request.user.id)
+# Local Method
+def obtenerDispositivos(idUsuario):
+    idDispositivos = Dispositivo_Usuario.objects.filter(idUsuario=idUsuario)
     listaDisp = []
 
     for i in idDispositivos:
         disp = ConexionIndiceSemantico(i.idDispositivo)
         if disp.getId() is not None:
             listaDisp.append(disp)
-
     return listaDisp
+
+def listarDispositivos(request):
+
+    listaDisp = obtenerDispositivos(request.user.id)
+
+    dictDisp = {}       #Diccionario de la forma {"Concepto1": [Lista de dispositivos], "Concepto2": [Lista de dispositivos]}
+
+    for i in listaDisp:
+        if i.getConceptos()[0] in dictDisp:
+            listAux = dictDisp.get(i.getConceptos()[0])
+            listAux.append(i.getTitle())
+            dictDisp.update({i.getConceptos()[0]: listAux})
+            print(dictDisp)
+        else:
+            listAux = [i.getTitle()]
+            dictDisp.update({i.getConceptos()[0]: listAux})
+
+
+    return dictDisp
