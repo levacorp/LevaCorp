@@ -24,12 +24,12 @@ def root(request):
 @login_required()
 def homepage(request):
     dispositivos = listarDispositivos(request)
-    return render(request, "home.html", {'dispositivos': dispositivos})
+    return render(request, "Inicio.html", {'dispositivos': dispositivos})
 
 
 def logout_request(request):
     logout(request)
-    messages.info(request, "Logged out successfully!")
+    messages.info(request, "Su sesion ha terminado")
     return redirect("/")
 
 
@@ -51,7 +51,7 @@ def login_request(request):
             else:
                 messages.error(request, "Usuario o contraseña incorrecta.")
         else:
-            messages.error(request, "Usuario o contraseña incorrecta")
+            messages.error(request, "Campos invalidos")
     form = LoginForm()
     return render(request=request,
                   template_name="login.html",
