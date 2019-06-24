@@ -49,9 +49,9 @@ def login_request(request):
                 # messages.info(request, f"You are now logged in as {username}")
                 return redirect('/')
             else:
-                messages.error(request, "Invalid username or password.")
+                messages.error(request, "Usuario o contraseña incorrecta.")
         else:
-            messages.error(request, "Invalid username or password.")
+            messages.error(request, "Usuario o contraseña incorrecta")
     form = LoginForm()
     return render(request=request,
                   template_name="login.html",
