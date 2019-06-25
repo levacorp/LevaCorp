@@ -16,7 +16,7 @@
             </li>
         </ul>
         <ul class="list-unstyled components">
-            <button id="agregar " type="button" class="rounded-circle btn btn-primary">+</button>
+            <button onclick="location.href='{% url 'agregarDispositivo' %}'" id="agregar " type="button" class="rounded-circle btn btn-primary">+</button>
         </ul>
         <ul class="list-unstyled components ">
             <li>
@@ -55,13 +55,6 @@
             </li>
         </ul>
     </nav>
-
-    <div class="container">
-        <form method="POST">
-            {% csrf_token %}
-            {{form.as_p}}
-            <p><a href="{% url 'buscar' %}">Buscar</a></p>
-        </form>
-    </div>
+    
 </div>
 {% endblock %}

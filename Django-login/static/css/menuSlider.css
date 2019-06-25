@@ -6,11 +6,12 @@
 #sidebar {
     min-width: 250px;
     max-width: 250px;
-    max-height: 400px;
+    max-height: 100%;
     background: white;
     color: black;
     transition: all 0.3s;
-    
+    overflow-y: scroll;
+    overflow-x: hidden;
 }
 
 #sidebar.active {

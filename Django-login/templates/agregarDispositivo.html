@@ -11,13 +11,13 @@
     <div id="page-content-wrapper">
         <!-- Keep all page content within the page-content inset div! -->
         <div class="page-content inset">
-            <ul class="list-group">
+            <ul class="list-group p-5">
                 <li class="list-group-item">
                     <div class="text-center font-weight-bold display-4">
                         <h1>Agregar Dispositivo</h1>
                     </div>
                 </li>
-                <li class="list-group-item">
+                <li class="list-group-item ">
                     <div class="card">
                         <div class="card-body">
                             <form>
@@ -25,14 +25,25 @@
                                     <div class="col-md-4 mb-3">
                                         <label for="validationDefault01">Buscar dispositivo existente:</label>
                                         <div class="row">
-                                            <div class="col">
-                                                <input type="text" class="form-control" id="validationDefault01"
-                                                    placeholder="ID" value="ID" required>
-                                            </div>
-                                            <div class="col-md-auto"></div>
+                                            <form method="POST">
+                                                {% csrf_token %}
+                                                <div class="col">
+                                                    <input name="id" type="text" class="form-control"
+                                                        id="validationDefault01" placeholder="ID" value="" required>
+                                                </div>
+                                                <div class="col-md-auto">
+                                                    <button type="submit"
+                                                        class="btn btn-outline-primary" name="button" formmethod="post">Buscar</button>
+                                                </div>
+                                            </form>
                                             <div class="col col-lg-2">
-                                                <button type="submit" class="btn btn-outline-primary"
-                                                    name="Buscar">Buscar</button>
+                                                {% if messages %}
+                                                {% for message in messages %}
+                                                <div class="alert alert-{{ message.tags }}">
+                                                    {{ message }}
+                                                </div>
+                                                {% endfor %}
+                                                {% endif %}
                                             </div>
                                         </div>
                                     </div>
@@ -45,8 +56,8 @@
 
                                 <div class="form-row">
                                     <div class="col-md-4 mb-3">
-                                        <button type="submit" class="btn btn-outline-primary"
-                                            name="Crear">Crear</button>
+                                        <button type="button" class="btn btn-outline-primary"
+                                            name="Crear" onclick="location.href='{% url 'crear' %}'" >Crear</button>
                                     </div>
                                 </div>
                             </form>

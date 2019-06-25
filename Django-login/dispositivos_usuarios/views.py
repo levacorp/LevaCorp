@@ -7,6 +7,7 @@ from .forms import BuscarDispositivoForm
 from .forms import AgregarDispositivoForm
 from .forms import infoDispositivo
 from .ConexionIndiceSemantico import ConexionIndiceSemantico
+from django.contrib import messages
 
 from django.views import View
 from django.utils.decorators import method_decorator
@@ -38,36 +39,34 @@ class agregarView(View):
                 nuevo = Dispositivo_Usuario(idUsuario=request.user, idDispositivo=idDisp)
                 nuevo.save()
 
-
         return redirect("homepage")
 
+@login_required()
+def estadoDispositivos(request):
+    return render(request, "Estado.html")
 
-class buscarView(View):
 
-    @method_decorator(login_required)
-    def get(self, request):
-        form = BuscarDispositivoForm()
-        return render(request, "buscar.html", {'form': form})
-
-    @method_decorator(login_required)
-    def post(self, request):
+@login_required()
+def agregarDispositivo(request):
+    
+    if request.method == "POST":
         form = BuscarDispositivoForm(request.POST)
         if form.is_valid():
             id = form.cleaned_data['id']
             disp = ConexionIndiceSemantico(id)
 
-        form = BuscarDispositivoForm()
-        if disp.getId() is None:
-            # Mostrar mensaje que no se encontró el dispositivo
-            args = {'form': form, 'mensaje': 'No se encontró el dispositivo'}
-            return render(request, "buscar.html", args)
-        else:
-            return redirect("agregar", id)
+            if disp.getId() is None:
+                # Mostrar mensaje que no se encontró el dispositivo
+                messages.error(request, "Dispositivo no encontrado")
+                args = {'form': form, 'mensaje': 'No se encontró el dispositivo'}
+                return render(request, "agregarDispositivo.html", args)
+            else:
+                messages.error(request, "Dispositivo encontrado")
+                return redirect("confirmarAgregar", id)
 
+    form = BuscarDispositivoForm()
+    return render(request, "agregarDispositivo.html", {"form": form})
 
-@login_required()
-def estadoDispositivos(request):
-    return render(request, "Estado.html")
 
 @login_required()
 def listarDispositivos(request):
