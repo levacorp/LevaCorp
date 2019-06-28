@@ -5,7 +5,7 @@
     <nav class="scroll" id="sidebar">
         <div class="sidebar-header">
             <img id="logo" src="{% static 'img/1.png' %}" alt="..." class="rounded-circle">
-            <p><a href="{% url 'logout' %}">Cerrar Sesión</a></p>
+            <a href="{% url 'logout' %}">Cerrar Sesión</a>
         </div>
         <ul class="list-unstyled components">
             <li>
@@ -19,40 +19,18 @@
             <button onclick="location.href='{% url 'agregarDispositivo' %}'" id="agregar " type="button" class="rounded-circle btn btn-primary">+</button>
         </ul>
         <ul class="list-unstyled components ">
-            <li>
-                <a href="#">Contact</a>
-            </li>
+            {% for key, values in dispositivos.items %}
             <li class="active">
-                <a href="#homeSubmenu" data-toggle="collapse" aria-expanded="false" class="dropdown-toggle">Home</a>
+                <a href="#homeSubmenu" data-toggle="collapse" aria-expanded="false" class="dropdown-toggle">{{key}}</a>
                 <ul class="collapse list-unstyled" id="homeSubmenu">
-                    <li>
-                        <a href="#">Home 1</a>
-                    </li>
-                    <li>
-                        <a href="#">Home 2</a>
-                    </li>
-                    <li>
-                        <a href="#">Home 3</a>
-                    </li>
+                    {% for value in values %}
+                        <li>
+                         <a href="#">{{value}}</a>
+                        </li>
+                    {% endfor %}
                 </ul>
             </li>
-            <li>
-                <a href="#">About</a>
-            </li>
-            <li>
-                <a href="#pageSubmenu" data-toggle="collapse" aria-expanded="false" class="dropdown-toggle">Pages</a>
-                <ul class="collapse list-unstyled" id="pageSubmenu">
-                    <li>
-                        <a href="#">Page 1</a>
-                    </li>
-                    <li>
-                        <a href="#">Page 2</a>
-                    </li>
-                    <li>
-                        <a href="#">Page 3</a>
-                    </li>
-                </ul>
-            </li>
+            {% endfor %}
         </ul>
     </nav>
     
