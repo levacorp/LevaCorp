@@ -1,14 +1,11 @@
-from django.shortcuts import render
-
 # users/views.py
-from django.urls import reverse_lazy
-from django.views import generic
 from django.shortcuts import redirect
 from django.shortcuts import render
 from django.contrib.auth import *
 from django.contrib import messages
 from django.contrib.auth.decorators import login_required
-from usuarios.forms import LoginForm
+from .forms import LoginForm
+from .forms import RegistroForm
 from dispositivos_usuarios.views import listarDispositivos
 
 
@@ -55,3 +52,24 @@ def login_request(request):
     return render(request=request,
                   template_name="login.html",
                   context={"form": form})
+
+
+def registrar(request):
+
+    if request.user.is_authenticated:
+        return redirect("homepage")
+
+    if request.method == "POST":
+        form = RegistroForm(request.POST)
+        if form.is_valid():
+            form.save()
+            username = form.cleaned_data.get('username')
+            password = form.cleaned_data.get('password1')
+            user = authenticate(username=username, password=password)
+            login(request, user)
+            return redirect("/")
+        else:
+            messages.error(request, "Campos invalidos")
+    else:
+        form = RegistroForm()
+    return render(request, 'registrar.html', {'form': form})

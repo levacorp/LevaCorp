@@ -7,6 +7,7 @@ from .forms import BuscarDispositivoForm
 from .forms import AgregarDispositivoForm
 from .forms import infoDispositivo
 from .ConexionIndiceSemantico import ConexionIndiceSemantico
+from .conexionEstado import conexionEstado
 from django.contrib import messages
 
 from django.views import View
@@ -42,8 +43,33 @@ class agregarView(View):
         return redirect("homepage")
 
 @login_required()
-def estadoDispositivos(request):
-    return render(request, "Estado.html")
+def estadosDispositivos(request):
+    conexion = conexionEstado()
+    if request.method == "GET":
+        listaDisp = obtenerDispositivos(request.user.id)
+        lista = []
+        diccionario = {}
+        for i in listaDisp:
+            id = i.getId()
+            print(id)
+            ip = "10.0.0.16"
+            diccionario = conexion.estadosDispositivos(ip,id)
+            lista.append(diccionario)
+
+            print(diccionario)
+    return render(request, "allEstate.html", {"lista": lista})
+@login_required()
+def estadoDispositivo(request, id):
+    conexion = conexionEstado()
+    if request.method == "GET":
+        diccionario = {}
+
+        ip = "10.0.0.16"
+        diccionario = conexion.estadosDispositivos(ip,id)
+
+        print(diccionario)
+    return render(request, "Estado.html", {"Diccionario": diccionario})
+
 
 
 @login_required()
@@ -76,14 +102,17 @@ def listarDispositivos(request):
     dictDisp = {}       #Diccionario de la forma {"Concepto1": [Lista de dispositivos], "Concepto2": [Lista de dispositivos]}
 
     for i in listaDisp:
-        if i.getConceptos()[0] in dictDisp:
-            listAux = dictDisp.get(i.getConceptos()[0])
+        print(i.getTags())
+        print("---------------------")
+        indices = [j for j, s in enumerate(i.getTags()) if 'Entidad' in s]
+        if i.getTags()[indices[0]] in dictDisp:
+            listAux = dictDisp.get(i.getTags()[indices[0]])
             listAux.append(i.getTitle())
-            dictDisp.update({i.getConceptos()[0]: listAux})
-            print(dictDisp)
+            dictDisp.update({i.getTags()[indices[0]]: listAux})
+
         else:
             listAux = [i.getTitle()]
-            dictDisp.update({i.getConceptos()[0]: listAux})
+            dictDisp.update({i.getTags()[indices[0]]: listAux})
 
 
     return dictDisp
@@ -179,3 +208,7 @@ def obtenerDispositivos(idUsuario):
         if disp.getId() is not None:
             listaDisp.append(disp)
     return listaDisp
+
+@login_required()
+def obtenerEstadoDeUnDispositivo(idUsuario):
+    idDispositivos = Dispositivo_Usuario.objects.filter(idUsuario=idUsuario)
