@@ -131,7 +131,7 @@ def crearDispositivo(request):
             return response
     else:
         form = infoDispositivo()
-    return render(request, 'crear.html', {'form': form})
+    return render(request, 'crearDispositivo.html', {'form': form})
 
 
 # Local Method
