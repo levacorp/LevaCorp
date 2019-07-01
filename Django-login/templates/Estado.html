@@ -1,9 +1,11 @@
 {% extends 'base.html' %}
-
+{% load navBarTags %}
 {% block content %}
 <div id="wrapper" class="active">
     <!-- Sidebar -->
-    {% include 'navBar.html' %}
+    {% listarDispositivos %}
+    {% include 'navBar.html' with dispositivos=dispositivos %}
+
     <!-- Fin Navbar -->
 
     <!-- Page content -->

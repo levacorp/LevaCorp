@@ -1,9 +1,11 @@
 {% extends 'base.html' %}
-
+{% load navBarTags %}
 {% block content %}
 <div id="wrapper" class="active">
     <!-- Sidebar -->
-    {% include 'navBar.html' %}
+    {% listarDispositivos %}
+    {% include 'navBar.html' with dispositivos=dispositivos %}
+
     <!-- Fin Navbar -->
 
     <!-- Page content -->
@@ -22,18 +24,22 @@
                         <div class="card-body">
                             <h5 class="card-title">Estado de los sensores y actuadores </h5>
                             <div class="card-columns">
+                                {% for key, values in diccionario.items %}
                                 <div class="card">
                                     <div class="card-body">
                                         <h5 class="card-title">
                                             <div class="row">
-                                                <div class="col-8">Actuador 1</div>
+                                                <div class="col-8">{{ key }}</div>
+                                                {% if values.0 == 'bool' %}
                                                 <div class="col-4">
                                                     <div class="custom-control custom-switch">
                                                         <input type="checkbox" class="custom-control-input"
-                                                            id="customSwitch1">
+                                                            id="customSwitch1" checked>
+                                                        {{ values.1 }}
                                                         <label class="custom-control-label" for="customSwitch1"></label>
                                                     </div>
                                                 </div>
+<<<<<<< Updated upstream
                                             </div>
                                         </h5>
                                         <div class="container-fluid">
@@ -80,20 +86,23 @@
                                                         <input type="checkbox" class="custom-control-input"
                                                             id="customSwitch3">
                                                         <label class="custom-control-label" for="customSwitch3"></label>
+=======
+                                                {% else%}
+                                                    <div class="container-fluid">
+                                                        <div class="row">
+                                                            <label for="valor">Valor:</label>
+                                                            <div class="col-sm" id="valor">
+                                                                <p><b>{{ values.1 }}</b></p>
+                                                            </div>
+                                                        </div>
+>>>>>>> Stashed changes
                                                     </div>
-                                                </div>
+                                                {% endif %}
                                             </div>
                                         </h5>
-                                        <div class="container-fluid">
-                                            <div class="row">
-                                                <label for="valor">Valor:</label>
-                                                <div class="col-sm" id="valor">
-                                                    <p><b>27º C</b></p>
-                                                </div>
-                                            </div>
-                                        </div>
                                     </div>
                                 </div>
+                                {% endfor %}
                             </div>
                         </div>
                     </div>

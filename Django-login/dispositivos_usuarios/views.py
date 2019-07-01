@@ -51,24 +51,25 @@ def estadosDispositivos(request):
         diccionario = {}
         for i in listaDisp:
             id = i.getId()
-            print(id)
+
             ip = "10.0.0.16"
+
             diccionario = conexion.estadosDispositivos(ip,id)
             lista.append(diccionario)
 
-            print(diccionario)
     return render(request, "Estado.html", {"lista": lista})
+
 @login_required()
 def estadoDispositivo(request, id):
     conexion = conexionEstado()
     if request.method == "GET":
         diccionario = {}
 
-        ip = "10.0.0.16"
+        #ip = "10.0.0.16"
+        ip = "192.168.0.21"
         diccionario = conexion.estadosDispositivos(ip,id)
 
-        print(diccionario)
-    return render(request, "Estado.html", {"Diccionario": diccionario})
+    return render(request, "controlDispositivo.html", {"diccionario": diccionario})
 
 
 
@@ -92,30 +93,6 @@ def agregarDispositivo(request):
 
     form = BuscarDispositivoForm()
     return render(request, "agregarDispositivo.html", {"form": form})
-
-
-@login_required()
-def listarDispositivos(request):
-
-    listaDisp = obtenerDispositivos(request.user.id)
-
-    dictDisp = {}       #Diccionario de la forma {"Concepto1": [Lista de dispositivos], "Concepto2": [Lista de dispositivos]}
-
-    for i in listaDisp:
-        print(i.getTags())
-        print("---------------------")
-        indices = [j for j, s in enumerate(i.getTags()) if 'Entidad' in s]
-        if i.getTags()[indices[0]] in dictDisp:
-            listAux = dictDisp.get(i.getTags()[indices[0]])
-            listAux.append(i.getTitle())
-            dictDisp.update({i.getTags()[indices[0]]: listAux})
-
-        else:
-            listAux = [i.getTitle()]
-            dictDisp.update({i.getTags()[indices[0]]: listAux})
-
-
-    return dictDisp
 
 
 @login_required()
@@ -209,6 +186,3 @@ def obtenerDispositivos(idUsuario):
             listaDisp.append(disp)
     return listaDisp
 
-@login_required()
-def obtenerEstadoDeUnDispositivo(idUsuario):
-    idDispositivos = Dispositivo_Usuario.objects.filter(idUsuario=idUsuario)

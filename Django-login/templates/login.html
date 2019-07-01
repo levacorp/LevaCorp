@@ -37,22 +37,18 @@
           
             <div class="justify-content-center mt-3 login_container " style="width:70%;margin-left: 50px">
                     <a href= {% url 'registrar' %} name="button" class="btn login_btn">Registrar</a>
-                </div>
-                <div class="d-flex justify-content-center mt-3 login_container">
-                        {% if messages %}
-                        {% for message in messages %}
+            </div>
+            <div class="d-flex justify-content-center mt-3 login_container">
+                {% if messages %}
+                    {% for message in messages %}
                         <div class="alert alert-{{ message.tags }}">
                             {{ message }}
                         </div>
-                        {% endfor %}
-                        {% endif %}
-                    </div>
+                    {% endfor %}
+                {% endif %}
+            </div>
         </div>
-
-       
-
     </div>
-
 </div>
 
 

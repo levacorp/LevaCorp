@@ -1,6 +1,9 @@
 {% block navBar %}
 {% load staticfiles %}
+
+
 <div id="sidebar-wrapper">
+
     <!-- Sidebar -->
 
     <nav class="scroll" id="sidebar">
@@ -33,22 +36,14 @@
                         <li>
                             <a href="#">{{value}}</a>
                         </li>
+
                         {% endfor %}
                     </ul>
                 </li>
                 {% endfor %}
-                <li class="active">
-                    <a href="#homeSubmenu" data-toggle="collapse" aria-expanded="false"
-                        class="dropdown-toggle">miraa</a>
-                    <ul class="collapse list-unstyled" id="homeSubmenu">
-                        <li>
-                            <a href="#">miraaa</a>
-                        </li>
-                    </ul>
-                </li>
             </ul>
         </div>
     </nav>
-
 </div>
+
 {% endblock %}

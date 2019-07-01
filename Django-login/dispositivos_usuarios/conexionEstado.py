@@ -23,7 +23,7 @@ class conexionEstado:
         pass
 
     def estadosDispositivos(self,ip, id):
-        url = 'http://'+ip+'/SendState?osid='+id
+        url = 'http://'+ip+'/SendState?osid='+str(id)
         xml = requests.get(url)
         
         tree = ET.fromstring(xml.content)
