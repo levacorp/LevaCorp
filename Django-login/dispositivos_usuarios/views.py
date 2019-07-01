@@ -57,7 +57,7 @@ def estadosDispositivos(request):
             lista.append(diccionario)
 
             print(diccionario)
-    return render(request, "allEstate.html", {"lista": lista})
+    return render(request, "Estado.html", {"lista": lista})
 @login_required()
 def estadoDispositivo(request, id):
     conexion = conexionEstado()
@@ -120,11 +120,11 @@ def listarDispositivos(request):
 
 @login_required()
 def crearDispositivo(request):
-    if request.method == "POST":
+    if request.method == 'POST':
         form = infoDispositivo(request.POST)
         if form.is_valid():
             dataJSON = crearJSON(form)
-
+            print("entro")
             response = JsonResponse(dataJSON)
             response['Content-Disposition'] = 'attachment; filename="' + str(form.cleaned_data["idDispositivo"]) + '.json"'
             print(response)
