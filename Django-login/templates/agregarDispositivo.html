@@ -11,17 +11,14 @@
     <div id="page-content-wrapper">
         <!-- Keep all page content within the page-content inset div! -->
         <div class="page-content inset">
-            <ul class="list-group p-5">
-                <li class="list-group-item">
-                    <div class="text-center font-weight-bold display-4">
-                        <h1>Agregar Dispositivo</h1>
-                    </div>
-                </li>
-                <li class="list-group-item ">
-                    <div class="card">
-                        <div class="card-body">
+            <div class="fondo"></div>
+            <div class="wizard-container">
+                <div class="container cont-principal">
+                    <div class="card wizard-card justify-content-center">
+                        <div class="div-principal">
+                            <h1 class="text-center">Agregar Dispositivo</h1>
                             <form>
-                                <div class="form-row">
+                                <div class="row">
                                     <div class="col-md-4 mb-3">
                                         <label for="validationDefault01">Buscar dispositivo existente:</label>
                                         <div class="row">
@@ -32,8 +29,8 @@
                                                         id="validationDefault01" placeholder="ID" value="" required>
                                                 </div>
                                                 <div class="col-md-auto">
-                                                    <button type="submit"
-                                                        class="btn btn-outline-primary" name="button" formmethod="post">Buscar</button>
+                                                    <button type="submit" class="btn btn-outline-primary" name="button"
+                                                        formmethod="post">Buscar</button>
                                                 </div>
                                             </form>
                                             <div class="col col-lg-2">
@@ -48,25 +45,24 @@
                                         </div>
                                     </div>
                                 </div>
-                                <div class="form-row">
+                                <div class="row">
                                     <div class="col-md-4">
                                         <label for="">Crear un nuevo dispositivo:</label>
                                     </div>
                                 </div>
 
-                                <div class="form-row">
+                                <div class="row">
                                     <div class="col-md-4 mb-3">
-                                        <button type="button" class="btn btn-outline-primary"
-                                            name="Crear" onclick="location.href='{% url 'crear' %}'" >Crear</button>
+                                        <button type="button" class="btn btn-outline-primary" name="Crear"
+                                            onclick="location.href='{% url 'crear' %}'">Crear</button>
                                     </div>
                                 </div>
                             </form>
                         </div>
                     </div>
-                </li>
-            </ul>
+                </div>
+            </div>
         </div>
     </div>
-
 </div>
 {% endblock %}

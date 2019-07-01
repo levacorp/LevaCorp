@@ -1,3 +1,4 @@
+
 #wrapper {
     padding-left: 70px;
     transition: all .4s ease 0s;
@@ -10,12 +11,13 @@
     height: 100%;
     min-height: 340px;
     padding: 20px 15px;
+    border: 1px solid #dee2e6!important;
 }
 
 #sidebar-wrapper {
     margin-left: -150px;
     left: 70px;
-    width: 150px;
+    width: 250px;
     position: fixed;
     height: 100%;
     z-index: 10000;
@@ -37,7 +39,7 @@
     height: auto;
 }
 #wrapper.active {
-    padding-left: 150px;
+    padding-left: 250px;
 }
 #wrapper.active #sidebar-wrapper {
     left: 150px;

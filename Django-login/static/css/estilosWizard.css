@@ -3,8 +3,8 @@
 }
 
 .cont-principal {
-    padding-right: 20px;
-    padding-left: 20px;
+    padding-right: 50px;
+    padding-left: 50px;
     margin-right: auto;
     margin-left: auto;
 }
@@ -58,7 +58,7 @@
 
 .card {
     background-color: #FFFFFF;
-    padding: 10px 0;
+    padding: 15px 10px;
     width: 100%;
     border-radius: 6px;
     color: rgba(0, 0, 0, 0.87);
@@ -67,6 +67,10 @@
 
 .wizard-card {
     min-height: 410px;
+    box-shadow: 0 16px 24px 2px rgba(0, 0, 0, 0.14), 0 6px 30px 5px rgba(0, 0, 0, 0.12), 0 8px 10px -5px rgba(0, 0, 0, 0.2);
+}
+
+.wizard-title {
     box-shadow: 0 16px 24px 2px rgba(0, 0, 0, 0.14), 0 6px 30px 5px rgba(0, 0, 0, 0.12), 0 8px 10px -5px rgba(0, 0, 0, 0.2);
 }
 
@@ -207,8 +211,4 @@
 .wizard-card .description {
     color: #999999;
     font-size: 14px;
-}
-
-.wizard-card .wizard-title {
-    margin: 0;
 }
