@@ -1,0 +1,1 @@
+se agrega Shedule Activity (date, type_command, id_resource) para almacenar cuando se enciende o apaga un actuador.

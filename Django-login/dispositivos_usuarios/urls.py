@@ -7,5 +7,5 @@ urlpatterns = [
     path('crear', views.crearDispositivo, name='crear'),
     path('estado', views.estadosDispositivos, name='estado'),
     path('agregar', views.agregarDispositivo, name='agregarDispositivo'),
-    path('estados/<int:id>', views.estadoDispositivo, name ='estados'),
+    path('estados/(<int:id>, <str:nombre>)', views.estadoDispositivo, name='estados'),
 ]

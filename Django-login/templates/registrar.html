@@ -48,7 +48,7 @@
                             <div class="input-group-append">
                                 <span class="input-group-text"><i class="fas fa-key"></i></span>
                             </div>
-                            <input type="password" id="password" name="password" class="form-control input_pass" value=""
+                            <input type="password" id="password" name="password1" class="form-control input_pass" value=""
                                 placeholder="Contraseña" required="">
                         </div>
                         <div class="input-group mb-2">
@@ -59,7 +59,7 @@
                                     placeholder="Confirmar contraseña" onkeyup="checkPass(); return false;" required="">
                             </div>
                     <div class="d-flex justify-content-center mt-3 login_container">
-                        <button href={% url 'login' %} type="submit" name="button" class="btn login_btn">Registrar</button>
+                        <button href={% url 'registrar' %} type="submit" name="button" class="btn login_btn">Registrar</button>
                     </div>
                 </form>
             </div>

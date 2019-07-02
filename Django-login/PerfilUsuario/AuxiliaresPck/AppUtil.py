@@ -1,0 +1,17 @@
+pathOWL="./OWL/"
+ontologiaPU="./OWL/ontologiapu.owl"
+pathRespuestasXml="./RespuestasXml/"
+pathPeticionesXml="./PeticionesXML/"
+
+##Codigos para las peticiones web
+idIncorrecto = "1025"
+dataStremNoExiste = "1026"
+noImplementado = "1027"
+exitoso = "1028"
+usuarioExiste="1042"
+usuarioNoExiste="1043"
+ontologiaCreada = "1044"
+error="1045"
+credencialesIncorrectas="1046"
+ontologiaNoexisteOdatosIncorrectos="1048"
+noHayRegistros = "1047"

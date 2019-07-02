@@ -9,6 +9,10 @@ class AgregarDispositivoForm(forms.Form):
     idDispositivo = forms.IntegerField()
 
 
+class obtenerIP(forms.Form):
+    ipDispositivo = forms.CharField(max_length=45)
+
+
 class infoDispositivo(forms.Form):
     idDispositivo = forms.IntegerField()
     titulo = forms.CharField(max_length=250)

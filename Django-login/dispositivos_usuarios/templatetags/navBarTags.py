@@ -8,17 +8,16 @@ def listarDispositivos(context):
 
     listaDisp = obtenerDispositivos(context['request'].user.id)
 
-    dictDisp = {}       #Diccionario de la forma {"Concepto1": [Lista de dispositivos], "Concepto2": [Lista de dispositivos]}
+    dictDisp = {}       #Diccionario de la forma {"Concepto1": [(idDisp, Lista de dispositivos)], "Concepto2": [(idDisp, Lista de dispositivos)]}
 
     for i in listaDisp:
         indices = [j for j, s in enumerate(i.getTags()) if 'Entidad' in s]
         if i.getTags()[indices[0]] in dictDisp:
             listAux = dictDisp.get(i.getTags()[indices[0]])
-            listAux.append(i.getTitle())
+            listAux.append((i.getId(), i.getTitle()))
             dictDisp.update({i.getTags()[indices[0]]: listAux})
-
         else:
-            listAux = [i.getTitle()]
+            listAux = [(i.getId(), i.getTitle())]
             dictDisp.update({i.getTags()[indices[0]]: listAux})
     context.update({'dispositivos': dictDisp})
     return {

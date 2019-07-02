@@ -34,9 +34,8 @@
                     <ul class="collapse list-unstyled" id="homeSubmenu">
                         {% for value in values %}
                         <li>
-                            <a href="#">{{value}}</a>
+                            <a href={% url 'estados' value.0 value.1 %}>{{value.1}}</a>
                         </li>
-
                         {% endfor %}
                     </ul>
                 </li>
