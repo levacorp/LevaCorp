@@ -16,14 +16,14 @@ function checkPass()
         //the user that they have entered the correct password 
         pass2.style.backgroundColor = goodColor;
         message.style.color = goodColor;
-        message.innerHTML = "Passwords Match"
+        message.innerHTML = "Contraseñas iguales"
     }else{
         //The passwords do not match.
         //Set the color to the bad color and
         //notify the user.
         pass2.style.backgroundColor = badColor;
         message.style.color = badColor;
-        message.innerHTML = "Passwords Do Not Match!"
+        message.innerHTML = "las contraseñas son incorrectas"
     }
 } 
 
@@ -38,12 +38,11 @@ var regMail = /^([_a-zA-Z0-9-]+)(\.[_a-zA-Z0-9-]+)*@([a-zA-Z0-9-]+\.)+([a-zA-Z]{
 
     if(regMail.test(email) == false)
     {
-    document.getElementById("status").innerHTML    = "<span class='warning'>Email address is not valid yet.</span>";
+    document.getElementById("status").innerHTML    = "<span class='warning'>El email no es valido</span>";
     }
     else
     {
-    document.getElementById("status").innerHTML	= "<span class='valid'>Thanks, you have entered a valid Email address!</span>";	
+    document.getElementById("status").innerHTML	= "<span class='valid'>Email correcto!</span>";	
     }
 }
-
 

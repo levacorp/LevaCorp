@@ -1,12 +1,11 @@
 {% extends 'base.html' %}
 {% block content %}
 {% load staticfiles %}
-<link rel="stylesheet" type="text/js" href="{% static 'js\jscripValidarRegistro.jss' %}">
 
 <div class="fondo"></div>
 <div class="container h-100">
     <div class="d-flex justify-content-center h-100">
-        <div class="user_card" style="height: 570px">
+        <div class="user_card" style="height: 580px">
             <div class="d-flex justify-content-center">
                 <div class="brand_logo_container">
                     <img src="{% static 'img/logoClipio.png' %}" class="brand_logo" alt="Logo">
@@ -19,47 +18,51 @@
                         <div class="input-group-append">
                             <span class="input-group-text"><i class="fas fa-user"></i></span>
                         </div>
-                        <input type="text" name="username" class="form-control input_user" value=""
-                            placeholder="Usuario" required="">
+                        <input type="text" name="username" class="form-control input_user" required
+                            placeholder="Usuario">
                     </div>
                     <div class="input-group mb-3">
                         <div class="input-group-append">
                             <span class="input-group-text"><i class="fas fa-user"></i></span>
                         </div>
-                        <input type="text" name="first_name" class="form-control input_user" value=""
-                            placeholder="Nombre" required="">
+                        <input type="text" name="first_name" class="form-control input_user" required
+                            placeholder="Nombre">
                     </div>
                     <div class="input-group mb-3">
                             <div class="input-group-append">
                                 <span class="input-group-text"><i class="fas fa-user"></i></span>
                             </div>
-                            <input type="text" name="last_name" class="form-control input_user" value=""
-                                placeholder="Apellido" required="">
+                            <input type="text" name="last_name" class="form-control input_user" required
+                                placeholder="Apellido">
                     </div>
                     
                     <div class="input-group mb-3">
                             <div class="input-group-append">
                                 <span class="input-group-text"><i class="fas fa-user"></i></span>
                             </div>
-                            <input id="email" type="text" name="email" class="form-control input_user" value=""
-                                placeholder="email" required="">
+                            <input required type="text" name="email" id = "email"  onchange="email_validate(this.value);" class="form-control input_user"
+                             placeholder="email"/>
+                             <div class="status" id="status"></div>
+                            
                     </div>
+
                     <div class="input-group mb-2">
                             <div class="input-group-append">
                                 <span class="input-group-text"><i class="fas fa-key"></i></span>
                             </div>
-                            <input type="password" id="password" name="password" class="form-control input_pass" value=""
-                                placeholder="Contraseña" required="">
+                            <input required name="password" type="password" class="form-control input_pass" minlength="6" maxlenght="14" id="pass1"
+                                placeholder="Contraseña">
                         </div>
                         <div class="input-group mb-2">
                                 <div class="input-group-append">
                                     <span class="input-group-text"><i class="fas fa-key"></i></span>
                                 </div>
-                                <input type="password" id="pass2" minlength="4" name="password2" class="form-control input_pass" value=""
-                                    placeholder="Confirmar contraseña" onkeyup="checkPass(); return false;" required="">
+                                <input required name="password" type="password" class="form-control inputpass" minlength="6" maxlenght="14" placeholder="Ingrese de nuevo la contraseña"  id="pass2" onkeyup="checkPass(); return false;" />
+                                <span id="confirmMessage" class="confirmMessage"></br></span>
+
                             </div>
                     <div class="d-flex justify-content-center mt-3 login_container">
-                        <button href={ % url 'login' %} type="submit" name="button" class="btn login_btn">Registrar</button>
+                        <button type="submit" name="button" class="btn login_btn">Registrar</button>
                     </div>
                 </form>
             </div>
@@ -85,24 +88,7 @@
 
 </div>
 
-<script>
-    $(document).ready(function() {
 
-$('#password2').keyup(function() {
-
-    var pass1 = $('#password').val();
-    var pass2 = $('#password2').val();
-
-    if ( pass1 == pass2 ) {
-        $('#password2').css("background", "url(../img/check.png)");
-    } else {
-        $('#password2').css("background", "url(../img/check.png)");
-    }
-
-});
-
-});
-</script>
 
 
 </div>
