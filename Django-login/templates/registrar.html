@@ -2,25 +2,18 @@
 {% block content %}
 {% load staticfiles %}
 
-<div class="fondo"></div>
+<div class="fondo"></div>   
 <div class="container h-100">
     <div class="d-flex justify-content-center h-100">
-        <div class="user_card" style="height: 580px">
+        <div class="user_card" style="height: 530px; ">
             <div class="d-flex justify-content-center">
                 <div class="brand_logo_container">
                     <img src="{% static 'img/logoClipio.png' %}" class="brand_logo" alt="Logo">
                 </div>
             </div>
-            <div class="d-flex justify-content-center form_container">
-                <form method="POST">
+
+                <form method="POST" style="margin-top:100px">
                     {% csrf_token %}
-                    <div class="input-group mb-3">
-                        <div class="input-group-append">
-                            <span class="input-group-text"><i class="fas fa-user"></i></span>
-                        </div>
-                        <input type="text" name="username" class="form-control input_user" required
-                            placeholder="Usuario">
-                    </div>
                     <div class="input-group mb-3">
                         <div class="input-group-append">
                             <span class="input-group-text"><i class="fas fa-user"></i></span>
@@ -42,42 +35,35 @@
                             </div>
                             <input required type="text" name="email" id = "email"  onchange="email_validate(this.value);" class="form-control input_user"
                              placeholder="email"/>
-                             <div class="status" id="status"></div>
+                             <div class="input-group "style="">
+                                                 <div class="status" id="status"></div>
+                            </div>
                             
                     </div>
 
-                    <div class="input-group mb-2">
+                    <div class="input-group mb-3">
                             <div class="input-group-append">
                                 <span class="input-group-text"><i class="fas fa-key"></i></span>
                             </div>
-<<<<<<< HEAD
-                            <input required name="password" type="password" class="form-control input_pass" minlength="6" maxlenght="14" id="pass1"
+                            <input required name="password" type="password" class="form-control input_pass" minlength="8" maxlenght="14" id="pass1"
                                 placeholder="Contraseña">
-=======
-                            <input type="password" id="password" name="password1" class="form-control input_pass" value=""
-                                placeholder="Contraseña" required="">
->>>>>>> 65c8c878b9830e82d9ed4e1931f19cd2967cef50
                         </div>
                         <div class="input-group mb-2">
                                 <div class="input-group-append">
                                     <span class="input-group-text"><i class="fas fa-key"></i></span>
                                 </div>
-                                <input required name="password" type="password" class="form-control inputpass" minlength="6" maxlenght="14" placeholder="Ingrese de nuevo la contraseña"  id="pass2" onkeyup="checkPass(); return false;" />
-                                <span id="confirmMessage" class="confirmMessage"></br></span>
-
+                                <input required name="password" type="password" class="form-control inputpass" minlength="8" maxlenght="14" placeholder="Ingrese de nuevo la contraseña"  id="pass2" onkeyup="checkPass(); return false;" />
+                                <div class="input-group mb-1">
+                                <span id="confirmMessage" class="confirmMessage"></span>
+                            </div>
                             </div>
                     <div class="d-flex justify-content-center mt-3 login_container">
-<<<<<<< HEAD
                         <button type="submit" name="button" class="btn login_btn">Registrar</button>
-=======
-                        <button href={% url 'registrar' %} type="submit" name="button" class="btn login_btn">Registrar</button>
->>>>>>> 65c8c878b9830e82d9ed4e1931f19cd2967cef50
                     </div>
                 </form>
-            </div>
             
           
-            <div class="justify-content-center mt-3 login_container " style="width:70%;margin-left: 50px">
+            <div class="justify-content-center mt-3 login_container " >
                     <button type="" name="button" class="btn login_btn">Regresar</button>
                 </div>
                 <div class="d-flex justify-content-center mt-3 login_container">
