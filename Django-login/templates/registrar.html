@@ -5,7 +5,7 @@
 <div class="fondo"></div>   
 <div class="container h-100">
     <div class="d-flex justify-content-center h-100">
-        <div class="user_card" style="height: 530px; ">
+        <div class="user_card" style="height: 580px; ">
             <div class="d-flex justify-content-center">
                 <div class="brand_logo_container">
                     <img src="{% static 'img/logoClipio.png' %}" class="brand_logo" alt="Logo">
@@ -14,6 +14,13 @@
 
                 <form method="POST" style="margin-top:100px">
                     {% csrf_token %}
+                    <div class="input-group mb-3">
+                        <div class="input-group-append">
+                            <span class="input-group-text"><i class="fas fa-user"></i></span>
+                        </div>
+                        <input type="text" name="username" class="form-control input_user" required
+                            placeholder="usuario">
+                    </div>
                     <div class="input-group mb-3">
                         <div class="input-group-append">
                             <span class="input-group-text"><i class="fas fa-user"></i></span>
@@ -45,14 +52,14 @@
                             <div class="input-group-append">
                                 <span class="input-group-text"><i class="fas fa-key"></i></span>
                             </div>
-                            <input required name="password" type="password" class="form-control input_pass" minlength="8" maxlenght="14" id="pass1"
+                            <input required name="password1" type="password" class="form-control input_pass" minlength="8" maxlenght="14" id="pass1"
                                 placeholder="Contraseña">
                         </div>
                         <div class="input-group mb-2">
                                 <div class="input-group-append">
                                     <span class="input-group-text"><i class="fas fa-key"></i></span>
                                 </div>
-                                <input required name="password" type="password" class="form-control inputpass" minlength="8" maxlenght="14" placeholder="Ingrese de nuevo la contraseña"  id="pass2" onkeyup="checkPass(); return false;" />
+                                <input required name="password2" type="password" class="form-control inputpass" minlength="8" maxlenght="14" placeholder="Ingrese de nuevo la contraseña"  id="pass2" onkeyup="checkPass(); return false;" />
                                 <div class="input-group mb-1">
                                 <span id="confirmMessage" class="confirmMessage"></span>
                             </div>
@@ -60,12 +67,13 @@
                     <div class="d-flex justify-content-center mt-3 login_container">
                         <button type="submit" name="button" class="btn login_btn">Registrar</button>
                     </div>
+                    <div class="justify-content-center mt-3 login_container " >
+                        <button type="" name="button" class="btn login_btn">Regresar</button>
+                    </div>
                 </form>
             
           
-            <div class="justify-content-center mt-3 login_container " >
-                    <button type="" name="button" class="btn login_btn">Regresar</button>
-                </div>
+         
                 <div class="d-flex justify-content-center mt-3 login_container">
                         {% if messages %}
                         {% for message in messages %}

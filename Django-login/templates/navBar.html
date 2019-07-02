@@ -9,8 +9,19 @@
     <nav class="scroll" id="sidebar">
         <div class="card wizard-card justify-content-center">
             <div class="sidebar-header">
-                <img id="logo" src="{% static 'img/1.png' %}" alt="..." class="rounded-circle">
-                <a href="{% url 'logout' %}">Cerrar Sesión</a>
+                <a href="#usuario" data-toggle="collapse" aria-expanded="false" class="dropdown-toggle">
+                    <img id="logo" src="{% static 'img/1.png' %}" alt="..." class="rounded-circle">
+            </a>
+            <ul class="collapse list-unstyled" id="usuario">
+                <li>
+                        <div class="flecha">
+                                <a href="{% url 'logout' %}" >Cerrar Sesion</a>   
+                        </div>
+                    
+                </li>
+            </ul>
+            <h3>{{request.user}}</h3>
+             
             </div>
             <ul class="list-unstyled components">
                 <li>
