@@ -5,6 +5,7 @@ from django.contrib.auth.decorators import login_required
 from .models import Dispositivo_Usuario
 from .forms import BuscarDispositivoForm
 from .forms import AgregarDispositivoForm
+from .forms import obtenerIP
 from .forms import infoDispositivo
 from .ConexionIndiceSemantico import ConexionIndiceSemantico
 from .conexionEstado import conexionEstado
@@ -37,7 +38,7 @@ class agregarView(View):
                 print("Dispositivo ya existente")
             else:
                 print("Dispositivo nuevo")
-                nuevo = Dispositivo_Usuario(idUsuario=request.user, idDispositivo=idDisp)
+                nuevo = Dispositivo_Usuario(idUsuario=request.user, idDispositivo=idDisp, ipDispositivo="192.168.0.21")
                 nuevo.save()
 
         return redirect("homepage")
@@ -50,26 +51,52 @@ def estadosDispositivos(request):
         lista = []
         diccionario = {}
         for i in listaDisp:
+
             id = i.getId()
-            print(id)
-            ip = "10.0.0.16"
-            diccionario = conexion.estadosDispositivos(ip,id)
-            lista.append(diccionario)
+            #Sacar IP por cada dispositivo.
+            #ip = "10.0.0.16"
 
-            print(diccionario)
-    return render(request, "allEstate.html", {"lista": lista})
+            ip = "192.168.0.21"
+            diccionario = conexion.estadosDispositivos(ip, id)
+            args = {}
+            if diccionario != None:
+                args = {"mensaje": "", "nombre": i.getTitle()}
+            else:
+                args = {"mensaje": "No se pudo hacer la conexión. Ir a inicializar"}
+
+            lista.append(args)
+
+    return render(request, "Estado.html", {"lista": lista})
+
 @login_required()
-def estadoDispositivo(request, id):
+def estadoDispositivo(request, id, nombre):
     conexion = conexionEstado()
-    if request.method == "GET":
+    if request.method == "POST":
+        if 'ipDispositivo' in request.POST:
+            form = obtenerIP(request.POST)
+            if form.is_valid():
+                obj = Dispositivo_Usuario.objects.get(idUsuario=request.user, idDispositivo=id)
+                obj.ipDispositivo = form.cleaned_data['ipDispositivo']
+                obj.save()
+            else:
+                messages.error(request, "Campo incorrecto")
+            return redirect("/dispositivos/estados/("+ str(id) +", "+ nombre+")")
+
+    elif request.method == "GET":
         diccionario = {}
+        obj = Dispositivo_Usuario.objects.get(idUsuario=request.user, idDispositivo=id)
 
-        ip = "10.0.0.16"
-        diccionario = conexion.estadosDispositivos(ip,id)
+        ip = obj.ipDispositivo
 
-        print(diccionario)
-    return render(request, "Estado.html", {"Diccionario": diccionario})
+        args = {}
+        diccionario = conexion.estadosDispositivos(ip, id)
 
+        if diccionario != None:
+            args = {"mensaje": "", "diccionario": diccionario, "nombre": nombre}
+        else:
+            args = {"mensaje": "No se pudo hacer la conexión con la ip "}
+
+        return render(request, "controlDispositivo.html", args)
 
 
 @login_required()
@@ -95,36 +122,12 @@ def agregarDispositivo(request):
 
 
 @login_required()
-def listarDispositivos(request):
-
-    listaDisp = obtenerDispositivos(request.user.id)
-
-    dictDisp = {}       #Diccionario de la forma {"Concepto1": [Lista de dispositivos], "Concepto2": [Lista de dispositivos]}
-
-    for i in listaDisp:
-        print(i.getTags())
-        print("---------------------")
-        indices = [j for j, s in enumerate(i.getTags()) if 'Entidad' in s]
-        if i.getTags()[indices[0]] in dictDisp:
-            listAux = dictDisp.get(i.getTags()[indices[0]])
-            listAux.append(i.getTitle())
-            dictDisp.update({i.getTags()[indices[0]]: listAux})
-
-        else:
-            listAux = [i.getTitle()]
-            dictDisp.update({i.getTags()[indices[0]]: listAux})
-
-
-    return dictDisp
-
-
-@login_required()
 def crearDispositivo(request):
-    if request.method == "POST":
+    if request.method == 'POST':
         form = infoDispositivo(request.POST)
         if form.is_valid():
             dataJSON = crearJSON(form)
-
+            print("entro")
             response = JsonResponse(dataJSON)
             response['Content-Disposition'] = 'attachment; filename="' + str(form.cleaned_data["idDispositivo"]) + '.json"'
             print(response)
@@ -209,6 +212,3 @@ def obtenerDispositivos(idUsuario):
             listaDisp.append(disp)
     return listaDisp
 
-@login_required()
-def obtenerEstadoDeUnDispositivo(idUsuario):
-    idDispositivos = Dispositivo_Usuario.objects.filter(idUsuario=idUsuario)

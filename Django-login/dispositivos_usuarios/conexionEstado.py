@@ -22,19 +22,20 @@ class conexionEstado:
     def __init__(self):
         pass
 
-    def estadosDispositivos(self,ip, id):
-        url = 'http://'+ip+'/SendState?osid='+id
-        xml = requests.get(url)
-        
-        tree = ET.fromstring(xml.content)
+    def estadosDispositivos(self, ip, id):
+        url = 'http://'+ip+'/SendState?osid='+str(id)
+        estados = {}
+        try:
+            xml = requests.get(url)
 
-        datos = tree[0][1]
-        estados={}
-        for child in datos:
-            estados.update({child.get('name'):[child[0].get('type'),child[0].text]})
-            #print(child.get('name'))
-            #print(child[0].get('type'))
-            #print(child[0].text)
+            tree = ET.fromstring(xml.content)
+            datos = tree[0][1]
+            for child in datos:
+                estados.update({child.get('name'): [child[0].get('type'), child[0].text]})
+
+        except requests.exceptions.RequestException as e:
+            print("No se logró hacer la conexion")
+            estados = None
 
         return estados
 

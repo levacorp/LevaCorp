@@ -1,9 +1,11 @@
 {% extends 'base.html' %}
-
+{% load navBarTags %}
 {% block content %}
 <div id="wrapper" class="active">
     <!-- Sidebar -->
-    {% include 'navBar.html' %}
+    {% listarDispositivos %}
+    {% include 'navBar.html' with dispositivos=dispositivos %}
+
     <!-- Fin Navbar -->
 
     <!-- Page content -->
@@ -14,87 +16,66 @@
             <ul class="list-group p-5">
                 <li class="list-group-item">
                     <div class="text-center font-weight-bold display-4">
-                        <h1>Estado</h1>
+                        <h1>{{ nombre }}</h1>
                     </div>
                 </li>
                 <li class="list-group-item">
                     <div class="card">
                         <div class="card-body">
-                            <h5 class="card-title">Estado de los sensores y actuadores </h5>
-                            <div class="card-columns">
-                                <div class="card">
-                                    <div class="card-body">
-                                        <h5 class="card-title">
-                                            <div class="row">
-                                                <div class="col-8">Actuador 1</div>
-                                                <div class="col-4">
-                                                    <div class="custom-control custom-switch">
-                                                        <input type="checkbox" class="custom-control-input"
-                                                            id="customSwitch1">
-                                                        <label class="custom-control-label" for="customSwitch1"></label>
+                            {% if mensaje == "" %}
+                                {% if not diccionario %}
+                                    <h5 class="card-title">No se encontró el dispositivo</h5>
+                                {% else %}
+                                    <h5 class="card-title">Estado de los sensores y actuadores </h5>
+                                    <div class="card-columns">
+                                    {% for key, values in diccionario.items %}
+                                    <div class="card">
+                                        <div class="card-body">
+                                            <h5 class="card-title">
+                                                <div class="row">
+                                                    <div class="col-8">{{ key }}</div>
+                                                    {% if values.0 == 'bool' %}
+                                                    <div class="col-4">
+                                                        <div class="custom-control custom-switch">
+                                                            {% if values.1 == '1' %}
+                                                                <input type="checkbox" class="custom-control-input"
+                                                                    id="customSwitch1" checked>
+                                                            {% else %}
+                                                                <input type="checkbox" class="custom-control-input"
+                                                                    id="customSwitch1">
+                                                            {% endif %}
+                                                            <label class="custom-control-label" for="customSwitch1"></label>
+                                                        </div>
                                                     </div>
+                                                    {% else%}
+                                                        <div class="container-fluid">
+                                                            <div class="row">
+                                                                <label for="valor">Valor:</label>
+                                                                <div class="col-sm" id="valor">
+                                                                    <p><b>{{ values.1 }}</b></p>
+                                                                </div>
+                                                            </div>
+                                                        </div>
+                                                    {% endif %}
                                                 </div>
-                                            </div>
-                                        </h5>
-                                        <div class="container-fluid">
-                                            <div class="row">
-                                                <label for="valor">Valor:</label>
-                                                <div class="col-sm" id="valor">
-                                                    <p><b>27º C</b></p>
-                                                </div>
-                                            </div>
+                                            </h5>
                                         </div>
                                     </div>
-                                </div>
-                                <div class="card">
-                                    <div class="card-body">
-                                        <h5 class="card-title">
-                                            <div class="row">
-                                                <div class="col-8">Sensor 2</div>
-                                                <div class="col-4">
-                                                    <div class="custom-control custom-switch">
-                                                        <input type="checkbox" class="custom-control-input"
-                                                            id="customSwitch2">
-                                                        <label class="custom-control-label" for="customSwitch2"></label>
-                                                    </div>
-                                                </div>
-                                            </div>
-                                        </h5>
-                                        <div class="container-fluid">
-                                            <div class="row">
-                                                <label for="valor">Valor:</label>
-                                                <div class="col-sm" id="valor">
-                                                    <p><b>ON</b></p>
-                                                </div>
-                                            </div>
-                                        </div>
+                                    {% endfor %}
                                     </div>
+                                {% endif %}
+                            {% else%}
+                                <h5 class="card-title">{{ mensaje }}</h5>
+                                <form method="POST">
+                                {% csrf_token %}
+                                <div class="input-group mb-3">
+                                    <input type="text" name="ipDispositivo" placeholder="Nueva IP" value="">
                                 </div>
-                                <div class="card">
-                                    <div class="card-body">
-                                        <h5 class="card-title">
-                                            <div class="row">
-                                                <div class="col-8">Dispositivo 3</div>
-                                                <div class="col-4">
-                                                    <div class="custom-control custom-switch">
-                                                        <input type="checkbox" class="custom-control-input"
-                                                            id="customSwitch3">
-                                                        <label class="custom-control-label" for="customSwitch3"></label>
-                                                    </div>
-                                                </div>
-                                            </div>
-                                        </h5>
-                                        <div class="container-fluid">
-                                            <div class="row">
-                                                <label for="valor">Valor:</label>
-                                                <div class="col-sm" id="valor">
-                                                    <p><b>27º C</b></p>
-                                                </div>
-                                            </div>
-                                        </div>
-                                    </div>
+                                <div class="d-flex justify-content-center mt-3 login_container">
+                                    <button type="submit" name="btnIP" >Guardar</button>
                                 </div>
-                            </div>
+                                </form>
+                            {% endif %}
                         </div>
                     </div>
                 </li>

@@ -1,16 +1,19 @@
 {% extends 'base.html' %}
-
+{% load navBarTags %}
 {% block content %}
 
 <div id="wrapper" class="active">
     <!-- Navbar -->
-    {% include 'navBar.html' %}
+    {% listarDispositivos %}
+    {% include 'navBar.html' with dispositivos=dispositivos %}
+
     <!-- Fin Navbar -->
 
     <!-- Page content -->
     <div id="page-content-wrapper">
         <!-- Keep all page content within the page-content inset div! -->
         <div class="page-content inset">
+            <div class="fondo"></div>
             <div class="wizard-container">
                 <div class="container cont-principal">
                     <div class="card wizard-card" id="wizard">
@@ -32,287 +35,308 @@
 
                             </div>
                         </div>
-                        <div class="row setup-content justify-content-center" id="step-1">
-                            <div class="col-xs-12">
-                                <div class="col-md-12">
-                                    <h3 class="text-center">INFORMACION GENERAL</h3>
-                                    <!-- content go here -->
-                                    <div class="div-principal border">
-                                        <div class="row">
-                                            <div class="col-md-4 mb-3">
-                                                <label for="validationDefault01">ID</label>
-                                                <input type="text" class="form-control" id="validationDefault01"
-                                                    placeholder="ID" value="ID" required>
-                                            </div>
-                                            <div class="col-md-4 mb-3">
-                                                <label for="validationDefault02">Titulo</label>
-                                                <input type="text" class="form-control" id="validationDefault02"
-                                                    placeholder="Titulo" value="Titulo" required>
-                                            </div>
-                                            <div class="col-md-4 mb-3">
-                                                <label for="validationDefault01">IP</label>
-                                                <input type="text" class="form-control" id="validationDefault03"
-                                                    placeholder="IP" value="IP" required>
-                                            </div>
-                                        </div>
-                                        <div class="row">
-                                            <div class="col-md-4">
-                                                <label for="validationDefault03">Localizacion</label>
-                                            </div>
-                                        </div>
-                                        <div class="row">
-                                            <div class="col-md-4 mb-3">
-                                                <input type="text" class="form-control" id="validationDefault04"
-                                                    placeholder="Latitud" value="Latitud" required>
-                                            </div>
-                                            <div class="col-md-4 mb-3">
-                                                <input type="text" class="form-control" id="validationDefault05"
-                                                    placeholder="Longitud" value="Longitud" required>
-                                            </div>
-                                            <div class="col-md-4 mb-3">
-                                                <input type="text" class="form-control" id="validationDefault06"
-                                                    placeholder="Altitud" value="Altitud" required>
-                                            </div>
-                                        </div>
-                                        <div class="form-group">
-                                            <label for="DescripcionDisp">Descripcion</label>
-                                            <textarea class="form-control" id="exampleFormControlTextarea1"
-                                                rows="3"></textarea>
-                                        </div>
-                                    </div>
-                                    <div class="container boton-footer">
-                                        <div class="row justify-content-end">
-                                            <button class="btn btn-danger nextBtn" type="button">Siguiente</button>
-                                        </div>
-                                    </div>
-                                </div>
-                            </div>
-                        </div>
-
-                        <div class="row setup-content justify-content-center" id="step-2">
-                            <div class="col-xs-12">
-                                <div class="col-md-12">
-                                    <h3 class="text-center">INFORMACION GENERAL</h3>
-                                    <!-- content go here -->
-                                    <div class="div-principal border">
-                                        <div class="form-row">
-                                            <div class="col col-6 col-md-3">
-                                                <div class="row col-md-4 mb-3">
-                                                    <label for="validationDefault01">Entidad</label>
+                        <form action="POST">
+                            {% csrf_token %}
+                            <div class="row setup-content justify-content-center" id="step-1">
+                                <div class="col-xs-12">
+                                    <div class="col-md-12">
+                                        <h3 class="text-center">INFORMACION GENERAL</h3>
+                                        <!-- content go here -->
+                                        <div class="div-principal">
+                                            <div class="row">
+                                                <div class="col-md-4 mb-3">
+                                                    <label for="validationDefault01">ID</label>
+                                                    <input type="text" class="form-control inputs" name="idDispositivo"
+                                                        id="validationDefault01" placeholder="ID" value="" required>
+                                                </div>
+                                                <div class="col-md-4 mb-3">
+                                                    <label for="validationDefault02">Titulo</label>
+                                                    <input type="text" class="form-control inputs" name ="titulo"
+                                                        id="validationDefault02" placeholder="Titulo" value=""
+                                                        required>
+                                                </div>
+                                                <div class="col-md-4 mb-3">
+                                                    <label for="validationDefault01">IP</label>
+                                                    <input type="text" class="form-control inputs"
+                                                        id="validationDefault03" placeholder="IP" value="" required>
                                                 </div>
                                             </div>
-                                            <div class="col col-12 col-md-8">
-                                                <div class="row">
-                                                    <div class="col-md-6 mb-3">
-                                                        <input type="text" class="form-control" id="validationDefault05"
-                                                            placeholder="Longitud" value="Español" required>
-                                                    </div>
-                                                    <div class="col-md-6 mb-3">
-                                                        <input type="text" class="form-control" id="validationDefault05"
-                                                            placeholder="Longitud" value="English" required>
-                                                    </div>
+                                            <div class="row">
+                                                <div class="col-md-4">
+                                                    <label for="validationDefault03">Localizacion</label>
                                                 </div>
+                                            </div>
+                                            <div class="row">
+                                                <div class="col-md-4 mb-3">
+                                                    <input type="text" class="form-control inputs" name="localizacionLatitud"
+                                                        id="validationDefault04" placeholder="Latitud" value=""
+                                                        required>
+                                                </div>
+                                                <div class="col-md-4 mb-3">
+                                                    <input type="text" class="form-control inputs" name="localizacionLongitud"
+                                                        id="validationDefault05" placeholder="Longitud" value=""
+                                                        required>
+                                                </div>
+                                                <div class="col-md-4 mb-3">
+                                                    <input type="text" class="form-control inputs" name="localizacionElevacion"
+                                                        id="validationDefault06" placeholder="Elevacion" value=""
+                                                        required>
+                                                </div>
+                                            </div>
+                                            <div class="form-group">
+                                                <label for="DescripcionDisp">Descripcion</label>
+                                                <textarea class="form-control" id="exampleFormControlTextarea1" name="descripcion"
+                                                    rows="3"></textarea>
                                             </div>
                                         </div>
-
-                                        <div class="form-row">
-                                            <div class="col col-6 col-md-3">
-                                                <div class="row col-md-4 mb-3">
-                                                    <label for="validationDefault01">Funcionalidad</label>
-                                                </div>
-                                            </div>
-                                            <div class="col col-12 col-md-8">
-                                                <div class="row">
-                                                    <div class="col-md-6 mb-3">
-                                                        <input type="text" class="form-control" id="validationDefault05"
-                                                            placeholder="Longitud" value="Español" required>
-                                                    </div>
-                                                    <div class="col-md-6 mb-3">
-                                                        <input type="text" class="form-control" id="validationDefault05"
-                                                            placeholder="Longitud" value="English" required>
-                                                    </div>
-                                                </div>
-                                            </div>
-                                        </div>
-
-                                        <div class="form-row">
-                                            <div class="col col-6 col-md-3">
-                                                <div class="row col-md-4 mb-3">
-                                                    <label for="validationDefault01">Nombre</label>
-                                                </div>
-                                            </div>
-                                            <div class="col col-12 col-md-8">
-                                                <div class="row">
-                                                    <div class="col-md-6 mb-3">
-                                                        <input type="text" class="form-control" id="validationDefault05"
-                                                            placeholder="Longitud" value="Español" required>
-                                                    </div>
-                                                    <div class="col-md-6 mb-3">
-                                                        <input type="text" class="form-control" id="validationDefault05"
-                                                            placeholder="Longitud" value="English" required>
-                                                    </div>
-                                                </div>
-                                            </div>
-                                        </div>
-
-                                        <div class="form-row">
-                                            <div class="col col-6 col-md-3">
-                                                <div class="row col-md-4 mb-3">
-                                                    <button type="button"
-                                                        class="rounded-circle btn btn-outline-success">+</button>
-                                                </div>
-                                            </div>
-                                            <div class="col col-12 col-md-8">
-                                                <div class="row">
-                                                    <div class="col-md-6 mb-3">
-                                                        <input type="text" class="form-control" id="validationDefault05"
-                                                            placeholder="Longitud" value="Español" required>
-                                                    </div>
-                                                    <div class="col-md-6 mb-3">
-                                                        <input type="text" class="form-control" id="validationDefault05"
-                                                            placeholder="Longitud" value="English" required>
-                                                    </div>
-                                                </div>
-                                            </div>
-                                            <div class="col col-6 col-md-1">
-                                                <div class="row col-md-4 mb-3">
-                                                    <button type="button"
-                                                        class="rounded-circle btn btn-outline-danger">-</button>
-                                                </div>
-                                            </div>
-                                        </div>
-                                    </div>
-                                    <div class="container boton-footer">
-                                        <div class="row justify-content-end">
-                                            <button class="btn btn-danger nextBtn" type="button">Siguiente</button>
-                                        </div>
-                                    </div>
-                                </div>
-                            </div>
-                        </div>
-
-                        <div class="row setup-content justify-content-center" id="step-3">
-                            <div class="col-xs-12">
-                                <div class="col-md-12">
-                                    <h3 class="text-center">Datastreams</h3>
-                                    <!-- content go here -->
-                                    <div class="div-principal border">
-                                        <div class="form-row">
-                                            <div class="col mb-3">
-                                                <label for="validationDefault01">Nombre</label>
-                                                <input type="text" class="form-control" id="validationDefault01"
-                                                    placeholder="Nombre" value="Nombre" required>
-                                            </div>
-                                        </div>
-
-                                        <div class="form-row">
-                                            <div class="col-md-4 mb-3">
-                                                <label for="validationDefault02">Valor Maximo</label>
-                                                <input type="text" class="form-control" id="validationDefault02"
-                                                    placeholder="ValorMaximo" value="Valor Maximo" required>
-                                            </div>
-                                            <div class="col-md-4 mb-3">
-                                                <label for="validationDefault03">Valor Minimo</label>
-                                                <input type="text" class="form-control" id="validationDefault03"
-                                                    placeholder="ValorMinimo" value="Valor Minimo" required>
-                                            </div>
-                                        </div>
-
-                                        <div class="form-row">
-                                            <div class="col col-6 col-md-3">
-                                                <label for="validationDefault04">Unidad</label>
-                                            </div>
-                                        </div>
-
-                                        <div class="form-row">
-                                            <div class="col-md-4 mb-3">
-                                                <input type="text" class="form-control" id="validationDefault05"
-                                                    placeholder="Simbolo" value="Símbolo" required>
-                                            </div>
-                                            <div class="col-md-4 mb-3">
-                                                <input type="text" class="form-control" id="validationDefault06"
-                                                    placeholder="Etiqueta" value="Etiqueta" required>
-                                            </div>
-                                            <div class="col-md-4 mb-3">
-                                                <input type="text" class="form-control" id="validationDefault07"
-                                                    placeholder="Tipo" value="Tipo" required>
-                                            </div>
-                                        </div>
-
-                                        <div class="form-row">
-                                            <div class="container border rounded-lg">
-
-                                                <div class="row">
-                                                    <div class="col-md-4 mb-3">
-                                                        <label for="validationDefault02">Añadir Tags</label>
-                                                    </div>
-                                                </div>
-
-                                                <div class="row">
-                                                    <div class="col col-6 col-md-1">
-                                                        <label for="validationDefault02">Tags</label>
-                                                    </div>
-                                                    <div class="col col-12 col-md-8">
-                                                        <div class="row">
-                                                            <div class="col-md-6 mb-3">
-                                                                <input type="text" class="form-control"
-                                                                    id="validationDefault05" placeholder="Longitud"
-                                                                    value="Español" required>
-                                                            </div>
-                                                            <div class="col-md-6 mb-3">
-                                                                <input type="text" class="form-control"
-                                                                    id="validationDefault05" placeholder="Longitud"
-                                                                    value="English" required>
-                                                            </div>
-                                                        </div>
-                                                    </div>
-                                                </div>
-
-                                                <div class="row">
-                                                    <div class="col col-6 col-md-1">
-                                                        <div class="row col-md-4 mb-3">
-                                                            <button type="button"
-                                                                class="rounded-circle btn btn-outline-success">+</button>
-                                                        </div>
-                                                    </div>
-                                                    <div class="col col-12 col-md-8">
-                                                        <div class="row">
-                                                            <div class="col-md-6 mb-3">
-                                                                <input type="text" class="form-control"
-                                                                    id="validationDefault05" placeholder="Longitud"
-                                                                    value="Español" required>
-                                                            </div>
-                                                            <div class="col-md-6 mb-3">
-                                                                <input type="text" class="form-control"
-                                                                    id="validationDefault05" placeholder="Longitud"
-                                                                    value="English" required>
-                                                            </div>
-                                                        </div>
-                                                    </div>
-                                                    <div class="col col-6 col-md-1">
-                                                        <div class="row col-md-4 mb-3">
-                                                            <button type="button"
-                                                                class="rounded-circle btn btn-outline-danger">-</button>
-                                                        </div>
-                                                    </div>
-                                                </div>
-                                            </div>
-                                        </div>
-                                        <div class="container p-3">
+                                        <div class="container boton-footer">
                                             <div class="row justify-content-end">
-                                                <button type="button" class="btn btn-outline-secondary">Añadir otro
-                                                    datastream</button>
+                                                <button class="btn btn-danger nextBtn" type="button">Siguiente</button>
                                             </div>
-                                        </div>
-                                    </div>
-                                    <div class="container boton-footer">
-                                        <div class="row justify-content-end">
-                                            <button class="btn btn-danger nextBtn" type="button">Crear</button>
                                         </div>
                                     </div>
                                 </div>
                             </div>
-                        </div>
+
+                            <div class="row setup-content justify-content-center" id="step-2">
+                                <div class="col-xs-12">
+                                    <div class="col-md-12">
+                                        <h3 class="text-center">Tags</h3>
+                                        <!-- content go here -->
+                                        <div class="div-principal">
+                                            <div class="form-row">
+                                                <div class="col col-6 col-md-3">
+                                                    <div class="row col-md-4 mb-3">
+                                                        <label for="validationDefault01">Entidad</label>
+                                                    </div>
+                                                </div>
+                                                <div class="col col-12 col-md-8">
+                                                    <div class="row">
+                                                        <div class="col-md-6 mb-3">
+                                                            <input type="text" class="form-control inputs" name="tagEntidadEsp"
+                                                                id="validationDefault05" placeholder="Español"
+                                                                value="" required>
+                                                        </div>
+                                                        <div class="col-md-6 mb-3">
+                                                            <input type="text" class="form-control inputs" name="tagEntidadIng"
+                                                                id="validationDefault05" placeholder="English"
+                                                                value="" required>
+                                                        </div>
+                                                    </div>
+                                                </div>
+                                            </div>
+
+                                            <div class="form-row">
+                                                <div class="col col-6 col-md-3">
+                                                    <div class="row col-md-4 mb-3">
+                                                        <label for="validationDefault01">Funcionalidad</label>
+                                                    </div>
+                                                </div>
+                                                <div class="col col-12 col-md-8">
+                                                    <div class="row">
+                                                        <div class="col-md-6 mb-3">
+                                                            <input type="text" class="form-control inputs" name="tagFuncionalidadEsp"
+                                                                id="validationDefault05" placeholder="Español"
+                                                                value="" required>
+                                                        </div>
+                                                        <div class="col-md-6 mb-3">
+                                                            <input type="text" class="form-control inputs" name="tagFuncionalidadIng"
+                                                                id="validationDefault05" placeholder="English"
+                                                                value="" required>
+                                                        </div>
+                                                    </div>
+                                                </div>
+                                            </div>
+
+                                            <div class="form-row">
+                                                <div class="col col-6 col-md-3">
+                                                    <div class="row col-md-4 mb-3">
+                                                        <label for="validationDefault01">Nombre</label>
+                                                    </div>
+                                                </div>
+                                                <div class="col col-12 col-md-8">
+                                                    <div class="row">
+                                                        <div class="col-md-6 mb-3">
+                                                            <input type="text" class="form-control inputs" name="tagNombreEsp"
+                                                                id="validationDefault05" placeholder="Español"
+                                                                value="" required>
+                                                        </div>
+                                                        <div class="col-md-6 mb-3">
+                                                            <input type="text" class="form-control inputs" name="tagNombreIng"
+                                                                id="validationDefault05" placeholder="English"
+                                                                value="" required>
+                                                        </div>
+                                                    </div>
+                                                </div>
+                                            </div>
+
+                                            <div class="form-row">
+                                                <div class="col col-6 col-md-3">
+                                                    <div class="row col-md-4 mb-3">
+                                                        <button type="button"
+                                                            class="rounded-circle btn btn-outline-success">+</button>
+                                                    </div>
+                                                </div>
+                                                <div class="col col-12 col-md-8">
+                                                    <div class="row">
+                                                        <div class="col-md-6 mb-3">
+                                                            <input type="text" class="form-control inputs"
+                                                                id="validationDefault05" placeholder="Español"
+                                                                value="Español" required>
+                                                        </div>
+                                                        <div class="col-md-6 mb-3">
+                                                            <input type="text" class="form-control inputs"
+                                                                id="validationDefault05" placeholder="English"
+                                                                value="English" required>
+                                                        </div>
+                                                    </div>
+                                                </div>
+                                                <div class="col col-6 col-md-1">
+                                                    <div class="row col-md-4 mb-3">
+                                                        <button type="button"
+                                                            class="rounded-circle btn btn-outline-danger">-</button>
+                                                    </div>
+                                                </div>
+                                            </div>
+                                        </div>
+                                        <div class="container boton-footer">
+                                            <div class="row justify-content-end">
+                                                <button class="btn btn-danger nextBtn" type="button">Siguiente</button>
+                                            </div>
+                                        </div>
+                                    </div>
+                                </div>
+                            </div>
+
+                            <div class="row setup-content justify-content-center" id="step-3">
+                                <div class="col-xs-12">
+                                    <div class="col-md-12">
+                                        <h3 class="text-center">Datastreams</h3>
+                                        <!-- content go here -->
+                                        <div class="div-principal">
+                                            <div class="form-row">
+                                                <div class="col mb-3">
+                                                    <label for="validationDefault01">Nombre</label>
+                                                    <input type="text" class="form-control inputs" name="dsNombre"
+                                                        id="validationDefault01" placeholder="Nombre" value=""
+                                                        required>
+                                                </div>
+                                            </div>
+
+                                            <div class="form-row">
+                                                <div class="col-md-4 mb-3">
+                                                    <label for="validationDefault02">Valor Maximo</label>
+                                                    <input type="text" class="form-control inputs" name="dsValorMin"
+                                                        id="validationDefault02" placeholder="Valor Maximo"
+                                                        value="" required>
+                                                </div>
+                                                <div class="col-md-4 mb-3">
+                                                    <label for="validationDefault03">Valor Minimo</label>
+                                                    <input type="text" class="form-control inputs" name="dsValorMax"
+                                                        id="validationDefault03" placeholder="Valor Minimo"
+                                                        value="" required>
+                                                </div>
+                                            </div>
+
+                                            <div class="form-row">
+                                                <div class="col col-6 col-md-3">
+                                                    <label for="validationDefault04">Unidad</label>
+                                                </div>
+                                            </div>
+
+                                            <div class="form-row">
+                                                <div class="col-md-4 mb-3">
+                                                    <input type="text" class="form-control inputs" name="dsUnidad"
+                                                        id="validationDefault05" placeholder="Símbolo" value=""
+                                                        required>
+                                                </div>
+                                                <div class="col-md-4 mb-3">
+                                                    <input type="text" class="form-control inputs" name="dsEtiqueta"
+                                                        id="validationDefault06" placeholder="Etiqueta" value=""
+                                                        required>
+                                                </div>
+                                                <div class="col-md-4 mb-3">
+                                                    <input type="text" class="form-control inputs" name="dsTipo"
+                                                        id="validationDefault07" placeholder="Tipo" value=""
+                                                        required>
+                                                </div>
+                                            </div>
+
+                                            <div class="form-row">
+                                                <div class="container border rounded-lg">
+
+                                                    <div class="row">
+                                                        <div class="col-md-4 mb-3">
+                                                            <label for="validationDefault02">Añadir Tags</label>
+                                                        </div>
+                                                    </div>
+
+                                                    <div class="row">
+                                                        <div class="col col-6 col-md-1">
+                                                            <label for="validationDefault02">Tags</label>
+                                                        </div>
+                                                        <div class="col col-12 col-md-8">
+                                                            <div class="row">
+                                                                <div class="col-md-6 mb-3">
+                                                                    <input type="text" class="form-control inputs" name="dsTagEsp"
+                                                                        id="validationDefault05" placeholder="Español"
+                                                                        value="" required>
+                                                                </div>
+                                                                <div class="col-md-6 mb-3">
+                                                                    <input type="text" class="form-control inputs" name="dsTagIng"
+                                                                        id="validationDefault05" placeholder="English"
+                                                                        value="" required>
+                                                                </div>
+                                                            </div>
+                                                        </div>
+                                                    </div>
+
+                                                    <div class="row">
+                                                        <div class="col col-6 col-md-1">
+                                                            <div class="row col-md-4 mb-3">
+                                                                <button type="button"
+                                                                    class="rounded-circle btn btn-outline-success">+</button>
+                                                            </div>
+                                                        </div>
+                                                        <div class="col col-12 col-md-8">
+                                                            <div class="row">
+                                                                <div class="col-md-6 mb-3">
+                                                                    <input type="text" class="form-control inputs"
+                                                                        id="validationDefault05" placeholder="Español"
+                                                                        value="" required>
+                                                                </div>
+                                                                <div class="col-md-6 mb-3">
+                                                                    <input type="text" class="form-control inputs"
+                                                                        id="validationDefault05" placeholder="English"
+                                                                        value="" required>
+                                                                </div>
+                                                            </div>
+                                                        </div>
+                                                        <div class="col col-6 col-md-1">
+                                                            <div class="row col-md-4 mb-3">
+                                                                <button type="button"
+                                                                    class="rounded-circle btn btn-outline-danger">-</button>
+                                                            </div>
+                                                        </div>
+                                                    </div>
+                                                </div>
+                                            </div>
+                                            <div class="container p-3">
+                                                <div class="row justify-content-end">
+                                                    <button type="button" class="btn btn-outline-secondary">Añadir otro
+                                                        datastream</button>
+                                                </div>
+                                            </div>
+                                        </div>
+                                        <div class="container boton-footer">
+                                            <div class="row justify-content-end">
+                                                <button class="btn btn-danger nextBtn" type="submit" formmethod="post">Crear</button>
+                                            </div>
+                                        </div>
+                                    </div>
+                                </div>
+                            </div>
+                        </form>
                     </div>
                 </div>
             </div>

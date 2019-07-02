@@ -1,0 +1,4 @@
+Esta ontologia tiene las preferencias como ecas.
+Buildingenvironment esta relacionado a un objeto.
+Preference take object
+Actividad use -> object

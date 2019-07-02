@@ -7,12 +7,13 @@
     min-width: 250px;
     max-width: 250px;
     max-height: 100%;
-    min-height: 100%;
+    min-height: 95%;
     background: white;
     color: black;
     transition: all 0.3s;
-    overflow-y: scroll;
-    overflow-x: hidden;
+    margin-left: 10px;
+    margin-right: 10px;
+    margin-top: 10px;
 }
 
 #sidebar.active {
@@ -60,8 +61,9 @@ a, a:hover, a:focus {
 #sidebar .sidebar-header {
     padding: 20px;
     background: white;
-    border-right: 1px solid black;
-    border-left: 1px solid black;
+    border-top: 1px solid #dee2e6!important;
+    border-right: 1px solid #dee2e6!important;
+    border-left: 1px solid #dee2e6!important;
 
 }
 #sidebar .sidebar-header a{
@@ -71,9 +73,9 @@ a, a:hover, a:focus {
 
 #sidebar ul.components {
     margin-bottom: -1px;
-    border-right:  1px solid black;
-    border-top: 1px solid black; 
-    border-left: 1px solid black;
+    border-right:  1px solid #dee2e6!important;
+    border-top: 1px solid #dee2e6!important; 
+    border-left: 1px solid #dee2e6!important;
 }
 
 #sidebar ul p {
@@ -88,7 +90,7 @@ a, a:hover, a:focus {
     font-size: 1.1em;
     display: block;
     color: black;
-    border-bottom: 1px solid black;
+    border-bottom: 1px solid #dee2e6!important;
 }
 img{
     width: 100px;
@@ -105,7 +107,7 @@ img{
     margin-left: 40%;
 }
 #agregar{
-    border: 1pc solid black;
+    border: 1px solid #dee2e6!important;
 }
 
 #sidebar ul li  button {
@@ -126,8 +128,32 @@ ul ul a {
     padding-left: 30px !important;
 }
 
-.scrollable-menu {
-    height: auto;
-    max-height: 200px;
-    overflow-x: hidden;
+.scroll{
+    overflow-y: auto;
+    overflow-x: hidden; 
 }
+
+::-webkit-scrollbar{
+    background: red;
+    width: 10px;
+  }
+  
+  ::-webkit-scrollbar-thumb{
+    background: black;
+    border-radius: 10px;
+  }
+  
+  ::-webkit-scrollbar-thumb:hover{
+    background: #ffffff;
+  }
+  ::-webkit-scrollbar-thumb:active{
+    background: blue;
+  }
+  
+  ::-webkit-scrollbar-track{
+    background: orange;
+  }
+  
+  ::-webkit-scrollbar-track:hover{
+    background: yellow;
+  }

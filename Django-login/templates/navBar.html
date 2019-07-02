@@ -1,45 +1,48 @@
 {% block navBar %}
 {% load staticfiles %}
+
+
 <div id="sidebar-wrapper">
+
     <!-- Sidebar -->
+
     <nav class="scroll" id="sidebar">
-        <div class="sidebar-header">
-            <img id="logo" src="{% static 'img/1.png' %}" alt="..." class="rounded-circle">
-            <a href="{% url 'logout' %}">Cerrar Sesión</a>
-        </div>
-        <ul class="list-unstyled components">
-            <li>
-                <button onclick="location.href='{% url 'homepage' %}'" class="btn btn-primary btn-lg" role="button" aria-pressed="true">Inicio</button>
-            </li>
-            <li>
-                <button  onclick="location.href='{% url 'estado' %}'" class="btn btn-primary btn-lg " role="button" aria-pressed="true">Estado</button>
-            </li>
-        </ul>
-        <ul class="list-unstyled components">
-            <button onclick="location.href='{% url 'agregarDispositivo' %}'" id="agregar " type="button" class="rounded-circle btn btn-primary">+</button>
-        </ul>
-        <ul class="list-unstyled components ">
-            {% for key, values in dispositivos.items %}
-            <li class="active">
-                <a href="#homeSubmenu" data-toggle="collapse" aria-expanded="false" class="dropdown-toggle">{{key}}</a>
-                <ul class="collapse list-unstyled" id="homeSubmenu">
-                    {% for value in values %}
+        <div class="card wizard-card justify-content-center">
+            <div class="sidebar-header">
+                <img id="logo" src="{% static 'img/1.png' %}" alt="..." class="rounded-circle">
+                <a href="{% url 'logout' %}">Cerrar Sesión</a>
+            </div>
+            <ul class="list-unstyled components">
+                <li>
+                    <button onclick="location.href='{% url 'homepage' %}'" class="btn btn-primary btn-lg" role="button"
+                        aria-pressed="true">Inicio</button>
+                </li>
+                <li>
+                    <button onclick="location.href='{% url 'estado' %}'" class="btn btn-primary btn-lg " role="button"
+                        aria-pressed="true">Estado</button>
+                </li>
+            </ul>
+            <ul class="list-unstyled components">
+                <button onclick="location.href='{% url 'agregarDispositivo' %}'" id="agregar " type="button"
+                    class="rounded-circle btn btn-primary">+</button>
+            </ul>
+            <ul class="list-unstyled components ">
+                {% for key, values in dispositivos.items %}
+                <li class="active">
+                    <a href="#homeSubmenu" data-toggle="collapse" aria-expanded="false"
+                        class="dropdown-toggle">{{key}}</a>
+                    <ul class="collapse list-unstyled" id="homeSubmenu">
+                        {% for value in values %}
                         <li>
-                         <a href="#">{{value}}</a>
+                            <a href={% url 'estados' value.0 value.1 %}>{{value.1}}</a>
                         </li>
-                    {% endfor %}
-                </ul>
-            </li>
-            {% endfor %}
-            <li class="active">
-                <a href="#homeSubmenu" data-toggle="collapse" aria-expanded="false" class="dropdown-toggle">miraa</a>
-                <ul class="collapse list-unstyled" id="homeSubmenu">                        <li>
-                         <a href="#">miraaa</a>
-                        </li>
-                </ul>
-            </li>
-        </ul>
+                        {% endfor %}
+                    </ul>
+                </li>
+                {% endfor %}
+            </ul>
+        </div>
     </nav>
-    
 </div>
+
 {% endblock %}
