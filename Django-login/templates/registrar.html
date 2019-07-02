@@ -67,19 +67,12 @@
                     <div class="d-flex justify-content-center mt-3 login_container">
                         <button type="submit" name="button" class="btn login_btn">Registrar</button>
                     </div>
-                    <div class="justify-content-center mt-3 login_container " >
-                        <button type="" name="button" class="btn login_btn">Regresar</button>
-                    </div>
                 </form>
             
-          
-<<<<<<< HEAD
-         
-=======
-            <div class="justify-content-center mt-3 login_container " style="width:70%;margin-left: 50px">
-                    <button href={% url 'login' %} name="button" class="btn login_btn">Regresar</button>
+
+            <div class="justify-content-center mt-3 login_container " >
+                    <a href="{% url 'login' %}" name="button" class="btn login_btn">Regresar</a>
                 </div>
->>>>>>> 5142bb9bf08755e200f1aabeed275fa4bd8f2f65
                 <div class="d-flex justify-content-center mt-3 login_container">
                         {% if messages %}
                         {% for message in messages %}

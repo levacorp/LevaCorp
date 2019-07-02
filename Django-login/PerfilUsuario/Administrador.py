@@ -143,6 +143,7 @@ if __name__ == "__main__":
     administrador = Administrador()
 ##diccionarioData = ['name_person', 'surname', 'date_of_birth', 'gender', 'celullar', 'facebook', 'email', 'place_of_birth']
     ##diccionarioApp = ['name_app', 'user_app', 'password_app']
+
     dicPersonal = dict(name_person="Andrea",
                        surname='Pabon',
                        date_of_birth='',
@@ -153,6 +154,7 @@ if __name__ == "__main__":
                        place_of_birth='')
     print(dicPersonal['email'])
     diccionarioApp = dict(name_app="ClipioAdmin", user_app='ANDREA@GMAIL.COM', password_app="12345")
+
     administrador.registrarUsuario("00", diccionarioApp)
     administrador.registrarDatosPersonales("00", dicPersonal)
     ##parametros = [email, password, name_app, mac, user_name]

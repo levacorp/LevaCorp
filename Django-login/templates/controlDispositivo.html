@@ -13,58 +13,60 @@
         <!-- Keep all page content within the page-content inset div! -->
         <div class="page-content inset">
             <div class="fondo"></div>
-            <ul class="list-group p-5">
-                <li class="list-group-item">
-                    <div class="text-center font-weight-bold display-4">
-                        <h1>{{ nombre }}</h1>
-                    </div>
-                </li>
-                <li class="list-group-item">
-                    <div class="card">
-                        <div class="card-body">
+            <div class="wizard-container">
+                <div class="container cont-principal">
+                    <div class="card wizard-card justify-content-center">
+                        <div class="div-principal">
+                            <h1 class="text-center"> {{ nombre }}</h1>
                             {% if mensaje == "" %}
-                                {% if not diccionario %}
-                                    <h5 class="card-title">No se encontró el dispositivo</h5>
+                            {% if not diccionario %}
+                            <h1 class=text-center>No se encontró el dispositivo</h5>
                                 {% else %}
-                                    <h5 class="card-title">Estado de los sensores y actuadores </h5>
-                                    <div class="card-columns">
+                                <h5 class="text-center">Estado de los sensores y actuadores </h5>
+                                <div class="card-deck">
+
                                     {% for key, values in diccionario.items %}
-                                    <div class="card">
-                                        <div class="card-body">
-                                            <h5 class="card-title">
-                                                <div class="row">
-                                                    <div class="col-8">{{ key }}</div>
-                                                    {% if values.0 == 'bool' %}
-                                                    <div class="col-4">
-                                                        <div class="custom-control custom-switch">
-                                                            {% if values.1 == '1' %}
+                                    <div class="col-sm-4 py-2">
+                                        <div class="card h-100 margen-cartas">
+                                            <div class="card-body">
+                                                <h5 class="card-title">
+                                                    <div class="row">
+                                                        <div class="col-sm"><h4> {{ key }} </h4></div>
+                                                        {% if values.0 == 'bool' %}
+                                                        <div class="col-sm">
+                                                            <div class="custom-control custom-switch">
+                                                                {% if values.1 == '1' %}
                                                                 <input type="checkbox" class="custom-control-input"
                                                                     id="customSwitch1" checked>
-                                                            {% else %}
+                                                                {% else %}
                                                                 <input type="checkbox" class="custom-control-input"
                                                                     id="customSwitch1">
-                                                            {% endif %}
-                                                            <label class="custom-control-label" for="customSwitch1"></label>
+                                                                {% endif %}
+                                                                <label class="custom-control-label"
+                                                                    for="customSwitch1"></label>
+                                                            </div>
                                                         </div>
-                                                    </div>
-                                                    {% else%}
+                                                        {% else%}
                                                         <div class="container-fluid">
                                                             <div class="row">
-                                                                <label for="valor">Valor:</label>
+                                                                <div class="col-sm-4">
+                                                                    <label for="valor">Valor:</label>
+                                                                </div>
                                                                 <div class="col-sm" id="valor">
                                                                     <p><b>{{ values.1 }}</b></p>
                                                                 </div>
                                                             </div>
                                                         </div>
-                                                    {% endif %}
-                                                </div>
-                                            </h5>
+                                                        {% endif %}
+                                                    </div>
+                                                </h5>
+                                            </div>
                                         </div>
                                     </div>
                                     {% endfor %}
-                                    </div>
+                                </div>
                                 {% endif %}
-                            {% else%}
+                                {% else%}
                                 <h5 class="card-title">{{ mensaje }}</h5>
                                 <form method="POST">
                                     {% csrf_token %}
@@ -72,14 +74,14 @@
                                         <input type="text" name="ipDispositivo" placeholder="Nueva IP" value="">
                                     </div>
                                     <div class="d-flex justify-content-center mt-3 login_container">
-                                        <button type="submit" name="btnIP" >Guardar</button>
+                                        <button type="submit" name="btnIP">Guardar</button>
                                     </div>
                                 </form>
-                            {% endif %}
+                                {% endif %}
                         </div>
                     </div>
-                </li>
-            </ul>
+                </div>
+            </div>
         </div>
     </div>
 </div>
