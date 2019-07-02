@@ -53,17 +53,15 @@ def estadosDispositivos(request):
         for i in listaDisp:
 
             id = i.getId()
-            #Sacar IP por cada dispositivo.
-            #ip = "10.0.0.16"
+            ip = Dispositivo_Usuario.objects.get(idUsuario=request.user, idDispositivo=id).ipDispositivo
 
-            ip = "192.168.0.21"
             diccionario = conexion.estadosDispositivos(ip, id)
             args = {}
             if diccionario != None:
-                args = {"mensaje": "", "nombre": i.getTitle()}
+                args = {"mensaje": ""}
             else:
                 args = {"mensaje": "No se pudo hacer la conexión. Ir a inicializar"}
-
+            args.update({"nombre": i.getTitle()})
             lista.append(args)
 
     return render(request, "Estado.html", {"lista": lista})
@@ -94,7 +92,7 @@ def estadoDispositivo(request, id, nombre):
         if diccionario != None:
             args = {"mensaje": "", "diccionario": diccionario, "nombre": nombre}
         else:
-            args = {"mensaje": "No se pudo hacer la conexión con la ip "}
+            args = {"mensaje": "No se pudo hacer la conexión con la ip ", "nombre": nombre}
 
         return render(request, "controlDispositivo.html", args)
 

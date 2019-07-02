@@ -25,24 +25,23 @@ class conexionEstado:
     def estadosDispositivos(self, ip, id):
         url = 'http://'+ip+'/SendState?osid='+str(id)
         estados = {}
+
         try:
             xml = requests.get(url)
-
+            if xml.status_code == 400:
+                raise RuntimeError("No se logró hacer la conexion")
             tree = ET.fromstring(xml.content)
+            if tree[0][1].tag == "Error":
+                raise RuntimeError("No se logró hacer la conexion")
             datos = tree[0][1]
             for child in datos:
                 estados.update({child.get('name'): [child[0].get('type'), child[0].text]})
 
+        except RuntimeError as e:
+            print(e)
+            estados = None
         except requests.exceptions.RequestException as e:
-            print("No se logró hacer la conexion")
+            print(e)
             estados = None
 
         return estados
-
-
-#obj = conexionEstado()
-#print(obj.estadosDispositivos("10.0.0.16", "708637323"))
-#obj.estadosDispositivos("192.168.0.103", "708637323")
-
-
-
