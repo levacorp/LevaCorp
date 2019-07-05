@@ -35,7 +35,7 @@
 
                             </div>
                         </div>
-                        <form action="POST">
+                        <form method="POST">
                             {% csrf_token %}
                             <div class="row setup-content justify-content-center" id="step-1">
                                 <div class="col-xs-12">
@@ -103,7 +103,9 @@
                                     <div class="col-md-12">
                                         <h3 class="text-center">Tags</h3>
                                         <!-- content go here -->
-                                        <div class="div-principal">
+                                        <div id=tags class="div-principal">
+
+                                           
                                             <div class="form-row">
                                                 <div class="col col-6 col-md-3">
                                                     <div class="row col-md-4 mb-3">
@@ -173,7 +175,7 @@
                                             <div class="form-row">
                                                 <div class="col col-6 col-md-3">
                                                     <div class="row col-md-4 mb-3">
-                                                        <button type="button"
+                                                        <button id="agregarTag" type="button" onclick="agregar()"
                                                             class="rounded-circle btn btn-outline-success">+</button>
                                                     </div>
                                                 </div>
@@ -181,23 +183,21 @@
                                                     <div class="row">
                                                         <div class="col-md-6 mb-3">
                                                             <input type="text" class="form-control inputs"
-                                                                id="validationDefault05" placeholder="Español"
-                                                                value="Español" required>
+                                                                id="tagEspañol" placeholder="Español"
+                                                                >
                                                         </div>
                                                         <div class="col-md-6 mb-3">
                                                             <input type="text" class="form-control inputs"
-                                                                id="validationDefault05" placeholder="English"
-                                                                value="English" required>
+                                                                id="tagIngles" placeholder="English"
+                                                                   >
                                                         </div>
                                                     </div>
                                                 </div>
-                                                <div class="col col-6 col-md-1">
-                                                    <div class="row col-md-4 mb-3">
-                                                        <button type="button"
-                                                            class="rounded-circle btn btn-outline-danger">-</button>
-                                                    </div>
-                                                </div>
+                                                
+                                                
                                             </div>
+                                            
+                                        
                                         </div>
                                         <div class="container boton-footer">
                                             <div class="row justify-content-end">
@@ -328,9 +328,127 @@
                                                 </div>
                                             </div>
                                         </div>
+                                        
+                                        <div class="div-principal">
+                                            <div class="form-row">
+                                                <div class="col mb-3">
+                                                    <label for="validationDefault01">Nombre</label>
+                                                    <input type="text" class="form-control inputs" name="dsNombre"
+                                                        id="validationDefault01" placeholder="Nombre" value=""
+                                                        required>
+                                                </div>
+                                            </div>
+
+                                            <div class="form-row">
+                                                <div class="col-md-4 mb-3">
+                                                    <label for="validationDefault02">Valor Maximo</label>
+                                                    <input type="text" class="form-control inputs" name="dsValorMin"
+                                                        id="validationDefault02" placeholder="Valor Maximo"
+                                                        value="" required>
+                                                </div>
+                                                <div class="col-md-4 mb-3">
+                                                    <label for="validationDefault03">Valor Minimo</label>
+                                                    <input type="text" class="form-control inputs" name="dsValorMax"
+                                                        id="validationDefault03" placeholder="Valor Minimo"
+                                                        value="" required>
+                                                </div>
+                                            </div>
+
+                                            <div class="form-row">
+                                                <div class="col col-6 col-md-3">
+                                                    <label for="validationDefault04">Unidad</label>
+                                                </div>
+                                            </div>
+
+                                            <div class="form-row">
+                                                <div class="col-md-4 mb-3">
+                                                    <input type="text" class="form-control inputs" name="dsUnidad"
+                                                        id="validationDefault05" placeholder="Símbolo" value=""
+                                                        required>
+                                                </div>
+                                                <div class="col-md-4 mb-3">
+                                                    <input type="text" class="form-control inputs" name="dsEtiqueta"
+                                                        id="validationDefault06" placeholder="Etiqueta" value=""
+                                                        required>
+                                                </div>
+                                                <div class="col-md-4 mb-3">
+                                                    <input type="text" class="form-control inputs" name="dsTipo"
+                                                        id="validationDefault07" placeholder="Tipo" value=""
+                                                        required>
+                                                </div>
+                                            </div>
+
+                                            <div class="form-row">
+                                                <div class="container border rounded-lg">
+
+                                                    <div class="row">
+                                                        <div class="col-md-4 mb-3">
+                                                            <label for="validationDefault02">Añadir Tags</label>
+                                                        </div>
+                                                    </div>
+
+                                                    <div class="row">
+                                                        <div class="col col-6 col-md-1">
+                                                            <label for="validationDefault02">Tags</label>
+                                                        </div>
+                                                        <div class="col col-12 col-md-8">
+                                                            <div class="row">
+                                                                <div class="col-md-6 mb-3">
+                                                                    <input type="text" class="form-control inputs" name="dsTagEsp"
+                                                                        id="validationDefault05" placeholder="Español"
+                                                                        value="" required>
+                                                                </div>
+                                                                <div class="col-md-6 mb-3">
+                                                                    <input type="text" class="form-control inputs" name="dsTagIng"
+                                                                        id="validationDefault05" placeholder="English"
+                                                                        value="" required>
+                                                                </div>
+                                                            </div>
+                                                        </div>
+                                                    </div>
+
+                                                    <div class="row">
+                                                        <div class="col col-6 col-md-1">
+                                                            <div class="row col-md-4 mb-3">
+                                                                <button type="button"
+                                                                    class="rounded-circle btn btn-outline-success">+</button>
+                                                            </div>
+                                                        </div>
+                                                        <div class="col col-12 col-md-8">
+                                                            <div class="row">
+                                                                <div class="col-md-6 mb-3">
+                                                                    <input type="text" class="form-control inputs"
+                                                                        id="validationDefault05" placeholder="Español"
+                                                                        value="" required>
+                                                                </div>
+                                                                <div class="col-md-6 mb-3">
+                                                                    <input type="text" class="form-control inputs"
+                                                                        id="validationDefault05" placeholder="English"
+                                                                        value="" required>
+                                                                </div>
+                                                            </div>
+                                                        </div>
+                                                        <div class="col col-6 col-md-1">
+                                                            <div class="row col-md-4 mb-3">
+                                                                <button type="button"
+                                                                    class="rounded-circle btn btn-outline-danger">-</button>
+                                                            </div>
+                                                        </div>
+                                                    </div>
+                                                </div>
+                                            </div>
+                                            <div class="container p-3">
+                                                <div class="row justify-content-end">
+                                                    <button type="button" class="btn btn-outline-secondary">Añadir otro
+                                                        datastream</button>
+                                                </div>
+                                            </div>
+                                        </div>
+
+
                                         <div class="container boton-footer">
                                             <div class="row justify-content-end">
-                                                <button class="btn btn-danger nextBtn" type="submit" formmethod="post">Crear</button>
+                                                <button class="btn btn-danger nextBtn" type="submit">Crear</button>
                                             </div>
                                         </div>
                                     </div>
