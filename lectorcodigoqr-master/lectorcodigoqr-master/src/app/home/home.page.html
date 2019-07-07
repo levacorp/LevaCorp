@@ -1,0 +1,31 @@
+<ion-header>
+  <ion-toolbar>
+    <ion-title>
+      Ionic 4: Barcode Scanner
+    </ion-title>
+  </ion-toolbar>
+</ion-header>
+ 
+<ion-content ion-padding>
+
+  <div style="padding: 10px">
+
+      <!--CODIFICAR-->
+      <ion-input type="text" placeholder="Digite su texto" [(ngModel)]="datocodificado"></ion-input>
+  
+      <ion-button expand="block" (click)="CodificarTexto()">Generar Código</ion-button>
+
+      <br>
+
+      <!--SCANNEAR-->
+      <ion-button expand="block" color="success" (click)="LeerCode()">Scannear Código</ion-button>
+    
+      <div *ngIf="datoscaneado">
+          <p>
+              Contenido obtenido: <b>{{ datoscaneado["text"] }}</b>
+          </p>
+      </div>
+
+  </div>
+    
+</ion-content>

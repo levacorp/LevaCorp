@@ -68,7 +68,6 @@ a, a:hover, a:focus {
 
 }
 #sidebar .sidebar-header h3{
-    margin-left: 40%;
 }
 
 #sidebar ul.components {
@@ -129,33 +128,23 @@ ul ul a {
 
 .scroll{
     overflow-y: auto;
-    overflow-x: hidden; 
+    overflow: hidden; 
 }
 
 ::-webkit-scrollbar{
-    background: red;
+    background: white;
     width: 10px;
   }
   
   ::-webkit-scrollbar-thumb{
-    background: black;
+    background: grey;
     border-radius: 10px;
   }
   
   ::-webkit-scrollbar-thumb:hover{
-    background: #ffffff;
-  }
-  ::-webkit-scrollbar-thumb:active{
-    background: blue;
+    background: #999;
   }
   
-  ::-webkit-scrollbar-track{
-    background: orange;
-  }
-  
-  ::-webkit-scrollbar-track:hover{
-    background: yellow;
-  }
   .arrow-before {
     width:0px;
     height:0px;

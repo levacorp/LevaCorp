@@ -19,12 +19,11 @@
                         <div class="div-principal">
                             <h1 class="text-center"> {{ nombre }}</h1>
                             {% if mensaje == "" %}
-                            {% if not diccionario %}
-                            <h1 class=text-center>No se encontró el dispositivo</h5>
+                                {% if not diccionario %}
+                            <h5 class=text-center>No se encontró el dispositivo</h5>
                                 {% else %}
                                 <h5 class="text-center">Estado de los sensores y actuadores </h5>
                                 <div class="card-deck">
-
                                     {% for key, values in diccionario.items %}
                                     <div class="col-sm-4 py-2">
                                         <div class="card h-100 margen-cartas">
@@ -34,16 +33,16 @@
                                                         <div class="col-sm"><h4> {{ key }} </h4></div>
                                                         {% if values.0 == 'bool' %}
                                                         <div class="col-sm">
-                                                            <div class="custom-control custom-switch">
+                                                            <div class="custom-control custom-switch" id=contenedor{{ key }}>
                                                                 {% if values.1 == '1' %}
                                                                 <input type="checkbox" class="custom-control-input"
-                                                                    id="customSwitch1" checked>
+                                                                    onclick="handlerActuador(this, '{{ ipDispositivo }}', '{{ idDispositivo }}')" id={{ key }} name={{ key }} checked>
                                                                 {% else %}
                                                                 <input type="checkbox" class="custom-control-input"
-                                                                    id="customSwitch1">
+                                                                    onclick="handlerActuador(this, '{{ ipDispositivo }}', '{{ idDispositivo }}')" id={{ key }} name={{ key }}>
                                                                 {% endif %}
                                                                 <label class="custom-control-label"
-                                                                    for="customSwitch1"></label>
+                                                                    for={{ key }}></label>
                                                             </div>
                                                         </div>
                                                         {% else%}
@@ -64,20 +63,32 @@
                                         </div>
                                     </div>
                                     {% endfor %}
-                                </div>
+                                    </div>
+                                    <div class="container boton-footer">
+                                            <div class="row mr-4 justify-content-end">
+                                                <button class="btn btn-primary btn-lg" >Ver informacion del dispositivo</button>
+                                            </div>
+                                    </div>
                                 {% endif %}
-                                {% else%}
-                                <h5 class="card-title">{{ mensaje }}</h5>
+                            {% else%}
                                 <form method="POST">
-                                    {% csrf_token %}
-                                    <div class="input-group mb-3">
-                                        <input type="text" name="ipDispositivo" placeholder="Nueva IP" value="">
+                                {% csrf_token %}
+                                <div class="container">
+                                    <div class="row m-4 ">
+                                        <div class="col col-4">
+                                                <input name="ipDispositivo" type="text" class="form-control inputs"
+                                                 placeholder="Nueva IP" required>
+                                        </div>
+                                            <div class="col  col-6"><button type="submit" class="btn btn-outline-primary" name="btnIP">Cambiar Ip</button>
+                                            </div>
+                                        </div>
+                                        <div class="row">
+                                                <h5 class="card-title">{{ mensaje }},Ingrese una nueva ip </h5>
+                                        </div>
                                     </div>
-                                    <div class="d-flex justify-content-center mt-3 login_container">
-                                        <button type="submit" name="btnIP">Guardar</button>
-                                    </div>
-                                </form>
-                                {% endif %}
+                                    </form>
+                            {% endif %}
+
                         </div>
                     </div>
                 </div>

@@ -93,7 +93,8 @@ def estadoDispositivo(request, id, nombre):
             args = {"mensaje": "", "diccionario": diccionario, "nombre": nombre}
         else:
             args = {"mensaje": "No se pudo hacer la conexión con la ip ", "nombre": nombre}
-
+        args.update({"ipDispositivo": ip})
+        args.update({"idDispositivo": id})
         return render(request, "controlDispositivo.html", args)
 
 
@@ -136,6 +137,22 @@ def crearDispositivo(request):
     #    form = infoDispositivo()
     return render(request, 'crearDispositivo.html')
 
+@login_required()
+def changeValue(request):
+    conexion = conexionEstado()
+
+    ip = request.GET.get('ip')
+    idDisp = request.GET.get('id')
+    option = request.GET.get('option')
+    idDatastream = request.GET.get('name')
+
+    siCambio = conexion.cambiarEstadoActuadores(ip, idDisp, idDatastream, option)
+    if siCambio == "":
+        data = {'cambio': 0}
+    else:
+        data = {'cambio': 1}
+
+    return JsonResponse(data)
 
 # Local Method
 def crearJSON(form):
