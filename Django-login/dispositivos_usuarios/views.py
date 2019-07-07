@@ -123,17 +123,19 @@ def agregarDispositivo(request):
 @login_required()
 def crearDispositivo(request):
     if request.method == 'POST':
-        form = infoDispositivo(request.POST)
-        if form.is_valid():
-            dataJSON = crearJSON(form)
-            print("entro")
-            response = JsonResponse(dataJSON)
-            response['Content-Disposition'] = 'attachment; filename="' + str(form.cleaned_data["idDispositivo"]) + '.json"'
-            print(response)
-            return response
-    else:
-        form = infoDispositivo()
-    return render(request, 'crearDispositivo.html', {'form': form})
+        #form = infoDispositivo(request.POST)
+        lista = request.GET.get('pruebaFuego')
+        print(lista)
+        #   if form.is_valid():
+        #    dataJSON = crearJSON(form)
+        #    print("entro")
+        #    response = JsonResponse(dataJSON)
+        #    response['Content-Disposition'] = 'attachment; filename="' + str(form.cleaned_data["idDispositivo"]) + '.json"'
+        #    print(response)
+        #    return response
+    #else:
+    #    form = infoDispositivo()
+    return render(request, 'crearDispositivo.html')
 
 @login_required()
 def changeValue(request):
@@ -154,7 +156,7 @@ def changeValue(request):
 
 # Local Method
 def crearJSON(form):
-
+    
     diccionario = {}
     diccionario["Conceptos"] = ["sala de estar"]
     diccionario["lugares"] = None
