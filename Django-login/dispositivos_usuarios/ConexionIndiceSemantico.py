@@ -163,6 +163,16 @@ class ConexionIndiceSemantico:
         ###Retorna una coleccion de un Datastreams especifico
         ###diccionario {'tags' 'min_value' 'max_value' 'current_value', 'datastream_id', 'at', 'unit' }
 
+    def getPersonalizedTags(self):
+        tagsList = []
+        finalList = []
+        for i in self.getTags():
+            tagsList.append(i)
+        for i in range(6, len(tagsList)-1, 2):
+            aux=[tagsList[i],tagsList[i+1]]
+            finalList.append(aux)
+        return finalList
+
     def getDatastreams(self, idDataStreams):
         lista = self.jsonObjeto['datastreams']
         for i in lista:
