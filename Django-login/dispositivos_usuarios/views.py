@@ -25,7 +25,7 @@ class agregarView(View):
         form = AgregarDispositivoForm(initial={'idDispositivo': id})
         disp = ConexionIndiceSemantico(id)
 
-        return render(request, "agregar.html", {'form': form, 'disp': disp})
+        return render(request, "crearDispositivoTemp.html", {'form': form, 'disp': disp})
 
     @method_decorator(login_required)
     def post(self, request, id):
@@ -110,10 +110,9 @@ def agregarDispositivo(request):
             if disp.getId() is None:
                 # Mostrar mensaje que no se encontró el dispositivo
                 messages.error(request, "Dispositivo no encontrado")
-                args = {'form': form, 'mensaje': 'No se encontró el dispositivo'}
+                args = {'form': form}
                 return render(request, "agregarDispositivo.html", args)
             else:
-                messages.error(request, "Dispositivo encontrado")
                 return redirect("confirmarAgregar", id)
 
     form = BuscarDispositivoForm()
@@ -123,18 +122,83 @@ def agregarDispositivo(request):
 @login_required()
 def crearDispositivo(request):
     if request.method == 'POST':
+
+        ##Informacion Básica
         #form = infoDispositivo(request.POST)
-        lista = request.GET.get('pruebaFuego')
-        print(lista)
-        #   if form.is_valid():
-        #    dataJSON = crearJSON(form)
-        #    print("entro")
-        #    response = JsonResponse(dataJSON)
-        #    response['Content-Disposition'] = 'attachment; filename="' + str(form.cleaned_data["idDispositivo"]) + '.json"'
-        #    print(response)
-        #    return response
-    #else:
-    #    form = infoDispositivo()
+        idDispositivo = request.POST.get('idDispositivo')
+        print(idDispositivo)
+        titulo = request.POST.get('titulo')
+        localizacionLatitud = request.POST.get('localizacionLatitud')
+        localizacionLongitud = request.POST.get('localizacionLongitud')
+        localizacionElevacion = request.POST.get('localizacionElevacion')
+        descripcion = request.POST.get('descripcion')
+
+
+        ## Tags
+        tagEntidadEsp = request.POST.get('tagEntidadEsp')
+        tagEntidadIng = request.POST.get('tagEntidadIng')
+        tagFuncionalidadEsp = request.POST.get('tagFuncionalidadEsp')
+        tagFuncionalidadIng = request.POST.get('tagFuncionalidadIng')
+        tagNombreEsp = request.POST.get('tagNombreEsp')
+        tagNombreIng = request.POST.get('tagNombreIng')
+
+        existe = True
+        cont = 1
+        tags = []
+        while(existe):
+            valorEsp = 'tagEspanol'+ str(cont)
+            valorIng = 'tagIngles' + str(cont)
+            if request.POST.get(valorEsp) and request.POST.get(valorIng):
+                tags.append(request.POST.get(valorEsp))
+                tags.append(request.POST.get(valorIng))
+                print("Se obtuvo")
+            else:
+                existe = False
+                print("No se obtuvo")
+            cont = cont + 1
+
+        print(tags)
+
+        ##DataStreams
+        existeDataStream = True
+        datastreams = []
+        cont = 0
+        while(existeDataStream):
+            valor = 'inputNombre'+ str(cont)
+            if request.POST.get(valor):
+                existeTags = True
+                contTags = 1
+                listaTags = []
+                while(existeTags):
+                    valorTagEsp = 'inputEspanolTag'+str(contTags) + 'DataStream' + str(cont)
+                    valorTagIng = 'inputInglesTag' + str(contTags) + 'DataStream' + str(cont)
+                    if request.POST.get(valorTagEsp) and request.POST.get(valorTagIng):
+                        listaTags.append(request.POST.get(valorTagEsp))
+                        listaTags.append(request.POST.get(valorTagIng))
+                    else:
+                        existeTags = False
+                    contTags = contTags + 1
+                datastreams.append([
+                    request.POST.get('inputNombre'+str(cont)),
+                    request.POST.get('inputValorMaximo'+str(cont)),
+                    request.POST.get('inputValorMinimo' + str(cont)),
+                    request.POST.get('inputSimbolo' + str(cont)),
+                    request.POST.get('inputEtiqueta' + str(cont)),
+                    request.POST.get('inputTipo' + str(cont)),
+                    listaTags
+                ])
+            else:
+                existeDataStream = False
+            cont = cont + 1
+
+        print(datastreams)
+        dataJSON = crearJSON(idDispositivo, titulo, localizacionLatitud, localizacionLongitud, localizacionElevacion,
+                       descripcion, tagEntidadEsp, tagEntidadIng, tagFuncionalidadEsp, tagFuncionalidadIng,
+                         tagNombreEsp, tagNombreIng, tags, datastreams)
+        response = JsonResponse(dataJSON)
+        response['Content-Disposition'] = 'attachment; filename="' + str(idDispositivo) + '.json"'
+        print(response)
+        return response
     return render(request, 'crearDispositivo.html')
 
 @login_required()
@@ -155,23 +219,46 @@ def changeValue(request):
     return JsonResponse(data)
 
 # Local Method
-def crearJSON(form):
-    
+def crearJSON(idDispositivo, titulo, localizacionLatitud, localizacionLongitud, localizacionElevacion,
+              descripcion, tagEntidadEsp, tagEntidadIng, tagFuncionalidadEsp, tagFuncionalidadIng,
+                tagNombreEsp, tagNombreIng, tags, datastreams):
+
+    datastreamsDef = []
+    for i in datastreams:
+        if i[3] == "":      #Simbolo vacio
+            i[3] = None
+        if i[4] == "":      #Label vacio
+            i[4] = None
+        if i[5] == "":      #Unidad vacio
+            i[5] = 0
+        datastreamsDef.append(
+            {
+                "feedid": None,
+                "id": i[0],
+                "current_value": None,
+                "at": datetime.now().strftime("%m/%d/%Y %H:%M:%S"),
+                "max_value": i[1],
+                "min_value": i[2],
+                "tags": i[6],
+                "unit": {
+                    "symbol": i[3],
+                    "label": i[4],
+                    "unitType": i[5]
+                },
+                "datapoints": None,
+            }
+        )
+    tagsDef = [tagEntidadEsp, tagEntidadIng, tagFuncionalidadEsp, tagFuncionalidadIng, tagNombreEsp, tagNombreIng]
+    tagsDef.extend(tags)
     diccionario = {}
     diccionario["Conceptos"] = ["sala de estar"]
     diccionario["lugares"] = None
-    diccionario["feed"] = {"id": str(form.cleaned_data["idDispositivo"]),
-                           "title": form.cleaned_data["titulo"],
+    diccionario["feed"] = {"id": str(idDispositivo),
+                           "title": titulo,
                            "Private": False,
-                           "tags": [form.cleaned_data["tagEntidadEsp"],
-                                    form.cleaned_data["tagEntidadIng"],
-                                    form.cleaned_data["tagFuncionalidadEsp"],
-                                    form.cleaned_data["tagFuncionalidadIng"],
-                                    form.cleaned_data["tagNombreEsp"],
-                                    form.cleaned_data["tagNombreIng"],
-                            ],
-                           "description":form.cleaned_data["descripcion"],
-                           "feed": "https://api.xively.com/v2/feeds/708637323.json",
+                           "tags": tagsDef,
+                           "description": descripcion,
+                           "feed": "https://api.xively.com/v2/feeds/"+ str(idDispositivo)+".json",
                            "auto_feed_url": None,
                            "status": 0,
                            "updated": datetime.now().strftime("%m/%d/%Y %H:%M:%S"),
@@ -179,39 +266,20 @@ def crearJSON(form):
                            "creator": "https://personal.xively.com/users/manzamb",
                            "version": None,
                            "website": None,
-                           "datastreams":[
-                               {
-                                "feedid": None,
-                                "id": form.cleaned_data["dsNombre"],
-                                "current_value": None,
-                                "at": datetime.now().strftime("%m/%d/%Y %H:%M:%S"),
-                                "max_value": form.cleaned_data["dsValorMax"],
-                                "min_value": form.cleaned_data["dsValorMin"],
-                                "tags": [form.cleaned_data["dsTagEsp"],
-                                         form.cleaned_data["dsTagIng"],
-                                ],
-                                "unit": {
-                                    "symbol": form.cleaned_data["dsUnidad"],
-                                    "label": form.cleaned_data["dsEtiqueta"],
-                                    "unitType": form.cleaned_data["dsTipo"]
-                                },
-                                "datapoints": None,
-                               }
-
-                           ],
+                           "datastreams": datastreamsDef,
                            "location": {
                                "name": None,
                                "domain": 0,
-                               "lat": str(form.cleaned_data["localizacionLatitud"]),
-                               "lon": str(form.cleaned_data["localizacionLongitud"]),
-                               "ele": str(form.cleaned_data["localizacionElevacion"]),
+                               "lat": str(localizacionLatitud),
+                               "lon": str(localizacionLongitud),
+                               "ele": str(localizacionElevacion),
                                "exposure": 0,
                                "disposition": 0
                            },
-                           "TitleHTML": "<a style=\"color: #336600; font-size:110%;\"  href=\"https://xively.com/feeds/" + str(form.cleaned_data["idDispositivo"]) + "\" >" + form.cleaned_data["titulo"] + "</a>",
-                           "URLMostrar": "https://xively.com/feeds/" + str(form.cleaned_data["idDispositivo"])
-                           },
-    diccionario["pathfeed"] = "D:\\Aplicaciones\\SemanticSearchIoT\\WSSemanticSearch\\App_Data\\Json_Data\\" + str(form.cleaned_data["idDispositivo"]) + ".json"
+                           "TitleHTML": "<a style=\"color: #336600; font-size:110%;\"  href=\"https://xively.com/feeds/" + str(idDispositivo) + "\" >" + titulo + "</a>",
+                           "URLMostrar": "https://xively.com/feeds/" + str(idDispositivo)
+                           }
+    diccionario["pathfeed"] = "D:\\Aplicaciones\\SemanticSearchIoT\\WSSemanticSearch\\App_Data\\Json_Data\\" + str(idDispositivo) + ".json"
     diccionario["DocumentJSON"] = None
 
     #dataJson = json.dumps(diccionario)
