@@ -25,7 +25,7 @@ class agregarView(View):
         form = AgregarDispositivoForm(initial={'idDispositivo': id})
         disp = ConexionIndiceSemantico(id)
 
-        return render(request, "agregar.html", {'form': form, 'disp': disp})
+        return render(request, "crearDispositivoTemp.html", {'form': form, 'disp': disp})
 
     @method_decorator(login_required)
     def post(self, request, id):
