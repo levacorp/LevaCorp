@@ -45,3 +45,24 @@ class conexionEstado:
             estados = None
 
         return estados
+
+
+    def cambiarEstadoActuadores(self, ip, idDisp, idDatastream, opcion):
+
+        url = 'http://' + ip + '/SetDatastream?osid=' + str(idDisp) + '&idDataStream=' + idDatastream + '&comando='+opcion
+        print(url)
+        cambio = ""
+        try:
+            xml = requests.get(url)
+            if xml.status_code == 400:
+                raise RuntimeError("No se logró hacer la conexion")
+            tree = ET.fromstring(xml.content)
+            if tree[0][1].tag == "Error":
+                raise RuntimeError("Error al traer el xml")
+            cambio = "Exito"
+        except RuntimeError as e:
+            print(e)
+        except requests.exceptions.RequestException as e:
+            print(e)
+
+        return cambio
