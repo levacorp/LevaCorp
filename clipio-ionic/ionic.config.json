@@ -1,5 +1,7 @@
 {
   "name": "clipio-ionic",
-  "integrations": {},
+  "integrations": {
+    "cordova": {}
+  },
   "type": "angular"
 }
