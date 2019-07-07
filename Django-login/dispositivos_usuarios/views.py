@@ -126,6 +126,7 @@ def crearDispositivo(request):
         ##Informacion Básica
         #form = infoDispositivo(request.POST)
         idDispositivo = request.POST.get('idDispositivo')
+        print(idDispositivo)
         titulo = request.POST.get('titulo')
         localizacionLatitud = request.POST.get('localizacionLatitud')
         localizacionLongitud = request.POST.get('localizacionLongitud')
