@@ -4,7 +4,6 @@ from django.contrib.auth.decorators import login_required
 
 from .models import Dispositivo_Usuario
 from .forms import BuscarDispositivoForm
-from .forms import AgregarDispositivoForm
 from .forms import obtenerIP
 from .forms import infoDispositivo
 from .ConexionIndiceSemantico import ConexionIndiceSemantico
@@ -17,22 +16,12 @@ from django.http import JsonResponse
 
 from datetime import datetime
 
-
-class agregarView(View):
-
-    @method_decorator(login_required)
-    def get(self, request, id):
-        form = AgregarDispositivoForm(initial={'idDispositivo': id})
-        disp = ConexionIndiceSemantico(id)
-
-        return render(request, "crearDispositivoTemp.html", {'form': form, 'disp': disp})
-
-    @method_decorator(login_required)
-    def post(self, request, id):
-        form = AgregarDispositivoForm(request.POST)
-        if form.is_valid():
-            idDisp = form.cleaned_data['idDispositivo']
-
+@login_required()
+def confirmarAgregar(request, id):
+    if request.method == "POST":
+        if 'idDisp' in request.POST:
+            print("Está idDisp")
+            idDisp = int(request.POST.get('idDisp'))
             siExiste = Dispositivo_Usuario.objects.filter(idUsuario=request.user, idDispositivo=idDisp).count()
             if siExiste == 1:
                 print("Dispositivo ya existente")
@@ -40,8 +29,38 @@ class agregarView(View):
                 print("Dispositivo nuevo")
                 nuevo = Dispositivo_Usuario(idUsuario=request.user, idDispositivo=idDisp, ipDispositivo="192.168.0.21")
                 nuevo.save()
+            return redirect("homepage")
+        elif 'idDispositivo' in request.POST:
+            print(request.POST.get("idDispositivo"))
+            return crearDispositivo(request)
 
-        return redirect("homepage")
+    disp = ConexionIndiceSemantico(id)
+    return render(request, "crearDispositivoTemp.html", {'disp': disp})
+
+
+@login_required()
+def infoDispositivo(request, id):
+    if request.method == "POST":
+        if 'idDisp' in request.POST:
+            print("Está idDisp")
+            idDisp = int(request.POST.get('idDisp'))
+            siExiste = Dispositivo_Usuario.objects.filter(idUsuario=request.user, idDispositivo=idDisp).count()
+            if siExiste == 1:
+                print("Dispositivo ya existente")
+            else:
+                print("Dispositivo nuevo")
+                nuevo = Dispositivo_Usuario(idUsuario=request.user, idDispositivo=idDisp, ipDispositivo="192.168.0.21")
+                nuevo.save()
+            return redirect("homepage")
+        elif 'idDispositivo' in request.POST:
+            print(request.POST.get("idDispositivo"))
+            return crearDispositivo(request)
+
+    disp = ConexionIndiceSemantico(id)
+    siExiste = Dispositivo_Usuario.objects.get(idUsuario=request.user, idDispositivo=disp.getId())
+    ipDisp = siExiste.ipDispositivo
+    args = {'disp': disp, 'ipDisp': ipDisp}
+    return render(request, "crearDispositivoTemp.html", args)
 
 @login_required()
 def estadosDispositivos(request):
@@ -122,11 +141,13 @@ def agregarDispositivo(request):
 @login_required()
 def crearDispositivo(request):
     if request.method == 'POST':
-
         ##Informacion Básica
-        #form = infoDispositivo(request.POST)
         idDispositivo = request.POST.get('idDispositivo')
-        print(idDispositivo)
+        disp = ConexionIndiceSemantico(idDispositivo)
+        if(disp.getId() != None):           #Si el dispositivo ya existe, se usa la fecha de creacion original
+            fechaCreacion = disp.getCreated()
+        else:
+            fechaCreacion = datetime.now().strftime("%m/%d/%Y %H:%M:%S")
         titulo = request.POST.get('titulo')
         localizacionLatitud = request.POST.get('localizacionLatitud')
         localizacionLongitud = request.POST.get('localizacionLongitud')
@@ -157,7 +178,6 @@ def crearDispositivo(request):
                 print("No se obtuvo")
             cont = cont + 1
 
-        print(tags)
 
         ##DataStreams
         existeDataStream = True
@@ -191,13 +211,11 @@ def crearDispositivo(request):
                 existeDataStream = False
             cont = cont + 1
 
-        print(datastreams)
         dataJSON = crearJSON(idDispositivo, titulo, localizacionLatitud, localizacionLongitud, localizacionElevacion,
-                       descripcion, tagEntidadEsp, tagEntidadIng, tagFuncionalidadEsp, tagFuncionalidadIng,
+                       descripcion, fechaCreacion,tagEntidadEsp, tagEntidadIng, tagFuncionalidadEsp, tagFuncionalidadIng,
                          tagNombreEsp, tagNombreIng, tags, datastreams)
         response = JsonResponse(dataJSON)
         response['Content-Disposition'] = 'attachment; filename="' + str(idDispositivo) + '.json"'
-        print(response)
         return response
     return render(request, 'crearDispositivo.html')
 
@@ -220,7 +238,7 @@ def changeValue(request):
 
 # Local Method
 def crearJSON(idDispositivo, titulo, localizacionLatitud, localizacionLongitud, localizacionElevacion,
-              descripcion, tagEntidadEsp, tagEntidadIng, tagFuncionalidadEsp, tagFuncionalidadIng,
+              descripcion, fechaCreacion, tagEntidadEsp, tagEntidadIng, tagFuncionalidadEsp, tagFuncionalidadIng,
                 tagNombreEsp, tagNombreIng, tags, datastreams):
 
     datastreamsDef = []
@@ -262,7 +280,7 @@ def crearJSON(idDispositivo, titulo, localizacionLatitud, localizacionLongitud, 
                            "auto_feed_url": None,
                            "status": 0,
                            "updated": datetime.now().strftime("%m/%d/%Y %H:%M:%S"),
-                           "created": datetime.now().strftime("%m/%d/%Y %H:%M:%S"),
+                           "created": fechaCreacion,
                            "creator": "https://personal.xively.com/users/manzamb",
                            "version": None,
                            "website": None,

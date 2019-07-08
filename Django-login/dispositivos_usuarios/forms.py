@@ -5,9 +5,6 @@ from .models import Dispositivo_Usuario
 class BuscarDispositivoForm(forms.Form):
     id = forms.IntegerField()
 
-class AgregarDispositivoForm(forms.Form):
-    idDispositivo = forms.IntegerField()
-
 
 class obtenerIP(forms.Form):
     ipDispositivo = forms.CharField(max_length=45)
