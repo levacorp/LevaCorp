@@ -182,6 +182,26 @@ class ConexionIndiceSemantico:
             return []
 
         ###Retorna una coleccion de los Datastreams
+    def getPersonalizedDataStreams(self):
+        dic = self.getListaDatastreams()
+        for i in dic:
+            if("tags" in i):
+                tags = i["tags"]
+                listaTags = []
+                finalList = []
+                for j in tags:
+                    listaTags.append(j)
+                
+                for k in range(0, len(listaTags)-1, 2):
+                    aux = [listaTags[k], listaTags[k+1]]
+                    finalList.append(aux)
+
+                if((len(listaTags) % 2) != 0):
+                    aux = [listaTags[len(listaTags)-1]]
+                    finalList.append(aux)
+                i["tags"] = finalList
+        return dic
+
 
     def getListaDatastreams(self):
         if "datastreams" in self.jsonObjeto:                # if self.jsonObjeto.has_key("datastreams"):
@@ -190,24 +210,18 @@ class ConexionIndiceSemantico:
             keysUnit = ['label', 'symbol']
             listaDS = self.jsonObjeto['datastreams']
             listaDSAux = []
+
             for item in listaDS:
-                aux = item["id"]
-                del item["id"]
+                if("id" in item):
+                    aux = item['id']
+                    del item["id"]
+                else:
+                    aux = item["datastream_id"]
+
                 item["datastream_id"] = aux
                 if not item["datastream_id"] == "comodin":
                     if "unit" in item:                  # if item.has_key('unit'):
                         item['unit'] = self.pasarDiccionario(item['unit'], keysUnit)
-                    else:
-                        label = self.pedirDatos.datosFaltantes("recurso", 'label', item["datastream_id"])
-                        unidad = self.pedirDatos.datosFaltantes("recurso", 'symbol', item["datastream_id"])
-                        unit = {'label': label, 'symbol': unidad}
-                        item['unit'] = unit
-                    if "datastream_type" not in item:           # if not item.has_key("datastream_type"):
-                        item['datastream_type'] = self.pedirDatos.datosFaltantes("recurso", 'datastream_type',
-                                                                                 item["datastream_id"])
-                    if "datastream_format" not in item:         # if not item.has_key("datastream_format"):
-                        item['datastream_format'] = self.pedirDatos.datosFaltantes("recurso", 'datastream_format',
-                                                                                   item["datastream_id"])
                     dic = self.pasarDiccionario(item, keys)
                     listaDSAux.append(dic)
             return listaDSAux
