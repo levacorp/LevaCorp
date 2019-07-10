@@ -11,6 +11,30 @@
 
 cantidadTags = contarTagsAdicionales();*/
 
+function cambiarIdsTags(){
+    var contadorEspañol = 1;
+    var contadorIngles = 1;
+    while(true){
+        if(document.getElementById("inputTagEspañol")){
+            elemento = document.getElementById("inputTagEspañol");
+            elemento.id = "inputTagEspañol" + contadorEspañol;
+            elemento.name = "tagEspañol" + contadorEspañol;
+            elemento = document.getElementById("inputTagIngles");
+            elemento.id = "inputTagIngles" + contadorIngles;
+            elemento.name = "tagIngles" + contadorIngles;
+            botonEliminar = document.getElementById("eliminarTag");
+            botonEliminar.id = ""+contadorEspañol;
+            contadorEspañol++;
+            contadorIngles++;
+        }
+        else{
+            break;
+        }
+    }
+}
+
+cambiarIdsTags();
+
 cantidadTags = document.getElementById("contadorTags").value;
 
 var cantidadDataStreams=0;

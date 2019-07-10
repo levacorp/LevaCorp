@@ -7,7 +7,7 @@ from .forms import BuscarDispositivoForm
 from .forms import obtenerIP
 from .forms import infoDispositivo
 from .ConexionIndiceSemantico import ConexionIndiceSemantico
-from .conexionEstado import conexionEstado
+from .ConexionRaspberry import ConexionRaspberry
 from django.contrib import messages
 
 from django.views import View
@@ -64,7 +64,7 @@ def infoDispositivo(request, id):
 
 @login_required()
 def estadosDispositivos(request):
-    conexion = conexionEstado()
+    conexion = ConexionRaspberry()
     if request.method == "GET":
         listaDisp = obtenerDispositivos(request.user.id)
         lista = []
@@ -87,7 +87,7 @@ def estadosDispositivos(request):
 
 @login_required()
 def estadoDispositivo(request, id, nombre):
-    conexion = conexionEstado()
+    conexion = ConexionRaspberry()
     if request.method == "POST":
         if 'ipDispositivo' in request.POST:
             form = obtenerIP(request.POST)
@@ -221,7 +221,7 @@ def crearDispositivo(request):
 
 @login_required()
 def changeValue(request):
-    conexion = conexionEstado()
+    conexion = ConexionRaspberry()
 
     ip = request.GET.get('ip')
     idDisp = request.GET.get('id')

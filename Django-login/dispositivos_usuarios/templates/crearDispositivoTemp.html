@@ -305,7 +305,7 @@
 											{% with contador=1 %}
 											{% if disp.getPersonalizedTags %}
 											{% for tags in disp.getPersonalizedTags %}
-										
+
 											<div
 												class="form-row"
 												id="formTag{{contador}}"
@@ -313,7 +313,7 @@
 												<div class="col col-6 col-md-3">
 													<div class="row col-md-4 mb-3">
 														<button
-															id="{{contador}}"
+															id="eliminarTag"
 															type="button"
 															onclick="eliminarTag(this)"
 															class="rounded-circle btn btn-outline-danger"
@@ -327,7 +327,7 @@
 															<input
 																type="text"
 																class="form-control inputs"
-																id="inputEspanol{{contador}}"
+																id="inputTagEspañol"
 																placeholder="Español"
 																value="{{ tags.0 }}"
 															></input>
@@ -337,7 +337,7 @@
 															<input
 																type="text"
 																class="form-control inputs"
-																id="inputIngles{{contador}}"
+																id="inputTagIngles"
 																placeholder="English"
 																value="{{ tags.1 }}"
 															></input>
@@ -559,7 +559,7 @@
 												
 													
 													{% for tag in datastreams.tags %}
-													<h1>NO AUMENTAAAAAAAAAAAA{{contador1}}</h1>
+													<h1>{{contador1}}</h1>
 													<div class="row" id="Tag{{contador1}}DataStream{{contador1}}">
 														<div class="col col-6 col-md-1">
 															<div class="row col-md-4 mb-3">
@@ -578,7 +578,9 @@
 														</div></div>
 													
 													
-													{{ contador1.as_hidden|add:1 }}
+													{{ contador1|add:1 }}
+
+
 													{% endfor %}
 												
 

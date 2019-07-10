@@ -49,7 +49,7 @@ def login_request(request):
             messages.error(request, "Campos invalidos")
     form = LoginForm()
     return render(request=request,
-                  template_name="login.html",
+                  template_name="usuarios/login.html",
                   context={"form": form})
 
 
@@ -71,4 +71,4 @@ def registrar(request):
             messages.error(request, "Campos invalidos")
     else:
         form = RegistroForm()
-    return render(request, 'registrar.html', {'form': form})
+    return render(request, 'usuarios/registrar.html', {'form': form})

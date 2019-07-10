@@ -17,7 +17,7 @@ from lxml import etree
 
 ##Clase que se conecta con el indice semantico y proporciona
 ##metodos para obtener los metadatos de los objetos
-class conexionEstado:
+class ConexionRaspberry:
 
     def __init__(self):
         pass
