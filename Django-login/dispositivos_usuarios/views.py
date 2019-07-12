@@ -5,29 +5,28 @@ from django.contrib.auth.decorators import login_required
 from .models import Dispositivo_Usuario
 from .forms import BuscarDispositivoForm
 from .forms import obtenerIP
-from .forms import infoDispositivo
 from .ConexionIndiceSemantico import ConexionIndiceSemantico
 from .ConexionRaspberry import ConexionRaspberry
 from django.contrib import messages
 
-from django.views import View
-from django.utils.decorators import method_decorator
 from django.http import JsonResponse
-
 from datetime import datetime
 
-@login_required()
+
+@login_required()                                                  # El usuario debe estar autenticado
 def confirmarAgregar(request, id):
     if request.method == "POST":
         if 'idDisp' in request.POST:
-            print("Está idDisp")
             idDisp = int(request.POST.get('idDisp'))
-            siExiste = Dispositivo_Usuario.objects.filter(idUsuario=request.user, idDispositivo=idDisp).count()
+            siExiste = Dispositivo_Usuario.objects.filter(idUsuario=request.user,
+                                                          idDispositivo=idDisp).count()
             if siExiste == 1:
                 print("Dispositivo ya existente")
             else:
                 print("Dispositivo nuevo")
-                nuevo = Dispositivo_Usuario(idUsuario=request.user, idDispositivo=idDisp, ipDispositivo="192.168.0.21")
+                nuevo = Dispositivo_Usuario(idUsuario=request.user,
+                                            idDispositivo=idDisp,
+                                            ipDispositivo="192.168.0.21")
                 nuevo.save()
             return redirect("homepage")
         elif 'idDispositivo' in request.POST:
@@ -38,42 +37,43 @@ def confirmarAgregar(request, id):
     return render(request, "crearDispositivoTemp.html", {'disp': disp})
 
 
-@login_required()
+@login_required()                                                   # El usuario debe estar autenticado
 def infoDispositivo(request, id):
     if request.method == "POST":
-        if 'idDisp' in request.POST:
-            print("Está idDisp")
+        if 'idDisp' in request.POST:                                                    # Si
             idDisp = int(request.POST.get('idDisp'))
-            siExiste = Dispositivo_Usuario.objects.filter(idUsuario=request.user, idDispositivo=idDisp).count()
-            if siExiste == 1:
-                print("Dispositivo ya existente")
-            else:
-                print("Dispositivo nuevo")
-                nuevo = Dispositivo_Usuario(idUsuario=request.user, idDispositivo=idDisp, ipDispositivo="192.168.0.21")
+            siExiste = Dispositivo_Usuario.objects.filter(idUsuario=request.user,
+                                                          idDispositivo=idDisp).count()
+            if siExiste == 0:
+                nuevo = Dispositivo_Usuario(idUsuario=request.user,
+                                            idDispositivo=idDisp,
+                                            ipDispositivo="192.168.0.21")
                 nuevo.save()
             return redirect("homepage")
-        elif 'idDispositivo' in request.POST:
-            print(request.POST.get("idDispositivo"))
-            return crearDispositivo(request)
+        elif 'idDispositivo' in request.POST:                               # Redirige a la vista para descargar
+            return crearDispositivo(request)                                # el JSON cargado en el formulario
 
-    disp = ConexionIndiceSemantico(id)
-    siExiste = Dispositivo_Usuario.objects.get(idUsuario=request.user, idDispositivo=disp.getId())
+    disp = ConexionIndiceSemantico(id)                                      # Carga la información del dispositivo
+    siExiste = Dispositivo_Usuario.objects.get(idUsuario=request.user,      # ya existente
+                                               idDispositivo=disp.getId())
     ipDisp = siExiste.ipDispositivo
     args = {'disp': disp, 'ipDisp': ipDisp}
     return render(request, "crearDispositivoTemp.html", args)
 
-@login_required()
+
+@login_required()                                                   #El usuario debe estar autenticado
 def estadosDispositivos(request):
-    conexion = ConexionRaspberry()
-    if request.method == "GET":
-        listaDisp = obtenerDispositivos(request.user.id)
-        lista = []
-        diccionario = {}
+    conexion = ConexionRaspberry()                                  # Método para mostrar el estado de todos
+    if request.method == "GET":                                     # los dispositivos. Esto implica probar si se puede
+        listaDisp = obtenerDispositivos(request.user.id)            # hacer la conexión a un dispositivo a través de
+        lista = []                                                  # la IP guardada, en este caso se muestra encendido,
+        diccionario = {}                                            # de lo contrario se muestra apagado
         for i in listaDisp:
 
             id = i.getId()
-            ip = Dispositivo_Usuario.objects.get(idUsuario=request.user, idDispositivo=id).ipDispositivo
-
+            disp = Dispositivo_Usuario.objects.get(idUsuario=request.user,
+                                                 idDispositivo=id)
+            ip = disp.ipDispositivo
             diccionario = conexion.estadosDispositivos(ip, id)
             args = {}
             if diccionario != None:
@@ -85,27 +85,27 @@ def estadosDispositivos(request):
 
     return render(request, "Estado.html", {"lista": lista})
 
-@login_required()
-def estadoDispositivo(request, id, nombre):
-    conexion = ConexionRaspberry()
+
+@login_required()                                                   #El usuario debe estar autenticado
+def estadoDispositivo(request, id, nombre):                         # Método que renderiza el estado de los
+    conexion = ConexionRaspberry()                                  # actuadores y sensores de un dispositivo
     if request.method == "POST":
-        if 'ipDispositivo' in request.POST:
-            form = obtenerIP(request.POST)
+        if 'ipDispositivo' in request.POST:                         # En caso tal, captura el campo IP para cambiar
+            form = obtenerIP(request.POST)                          # la IP de un dispositivo
             if form.is_valid():
-                obj = Dispositivo_Usuario.objects.get(idUsuario=request.user, idDispositivo=id)
+                obj = Dispositivo_Usuario.objects.get(idUsuario=request.user,
+                                                      idDispositivo=id)
                 obj.ipDispositivo = form.cleaned_data['ipDispositivo']
                 obj.save()
             else:
                 messages.error(request, "Campo incorrecto")
             return redirect("/dispositivos/estados/("+ str(id) +", "+ nombre+")")
 
-    elif request.method == "GET":
-        diccionario = {}
-        obj = Dispositivo_Usuario.objects.get(idUsuario=request.user, idDispositivo=id)
-
+    elif request.method == "GET":                                                       # Para mostrar el estado de
+        obj = Dispositivo_Usuario.objects.get(idUsuario=request.user, idDispositivo=id) # Sensores y Actuadores
+                                                                                        # de un dispositivo
         ip = obj.ipDispositivo
 
-        args = {}
         diccionario = conexion.estadosDispositivos(ip, id)
 
         if diccionario != None:
@@ -117,35 +117,31 @@ def estadoDispositivo(request, id, nombre):
         return render(request, "controlDispositivo.html", args)
 
 
-@login_required()
+@login_required()                                                   # El usuario debe estar autenticado
 def agregarDispositivo(request):
-    
-    if request.method == "POST":
-        form = BuscarDispositivoForm(request.POST)
-        if form.is_valid():
-            id = form.cleaned_data['id']
+    if request.method == "POST":                                    # Método que redirige a la vista en donde se puede
+        form = BuscarDispositivoForm(request.POST)                  # buscar un dispositivo o crearlo
+        if form.is_valid():                                         # Si se busca el dispositivo y se encuentra,
+            id = form.cleaned_data['id']                            # redirige a la vista confirmarAgregar
             disp = ConexionIndiceSemantico(id)
 
             if disp.getId() is None:
-                # Mostrar mensaje que no se encontró el dispositivo
                 messages.error(request, "Dispositivo no encontrado")
-                args = {'form': form}
-                return render(request, "agregarDispositivo.html", args)
             else:
                 return redirect("confirmarAgregar", id)
 
-    form = BuscarDispositivoForm()
-    return render(request, "agregarDispositivo.html", {"form": form})
+    return render(request, "agregarDispositivo.html")
 
 
-@login_required()
-def crearDispositivo(request):
-    if request.method == 'POST':
+@login_required()                                                   # El usuario debe estar autenticado
+def crearDispositivo(request):                                      # Método que captura datos del formulario
+    if request.method == 'POST':                                    # y puede crear un JSON y descargarlo o
+                                                                    # mandarlo a la raspberry
         ##Informacion Básica
         idDispositivo = request.POST.get('idDispositivo')
         disp = ConexionIndiceSemantico(idDispositivo)
-        if(disp.getId() != None):           #Si el dispositivo ya existe, se usa la fecha de creacion original
-            fechaCreacion = disp.getCreated()
+        if(disp.getId() != None):                                   # Si el dispositivo ya existe, se usa
+            fechaCreacion = disp.getCreated()                       # la fecha de creacion original
         else:
             fechaCreacion = datetime.now().strftime("%m/%d/%Y %H:%M:%S")
         titulo = request.POST.get('titulo')
@@ -172,10 +168,8 @@ def crearDispositivo(request):
             if request.POST.get(valorEsp) and request.POST.get(valorIng):
                 tags.append(request.POST.get(valorEsp))
                 tags.append(request.POST.get(valorIng))
-                print("Se obtuvo")
             else:
                 existe = False
-                print("No se obtuvo")
             cont = cont + 1
 
 
@@ -214,14 +208,21 @@ def crearDispositivo(request):
         dataJSON = crearJSON(idDispositivo, titulo, localizacionLatitud, localizacionLongitud, localizacionElevacion,
                        descripcion, fechaCreacion,tagEntidadEsp, tagEntidadIng, tagFuncionalidadEsp, tagFuncionalidadIng,
                          tagNombreEsp, tagNombreIng, tags, datastreams)
-        response = JsonResponse(dataJSON)
-        response['Content-Disposition'] = 'attachment; filename="' + str(idDispositivo) + '.json"'
-        return response
+        if 'crear' in request.POST:                                     # Captura la acción de descargar el JSON
+            response = JsonResponse(dataJSON)
+            response['Content-Disposition'] = 'attachment; filename="' + str(idDispositivo) + '.json"'
+            return response
+        elif 'inicializar' in request.POST:                             # Captura la acción de inicializar
+            ip = request.POST.get('ip')                                 # un dispositivo a través del JSON capturado
+            print(ip)
+            ##TODO Metodo para mandar JSON a Raspberry
+            pass
     return render(request, 'crearDispositivo.html')
 
-@login_required()
-def changeValue(request):
-    conexion = ConexionRaspberry()
+
+@login_required()                                                   # El usuario debe estar autenticado
+def changeValue(request):                                           # Para cambiar el valor de un actuador
+    conexion = ConexionRaspberry()                                  # de un dispositivo
 
     ip = request.GET.get('ip')
     idDisp = request.GET.get('id')
@@ -237,17 +238,18 @@ def changeValue(request):
     return JsonResponse(data)
 
 # Local Method
-def crearJSON(idDispositivo, titulo, localizacionLatitud, localizacionLongitud, localizacionElevacion,
-              descripcion, fechaCreacion, tagEntidadEsp, tagEntidadIng, tagFuncionalidadEsp, tagFuncionalidadIng,
-                tagNombreEsp, tagNombreIng, tags, datastreams):
-
-    datastreamsDef = []
+def crearJSON(idDispositivo, titulo, localizacionLatitud, localizacionLongitud,
+              localizacionElevacion, descripcion, fechaCreacion, tagEntidadEsp,
+              tagEntidadIng, tagFuncionalidadEsp, tagFuncionalidadIng,
+              tagNombreEsp, tagNombreIng, tags, datastreams):                       # Método para crear el JSON de un
+                                                                                    # dispositivo y devuelve el JSON
+    datastreamsDef = []                                                             # en forma de diccionario
     for i in datastreams:
-        if i[3] == "":      #Simbolo vacio
+        if i[3] == "":      # Cuando el Simbolo está vacio
             i[3] = None
-        if i[4] == "":      #Label vacio
+        if i[4] == "":      # Cuando el Label está vacio
             i[4] = None
-        if i[5] == "":      #Unidad vacio
+        if i[5] == "":      # Cuando la Unidad está vacia
             i[5] = 0
         datastreamsDef.append(
             {
@@ -300,18 +302,17 @@ def crearJSON(idDispositivo, titulo, localizacionLatitud, localizacionLongitud, 
     diccionario["pathfeed"] = "D:\\Aplicaciones\\SemanticSearchIoT\\WSSemanticSearch\\App_Data\\Json_Data\\" + str(idDispositivo) + ".json"
     diccionario["DocumentJSON"] = None
 
-    #dataJson = json.dumps(diccionario)
     return diccionario
 
 
 # Local Method
-def obtenerDispositivos(idUsuario):
-    idDispositivos = Dispositivo_Usuario.objects.filter(idUsuario=idUsuario)
+def obtenerDispositivos(idUsuario):                                             # Listar el dispositivo de un usuario
+    idDispositivos = Dispositivo_Usuario.objects.filter(idUsuario=idUsuario)    # que le llega por ID
     listaDisp = []
 
     for i in idDispositivos:
-        disp = ConexionIndiceSemantico(i.idDispositivo)
-        if disp.getId() is not None:
+        disp = ConexionIndiceSemantico(i.idDispositivo)                         # Busca los dispositivos en
+        if disp.getId() is not None:                                            # el indice semántico
             listaDisp.append(disp)
     return listaDisp
 
