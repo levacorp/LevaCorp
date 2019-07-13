@@ -15,16 +15,19 @@ import requests
 import xml.etree.ElementTree as ET
 from lxml import etree
 
-##Clase que se conecta con el indice semantico y proporciona
-##metodos para obtener los metadatos de los objetos
+'''
+Clase que proporciona conexiones a una raspberry
+y proporciona el acceso a algunos servicios preestablecidos por la raspberry
+
+'''
 class ConexionRaspberry:
 
     def __init__(self):
         pass
 
-    def estadosDispositivos(self, ip, id):
-        url = 'http://'+ip+'/SendState?osid='+str(id)
-        estados = {}
+    def estadosDispositivos(self, ip, id):                      # Método para obtener estados de sensores y
+        url = 'http://'+ip+'/SendState?osid='+str(id)           # actuadores de un dispositivo, se hace la conexión
+        estados = {}                                            # con la dirección IP y el id del dispositivo
 
         try:
             xml = requests.get(url)
@@ -47,9 +50,9 @@ class ConexionRaspberry:
         return estados
 
 
-    def cambiarEstadoActuadores(self, ip, idDisp, idDatastream, opcion):
-
-        url = 'http://' + ip + '/SetDatastream?osid=' + str(idDisp) + '&idDataStream=' + idDatastream + '&comando='+opcion
+    def cambiarEstadoActuadores(self, ip, idDisp, idDatastream, opcion):        # Método que permite cambiar el estado
+                                                                                # de los actuadores de un dispositivo
+        url = 'http://'+ip +'/SetDatastream?osid='+str(idDisp)+'&idDataStream='+idDatastream+'&comando='+opcion
         print(url)
         cambio = ""
         try:

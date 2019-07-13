@@ -14,23 +14,19 @@ from datetime import datetime
 
 
 @login_required()                                                  # El usuario debe estar autenticado
-def confirmarAgregar(request, id):
+def buscar(request, id):
     if request.method == "POST":
-        if 'idDisp' in request.POST:
+        if 'agregar' in request.POST:                               # Agregar dispositivo
             idDisp = int(request.POST.get('idDisp'))
             siExiste = Dispositivo_Usuario.objects.filter(idUsuario=request.user,
                                                           idDispositivo=idDisp).count()
-            if siExiste == 1:
-                print("Dispositivo ya existente")
-            else:
-                print("Dispositivo nuevo")
+            if siExiste == 0:
                 nuevo = Dispositivo_Usuario(idUsuario=request.user,
                                             idDispositivo=idDisp,
-                                            ipDispositivo="192.168.0.21")
+                                            ipDispositivo=request.POST.get('ip'))
                 nuevo.save()
             return redirect("homepage")
-        elif 'idDispositivo' in request.POST:
-            print(request.POST.get("idDispositivo"))
+        elif 'descargarJson' in request.POST:
             return crearDispositivo(request)
 
     disp = ConexionIndiceSemantico(id)
@@ -40,17 +36,7 @@ def confirmarAgregar(request, id):
 @login_required()                                                   # El usuario debe estar autenticado
 def infoDispositivo(request, id):
     if request.method == "POST":
-        if 'idDisp' in request.POST:                                                    # Si
-            idDisp = int(request.POST.get('idDisp'))
-            siExiste = Dispositivo_Usuario.objects.filter(idUsuario=request.user,
-                                                          idDispositivo=idDisp).count()
-            if siExiste == 0:
-                nuevo = Dispositivo_Usuario(idUsuario=request.user,
-                                            idDispositivo=idDisp,
-                                            ipDispositivo="192.168.0.21")
-                nuevo.save()
-            return redirect("homepage")
-        elif 'idDispositivo' in request.POST:                               # Redirige a la vista para descargar
+        if 'descargarJson' in request.POST:                               # Redirige a la vista para descargar
             return crearDispositivo(request)                                # el JSON cargado en el formulario
 
     disp = ConexionIndiceSemantico(id)                                      # Carga la información del dispositivo
@@ -128,7 +114,7 @@ def agregarDispositivo(request):
             if disp.getId() is None:
                 messages.error(request, "Dispositivo no encontrado")
             else:
-                return redirect("confirmarAgregar", id)
+                return redirect("buscar", id)
 
     return render(request, "agregarDispositivo.html")
 
@@ -208,7 +194,7 @@ def crearDispositivo(request):                                      # Método qu
         dataJSON = crearJSON(idDispositivo, titulo, localizacionLatitud, localizacionLongitud, localizacionElevacion,
                        descripcion, fechaCreacion,tagEntidadEsp, tagEntidadIng, tagFuncionalidadEsp, tagFuncionalidadIng,
                          tagNombreEsp, tagNombreIng, tags, datastreams)
-        if 'crear' in request.POST:                                     # Captura la acción de descargar el JSON
+        if 'descargarJson' in request.POST:                                     # Captura la acción de descargar el JSON
             response = JsonResponse(dataJSON)
             response['Content-Disposition'] = 'attachment; filename="' + str(idDispositivo) + '.json"'
             return response

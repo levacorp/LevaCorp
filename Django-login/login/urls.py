@@ -15,6 +15,10 @@ Including another URLconf
 """
 from django.urls import include, path
 
+'''
+URLs principales
+'''
+
 urlpatterns = [
     path('', include('usuarios.urls')),
     path('dispositivos/', include('dispositivos_usuarios.urls')),

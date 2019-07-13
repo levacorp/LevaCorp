@@ -1,8 +1,11 @@
 from django.urls import path
 from . import views
 
+'''
+URLs dispositivos
+'''
 urlpatterns = [
-    path('confirmarAgregar/<int:id>', views.confirmarAgregar, name="confirmarAgregar"),
+    path('buscar/<int:id>', views.buscar, name="buscar"),
     path('infoDispositivo/<int:id>', views.infoDispositivo, name="infoDispositivo"),
     path('crear', views.crearDispositivo, name='crear'),
     path('estado', views.estadosDispositivos, name='estado'),

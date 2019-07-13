@@ -101,15 +101,19 @@
 													></input>
 												</div>
 
-												{% if ipDisp %}
+                                                <div class="col-md-4 mb-3">
+													<label for="validationDefault02">IP</label>
 
-												<div class="col-md-4 mb-3">
-													<label for="validationDefault01">IP:</label>
-
-													<label for="validationDefault01">{{ ipDisp }}</label>
+													<input
+														type="text"
+														class="form-control inputs"
+														name="ip"
+														id="validationDefault02"
+														placeholder="IP"
+														value="{% if ipDisp %}{{ ipDisp }}{% endif %}"
+													></input>
 												</div>
 
-												{% endif %}
 											</div>
 
 											<div class="row">
@@ -615,37 +619,33 @@
 												<button
 													class="btn btn-danger nextBtn"
 													type="submit"
+                                                    name="descargarJson"
 												>Descargar JSON</button>
 											</div>
 										</div>
+
+						                {% if not ipDisp %}
+
+                                            <input name="idDisp" type="hidden" value="{{ disp.getId }}"></input>
+
+                                            <div class="container boton-footer">
+                                                <div class="row justify-content-end">
+                                                    <button
+                                                        class="btn btn-danger nextBtn"
+                                                        type="submit"
+                                                        name="agregar"
+                                                    >Agregar</button>
+                                                </div>
+                                            </div>
+						                {% endif %}
+
 									</div>
 								</div>
 							</div>
 						</form>
 
-						{% if not ipDisp %}
 
-						<form method="POST">
-							{% csrf_token %}
 
-							<input
-								id="machetazo"
-								name="idDisp"
-								type="hidden"
-								value="{{ disp.getId }}"
-							></input>
-
-							<div class="container boton-footer">
-								<div class="row justify-content-end">
-									<button
-										class="btn btn-danger nextBtn"
-										type="submit"
-									>Agregar</button>
-								</div>
-							</div>
-						</form>
-
-						{% endif %}
 
 						{% else %}
 
