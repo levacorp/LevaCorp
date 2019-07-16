@@ -7,6 +7,7 @@
     float: none;
     box-shadow: none;
     background-position: center bottom, center calc(100% - 1px);
+    background-attachment: fixed;
 }
 
 
@@ -23,6 +24,8 @@
     min-height: 340px;
     padding: 20px 15px;
     border: 1px solid #dee2e6!important;
+    margin-bottom: 25px;
+
 }
 
 #sidebar-wrapper {

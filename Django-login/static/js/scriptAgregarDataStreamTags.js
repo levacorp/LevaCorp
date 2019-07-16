@@ -1,21 +1,17 @@
-/*function contarTagsAdicionales() {
-    contador=0;
-    for (i = 0; i < 1; i++) {
-        if (document.getElementById("inputIngles"+ contador+1) ) {
-            contador++;
-            i--;
-        }
-    }
-    return contador;
-}
+var cantidadTags = 0;
+var cantidadDataStreams=0;
+var listaCantTagsDataStream=[0];
 
-cantidadTags = contarTagsAdicionales();*/
+
 
 function cambiarIdsTags(){
     var contadorEspañol = 1;
     var contadorIngles = 1;
     while(true){
-        if(document.getElementById("inputTagEspañol")){
+        if(document.getElementById("formTag")){
+
+            elemento = document.getElementById("formTag");
+            elemento.id = "formTag" + contadorEspañol; 
             elemento = document.getElementById("inputTagEspañol");
             elemento.id = "inputTagEspañol" + contadorEspañol;
             elemento.name = "tagEspañol" + contadorEspañol;
@@ -26,6 +22,7 @@ function cambiarIdsTags(){
             botonEliminar.id = ""+contadorEspañol;
             contadorEspañol++;
             contadorIngles++;
+            cantidadTags++;
         }
         else{
             break;
@@ -33,15 +30,115 @@ function cambiarIdsTags(){
     }
 }
 
+function cambiarIdsDataSreams()
+{
+    var contDataStream = 0;
+    
+    while(true){
+        
+        if(document.getElementById("dataStream00")){
+            elemento = document.getElementById("dataStream00");
+            elemento.id = "dataStream" + contDataStream;
+
+            h2=document.getElementById("dataStreamH200");
+            h2.id = "dataStreamH2" + contDataStream;
+            h2.innerHTML="dataStream"+contDataStream;
+
+            inputNombre=document.getElementById("inputNombre00")
+            inputNombre.id = "inputNombre" + contDataStream;
+            inputNombre.name = "inputNombre" + contDataStream;
+            
+            inpuValorMaximo=document.getElementById("inputValorMaximo00")
+            inpuValorMaximo.id = "inputValorMaximo" + contDataStream;
+            inpuValorMaximo.name = "inputValorMaximo" + contDataStream;
+
+            inpuValorMinimo=document.getElementById("inputValorMinimo00")
+            inpuValorMinimo.id = "inputValorMinimo" + contDataStream;
+            inpuValorMinimo.name = "inputValorMinimo" + contDataStream;
+
+            inputSimbolo=document.getElementById("inputSimbolo00")
+            inputSimbolo.id = "inputSimbolo" + contDataStream;
+            inputSimbolo.name = "inputSimbolo" + contDataStream;
+
+            inputEtiqueta=document.getElementById("inputEtiqueta00")
+            inputEtiqueta.id = "inputEtiqueta" + contDataStream;
+            inputEtiqueta.name = "inputEtiqueta" + contDataStream;
+
+            inputTipo=document.getElementById("inputTipo00")
+            inputTipo.id = "inputTipo" + contDataStream;
+            inputTipo.name = "inputTipo" + contDataStream;
+
+            tagsDataStream=document.getElementById("tagsDataStream00");
+            tagsDataStream.id = "tagsDataStream" + contDataStream;
+
+            buttonAgregarTagDataStream=document.getElementById("buttonAgregarTagDataStream00");
+            buttonAgregarTagDataStream.id = "buttonAgregarTagDataStream" + contDataStream;
+
+            inputTagDataStreamEspanol=document.getElementById("inputTagDataStreamEspanol00");
+            inputTagDataStreamEspanol.id="inputTagDataStreamEspanol"+contDataStream;
+
+            inputTagDataStreamIngles=document.getElementById("inputTagDataStreamIngles00");
+            inputTagDataStreamIngles.id="inputTagDataStreamIngles"+contDataStream;
+
+            buttonEliminardataStream=document.getElementById('buttonEliminardataStream00');
+            buttonEliminardataStream.id="buttonEliminardataStream"+contDataStream;
+
+            var contTags=1;
+            while(true)
+            {
+                if(document.getElementById("Tag0DataStream00")){
+                if(document.getElementById("Tag0DataStream00").parentElement===document.getElementById("tagsDataStream"+contDataStream))
+                    {
+                       
+                       TagnDataStreamN=document.getElementById("Tag0DataStream00");
+                       TagnDataStreamN.id="Tag"+contTags+"DataStream"+contDataStream;
+
+                       buttonTagNDataStreamN=document.getElementById("buttonTag0DataStream00");
+                       buttonTagNDataStreamN.id="buttonTag"+contTags+"DataStream"+contDataStream;
+
+                       inputEspanolTagNDataStreamN=document.getElementById("inputEspanolTag0DataStream00");
+                       inputEspanolTagNDataStreamN.name="inputEspanolTag"+contTags+"DataStream"+contDataStream;
+                       inputEspanolTagNDataStreamN.id="inputEspanolTag"+contTags+"DataStream"+contDataStream;
+
+                       inputInglesTagNDataStreamN=document.getElementById("inputInglesTag0DataStream00");
+                       inputInglesTagNDataStreamN.name="inputInglesTag"+contTags+"DataStream"+contDataStream;
+                       inputInglesTagNDataStreamN.id="inputInglesTag"+contTags+"DataStream"+contDataStream;
+                       contTags++;
+                    }
+                    else{
+                        break;
+                    }
+                }
+                else{break;}
+            }
+            if(contDataStream==0){
+                listaCantTagsDataStream[0]=contTags-1;
+            }
+            else{
+                listaCantTagsDataStream.push(contTags-1);
+            }
+
+            contDataStream++;
+
+
+        }
+        else{
+            break;
+        }
+    }
+    if(contDataStream!=0)
+        {
+            cantidadDataStreams=contDataStream-1;
+        }
+ 
+}
 cambiarIdsTags();
 
-cantidadTags = document.getElementById("contadorTags").value;
-
-var cantidadDataStreams=0;
-var listaCantTagsDataStream=[0];
 
 
-function agregar() {
+
+
+function agregartag() {
     cantidadTags++;
     var tags = document.getElementById("tags");
     var valueInputEspanol = document.getElementById("tagEspañol").value;
@@ -55,7 +152,6 @@ function agregar() {
     html = htmlForm + htmlTagEspañol + htmlTagIngles;
     tags.insertAdjacentHTML('beforeend', html);
 }
-
 function eliminarTag(comp) {
     var id = comp.id;
     id = id.replace(/ /g, "");
@@ -79,17 +175,16 @@ function eliminarTag(comp) {
         inputInglesSig.id = "inputIngles" + idActual;
     }
 }
-
 function agregarDataStream()
 {
     var dataStreams = document.getElementById("dataStreams");
     cantidadDataStreams++;
-    nombre='<div class="div-principal" id="dataStream'+cantidadDataStreams+'"><h2>DataStream'+cantidadDataStreams+'</h2><div class="form-row"><div class="col mb-3"><label>Nombre</label><input type="text" class="form-control inputs" name="inputNombre'+cantidadDataStreams+'"id="inputNombre'+cantidadDataStreams+'" placeholder="Nombre"required></div></div>'
+    nombre='<div class="div-principal" id="dataStream'+cantidadDataStreams+'"><h2 id="dataStreamH2'+cantidadDataStreams+'">dataStream'+cantidadDataStreams+'</h2><div class="form-row"><div class="col mb-3"><label>Nombre</label><input type="text" class="form-control inputs" name="inputNombre'+cantidadDataStreams+'"id="inputNombre'+cantidadDataStreams+'" placeholder="Nombre"required></div></div>'
     valorMaximo='<div class="form-row"><div class="col-md-4 mb-3"><label>Valor Maximo</label><input type="text" class="form-control inputs" name="inputValorMaximo'+cantidadDataStreams+'"id="inputValorMaximo'+cantidadDataStreams+'" placeholder="Valor Maximo"required></div>'
     valorMinimo='<div class="col-md-4 mb-3"><label>Valor Minimo</label><input type="text" class="form-control inputs" name="inputValorMinimo'+cantidadDataStreams+'"id="inputValorMinimo'+cantidadDataStreams+'" placeholder="Valor Minimo"required></div></div>'
     unidades='<div class="form-row"><div class="col col-6 col-md-3"><label>Unidad</label></div></div><div class="form-row"><div class="col-md-4 mb-3"><input type="text" class="form-control inputs" name="inputSimbolo'+cantidadDataStreams+'"id="inputSimbolo'+cantidadDataStreams+'" placeholder="Símbolo"></div><div class="col-md-4 mb-3"><input type="text" class="form-control inputs" name="inputEtiqueta'+cantidadDataStreams+'" id="inputEtiqueta'+cantidadDataStreams+'" placeholder="Etiqueta"></div><div class="col-md-4 mb-3"><input type="text" class="form-control inputs" name="inputTipo'+cantidadDataStreams+'"id="inputTipo'+cantidadDataStreams+'" placeholder="Tipo"></div></div>'
     tagsDataStream='<div class="form-row"><div class="container border rounded-lg" id="tagsDataStream'+cantidadDataStreams+'"><div class="row"><div class="col-md-4 mb-3"><label>Añadir Tags</label></div></div><div class="row"><div class="col col-6 col-md-1"><div class="row col-md-4 mb-3"><button type="button" id="buttonAgregarTagDataStream'+cantidadDataStreams+'" onclick="agregarTagDataStream(this)"class="rounded-circle btn btn-outline-success">+</button></div></div><div class="col col-12 col-md-8"><div class="row"><div class="col-md-6 mb-3"><input type="text" class="form-control inputs"id="inputTagDataStreamEspanol'+cantidadDataStreams+'" name="inputTagDataStreamEspanol'+cantidadDataStreams+'" placeholder="Español"></div><div class="col-md-6 mb-3"><input type="text" class="form-control inputs"id="inputTagDataStreamIngles'+cantidadDataStreams+'" name="inputTagDataStreamIngles'+cantidadDataStreams+'"placeholder="English"></div></div></div></div></div></div>'
-    opcionDataStream='<div class="container p-3"><div class="row"><div class="col col-6"><button id="buttonEliminardataStream'+cantidadDataStreams+'"onclick="EliminarDataStream(this)" type="button" class="btn btn-outline-secondary">Eliminar datastream</button></div><button onclick="agregarDataStream()" type="button" class="btn btn-outline-secondary">Añadir otro datastream</button></div></div></div></br>'
+    opcionDataStream='<div class="container p-3"><div class="row"><div class="col col-6"><button id="buttonEliminardataStream'+cantidadDataStreams+'"onclick="EliminarDataStream(this)" type="button" class="btn btn-outline-secondary">Eliminar datastream</button></div><button onclick="agregarDataStream()" type="button" class="btn btn-outline-secondary">Añadir otro datastream</button></div></div></div>'
     html=nombre+valorMaximo+valorMinimo+unidades+tagsDataStream+opcionDataStream;
     dataStreams.insertAdjacentHTML('beforeend',html);
     listaCantTagsDataStream.push(0);
@@ -108,6 +203,10 @@ function EliminarDataStream(comp)
     {
         dataStreamSiguiente=document.getElementById("dataStream"+(idDataStreamActual+1));
         dataStreamSiguiente.id="dataStream"+idDataStreamActual;
+        
+        dataStreamSiguiente=document.getElementById("dataStreamH2"+(idDataStreamActual+1));
+        dataStreamSiguiente.innerHTML="dataStream"+idDataStreamActual;
+        dataStreamSiguiente.id="dataStreamH2"+idDataStreamActual;
 
         inputNombreSiguiente=document.getElementById("inputNombre"+(idDataStreamActual+1));
         inputNombreSiguiente.setAttribute("name",("inputNombre"+idDataStreamActual));
@@ -153,10 +252,12 @@ function EliminarDataStream(comp)
         inputTagDataStreamInglesSiguiente.setAttribute("name",("inputTagDataStreamIngles"+idDataStreamActual));
         inputTagDataStreamInglesSiguiente.id="inputTagDataStreamIngles"+idDataStreamActual;
         
-        alert(idDataStreamActual);
             
         for(var i=1;i<=listaCantTagsDataStream[idDataStreamActual];i++)
         {
+            TagnDataStreamN=document.getElementById("Tag"+i+"DataStream"+(idDataStreamActual+1));
+            TagnDataStreamN.id="Tag"+i+"DataStream"+idDataStreamActual;
+            
             buttonTagnDataStreamnSiguiente=document.getElementById("buttonTag"+i+"DataStream"+(idDataStreamActual+1));
             buttonTagnDataStreamnSiguiente.id="buttonTag"+i+"DataStream"+idDataStreamActual;
 

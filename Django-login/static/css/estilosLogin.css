@@ -3,21 +3,17 @@
     html {
         margin: 0;
         padding: 0;
+        background-image: url("../img/background-2462431_1920.jpg");
+        background-position: center; 
         height: 100%;
+        background-repeat: repeat;
+        background-size: cover;
+        background-attachment: fixed;
+       
     }
     .fondo{
-        height: 100vh;
-        width: 100vw;
-        position: absolute;
-        top: 0;
-        left: 0;
-        background: #fff;
-        z-index: -1;
-        opacity: .35;    
-        background-image: url("../img/background-2462431_1920.jpg");
-        background-position: center;
-        background-repeat: no-repeat;
-        background-size: cover;
+       
+       
     }
     .user_card {
         height: 350px;
