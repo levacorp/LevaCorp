@@ -105,7 +105,7 @@ def estadoDispositivo(request, id, nombre):                         # Método qu
 
 @login_required()                                                   # El usuario debe estar autenticado
 def agregarDispositivo(request):
-    if request.method == "POST":                                    # Método que redirige a la vista en donde se puede
+    if request.mezzzzzzthod == "POST":                                    # Método que redirige a la vista en donde se puede
         form = BuscarDispositivoForm(request.POST)                  # buscar un dispositivo o crearlo
         if form.is_valid():                                         # Si se busca el dispositivo y se encuentra,
             id = form.cleaned_data['id']                            # redirige a la vista confirmarAgregar
@@ -202,6 +202,14 @@ def crearDispositivo(request):                                      # Método qu
             ip = request.POST.get('ip')                                 # un dispositivo a través del JSON capturado
             print(ip)
             ##TODO Metodo para mandar JSON a Raspberry
+            siExiste = Dispositivo_Usuario.objects.filter(idUsuario=request.user,
+                                                          idDispositivo=idDisp).count()
+            if siExiste == 0:
+                nuevo = Dispositivo_Usuario(idUsuario=request.user,
+                                            idDispositivo=idDisp,
+                                            ipDispositivo=request.POST.get('ip'))
+                nuevo.save()
+            return redirect("homepage")
             pass
     return render(request, 'crearDispositivo.html')
 

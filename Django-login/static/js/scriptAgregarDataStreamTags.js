@@ -196,9 +196,12 @@ function EliminarDataStream(comp)
     var node = document.getElementById(id);
     node.parentNode.removeChild(node);
     id=id.replace(/ |dataStream/g, "");
-    var idDataStreamActual=parseInt(id,8);
+    alert(id);
+
+    var idDataStreamActual=parseInt(id,10);
     cantidadDataStreams--;
     listaCantTagsDataStream.splice(idDataStreamActual,1);
+    alert(idDataStreamActual);
     for(idDataStreamActual;idDataStreamActual<=cantidadDataStreams;idDataStreamActual++)
     {
         dataStreamSiguiente=document.getElementById("dataStream"+(idDataStreamActual+1));
