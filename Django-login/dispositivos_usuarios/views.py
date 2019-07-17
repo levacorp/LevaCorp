@@ -48,25 +48,23 @@ def infoDispositivo(request, id):
 
 
 @login_required()                                                   #El usuario debe estar autenticado
-def estadosDispositivos(request):
-    conexion = ConexionRaspberry()                                  # Método para mostrar el estado de todos
+def estadosDispositivos(request):                             # Método para mostrar el estado de todos
     if request.method == "GET":                                     # los dispositivos. Esto implica probar si se puede
         listaDisp = obtenerDispositivos(request.user.id)            # hacer la conexión a un dispositivo a través de
         lista = []                                                  # la IP guardada, en este caso se muestra encendido,
-        diccionario = {}                                            # de lo contrario se muestra apagado
+                                                                    # de lo contrario se muestra apagado
         for i in listaDisp:
 
             id = i.getId()
             disp = Dispositivo_Usuario.objects.get(idUsuario=request.user,
                                                  idDispositivo=id)
             ip = disp.ipDispositivo
-            diccionario = conexion.estadosDispositivos(ip, id)
-            args = {}
-            if diccionario != None:
-                args = {"mensaje": ""}
-            else:
-                args = {"mensaje": "No se pudo hacer la conexión. Ir a inicializar"}
-            args.update({"nombre": i.getTitle()})
+            # diccionario = conexion.estadosDispositivos(ip, id)
+            # if diccionario != None:
+            #     args = {"mensaje": ""}
+            # else:
+            #    args = {"mensaje": "No se pudo hacer la conexión. Ir a inicializar"}
+            args = {"nombre": i.getTitle(), "ipDisp": ip, "idDisp": id}
             lista.append(args)
 
     return render(request, "Estado.html", {"lista": lista})
@@ -312,3 +310,17 @@ def obtenerDispositivos(idUsuario):                                             
             listaDisp.append(disp)
     return listaDisp
 
+
+# Method
+def probarConexion(request):
+
+    idDisp = request.GET.get('idDisp')
+    ipDisp = request.GET.get('ipDisp')
+
+    conexion = ConexionRaspberry()
+    diccionario = conexion.estadosDispositivos(ipDisp, idDisp)
+    if diccionario != None:
+        data = {"conecto": 1}
+    else:
+        data = {"conecto": 0}
+    return JsonResponse(data)
