@@ -97,7 +97,8 @@ def estadoDispositivo(request, id, nombre):                         # Método qu
         if diccionario != None:
             args = {"mensaje": "", "diccionario": diccionario, "nombre": nombre}
         else:
-            args = {"mensaje": "No se pudo hacer la conexión con la ip ", "nombre": nombre}
+            infoBasica = ConexionIndiceSemantico(id)
+            args = {"mensaje": "No se pudo hacer la conexión con la ip ", "infoBasica": infoBasica, "nombre": nombre}
         args.update({"ipDispositivo": ip})
         args.update({"idDispositivo": id})
         return render(request, "controlDispositivo.html", args)
@@ -201,6 +202,15 @@ def crearDispositivo(request):                                      # Método qu
         elif 'inicializar' in request.POST:                             # Captura la acción de inicializar
             ip = request.POST.get('ip')                                 # un dispositivo a través del JSON capturado
             print(ip)
+            siExiste = Dispositivo_Usuario.objects.filter(idUsuario=request.user,
+                                                          idDispositivo=idDispositivo).count()
+            if siExiste == 0:
+                nuevo = Dispositivo_Usuario(idUsuario=request.user,
+                                            idDispositivo=idDispositivo,
+                                            ipDispositivo=request.POST.get('ip'))
+                nuevo.save()
+            return redirect("homepage")
+
             ##TODO Metodo para mandar JSON a Raspberry
             pass
     return render(request, 'crearDispositivo.html')

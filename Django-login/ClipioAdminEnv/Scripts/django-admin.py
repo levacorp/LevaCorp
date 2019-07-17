@@ -1,4 +1,4 @@
-#!d:\semestreix\proyecto 1\respositorylevacorp\levacorp\django-login\clipioadmin\scripts\python.exe
+#!d:\semestreix\proyecto 1\repositoriov2\levacorp\django-login\clipioadminenv\scripts\python.exe
 from django.core import management
 
 if __name__ == "__main__":
