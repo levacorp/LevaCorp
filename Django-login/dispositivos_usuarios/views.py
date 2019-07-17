@@ -38,7 +38,6 @@ def infoDispositivo(request, id):
     if request.method == "POST":
         if 'descargarJson' in request.POST:                               # Redirige a la vista para descargar
             return crearDispositivo(request)                                # el JSON cargado en el formulario
-
     disp = ConexionIndiceSemantico(id)                                      # Carga la información del dispositivo
     siExiste = Dispositivo_Usuario.objects.get(idUsuario=request.user,      # ya existente
                                                idDispositivo=disp.getId())
@@ -59,11 +58,7 @@ def estadosDispositivos(request):                             # Método para mos
             disp = Dispositivo_Usuario.objects.get(idUsuario=request.user,
                                                  idDispositivo=id)
             ip = disp.ipDispositivo
-            # diccionario = conexion.estadosDispositivos(ip, id)
-            # if diccionario != None:
-            #     args = {"mensaje": ""}
-            # else:
-            #    args = {"mensaje": "No se pudo hacer la conexión. Ir a inicializar"}
+
             args = {"nombre": i.getTitle(), "ipDisp": ip, "idDisp": id}
             lista.append(args)
 

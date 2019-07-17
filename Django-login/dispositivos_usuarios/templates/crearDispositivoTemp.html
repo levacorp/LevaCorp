@@ -617,20 +617,18 @@
 												</div>
 											</div>
 
-						             
-
 									</div>
 								</div>
 							</div>
+
 						</form>
-
-
-
-
+                        <div class="container boton-footer">
+                            <div class="row mr-4 justify-content-end">
+                                <button onclick="location.href='{% url 'estados' disp.getId disp.getTitle %}'" class="btn btn-primary btn-lg" >Ver sensores y actuadores</button>
+                            </div>
+                        </div>
 						{% else %}
-
 						<h2>El dispositivo no existe</h2>
-
 						{% endif %}
 					</div>
 				</div>

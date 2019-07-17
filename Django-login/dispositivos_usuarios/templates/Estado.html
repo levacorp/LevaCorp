@@ -34,8 +34,7 @@
                                                         <div class="col-4">
                                                             <div class="custom-control custom-switch">
                                                                 <input type="checkbox" class="custom-control-input"
-                                                                    id={{ obj.nombre }}>
-
+                                                                       id='{{ obj.nombre }}'>
                                                                 <label class="custom-control-label" for="customSwitch1"></label>
                                                             </div>
                                                         </div>
@@ -47,7 +46,7 @@
                                 </a>
                                 {% endfor %}
                                 {% for obj in lista %}
-                                    <script>handlerConectar('{{ obj.ipDisp }}', '{{ obj.idDisp }}');</script>
+                                    <script>handlerConectar('{{ obj.nombre }}', '{{ obj.ipDisp }}', '{{ obj.idDisp }}');</script>
                                 {% endfor %}
                             </div>
                         </div>
