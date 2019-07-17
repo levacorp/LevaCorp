@@ -30,7 +30,7 @@ class ConexionRaspberry:
         estados = {}                                            # con la dirección IP y el id del dispositivo
 
         try:
-            xml = requests.get(url)
+            xml = requests.get(url, timeout=15)
             if xml.status_code == 400:
                 raise RuntimeError("No se logró hacer la conexion")
             tree = ET.fromstring(xml.content)
