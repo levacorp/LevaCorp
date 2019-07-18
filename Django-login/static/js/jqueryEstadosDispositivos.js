@@ -1,4 +1,4 @@
-function handlerConectar(ipDispositivo, idDispositivo) {
+function handlerConectar(nombre, ipDispositivo, idDispositivo) {
 
     $.ajax({
           type : 'GET',
@@ -9,13 +9,15 @@ function handlerConectar(ipDispositivo, idDispositivo) {
           },
           dataType: 'json',
           success: function (data) {
-              var mensaje=""
+              var mensaje="";
               if(data.conecto == 1) {
-                  mensaje = "Conexión satisfactoria con la IP: "+ipDispositivo
+                  mensaje = "Conexión satisfactoria con la IP: "+ipDispositivo;
+                  var name = nombre;
+                  document.getElementById(name).checked = true;
               }else if(data.conecto == 0) {
-                  mensaje = "No se pudo hacer la conexión. Ir a inicializar"
+                  mensaje = "No se pudo hacer la conexión. Ir a inicializar";
               }
-              var buscar= idDispositivo
+              var buscar= idDispositivo;
               document.getElementById(''+buscar).innerHTML = mensaje;
           }
     });
