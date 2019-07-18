@@ -2,8 +2,6 @@ var cantidadTags = 0;
 var cantidadDataStreams=0;
 var listaCantTagsDataStream=[0];
 
-
-
 function cambiarIdsTags(){
     var contadorEspañol = 1;
     var contadorIngles = 1;
@@ -29,7 +27,6 @@ function cambiarIdsTags(){
         }
     }
 }
-
 function cambiarIdsDataSreams()
 {
     var contDataStream = 0;
@@ -43,7 +40,7 @@ function cambiarIdsDataSreams()
             h2=document.getElementById("dataStreamH200");
             h2.id = "dataStreamH2" + contDataStream;
             //h2.innerHTML="dataStream"+contDataStream;
-
+            
             inputNombre=document.getElementById("inputNombre00")
             inputNombre.id = "inputNombre" + contDataStream;
             inputNombre.name = "inputNombre" + contDataStream;
@@ -132,12 +129,6 @@ function cambiarIdsDataSreams()
         }
  
 }
-cambiarIdsTags();
-
-
-
-
-
 function agregartag() {
     cantidadTags++;
     var tags = document.getElementById("tags");
@@ -179,7 +170,7 @@ function agregarDataStream()
 {
     var dataStreams = document.getElementById("dataStreams");
     cantidadDataStreams++;
-    nombre='<div class="div-principal" id="dataStream'+cantidadDataStreams+'"><h2 id="dataStreamH2'+cantidadDataStreams+'">dataStream'+cantidadDataStreams+'</h2><div class="form-row"><div class="col mb-3"><label><strong>Nombre</strong></label><input type="text" class="form-control inputs" name="inputNombre'+cantidadDataStreams+'"id="inputNombre'+cantidadDataStreams+'" placeholder="Nombre"required></div></div>'
+    nombre='<div class="div-principal" id="dataStream'+cantidadDataStreams+'"><h2 id="dataStreamH2'+cantidadDataStreams+'">Nuevo datastream</h2><div class="form-row"><div class="col mb-3"><label><strong>Nombre</strong></label><input type="text" class="form-control inputs" name="inputNombre'+cantidadDataStreams+'"id="inputNombre'+cantidadDataStreams+'" onchange="changeNameDataStream(this);" placeholder="Nombre"required></div></div>'
     valorMaximo='<div class="form-row"><div class="col-md-4 mb-3"><label><strong>Valor maximo</strong></label><input type="text" class="form-control inputs" name="inputValorMaximo'+cantidadDataStreams+'"id="inputValorMaximo'+cantidadDataStreams+'" placeholder="Valor Maximo"required></div>'
     valorMinimo='<div class="col-md-4 mb-3"><label><strong>Valor minimo</strong></label><input type="text" class="form-control inputs" name="inputValorMinimo'+cantidadDataStreams+'"id="inputValorMinimo'+cantidadDataStreams+'" placeholder="Valor Minimo"required></div></div>'
     unidades='<div class="form-row"><div class="col col-6 col-md-3"><label><strong>Unidad</strong></label></div></div><div class="form-row"><div class="col-md-4 mb-3"><input type="text" class="form-control inputs" name="inputSimbolo'+cantidadDataStreams+'"id="inputSimbolo'+cantidadDataStreams+'" placeholder="Símbolo"></div><div class="col-md-4 mb-3"><input type="text" class="form-control inputs" name="inputEtiqueta'+cantidadDataStreams+'" id="inputEtiqueta'+cantidadDataStreams+'" placeholder="Etiqueta"></div><div class="col-md-4 mb-3"><input type="text" class="form-control inputs" name="inputTipo'+cantidadDataStreams+'"id="inputTipo'+cantidadDataStreams+'" placeholder="Tipo"></div></div>'
@@ -206,9 +197,9 @@ function EliminarDataStream(comp)
     {
         dataStreamSiguiente=document.getElementById("dataStream"+(idDataStreamActual+1));
         dataStreamSiguiente.id="dataStream"+idDataStreamActual;
-        
+
         dataStreamSiguiente=document.getElementById("dataStreamH2"+(idDataStreamActual+1));
-        dataStreamSiguiente.innerHTML="dataStream"+idDataStreamActual;
+        //dataStreamSiguiente.innerHTML="dataStream"+idDataStreamActual;
         dataStreamSiguiente.id="dataStreamH2"+idDataStreamActual;
 
         inputNombreSiguiente=document.getElementById("inputNombre"+(idDataStreamActual+1));
@@ -324,4 +315,11 @@ function eliminarTagDataStream(comp){
         inputInglesSig.id="inputInglesTag"+idTagActual+"DataStream"+idDataStreamActual;
     }
     
+}
+function changeNameDataStream(elem)
+{
+    var id=elem.id;
+    id=id.replace(/ |inputNombre/g, "");
+    var node = document.getElementById("dataStreamH2"+id);
+    node.innerHTML=elem.value;
 }
