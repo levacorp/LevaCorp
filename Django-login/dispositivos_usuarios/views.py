@@ -16,8 +16,8 @@ from datetime import datetime
 @login_required()                                                  # El usuario debe estar autenticado
 def buscar(request, id):
     if request.method == "POST":
-        if 'agregar' in request.POST:                               # Agregar dispositivo
-            idDisp = int(request.POST.get('idDisp'))
+        if 'inicializar' in request.POST:                               # Agregar dispositivo
+            idDisp = int(request.POST.get('idDispositivo'))
             siExiste = Dispositivo_Usuario.objects.filter(idUsuario=request.user,
                                                           idDispositivo=idDisp).count()
             if siExiste == 0:
@@ -26,6 +26,7 @@ def buscar(request, id):
                                             ipDispositivo=request.POST.get('ip'))
                 nuevo.save()
             return redirect("homepage")
+            ##TODO Metodo para mandar JSON a Raspberry
         elif 'descargarJson' in request.POST:
             return crearDispositivo(request)
 
@@ -205,15 +206,7 @@ def crearDispositivo(request):                                      # Método qu
             return redirect("homepage")
 
             ##TODO Metodo para mandar JSON a Raspberry
-            siExiste = Dispositivo_Usuario.objects.filter(idUsuario=request.user,
-                                                          idDispositivo=idDisp).count()
-            if siExiste == 0:
-                nuevo = Dispositivo_Usuario(idUsuario=request.user,
-                                            idDispositivo=idDisp,
-                                            ipDispositivo=request.POST.get('ip'))
-                nuevo.save()
-            return redirect("homepage")
-            pass
+
     return render(request, 'crearDispositivo.html')
 
 
