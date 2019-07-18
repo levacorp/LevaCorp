@@ -104,7 +104,7 @@ def estadoDispositivo(request, id, nombre):                         # Método qu
 
 @login_required()                                                   # El usuario debe estar autenticado
 def agregarDispositivo(request):
-    if request.mezzzzzzthod == "POST":                                    # Método que redirige a la vista en donde se puede
+    if request.method == "POST":                                    # Método que redirige a la vista en donde se puede
         form = BuscarDispositivoForm(request.POST)                  # buscar un dispositivo o crearlo
         if form.is_valid():                                         # Si se busca el dispositivo y se encuentra,
             id = form.cleaned_data['id']                            # redirige a la vista confirmarAgregar
