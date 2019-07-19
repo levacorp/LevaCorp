@@ -34,24 +34,24 @@
 									<a
 										href="#step-1"
 										type="button"
-										class="btn btn-primary btn-circle"
+										class="btn btn-danger btn-circle"
 									>General</a>
 								</div>
 
 								<div class="stepwizard-step">
 									<a
 										href="#step-2"
-										type="button"
-										class="btn btn-default btn-circle"
+										type="button " onclick="cambiarIdsTags()"
+										class="btn btn-danger "
 										disabled="disabled"
 									>Tags</a>
 								</div>
 
 								<div class="stepwizard-step">
 									<a
-										href="#step-3"
+										href="#step-3" onclick="cambiarIdsDataSreams()"
 										type="button"
-										class="btn btn-default btn-circle"
+										class="btn  btn-danger"
 										disabled="disabled"
 									>Datastreams</a>
 								</div>
@@ -61,10 +61,7 @@
 						<form method="POST">
 							{% csrf_token %}
 
-							<div
-								class="row setup-content justify-content-center"
-								id="step-1"
-							>
+							<div class="row setup-content justify-content-center p-4" id="step-1">
 								<div class="col-xs-12">
 									<div class="col-md-12">
 										<h3 class="text-center">INFORMACION GENERAL</h3>
@@ -74,7 +71,7 @@
 										<div class="div-principal">
 											<div class="row">
 												<div class="col-md-4 mb-3">
-													<label for="validationDefault01">ID</label>
+													<label for="validationDefault01"><strong>ID</strong></label>
 
 													<input
 														type="text"
@@ -88,7 +85,7 @@
 												</div>
 
 												<div class="col-md-4 mb-3">
-													<label for="validationDefault02">Titulo</label>
+													<label for="validationDefault02"><strong>Titulo</strong></label>
 
 													<input
 														type="text"
@@ -102,7 +99,7 @@
 												</div>
 
                                                 <div class="col-md-4 mb-3">
-													<label for="validationDefault02">IP</label>
+													<label for="validationDefault02"><strong>IP</strong></label>
 
 													<input
 														type="text"
@@ -118,7 +115,7 @@
 
 											<div class="row">
 												<div class="col-md-4">
-													<label for="validationDefault03">Localizacion</label>
+													<label for="validationDefault03"><strong>localizacion</strong></label>
 												</div>
 											</div>
 
@@ -161,7 +158,7 @@
 											</div>
 
 											<div class="form-group">
-												<label for="DescripcionDisp">Descripcion</label>
+												<label for="DescripcionDisp"><strong>Descripcion</strong></label>
 
 												<textarea
 													class="form-control"
@@ -185,7 +182,7 @@
 							</div>
 
 							<div
-								class="row setup-content justify-content-center"
+								class="row setup-content justify-content-center p-4"
 								id="step-2"
 							>
 								<div class="col-xs-12">
@@ -201,7 +198,7 @@
 											<div class="form-row">
 												<div class="col col-6 col-md-3">
 													<div class="row col-md-4 mb-3">
-														<label for="validationDefault01">Entidad</label>
+														<label for="validationDefault01"><strong>Entidad</strong></label>
 													</div>
 												</div>
 
@@ -237,7 +234,7 @@
 											<div class="form-row">
 												<div class="col col-6 col-md-3">
 													<div class="row col-md-4 mb-3">
-														<label for="validationDefault01">Funcionalidad</label>
+														<label for="validationDefault01"><strong>Funcionalidad</strong></label>
 													</div>
 												</div>
 
@@ -273,7 +270,7 @@
 											<div class="form-row">
 												<div class="col col-6 col-md-3">
 													<div class="row col-md-4 mb-3">
-														<label for="validationDefault01">Nombre</label>
+														<label for="validationDefault01"><strong>Nombre</strong></label>
 													</div>
 												</div>
 
@@ -306,13 +303,12 @@
 												</div>
 											</div>
 
-											{% with contador=1 %}
+											{% with contador=0 %}
 											{% if disp.getPersonalizedTags %}
 											{% for tags in disp.getPersonalizedTags %}
-
 											<div
 												class="form-row"
-												id="formTag{{contador}}"
+												id="formTag"
 											>
 												<div class="col col-6 col-md-3">
 													<div class="row col-md-4 mb-3">
@@ -365,12 +361,7 @@
 											<div class="form-row">
 												<div class="col col-6 col-md-3">
 													<div class="row col-md-4 mb-3">
-														<button
-															id="agregarTag"
-															type="button"
-															onclick="agregar()"
-															class="rounded-circle btn btn-outline-success"
-														>+</button>
+														<button id="agregarTag"	type="button" onclick="agregartag()" class="rounded-circle btn btn-outline-success">+</button>
 													</div>
 												</div>
 
@@ -410,44 +401,44 @@
 								</div>
 							</div>
 
-							<div
-								class="row setup-content justify-content-center"
-								id="step-3"
-							>
+							<div class="row setup-content justify-content-center p-4" id="step-3">
 								<div class="col-xs-12">
 									<div class="col-md-12">
-										<h3 class="text-center">Datastreams</h3>
-
+										<h3 class="text-center">Datastreams</h3></br>
+										<div id=dataStreams>
 										<!-- content go here -->
 										{% if disp.getPersonalizedDataStreams %}
                                         {% for datastreams in disp.getPersonalizedDataStreams %}
-
-										<div class="div-principal">
+										
+										<div class="div-principal" id="dataStream00">
+											<h2 id="dataStreamH200">{{ datastreams.datastream_id }}</h2>
 											<div class="form-row">
 												<div class="col mb-3">
-													<label for="validationDefault01">Nombre</label>
+													<label ><strong>Nombre</strong></label>
 
 													<input
 														type="text"
 														class="form-control inputs"
-														name="dsNombre"
-														id="validationDefault01"
+														name="inputNombre00"
+														id="inputNombre00"
 														placeholder="Nombre"
 														value="{{ datastreams.datastream_id }}"
 														required="required"
+														onchange="changeNameDataStream(this);"
 													></input>
 												</div>
+											
 											</div>
 
 											<div class="form-row">
 												<div class="col-md-4 mb-3">
-													<label for="validationDefault02">Valor Maximo</label>
+													<label ><strong>Valor maximo</strong></label>
 
 													<input
 														type="text"
 														class="form-control inputs"
-														name="dsValorMin"
-														id="validationDefault02"
+														name="inputValorMaximo00"
+														id="inputValorMaximo00"
 														placeholder="Valor Maximo"
 														value="{{ datastreams.max_value }}"
 														required="required"
@@ -455,13 +446,13 @@
 												</div>
 
 												<div class="col-md-4 mb-3">
-													<label for="validationDefault03">Valor Minimo</label>
+													<label ><strong>Valor minimo</strong></label>
 
 													<input
 														type="text"
 														class="form-control inputs"
-														name="dsValorMax"
-														id="validationDefault03"
+														name="inputValorMinimo00"
+														id="inputValorMinimo00"
 														placeholder="Valor Minimo"
 														value="{{ datastreams.min_value }}"
 														required="required"
@@ -471,7 +462,7 @@
 
 											<div class="form-row">
 												<div class="col col-6 col-md-3">
-													<label for="validationDefault04">Unidad</label>
+													<label ><strong>Unidad</strong></label>
 												</div>
 											</div>
 
@@ -480,8 +471,8 @@
 													<input
 														type="text"
 														class="form-control inputs"
-														name="dsUnidad"
-														id="validationDefault05"
+														name="inputSimbolo00"
+														id="inputSimbolo00"
 														placeholder="Símbolo"
 														value="{{ datastreams.unit.symbol }}"
 														required="required"
@@ -492,8 +483,8 @@
 													<input
 														type="text"
 														class="form-control inputs"
-														name="dsEtiqueta"
-														id="validationDefault06"
+														name="inputEtiqueta00"
+														id="inputEtiqueta00"
 														placeholder="Etiqueta"
 														value="{{ datastreams.unit.label }}"
 														required="required"
@@ -504,8 +495,8 @@
 													<input
 														type="text"
 														class="form-control inputs"
-														name="dsTipo"
-														id="validationDefault07"
+														name="inputTipo00"
+														id="inputTipo00"
 														placeholder="Tipo"
 														value="{{ datastreams.datastream_type }}"
 														required="required"
@@ -516,11 +507,11 @@
 											<div class="form-row">
 												<div
 													class="container border rounded-lg"
-													id="tagsDataStream0"
+													id="tagsDataStream00"
 												>
 													<div class="row">
-														<div class="col-md-4 mb-3">
-															<label>Añadir Tags</label>
+														<div class="col-md-4 mb-3 p-2">
+															<label><strong>Añadir tags</strong></label>
 														</div>
 													</div>
 
@@ -529,7 +520,7 @@
 															<div class="row col-md-4 mb-3">
 																<button
 																	type="button"
-																	id="buttonAgregarTagDataStream0"
+																	id="buttonAgregarTagDataStream00"
 																	onclick="agregarTagDataStream(this)"
 																	class="rounded-circle btn btn-outline-success"
 																>+</button>
@@ -542,7 +533,7 @@
 																	<input
 																		type="text"
 																		class="form-control inputs"
-																		id="inputTagDataStreamEspanol0"
+																		id="inputTagDataStreamEspanol00"
 																		placeholder="Español"
 																	></input>
 																</div>
@@ -551,7 +542,7 @@
 																	<input
 																		type="text"
 																		class="form-control inputs"
-																		id="inputTagDataStreamIngles0"
+																		id="inputTagDataStreamIngles00"
 																		placeholder="English"
 																	></input>
 																</div>
@@ -563,26 +554,26 @@
 												
 													
 													{% for tag in datastreams.tags %}
-													<h1>{{contador1}}</h1>
-													<div class="row" id="Tag{{contador1}}DataStream{{contador1}}">
+													
+													<div class="row" id="Tag0DataStream00">
 														<div class="col col-6 col-md-1">
 															<div class="row col-md-4 mb-3">
-																<button onclick="eliminarTagDataStream(this)" id="buttonTag{{contador1}}DataStream{{contador1}}" "type="button" class="rounded-circle btn btn-outline-danger">-</button>
+																<button onclick="eliminarTagDataStream(this)" id="buttonTag0DataStream00" type="button" class="rounded-circle btn btn-outline-danger">-</button>
 															</div>
 														</div>
 														<div class="col col-12 col-md-8">
 															<div class="row">
 																<div class="col-md-6 mb-3">
-																	<input type="text" class="form-control inputs" id="inputEspanolTag1DataStream0" name="inputEspanolTag1DataStream0" value="{{ tag.0}}" placeholder="Español" required="">
+																	<input type="text" class="form-control inputs" id="inputEspanolTag0DataStream00" name="inputEspanolTag0DataStream0" value="{{ tag.0}}" placeholder="Español" required="">
 																</div>
 																<div class="col-md-6 mb-3">
-																	<input type="text" class="form-control inputs" id="inputInglesTag1DataStream0" name="inputInglesTag1DataStream0" value="{{ tag.1}}" placeholder="English" required="">
+																	<input type="text" class="form-control inputs" id="inputInglesTag0DataStream00" name="inputInglesTag0DataStream0" value="{{ tag.1}}" placeholder="English" required="">
 																</div>
 															</div>
 														</div></div>
 													
 													
-													{{ contador1|add:1 }}
+												
 
 
 													{% endfor %}
@@ -598,59 +589,43 @@
 												</div>
 											</div>
 
-											<div class="container p-3">
-												<div class="row justify-content-end">
-													<button
-														type="button"
-														class="btn btn-outline-secondary"
-													>
-														Añadir otro
-														datastream
-													</button>
-												</div>
-											</div>
+										    <div class="container p-3">
+												<div class="row">
+													<div class="col col-6">
+														<button id="buttonEliminardataStream00" onclick="EliminarDataStream(this)" type="button" class="btn btn-outline-secondary">Eliminar datastream</button>
+													</div>
+													<button onclick="agregarDataStream()" type="button" class="btn btn-outline-secondary">Añadir otro datastream</button>
+												</div></div>
 										</div>
-
+									
 										{% endfor %}
                                         {% endif %}
-
-										<div class="container boton-footer">
-											<div class="row justify-content-end">
-												<button
-													class="btn btn-danger nextBtn"
-													type="submit"
-                                                    name="descargarJson"
-												>Descargar JSON</button>
-											</div>
 										</div>
-
-						                {% if not ipDisp %}
-
-                                            <input name="idDisp" type="hidden" value="{{ disp.getId }}"></input>
-
-                                            <div class="container boton-footer">
-                                                <div class="row justify-content-end">
-                                                    <button
-                                                        class="btn btn-danger nextBtn"
-                                                        type="submit"
-                                                        name="agregar"
-                                                    >Agregar</button>
-                                                </div>
-                                            </div>
-						                {% endif %}
+										<div class="container boton-footer">
+												<div class="row justify-content-end">
+													<button class="btn btn-danger btn-lg nextBtn" name="descargarJson" type="submit">Descargar JSON</button>
+												</div>
+											</div>
+											<div class="container boton-footer">
+												<div class="row justify-content-end">
+													<button class="btn btn-danger btn-lg nextBtn" name="inicializar" type="submit">Guardar e Inicializar</button>
+												</div>
+											</div>
 
 									</div>
 								</div>
 							</div>
+
 						</form>
-
-
-
-
+                        {% if ipDisp %}
+                            <div class="container boton-footer">
+                                <div class="row mr-4 justify-content-end">
+                                    <button onclick="location.href='{% url 'estados' disp.getId disp.getTitle %}'" class="btn btn-primary btn-lg" >Ver sensores y actuadores</button>
+                                </div>
+                            </div>
+                        {% endif %}
 						{% else %}
-
 						<h2>El dispositivo no existe</h2>
-
 						{% endif %}
 					</div>
 				</div>

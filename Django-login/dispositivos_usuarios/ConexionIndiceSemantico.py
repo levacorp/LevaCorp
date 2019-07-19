@@ -1,17 +1,9 @@
 
 
-#from suds.client import Client
-#from suds.xsd.doctor import Import, ImportDoctor
 
 from zeep import Client
 
 import json
-
-import pprint  ##Para que imprima con formato los diccionarios y las listas
-import time
-
-import sys
-
 
 
 ##Clase que se conecta con el indice semantico y proporciona

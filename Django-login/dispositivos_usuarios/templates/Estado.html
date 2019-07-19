@@ -6,6 +6,9 @@
     {% listarDispositivos %}
     {% include 'navBar.html' with dispositivos=dispositivos %}
 
+    {% load staticfiles %}
+    <script src="https://code.jquery.com/jquery-3.3.1.min.js"></script>
+    <script src="{% static 'js\jqueryEstadosDispositivos.js' %}"></script>
     <!-- Fin Navbar -->
 
     <!-- Page content -->
@@ -21,33 +24,29 @@
                             <h4 class="card-title">Estado de los dispositivos </h4>
                             <div class="card-columns">
                                 
-                                {% for key, values in dispositivos.items %}
-                                {% for value in values%}
-                                <a href={% url 'estados' value.0 value.1 %}>
+                                {% for obj in lista %}
+                                <a href={% url 'estados' obj.idDisp obj.nombre %}>
                                         <div class="card">
                                             <div class="card-body">
                                                 <h5 class="card-title">
                                                     <div class="row">
-                                                        <div class="col-8">{{ value.1 }}</div>
+                                                        <div class="col-8">{{ obj.nombre }}</div>
                                                         <div class="col-4">
                                                             <div class="custom-control custom-switch">
-                                                                {% if disp.mensaje == "" %}
                                                                 <input type="checkbox" class="custom-control-input"
-                                                                    id="customSwitch1" checked>
-                                                                {% else %}
-                                                                    <input type="checkbox" class="custom-control-input"
-                                                                    id="customSwitch1">
-        
-                                                                {% endif %}
+                                                                       id='{{ obj.nombre }}'>
                                                                 <label class="custom-control-label" for="customSwitch1"></label>
                                                             </div>
                                                         </div>
+                                                        <h6 id={{ obj.idDisp }}>Cargando...</h6>
                                                     </div>
                                                 </h5>
                                             </div>
-                                            </div>
-                                    </a>
-                                {% endfor%}
+                                        </div>
+                                </a>
+                                {% endfor %}
+                                {% for obj in lista %}
+                                    <script>handlerConectar('{{ obj.nombre }}', '{{ obj.ipDisp }}', '{{ obj.idDisp }}');</script>
                                 {% endfor %}
                             </div>
                         </div>

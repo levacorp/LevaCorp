@@ -11,8 +11,8 @@ $(document).ready(function () {
             $item = $(this);
 
         if (!$item.hasClass('disabled')) {
-            navListItems.removeClass('btn-primary').addClass('btn-default');
-            $item.addClass('btn-primary');
+            navListItems.removeClass('btn-danger').addClass('btn-danger');
+            $item.addClass('btn-danger');
             allWells.hide();
             $target.show();
             $target.find('input:eq(0)').focus();
@@ -38,6 +38,6 @@ $(document).ready(function () {
             nextStepWizard.removeAttr('disabled').trigger('click');
     });
 
-    $('div.setup-panel div a.btn-primary').trigger('click');
+    $('div.setup-panel div a.btn-circle').trigger('click');
 });
 

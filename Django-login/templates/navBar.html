@@ -10,8 +10,12 @@
         <div class="card wizard-card justify-content-center">
             <div class="sidebar-header">
                 <a href="#usuario" data-toggle="collapse" aria-expanded="false" class="dropdown-toggle">
-                    <img id="logo" src="{% static 'img/1.jpg' %}" alt="..." class="rounded-circle">
-            </a>
+                    <img id="logo" src="{% static 'img/logoClipio.png' %}" alt="..." class="rounded-circle">
+                    <div class="col 2 d-flex justify-content-center">
+                        <h4 class="text-center">{{request.user}}</h4>
+                </div>
+            
+                </a>
             <ul class="collapse list-unstyled" id="usuario">
                 <li>
                         <div class="flecha">
@@ -20,25 +24,23 @@
                     
                 </li>
             </ul>
-            <div class="col 2 d-flex justify-content-center">
-                    <h5 class="text-center">{{request.user}}</h5>
-            </div>
+           
             
              
             </div>
             <ul class="list-unstyled components">
                 <li>
-                    <button onclick="location.href='{% url 'homepage' %}'" class="btn btn-primary btn-lg" role="button"
+                    <button onclick="location.href='{% url 'homepage' %}'" class="btn btn-danger btn-lg " role="button"
                         aria-pressed="true">Inicio</button>
                 </li>
                 <li>
-                    <button onclick="location.href='{% url 'estado' %}'" class="btn btn-primary btn-lg " role="button"
+                    <button onclick="location.href='{% url 'estado' %}'" class="btn btn-danger btn-lg " role="button"
                         aria-pressed="true">Estado</button>
                 </li>
             </ul>
             <ul class="list-unstyled components">
                 <button onclick="location.href='{% url 'agregarDispositivo' %}'" id="agregar " type="button"
-                    class="rounded-circle btn btn-primary">+</button>
+                    class="rounded-circle btn btn-danger myclass">+</button>
             </ul>
             <ul class="list-unstyled components ">
                 {% for key, values in dispositivos.items %}

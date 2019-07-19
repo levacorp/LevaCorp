@@ -11,5 +11,8 @@ urlpatterns = [
     path('estado', views.estadosDispositivos, name='estado'),
     path('agregar', views.agregarDispositivo, name='agregarDispositivo'),
     path('estados/(<int:id>, <str:nombre>)', views.estadoDispositivo, name='estados'),
-    path('changeValue/', views.changeValue, name='changeValue')
+
+
+    path('changeValue/', views.changeValue, name='changeValue'),
+    path('probarConexion/', views.probarConexion, name='probarConexion')
 ]

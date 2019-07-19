@@ -16,8 +16,8 @@ from datetime import datetime
 @login_required()                                                  # El usuario debe estar autenticado
 def buscar(request, id):
     if request.method == "POST":
-        if 'agregar' in request.POST:                               # Agregar dispositivo
-            idDisp = int(request.POST.get('idDisp'))
+        if 'inicializar' in request.POST:                               # Agregar dispositivo
+            idDisp = int(request.POST.get('idDispositivo'))
             siExiste = Dispositivo_Usuario.objects.filter(idUsuario=request.user,
                                                           idDispositivo=idDisp).count()
             if siExiste == 0:
@@ -26,6 +26,7 @@ def buscar(request, id):
                                             ipDispositivo=request.POST.get('ip'))
                 nuevo.save()
             return redirect("homepage")
+            ##TODO Metodo para mandar JSON a Raspberry
         elif 'descargarJson' in request.POST:
             return crearDispositivo(request)
 
@@ -38,7 +39,6 @@ def infoDispositivo(request, id):
     if request.method == "POST":
         if 'descargarJson' in request.POST:                               # Redirige a la vista para descargar
             return crearDispositivo(request)                                # el JSON cargado en el formulario
-
     disp = ConexionIndiceSemantico(id)                                      # Carga la información del dispositivo
     siExiste = Dispositivo_Usuario.objects.get(idUsuario=request.user,      # ya existente
                                                idDispositivo=disp.getId())
@@ -48,25 +48,19 @@ def infoDispositivo(request, id):
 
 
 @login_required()                                                   #El usuario debe estar autenticado
-def estadosDispositivos(request):
-    conexion = ConexionRaspberry()                                  # Método para mostrar el estado de todos
+def estadosDispositivos(request):                             # Método para mostrar el estado de todos
     if request.method == "GET":                                     # los dispositivos. Esto implica probar si se puede
         listaDisp = obtenerDispositivos(request.user.id)            # hacer la conexión a un dispositivo a través de
         lista = []                                                  # la IP guardada, en este caso se muestra encendido,
-        diccionario = {}                                            # de lo contrario se muestra apagado
+                                                                    # de lo contrario se muestra apagado
         for i in listaDisp:
 
             id = i.getId()
             disp = Dispositivo_Usuario.objects.get(idUsuario=request.user,
                                                  idDispositivo=id)
             ip = disp.ipDispositivo
-            diccionario = conexion.estadosDispositivos(ip, id)
-            args = {}
-            if diccionario != None:
-                args = {"mensaje": ""}
-            else:
-                args = {"mensaje": "No se pudo hacer la conexión. Ir a inicializar"}
-            args.update({"nombre": i.getTitle()})
+
+            args = {"nombre": i.getTitle(), "ipDisp": ip, "idDisp": id}
             lista.append(args)
 
     return render(request, "Estado.html", {"lista": lista})
@@ -97,7 +91,8 @@ def estadoDispositivo(request, id, nombre):                         # Método qu
         if diccionario != None:
             args = {"mensaje": "", "diccionario": diccionario, "nombre": nombre}
         else:
-            args = {"mensaje": "No se pudo hacer la conexión con la ip ", "nombre": nombre}
+            infoBasica = ConexionIndiceSemantico(id)
+            args = {"mensaje": "No se pudo hacer la conexión con la ip ", "infoBasica": infoBasica, "nombre": nombre}
         args.update({"ipDispositivo": ip})
         args.update({"idDispositivo": id})
         return render(request, "controlDispositivo.html", args)
@@ -201,8 +196,17 @@ def crearDispositivo(request):                                      # Método qu
         elif 'inicializar' in request.POST:                             # Captura la acción de inicializar
             ip = request.POST.get('ip')                                 # un dispositivo a través del JSON capturado
             print(ip)
+            siExiste = Dispositivo_Usuario.objects.filter(idUsuario=request.user,
+                                                          idDispositivo=idDispositivo).count()
+            if siExiste == 0:
+                nuevo = Dispositivo_Usuario(idUsuario=request.user,
+                                            idDispositivo=idDispositivo,
+                                            ipDispositivo=request.POST.get('ip'))
+                nuevo.save()
+            return redirect("homepage")
+
             ##TODO Metodo para mandar JSON a Raspberry
-            pass
+
     return render(request, 'crearDispositivo.html')
 
 
@@ -302,3 +306,17 @@ def obtenerDispositivos(idUsuario):                                             
             listaDisp.append(disp)
     return listaDisp
 
+
+# Method
+def probarConexion(request):
+
+    idDisp = request.GET.get('idDisp')
+    ipDisp = request.GET.get('ipDisp')
+
+    conexion = ConexionRaspberry()
+    diccionario = conexion.estadosDispositivos(ipDisp, idDisp)
+    if diccionario != None:
+        data = {"conecto": 1}
+    else:
+        data = {"conecto": 0}
+    return JsonResponse(data)

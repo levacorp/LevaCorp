@@ -79,16 +79,57 @@
                                                 <input name="ipDispositivo" type="text" class="form-control inputs"
                                                  placeholder="Nueva IP" required>
                                         </div>
-                                            <div class="col  col-6"><button type="submit" class="btn btn-outline-primary" name="btnIP">Cambiar Ip</button>
-                                            </div>
-                                        </div>
-                                        <div class="row">
-                                                <h5 class="card-title">{{ mensaje }},Ingrese una nueva ip </h5>
+                                        <div class="col  col-6"><button type="submit" class="btn btn-outline-primary" name="btnIP">Cambiar Ip</button>
                                         </div>
                                     </div>
-                                    </form>
-                            {% endif %}
+                                    <div class="row">
+                                        <h5 class="card-title">{{ mensaje }},Ingrese una nueva ip </h5>
+                                    </div>
+                                </div>
+                                </form>
+                                <div class="div-principal">
+                                    <div class="row">
+									    <div class="col-md-4 mb-3">
+											<label for="validationDefault01">ID</label>
+											<p class="form-control inputs">{{ infoBasica.getId }}</p>
+                                        </div>
+                                        <div class="col-md-4 mb-3">
+											<label for="validationDefault02">Titulo</label>
+                                            <p class="form-control inputs">{{ infoBasica.getTitle }}</p>
+                                        </div>
+                                        <div class="col-md-4 mb-3">
+                                            <label for="validationDefault02">IP</label>
+										    <p class="form-control inputs">{{ ipDispositivo }}</p>
+                                        </div>
+											</div>
+											<div class="row">
+												<div class="col-md-4">
+													<label for="validationDefault03">Localizacion</label>
+												</div>
+											</div>
+											<div class="row">
+												<div class="col-md-4 mb-3">
+                                                    <label for="validationDefault02">Latitud</label>
+													<p class="form-control inputs">{{ infoBasica.getLocation.lat }}</p>
+												</div>
 
+												<div class="col-md-4 mb-3">
+                                                    <label for="validationDefault02">Longitud</label>
+													<p class="form-control inputs">{{ infoBasica.getLocation.lon }}</p>
+												</div>
+
+												<div class="col-md-4 mb-3">
+                                                    <label for="validationDefault02">Elevacion</label>
+													<p class="form-control inputs">{{ infoBasica.getLocation.ele }}</p>
+												</div>
+											</div>
+
+											<div class="form-group">
+												<label for="DescripcionDisp">Descripcion</label>
+												<p class="form-control inputs">{{ infoBasica.getDescription }}</p>
+											</div>
+										</div>
+                            {% endif %}
                         </div>
                     </div>
                 </div>
