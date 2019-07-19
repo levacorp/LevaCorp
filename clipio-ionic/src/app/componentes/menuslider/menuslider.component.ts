@@ -1,7 +1,22 @@
 import { Component, OnInit } from '@angular/core';
 import { MenuController } from '@ionic/angular';
 import { BarcodeScannerOptions, BarcodeScanner } from '@ionic-native/barcode-scanner/ngx';
+import { NgModule} from '@angular/core';
+import { CommonModule } from '@angular/common';
+import { FormsModule } from '@angular/forms';
+import { IonicModule} from '@ionic/angular'
+import { Router } from '@angular/router';
 
+@NgModule({
+  imports: [
+    CommonModule,
+    FormsModule,
+    IonicModule,
+    
+
+  ], 
+})
+export class AppRoutingModule {}
 @Component({
   selector: 'app-menuslider',
   templateUrl: './menuslider.component.html',
@@ -10,7 +25,7 @@ import { BarcodeScannerOptions, BarcodeScanner } from '@ionic-native/barcode-sca
 export class MenusliderComponent implements OnInit {
 
     datosEscaneado = {};
-  constructor(private menu: MenuController, private barcodeScanner: BarcodeScanner) { }
+  constructor(private menu: MenuController, private barcodeScanner: BarcodeScanner, private router: Router) { }
   ngOnInit() {}
 
   leerCodigo()
@@ -22,4 +37,13 @@ export class MenusliderComponent implements OnInit {
          console.log('Error', err);
      });
   }
+  pushEdificio(){
+ this.router.navigate(['/edificio']);
+  }
+  pushInicio(){
+    this.router.navigate(['/']);
+     }
+  pushPreferencia(){
+      this.router.navigate(['/preferencia']);
+       }
 }

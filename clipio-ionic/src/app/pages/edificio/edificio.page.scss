@@ -1,0 +1,9 @@
+.md-grid-basic [class*="col"] {
+    padding-top: .5em;
+    padding-bottom: .5em;
+    
+    background: #f15e5e;
+    background-clip: padding-box;
+    border: 1px solid transparent;
+    color: #eeeded;
+}
