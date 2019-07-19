@@ -30,15 +30,17 @@
                                             <div class="card-body">
                                                 <h5 class="card-title">
                                                     <div class="row">
-                                                        <div class="col-8">{{ obj.nombre }}</div>
+                                                        <div class="col-8"><strong>{{ obj.nombre }}</strong></div>
                                                         <div class="col-4">
-                                                            <div class="custom-control custom-switch">
-                                                                <input type="checkbox" class="custom-control-input"
-                                                                       id='{{ obj.nombre }}'>
-                                                                <label class="custom-control-label" for="customSwitch1"></label>
-                                                            </div>
+                                                         
+                                                            <label class="switch" >
+                                                                    <input disabled type="checkbox" id='{{ obj.nombre }}'></input>
+                                                                    <span class="slider round"></span>
+                                                            </label>
+                                                         
+                                                          
                                                         </div>
-                                                        <h6 id={{ obj.idDisp }}>Cargando...</h6>
+                                                        <h6 class="p-3" id={{ obj.idDisp }}>Cargando...</h6>
                                                     </div>
                                                 </h5>
                                             </div>
