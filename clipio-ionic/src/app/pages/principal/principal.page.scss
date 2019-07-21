@@ -1,0 +1,21 @@
+/* Tamaño maximo para la carta de notificaciones */
+.tamanoCarta{
+    max-height: 28%;
+}
+/* activar scroll */
+.setScroll{
+    overflow: auto;
+}
+
+.barraSegmento{
+    padding: 1rem;
+    align-items: center;
+    align-self: center;
+    /* IMPORTANTE */
+    text-align: center;
+    align-content: center;
+}
+
+.contenidoSegmento{
+    border: 1px;
+}
