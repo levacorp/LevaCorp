@@ -14,12 +14,7 @@ const routes: Routes = [
   { path: 'elementos-habitacion', loadChildren: './elementos-habitacion/elementos-habitacion.module#ElementosHabitacionPageModule' },
   { path: 'edificio', loadChildren: './pages/edificio/edificio.module#EdificioPageModule' },
   { path: 'inicio', loadChildren: './pages/inicio/inicio.module#InicioPageModule' },
-  { path: 'preferencia', loadChildren: './pages/preferencia/preferencia.module#PreferenciaPageModule' }
-=======
-  { path: '', redirectTo: 'principal', pathMatch: 'full' },
-  { path: 'inicio-sesion', loadChildren: './pages/inicio-sesion/inicio-sesion.module#InicioSesionPageModule' },
-  { path: 'principal', loadChildren: './pages/principal/principal.module#PrincipalPageModule' },
-  { path: 'preferencias', loadChildren: './pages/preferencias/preferencias.module#PreferenciasPageModule' },
+  { path: 'preferencia', loadChildren: './pages/preferencia/preferencia.module#PreferenciaPageModule' },
   { path: 'lectura-qr/:id/:dir', loadChildren: './pages/lectura-qr/lectura-qr.module#LecturaQRPageModule' }
 
 
@@ -31,4 +26,4 @@ const routes: Routes = [
   imports: [RouterModule.forRoot(routes)],
   exports: [RouterModule]
 })
-export class AppRoutingModule {}
+export class AppRoutingModule { }
