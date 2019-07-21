@@ -24,6 +24,7 @@ export class PrincipalPage implements OnInit {
     //this.elementos = this.dataService.getElementos(); // Carga todos los elementos
     this.dataService.getHabitaciones().subscribe(console.log);
   }
+<<<<<<< HEAD
   /* Cuando se requiere traer los elementos filtrados o sin filtrar iguala el atributo filtro
     al filtro escogido 
   segmentButtonClicked(event) {
@@ -32,4 +33,7 @@ export class PrincipalPage implements OnInit {
     console.log(segEscogido);
   }*/
 
+=======
+  
+>>>>>>> 47eb0d2e6be32ad98a29d60360c2b5a444aff34c
 }

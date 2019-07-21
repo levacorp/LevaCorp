@@ -2,28 +2,48 @@
   <ion-menu side="start" contentId="principal" menuId="menuPrincipal">
     <ion-header>
       <ion-toolbar translucent>
+        <ion-img src="/assets/icon/UserLogo.png" slot="start"></ion-img>
         <ion-title>Menu</ion-title>
       </ion-toolbar>
     </ion-header>
     <ion-content>
+        
       <ion-list>
         <ion-item>
-          <ion-icon name="home" slot="start"></ion-icon>
-          <ion-label>Home</ion-label>
+          <ion-img src="/assets/icon/PaginaPrincipal.png" slot="start"></ion-img>
+          <ion-label (click)="pushInicio()">Inicio</ion-label>
         </ion-item>
         <ion-item>
-          <ion-icon name="person" slot="start"></ion-icon>
-          <ion-label>Profile</ion-label>
+            
+
+          <ion-img src="/assets/icon/Edificios.png" slot="start"></ion-img>
+          <ion-label (click)="pushEdificio()">Edificio</ion-label>
         </ion-item>
         <ion-item>
-          <ion-icon name="chatbubbles" slot="start"></ion-icon>
-          <ion-label>Messages</ion-label>
+          <ion-img src="/assets/icon/preferencias.png" slot="start" ></ion-img>
+          <ion-label (click)="pushPreferencia()">Preferencias</ion-label>
         </ion-item>
-        <ion-item>
-          <ion-icon name="settings" slot="start"></ion-icon>
-          <ion-label>Settings</ion-label>
+        <ion-item >
+          <ion-img src="/assets/icon/logout.png" slot="start"></ion-img>
+          <ion-label >Cerrar sesion</ion-label>
         </ion-item>
         
       </ion-list>
+      
     </ion-content>
+<<<<<<< HEAD
   </ion-menu>
+=======
+  </ion-menu>
+<!--botton Menu slider -->
+  <div class="ion-page" main>
+    <ion-header>
+      <ion-toolbar>
+        <ion-buttons slot="start">
+          <ion-menu-button></ion-menu-button>
+        </ion-buttons>
+        <ion-title>Clipio</ion-title>
+      </ion-toolbar>
+    </ion-header>
+  </div>
+>>>>>>> 47eb0d2e6be32ad98a29d60360c2b5a444aff34c

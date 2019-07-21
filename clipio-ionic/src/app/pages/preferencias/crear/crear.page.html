@@ -1,0 +1,93 @@
+<ion-header>
+  <ion-toolbar>
+      <ion-buttons slot="start">
+        <ion-back-button></ion-back-button>
+      </ion-buttons>
+    <ion-title>Nueva Preferencia</ion-title>
+  </ion-toolbar>
+</ion-header>
+
+<ion-content>
+  <ion-card>
+    <!-- Card Nombre -->
+    <ion-card-header>
+      <ion-card-title>
+          <ion-input placeholder="Nombre" required="true"></ion-input>
+      </ion-card-title>
+    </ion-card-header>
+  </ion-card>
+
+  <ion-card>
+    <!-- Card Evento -->
+    <ion-card-header>
+      <ion-toolbar>
+        <ion-card-title>
+          Evento
+        </ion-card-title>
+        <ion-buttons *ngIf="direccionEvento" slot="end">
+            <ion-button color="danger" (click)="eliminarEvento()">
+              <ion-icon slot="icon-only" name="trash"></ion-icon>
+            </ion-button>
+        </ion-buttons>
+      </ion-toolbar>
+    </ion-card-header>
+      <ion-card-content>
+        <!-- Caso de lectura QR Evento -->
+          <ion-row *ngIf="!direccionEvento"> 
+            <ion-col>
+              <ion-thumbnail>
+                <app-escaner (onReadDevice)="direccionLeidaEvento($event)"></app-escaner>
+              </ion-thumbnail>
+            </ion-col>
+            <ion-col>
+              <ion-label>Leer Código QR Evento</ion-label>
+            </ion-col>
+          </ion-row>
+        <!-- Fin Caso lectura QR Evento -->
+        <!-- Evento seleccionado sensor o actuador -->
+          <ion-label *ngIf="direccionEvento">{{ direccionEvento }}</ion-label>
+          
+        <!-- Fin Evento seleccionado sensor o actuador -->
+      </ion-card-content>
+  </ion-card>
+  <ion-card>
+    <!-- Card Accion -->
+    <ion-card-header>
+      <ion-toolbar>
+          <ion-card-title>
+            Acción
+          </ion-card-title>
+          <ion-buttons *ngIf="direccionAccion" slot="end">
+            <ion-button color="danger" (click)="eliminarAccion()">
+              <ion-icon slot="icon-only" name="trash"></ion-icon>
+            </ion-button>
+          </ion-buttons>
+      </ion-toolbar>
+    </ion-card-header>
+
+    <ion-card-content>
+      <!-- Caso seleccionado sensor o actuador -->
+        <ion-row *ngIf="!direccionAccion"> 
+          <ion-col>
+            <ion-thumbnail>
+              <app-escaner (onReadDevice)="direccionLeidaAccion($event)"></app-escaner>
+            </ion-thumbnail>
+          </ion-col>
+          <ion-col>
+            <ion-label>Leer Código QR Acción</ion-label>
+          </ion-col>
+        </ion-row>
+      <!-- Fin Caso seleccionado sensor o actuador -->
+      <!-- Caso seleccionado actuador accion -->
+        <ion-label *ngIf="direccionAccion">{{ direccionAccion }}</ion-label>
+      <!-- Fin Caso seleccionado actuador accion -->
+    </ion-card-content>
+  </ion-card>
+  <ion-card *ngIf="direccionAccion && direccionEvento">
+    <ion-header>
+      <ion-button expand="full" color="danger">
+        Listo
+      </ion-button>
+    </ion-header>
+  </ion-card>
+</ion-content>

@@ -1,0 +1,44 @@
+<ion-header>
+  <ion-toolbar>
+    <ion-buttons slot="start">
+      <ion-back-button></ion-back-button>
+    </ion-buttons>
+    <ion-title *ngIf="dataActuadores || dataActuadoresYSensores">Seleccion</ion-title>
+    <ion-title *ngIf="dataDispositivo">Verificar</ion-title>
+  </ion-toolbar>
+</ion-header>
+
+<ion-content>
+  <ion-card *ngIf="!dataDispositivo && !dataActuadores && !dataActuadoresYSensores">
+    <ion-card-header>
+        <ion-img src="/assets/img/loading.gif"></ion-img>
+    </ion-card-header>
+  </ion-card>
+  <ion-card *ngIf="dataDispositivo">
+    <ion-list>    <!-- *ngFor= -->
+      <ion-item>
+        <ion-card>
+          <ion-button>{{ dataDispositivo }}</ion-button>
+        </ion-card>
+      </ion-item>
+    </ion-list>
+  </ion-card>
+  <ion-card *ngIf="dataActuadores">
+      <ion-list>    <!-- *ngFor= -->
+        <ion-item>
+          <ion-card>
+            <ion-button>{{ dataActuadores }}</ion-button>
+          </ion-card>
+        </ion-item>
+      </ion-list>
+  </ion-card>
+  <ion-card *ngIf="dataActuadoresYSensores">
+      <ion-list>    <!-- *ngFor= -->
+        <ion-item>
+          <ion-card>
+            <ion-button>{{ dataActuadoresYSensores }}</ion-button>
+          </ion-card>
+        </ion-item>
+      </ion-list>
+  </ion-card>
+</ion-content>

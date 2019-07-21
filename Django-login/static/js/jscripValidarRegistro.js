@@ -23,7 +23,7 @@ function checkPass()
         //notify the user.
         pass2.style.backgroundColor = badColor;
         message.style.color = badColor;
-        message.innerHTML = "<br/>las contraseñas son incorrectas"
+        message.innerHTML = "las contraseñas son incorrectas"
     }
 } 
 
@@ -39,7 +39,7 @@ var regMail = /^([_a-zA-Z0-9-]+)(\.[_a-zA-Z0-9-]+)*@([a-zA-Z0-9-]+\.)+([a-zA-Z]{
     if(regMail.test(email) == false)
     {
        
-    document.getElementById("status").innerHTML    = "<span class='warning' style:width: 10px>El email no es valido</span>";
+    document.getElementById("status").innerHTML    = "<span class='warning'>El email no es valido</span>";
     }
     else
     {
