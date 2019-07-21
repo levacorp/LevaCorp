@@ -5,13 +5,13 @@ import { Routes, RouterModule } from '@angular/router';
 
 import { IonicModule } from '@ionic/angular';
 
-import { PrincipalPage } from './principal.page';
-import { ComponentsModule } from '../../componentes/componentesglobales.module';
+import { HttpClientModule } from '@angular/common/http';
+import { LecturaQRPage } from './lectura-qr.page';
 
 const routes: Routes = [
   {
     path: '',
-    component: PrincipalPage
+    component: LecturaQRPage
   }
 ];
 
@@ -19,10 +19,10 @@ const routes: Routes = [
   imports: [
     CommonModule,
     FormsModule,
-    ComponentsModule,
     IonicModule,
-    RouterModule.forChild(routes)
+    RouterModule.forChild(routes),
+    HttpClientModule
   ],
-  declarations: [PrincipalPage]
+  declarations: [LecturaQRPage]
 })
-export class PrincipalPageModule {}
+export class LecturaQRPageModule {}

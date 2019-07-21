@@ -1,4 +1,6 @@
+
 $(document).ready(function () {
+
     var navListItems = $('div.setup-panel div a'), // tab nav items
         allWells = $('.setup-content'), // content div
         allNextBtn = $('.nextBtn'); // next button

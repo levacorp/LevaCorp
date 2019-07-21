@@ -11,5 +11,5 @@ export class PrincipalPage implements OnInit {
 
   ngOnInit() {
   }
-
+  
 }
