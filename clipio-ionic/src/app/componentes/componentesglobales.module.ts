@@ -1,9 +1,16 @@
 import { NgModule } from '@angular/core';
 import { MenusliderComponent} from './menuslider/menuslider.component';
-import {IonicModule} from '@ionic/angular';
+import { EscanerComponent } from './escaner/escaner.component';
+import { IonicModule } from '@ionic/angular';
 @NgModule({
-    declarations:[MenusliderComponent],
-    exports:[MenusliderComponent],
+    declarations: [
+        MenusliderComponent,
+        EscanerComponent,
+    ],
+    exports: [
+        MenusliderComponent,
+        EscanerComponent,
+    ],
     imports: [IonicModule]
 })
 export class ComponentsModule{}

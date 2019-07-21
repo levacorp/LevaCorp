@@ -1,6 +1,6 @@
 import { Component, OnInit } from '@angular/core';
 import { MenuController } from '@ionic/angular';
-import { BarcodeScannerOptions, BarcodeScanner } from '@ionic-native/barcode-scanner/ngx';
+import { EscanerComponent } from '../escaner/escaner.component';
 
 @Component({
   selector: 'app-menuslider',
@@ -9,17 +9,7 @@ import { BarcodeScannerOptions, BarcodeScanner } from '@ionic-native/barcode-sca
 })
 export class MenusliderComponent implements OnInit {
 
-    datosEscaneado = {};
-  constructor(private menu: MenuController, private barcodeScanner: BarcodeScanner) { }
+  constructor(private menu: MenuController) { }
   ngOnInit() {}
 
-  leerCodigo()
-  {
-    this.barcodeScanner.scan().then(barcodeData => {
-      this.datosEscaneado = barcodeData;
-      console.log("IMPRIMEEEE"+this.datosEscaneado);
-     }).catch(err => {
-         console.log('Error', err);
-     });
-  }
 }

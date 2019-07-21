@@ -5,13 +5,16 @@ import { Routes, RouterModule } from '@angular/router';
 
 import { IonicModule } from '@ionic/angular';
 
-import { PrincipalPage } from './principal.page';
-import { ComponentsModule } from '../../componentes/componentesglobales.module';
+import { PreferenciasPage } from './preferencias.page';
 
 const routes: Routes = [
   {
     path: '',
-    component: PrincipalPage
+    component: PreferenciasPage
+  },
+  {
+    path: 'crear',
+    loadChildren: './crear/crear.module#CrearPageModule'
   }
 ];
 
@@ -19,10 +22,9 @@ const routes: Routes = [
   imports: [
     CommonModule,
     FormsModule,
-    ComponentsModule,
     IonicModule,
     RouterModule.forChild(routes)
   ],
-  declarations: [PrincipalPage]
+  declarations: [PreferenciasPage]
 })
-export class PrincipalPageModule {}
+export class PreferenciasPageModule {}
