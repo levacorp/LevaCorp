@@ -7,6 +7,7 @@ import { IonicModule } from '@ionic/angular';
 
 import { PrincipalPage } from './principal.page';
 import { ComponentsModule } from '../../componentes/componentesglobales.module';
+import { PipesModule } from '../../pipes/pipes.module';
 
 const routes: Routes = [
   {
@@ -19,10 +20,13 @@ const routes: Routes = [
   imports: [
     CommonModule,
     FormsModule,
-    ComponentsModule,
     IonicModule,
-    RouterModule.forChild(routes)
+    RouterModule.forChild(routes),
+    PipesModule,
+    ComponentsModule
   ],
   declarations: [PrincipalPage]
 })
-export class PrincipalPageModule {}
+export class PrincipalPageModule {
+
+}

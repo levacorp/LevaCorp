@@ -10,11 +10,15 @@ import { AppRoutingModule } from './app-routing.module';
 import { AppComponent } from './app.component';
 import { BarcodeScanner } from '@ionic-native/barcode-scanner/ngx';
 import { ComponentsModule } from './componentes/componentesglobales.module';
+import { HttpClientModule } from '@angular/common/http';
+import { PipesModule } from './pipes/pipes.module';
+
+
 
 @NgModule({
   declarations: [AppComponent],
   entryComponents: [],
-  imports: [BrowserModule, IonicModule.forRoot(), AppRoutingModule,ComponentsModule],
+  imports: [BrowserModule, IonicModule.forRoot(), AppRoutingModule,ComponentsModule, HttpClientModule, PipesModule],
   providers: [
     StatusBar,
     SplashScreen,
