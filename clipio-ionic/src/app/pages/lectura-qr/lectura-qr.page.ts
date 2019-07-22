@@ -20,9 +20,9 @@ export class LecturaQRPage implements OnInit {
   ngOnInit() {
     this.direccion = this.route.snapshot.paramMap.get('dir');
     let id = this.route.snapshot.paramMap.get('id');
-    if (id === '1') {
+    if (id === '2') {
       this.getActuadores();
-    } else if (id === '2') {
+    } else if (id === '1') {
       this.getActuadoresYSensores();
     } else if (id === '3') {
       this.getDispositivo();
