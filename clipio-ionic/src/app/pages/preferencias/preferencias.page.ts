@@ -11,5 +11,4 @@ export class PreferenciasPage implements OnInit {
 
   ngOnInit() {
   }
-
 }
