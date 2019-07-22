@@ -15,15 +15,15 @@ export class LecturaQRPage implements OnInit {
   dataDispositivo: any = null;
   dataActuadoresYSensores: any = null;
 
-  constructor(private http: HttpClient, private route: ActivatedRoute) { }
+  constructor(private route: ActivatedRoute) { }
 
   ngOnInit() {
     this.direccion = this.route.snapshot.paramMap.get('dir');
     let id = this.route.snapshot.paramMap.get('id');
     if (id === '1') {
-      this.getActuadores();
-    } else if (id === '2') {
       this.getActuadoresYSensores();
+    } else if (id === '2') {
+      this.getActuadores();
     } else if (id === '3') {
       this.getDispositivo();
     }
@@ -31,16 +31,24 @@ export class LecturaQRPage implements OnInit {
 
 
   getActuadores() {
-    // this.http.get(this.direccion).subscribe(datosDispositivo => (this.dataActuadores = datosDispositivo));
+    //this.http.get(this.direccion).subscribe(datosDispositivo => (this.dataActuadores = datosDispositivo));
 
-    this.dataActuadores = this.direccion;
+    // this.dataActuadores = this.direccion;
   }
 
 
   getActuadoresYSensores() {
+    const request = require('request');
+    request("http://www.google.com", function (error, response, body) {
+      console.error('error:', error); // Print the error if one occurred
+      console.log('statusCode:', response && response.statusCode); // Print the response status code if a response was received
+      console.log('body:', body); // Print the HTML for the Google homepage.
+    });
+
+
     // this.http.get(this.direccion).subscribe(apiData => (this.dataActuadoresYSensores = apiData));
 
-    this.dataActuadoresYSensores = this.direccion;
+    // this.dataActuadoresYSensores = this.direccion;
   }
 
 

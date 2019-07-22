@@ -14,7 +14,7 @@ export class EdificioPage implements OnInit {
   constructor(private dataservice: DataService,private router: Router) { }
 
   ngOnInit() {
-    this.edificios= this.dataservice.getEdificios();
+    // this.edificios= this.dataservice.getEdificios();
   }
   pushCrearEdificio(){
     this.router.navigate(['/crear-edificio']);
