@@ -30,7 +30,7 @@ export class MenusliderComponent implements OnInit {
     this.router.navigate(['/edificio']);
   }
   pushInicio() {
-    this.router.navigate(['/']);
+    this.router.navigate(['/principal']);
   }
   pushPreferencia(){
       this.router.navigate(['/preferencias']);
