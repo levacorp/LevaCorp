@@ -1,0 +1,42 @@
+<ion-header>
+  <ion-toolbar>
+    <ion-buttons slot="start">
+      <ion-back-button defaultHref="/"></ion-back-button>
+    </ion-buttons>
+    <ion-title>Nuevo Edificio</ion-title>
+  </ion-toolbar>
+</ion-header>
+
+<ion-content>
+  <ion-card>
+    <ion-item>
+      <img src="/assets/icon/house.png" />
+
+    </ion-item>
+  </ion-card>
+  <ion-card>
+    <ion-grid>
+
+      <ion-row>
+        <ion-text>Nombre</ion-text>
+      </ion-row>
+      <ion-row>
+        <ion-label>_________________</ion-label>
+      </ion-row>
+      <ion-row>
+        <ion-text>Piso</ion-text>
+      </ion-row>
+      <ion-row>
+        <ion-label>_________________</ion-label>
+      </ion-row>
+    </ion-grid>
+  </ion-card>
+  <ion-toolbar>
+    <div>
+      <ion-button (click)="clickedStar()">
+        <ion-text>listo</ion-text>
+      </ion-button>
+    </div>
+  </ion-toolbar>
+
+</ion-content>
