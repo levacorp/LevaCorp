@@ -10,66 +10,33 @@
   </ion-toolbar>
 </ion-header>
 
-    <div class = "md-grid-basic">
-        <div class = "col">Edificio</div>
-      </div>
-    
-   
-      <ion-content>
-        <ion-grid>
-          <ion-row >
-            <ion-col size="6">
-              <ion-card href="#">
-                  
-                
-                  <ion-img src="assets/img/logoClipio.png"></ion-img>
-    
-                 
-                      <ion-card-content>
-                          Keep close to Nature's heart... 
-                        </ion-card-content>
-                
-              </ion-card>
-            </ion-col>
-            <ion-col size="6">
-                <ion-card>
-                    <ion-item href="#" class="activated">
-                      <ion-icon name="wifi" slot="start"></ion-icon>
-                      <ion-label>Card Link Item 1 .activated</ion-label>
-                    </ion-item>
-                  </ion-card>
-              
-            </ion-col>
-            <ion-col size="6">
-              <ion-card href="#">
-                  
-                
-                  <ion-img src="assets/img/logoClipio.png"></ion-img>
-    
-                 
-                      <ion-card-content>
-                          Keep close to Nature's heart... 
-                        </ion-card-content>
-                
-              </ion-card>
-            </ion-col>
-            <ion-col size="6">
-                <ion-card>
-                    <ion-item href="#" class="activated">
-                      <ion-icon name="wifi" slot="start"></ion-icon>
-                      <ion-label>Card Link Item 1 .activated</ion-label>
-                    </ion-item>
-                  </ion-card>
-          <!--Fin Carga de los elementos filtrados por segmento escogido-->
-        </ion-col>
-      </ion-row>
-    </ion-grid> 
         
-    </ion-content>
+ <ion-content>    
+     
+    <ion-grid class="contenidoSegmento">
+        <ion-row>
+          <!--Acomoda el numero de tarjetas de acuerdo al tamaño de pantalla-->
+          <ion-col size="6" size-sm="4" size-md="3" size-lg="2"
+            *ngFor="let elemento of edificios | async">
+            <!--Carga de los elementos filtrados por segmento escogido-->
+            <ion-card>
+              <img src="/assets/icon/house.png" />
+              <ion-card-header>
+                <ion-card-title>{{ elemento.username }}</ion-card-title>
+              </ion-card-header>
+              <ion-card-content>
+                {{ elemento.email }}
+              </ion-card-content>
+            </ion-card>
+            <!--Fin Carga de los elementos filtrados por segmento escogido-->
+          </ion-col>
+        </ion-row>
+      </ion-grid>
+ </ion-content>
    
        <!-- fab placed to the top end -->
-   <ion-fab vertical="bottom" horizontal="end" slot="fixed">
-    <ion-fab-button color="danger">
+   <ion-fab vertical="bottom" horizontal="end" slot="fixed" >
+    <ion-fab-button (click)="pushCrearEdificio()"  color="danger" >
       <ion-icon name="add"></ion-icon>
     </ion-fab-button>
   </ion-fab>
