@@ -35,9 +35,10 @@
         <!-- Caso de lectura QR Evento -->
           <ion-row *ngIf="!direccionEvento"> 
             <ion-col>
-              <ion-thumbnail>
+              <!--<ion-thumbnail>
                 <app-escaner (onReadDevice)="direccionLeidaEvento($event)"></app-escaner>
-              </ion-thumbnail>
+              </ion-thumbnail>-->
+              <ion-button (click)="direccionLeidaEvento('http://192.168.0.23/Identificator?osid=708637323')"></ion-button>
             </ion-col>
             <ion-col>
               <ion-label>Leer Código QR Evento</ion-label>
