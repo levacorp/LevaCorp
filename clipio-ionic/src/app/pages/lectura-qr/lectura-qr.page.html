@@ -3,8 +3,8 @@
     <ion-buttons slot="start">
       <ion-back-button></ion-back-button>
     </ion-buttons>
-    <ion-title *ngIf="dataActuadores || dataActuadoresYSensores">Seleccion</ion-title>
-    <ion-title *ngIf="dataDispositivo">Verificar</ion-title>
+    <ion-title *ngIf="id === '1' || id === '2'">Seleccion</ion-title>
+    <ion-title *ngIf="id === '3'">Verificar</ion-title>
   </ion-toolbar>
 </ion-header>
 
