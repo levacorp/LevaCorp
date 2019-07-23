@@ -18,7 +18,6 @@ export class EdificioPage implements OnInit {
   }
   pushCrearEdificio(){
     this.router.navigate(['/crear-edificio']);
-    
-}
+  }
 
 }

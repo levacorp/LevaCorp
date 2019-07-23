@@ -15,7 +15,15 @@ const routes: Routes = [
   {
     path: 'crear',
     loadChildren: './crear/crear.module#CrearPageModule'
-  }
+  },
+  {
+    path: 'modificar',
+    loadChildren: './modificar/modificar.module#ModificarPageModule'
+  },
+  {
+    path: 'mostrar',
+    loadChildren: './mostrar/mostrar.module#MostrarPageModule'
+  },
 ];
 
 @NgModule({

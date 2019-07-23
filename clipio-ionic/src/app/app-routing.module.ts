@@ -11,7 +11,9 @@ const routes: Routes = [
   { path: 'inicio', loadChildren: './pages/inicio/inicio.module#InicioPageModule' },
   { path: 'lectura-qr/:id/:dir', loadChildren: './pages/lectura-qr/lectura-qr.module#LecturaQRPageModule' },
   { path: 'elementos-por-habitacion', loadChildren: './pages/elementos-por-habitacion/elementos-por-habitacion.module#ElementosPorHabitacionPageModule' },
-  { path: 'dispositivos-elemento/:id', loadChildren: './pages/dispositivos-elemento/dispositivos-elemento.module#DispositivosElementoPageModule' }
+  { path: 'dispositivos-elemento/:id', loadChildren: './pages/dispositivos-elemento/dispositivos-elemento.module#DispositivosElementoPageModule' },
+
+
 
 
 
