@@ -1,0 +1,108 @@
+<!--Se encarga de mostrar el navbar -->
+<ion-header>
+    <ion-toolbar>
+
+        <ion-buttons slot="start">
+          <ion-back-button></ion-back-button>
+        </ion-buttons>
+      <ion-title>{{argumento}}</ion-title>
+    </ion-toolbar>
+</ion-header>
+<!--Fin del navbar-->
+<!--Se encargara de mostrar todos los elementos de la habitacion-->
+<ion-content>
+   <!--Pestañas del dispositivo-->
+    <ion-segment color="danger" [(ngModel)]="segment" (ionChange)="segmentButtonClicked($event)">
+        <ion-segment-button value="Recursos" >
+          Recursos
+        </ion-segment-button>
+        <ion-segment-button value="Informacion">
+          Informacion
+        </ion-segment-button>
+   </ion-segment>
+        <!--Fin pestañas del dispositivo-->
+   
+    <!--Muestra el numero de slider en la pagina-->
+    <ion-slides  (ionSlideDidChange)="slideChanged()">
+        <!--Slide dispositivos inteligentes-->
+        <ion-slide>
+            <ion-grid>
+                <ion-row>
+                  <!--Acomoda el numero de tarjetas de acuerdo al tamaño de pantalla-->
+                  <ion-col size="6" size-sm="4" size-md="3" size-lg="2"
+                    *ngFor="let elemento of (elementos | async) | filtroElementos: '8':'userId'">
+                    <!--Carga de los elementos filtrados por la habitacion escogida-->
+                    
+                    <ion-card  >
+                      <img src="/assets/icon/camara1.png"/>
+                      <ion-card-header  >
+                        <ion-card-title>{{ elemento.userId }}</ion-card-title>
+                      </ion-card-header>
+                      <ion-card-content>
+                        {{ elemento.body }}
+                      </ion-card-content>
+                    </ion-card>
+                    <!--Fin Carga de los elementos filtrados por la habitacion escogido-->
+                  </ion-col>
+                </ion-row>
+              </ion-grid>
+        </ion-slide>
+        <!--Slide fin dispositivos inteligentes-->
+        <!--Slide informacion dispositivo-->
+        <ion-slide >
+            <ion-grid>
+                <ion-list>
+                    <ion-item>
+                      <ion-row>
+                          <ion-col size="12" >
+                              <h2>Identificador</h2>
+                            </ion-col>
+                            <ion-col size="12">
+                              1234
+                            </ion-col>
+                      </ion-row>
+                    </ion-item>
+                    
+                    <ion-item>
+                        <ion-row>
+                            <ion-col size="12" >
+                                <h2>Descripcion</h2>
+                              </ion-col>
+                              <ion-col size="12">
+                                1234
+                              </ion-col>
+                        </ion-row>
+                      </ion-item>
+
+                      <ion-item>
+                          <ion-row>
+                              <ion-col size="12" >
+                                  <h2>Tags</h2>
+                                </ion-col>
+                                <ion-col size="12">
+                                  1234
+                                </ion-col>
+                          </ion-row>
+                        </ion-item>
+
+                        <ion-item>
+                            <ion-row>
+                                <ion-col size="12" >
+                                    <h2>Ip</h2>
+                                  </ion-col>
+                                  <ion-col size="12">
+                                    1234
+                                  </ion-col>
+                            </ion-row>
+                          </ion-item>
+                 </ion-list>
+              
+            </ion-grid>
+        </ion-slide>
+        <!--Slide fin informacion dispositivo-->
+
+
+    </ion-slides>
+    <!--Fin slider-->
+</ion-content>
+<!--Fin muestra de elementos de la habitacion-->
