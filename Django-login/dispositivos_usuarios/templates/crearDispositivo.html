@@ -16,6 +16,11 @@
             <div class="fondo"></div>
             <div class="wizard-container">
                 <div class="container cont-principal">
+                    {% if mensaje %}
+                    <div class="alert alert-{{ mensaje.0 }}" role="alert">
+                        {{ mensaje.1 }}
+                    </div>
+                    {% endif %}
                     <div class="card wizard-card" id="wizard">
                         <div class="stepwizard">
                             <div class="stepwizard-row setup-panel">
@@ -219,6 +224,19 @@
                                             </div>
 
                                             <div class="form-row">
+                                                <div class="col-md-4 mb-3">
+                                                    <label><strong>Datastream Format</strong></label>
+                                                    <select class="form-control" name="datastream_format0"
+                                                            id="datastream_format0">
+                                                        <option>int</option>
+                                                        <option>float</option>
+                                                        <option>string</option>
+                                                        <option>char</option>
+                                                        <option>bool</option>
+                                                        <option>boolean</option>
+                                                        <option>serializable</option>
+                                                    </select>
+                                                </div>
                                                 <div class="col-md-4 mb-3">
                                                     <label><strong>Valor maximo</strong></label>
                                                     <input type="text" class="form-control inputs" name="inputValorMaximo0"

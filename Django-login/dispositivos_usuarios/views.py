@@ -17,16 +17,8 @@ from datetime import datetime
 def buscar(request, id):
     if request.method == "POST":
         if 'inicializar' in request.POST:                               # Agregar dispositivo
-            idDisp = int(request.POST.get('idDispositivo'))
-            siExiste = Dispositivo_Usuario.objects.filter(idUsuario=request.user,
-                                                          idDispositivo=idDisp).count()
-            if siExiste == 0:
-                nuevo = Dispositivo_Usuario(idUsuario=request.user,
-                                            idDispositivo=idDisp,
-                                            ipDispositivo=request.POST.get('ip'))
-                nuevo.save()
-            return redirect("homepage")
-            ##TODO Metodo para mandar JSON a Raspberry
+            return crearDispositivo(request)
+
         elif 'descargarJson' in request.POST:
             return crearDispositivo(request)
 
@@ -180,32 +172,38 @@ def crearDispositivo(request):                                      # Método qu
                     request.POST.get('inputSimbolo' + str(cont)),
                     request.POST.get('inputEtiqueta' + str(cont)),
                     request.POST.get('inputTipo' + str(cont)),
-                    listaTags
+                    listaTags,
+                    request.POST.get('datastream_format' + str(cont))
                 ])
             else:
                 existeDataStream = False
             cont = cont + 1
 
         dataJSON = crearJSON(idDispositivo, titulo, localizacionLatitud, localizacionLongitud, localizacionElevacion,
-                       descripcion, fechaCreacion,tagEntidadEsp, tagEntidadIng, tagFuncionalidadEsp, tagFuncionalidadIng,
+                       descripcion, fechaCreacion, tagEntidadEsp, tagEntidadIng, tagFuncionalidadEsp, tagFuncionalidadIng,
                          tagNombreEsp, tagNombreIng, tags, datastreams)
         if 'descargarJson' in request.POST:                                     # Captura la acción de descargar el JSON
             response = JsonResponse(dataJSON)
             response['Content-Disposition'] = 'attachment; filename="' + str(idDispositivo) + '.json"'
             return response
         elif 'inicializar' in request.POST:                             # Captura la acción de inicializar
-            ip = request.POST.get('ip')                                 # un dispositivo a través del JSON capturado
-            print(ip)
-            siExiste = Dispositivo_Usuario.objects.filter(idUsuario=request.user,
-                                                          idDispositivo=idDispositivo).count()
-            if siExiste == 0:
-                nuevo = Dispositivo_Usuario(idUsuario=request.user,
-                                            idDispositivo=idDispositivo,
-                                            ipDispositivo=request.POST.get('ip'))
-                nuevo.save()
-            return redirect("homepage")
+            conexion = ConexionRaspberry()                              # un dispositivo a través del JSON capturado
+            ip = request.POST.get('ip')
 
-            ##TODO Metodo para mandar JSON a Raspberry
+            siInicializo = conexion.inicializar(ip, dataJSON)
+
+            if siInicializo:
+                siExiste = Dispositivo_Usuario.objects.filter(idUsuario=request.user,
+                                                              idDispositivo=idDispositivo).count()
+                if siExiste == 0:
+                    nuevo = Dispositivo_Usuario(idUsuario=request.user,
+                                                idDispositivo=idDispositivo,
+                                                ipDispositivo=request.POST.get('ip'))
+                    nuevo.save()
+                return redirect("homepage", {'mensaje': ['success', 'Inicializacion Satisfactoria!']})
+            else:
+                return render(request, 'crearDispositivo.html', {'mensaje': ['danger', 'No se ha Inicializado el dispositivo']})
+
 
     return render(request, 'crearDispositivo.html')
 
@@ -228,13 +226,13 @@ def changeValue(request):                                           # Para cambi
     return JsonResponse(data)
 
 # Local Method
-def crearJSON(idDispositivo, titulo, localizacionLatitud, localizacionLongitud,
-              localizacionElevacion, descripcion, fechaCreacion, tagEntidadEsp,
-              tagEntidadIng, tagFuncionalidadEsp, tagFuncionalidadIng,
-              tagNombreEsp, tagNombreIng, tags, datastreams):                       # Método para crear el JSON de un
-                                                                                    # dispositivo y devuelve el JSON
-    datastreamsDef = []                                                             # en forma de diccionario
-    for i in datastreams:
+def crearJSON(idDispositivo, titulo, localizacionLatitud, localizacionLongitud,     # Método para crear el JSON de un
+              localizacionElevacion, descripcion, fechaCreacion, tagEntidadEsp,     # dispositivo y devuelve el JSON
+              tagEntidadIng, tagFuncionalidadEsp, tagFuncionalidadIng,              # en forma de diccionario
+              tagNombreEsp, tagNombreIng, tags, datastreams):
+
+    datastreamsDef = []
+    for i in datastreams:   # 0:id - 1:max_value - 2:min_value - 3:symbol - 4:label - 5:unitType - 6:tags - 7:datastream_format
         if i[3] == "":      # Cuando el Simbolo está vacio
             i[3] = None
         if i[4] == "":      # Cuando el Label está vacio
@@ -243,6 +241,7 @@ def crearJSON(idDispositivo, titulo, localizacionLatitud, localizacionLongitud,
             i[5] = 0
         datastreamsDef.append(
             {
+                "datastream_format": i[7],
                 "feedid": None,
                 "id": i[0],
                 "current_value": None,

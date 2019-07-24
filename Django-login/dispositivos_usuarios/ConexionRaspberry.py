@@ -69,3 +69,14 @@ class ConexionRaspberry:
             print(e)
 
         return cambio
+
+    # Método que permite inicializar una raspberry, mandandole el archivo JSON con sus datos
+    def inicializar(self, ip, dataJson):
+        url = 'http://' + ip + '/StartObject'
+
+        try:
+            requests.post(url, data=dataJson)
+            return True
+        except requests.exceptions.RequestException as e:
+            print(e)
+            return False
