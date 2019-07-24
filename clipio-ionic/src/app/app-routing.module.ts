@@ -6,10 +6,13 @@ const routes: Routes = [
   { path: '', redirectTo: 'principal', pathMatch: 'full' },
   { path: 'principal', loadChildren: './pages/principal/principal.module#PrincipalPageModule' },
   { path: 'preferencias', loadChildren: './pages/preferencias/preferencias.module#PreferenciasPageModule' },
-  { path: 'elementos-habitacion', loadChildren: './elementos-habitacion/elementos-habitacion.module#ElementosHabitacionPageModule' },
+  // { path: 'elementos-habitacion', loadChildren: './elementos-habitacion/elementos-habitacion.module#ElementosHabitacionPageModule' },
   { path: 'edificio', loadChildren: './pages/edificio/edificio.module#EdificioPageModule' },
   { path: 'inicio', loadChildren: './pages/inicio/inicio.module#InicioPageModule' },
-  { path: 'lectura-qr/:id/:dir', loadChildren: './pages/lectura-qr/lectura-qr.module#LecturaQRPageModule' }
+  { path: 'lectura-qr/:id/:dir', loadChildren: './pages/lectura-qr/lectura-qr.module#LecturaQRPageModule' },
+  // tslint:disable-next-line: max-line-length
+  { path: 'asociacion-elemento-dispositivo', loadChildren: './pages/asociacion-elemento-dispositivo/asociacion-elemento-dispositivo.module#AsociacionElementoDispositivoPageModule' }
+
 
 ];
 @NgModule({
