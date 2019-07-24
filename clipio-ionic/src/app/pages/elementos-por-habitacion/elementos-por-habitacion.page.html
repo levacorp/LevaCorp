@@ -1,18 +1,18 @@
+<!--Se encarga de mostrar el navbar -->
 <ion-header>
   <ion-toolbar>
     <ion-buttons slot="start">
       <ion-menu-button color="danger" menu="menuPrincipal"></ion-menu-button>
     </ion-buttons>
+    <ion-buttons>
+        <ion-back-button></ion-back-button>
+      </ion-buttons>
     <ion-title>Inicio</ion-title>
   </ion-toolbar>
 </ion-header>
 
 <!--Se encargara de mostrar todos los elementos de la habitacion-->
 <ion-content>
- 
-  <ion-button id="fernando "(click)="prueba($event)">
-    a
-  </ion-button>
   <ion-grid class="contenidoSegmento">
     <ion-row>
       <!--Acomoda el numero de tarjetas de acuerdo al tamaño de pantalla-->
@@ -20,9 +20,9 @@
         *ngFor="let elemento of (elementos | async) | filtroElementos: '8':'userId'">
         <!--Carga de los elementos filtrados por la habitacion escogida-->
         
-        <ion-card>
-          <img src="/assets/icon/camara1.png" />
-          <ion-card-header>
+        <ion-card  id="elemento.userId" (click)="routeDispositivosElemento(elemento.userId)" >
+          <img src="/assets/icon/camara1.png"/>
+          <ion-card-header  >
             <ion-card-title>{{ elemento.userId }}</ion-card-title>
           </ion-card-header>
           <ion-card-content>
@@ -34,3 +34,9 @@
     </ion-row>
   </ion-grid>
 </ion-content>
+ <!-- fab placed to the top end -->
+<ion-fab vertical="bottom" horizontal="end" slot="fixed" >
+      <ion-fab-button (click)="pushCrearEdificio()"  color="danger" >
+        <ion-icon name="add"></ion-icon>
+      </ion-fab-button>
+ </ion-fab>

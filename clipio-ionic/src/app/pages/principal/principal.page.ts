@@ -22,7 +22,6 @@ export class PrincipalPage implements OnInit {
   ngOnInit() {
     this.segmentoelementos.value = '1'; // Elemento del segmento seleccionado por defecto
     this.elementos = this.dataService.getElementos(); // Carga todos los elementos
-    //this.dataService.getHabitaciones().subscribe(console.log);
   }
   /* Cuando se requiere traer los elementos filtrados o sin filtrar iguala el atributo filtro
     al filtro escogido*/
