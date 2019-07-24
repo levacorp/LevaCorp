@@ -20,15 +20,15 @@ export class PrincipalPage implements OnInit {
 
   /* Inicializa los atributos a utilizar */
   ngOnInit() {
-    this.segmentoelementos.value = '1'; // Elemento del segmento seleccionado por defecto
+    // this.segmentoelementos.value = '1'; // Elemento del segmento seleccionado por defecto
     this.elementos = this.dataService.getElementos(); // Carga todos los elementos
+    this.habitaciones = this.dataService.getHabitaciones();
   }
   /* Cuando se requiere traer los elementos filtrados o sin filtrar iguala el atributo filtro
     al filtro escogido*/
   segmentButtonClicked(event) {
     const segEscogido = event.detail.value;
     this.filtro = segEscogido;
-    console.log(segEscogido);
   }
 
 }

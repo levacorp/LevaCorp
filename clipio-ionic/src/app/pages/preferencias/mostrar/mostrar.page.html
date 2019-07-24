@@ -1,0 +1,59 @@
+<ion-header>
+    <ion-toolbar>
+      <ion-title>Editar Preferencia</ion-title>
+    </ion-toolbar>
+  </ion-header>
+  
+  <ion-content>
+    <ion-card>
+    <!-- Card Nombre -->
+      <ion-card-header>
+        <ion-card-title>
+        </ion-card-title>
+        <ion-item>
+          <ion-label required="true">ECA1</ion-label>
+        </ion-item>
+      </ion-card-header>
+    </ion-card>
+  
+    <ion-card>
+        <!-- Card Evento -->
+        <ion-card-header>
+          <ion-card-title>
+            Evento
+          </ion-card-title>
+        </ion-card-header>
+        <ion-card-content>
+  
+          <!--TODO: Mostrar Evento-->
+  
+          <ion-item>
+            <ion-label required="true">Significado</ion-label>
+          </ion-item>
+        </ion-card-content>
+      </ion-card>
+      <ion-card>
+        <!-- Card Accion -->
+        <ion-card-header>
+          <ion-card-title>
+            Acción
+          </ion-card-title>
+        </ion-card-header>
+    
+        <ion-card-content>
+  
+          <!--TODO: Mostrar Accion-->
+  
+  
+          <ion-item>
+            <ion-label required="true">Significado</ion-label>
+          </ion-item>
+        </ion-card-content>
+      </ion-card>
+    <ion-fab vertical="bottom" horizontal="end" slot="fixed" >
+      <ion-fab-button (click)="pushModificarECA()" color="danger" >
+        <ion-icon name="create"></ion-icon>
+      </ion-fab-button>
+    </ion-fab>
+  </ion-content>
+  

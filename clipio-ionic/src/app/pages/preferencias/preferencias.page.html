@@ -4,12 +4,53 @@
       <ion-buttons slot="start">
         <ion-back-button></ion-back-button>
       </ion-buttons>
-    <ion-title>preferencias</ion-title>
+    <ion-title>Preferencias</ion-title>
   </ion-toolbar>
 </ion-header>
 
+<!-- Lista de Preferencias -->
 <ion-content>
-    <ion-button routerLink="./crear">
-      Crear
-    </ion-button>
+  <ion-card>
+    <ion-card-header>
+        <ion-toolbar>
+          <ion-title (click)="pushMostrar()">ECA1</ion-title>
+          <ion-toggle color="success" slot="end"></ion-toggle>
+          <ion-buttons slot="end">
+            <ion-button (click)="handlerEliminarECA()">
+              <ion-icon slot="icon-only" color="danger" name="trash"></ion-icon>
+            </ion-button>
+          </ion-buttons>
+        </ion-toolbar>
+    </ion-card-header>
+    <ion-card-content>
+      <div (click)="pushMostrar()">
+        <ion-grid>
+      <ion-row>
+        <ion-col>
+          <ion-toolbar>
+            <ion-label>Si hace mucho calor</ion-label>
+          </ion-toolbar>
+          <ion-toolbar>
+            <ion-label>Tempratura mayor a 30°</ion-label>
+          </ion-toolbar>
+        </ion-col>
+        <ion-col><ion-icon name="arrow-round-forward" style="zoom:2.0;text-align:center;"></ion-icon></ion-col>
+        <ion-col>
+          <ion-toolbar>
+            <ion-label>Encender el ventilador</ion-label>
+          </ion-toolbar>
+          <ion-toolbar>
+            <ion-label>Ventilador ON</ion-label>
+          </ion-toolbar>
+        </ion-col>
+      </ion-row>
+    </ion-grid>
+    </div>
+    </ion-card-content>
+  </ion-card>
+  <ion-fab vertical="bottom" horizontal="end" slot="fixed" >
+    <ion-fab-button routerLink="./crear" color="danger" >
+      <ion-icon name="add"></ion-icon>
+    </ion-fab-button>
+  </ion-fab>
 </ion-content>
