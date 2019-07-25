@@ -211,17 +211,24 @@
                                                 <h2 id="dataStreamH20">Nuevo Datastream</h2> 
 
                                             <div class="form-row">
-                                                <div class="col-md-5 mb-3">
+                                                <div class="col-md-7 mb-3">
                                                     <label><strong>Nombre</strong></label>
                                                     <input type="text" class="form-control inputs" name="inputNombre0"
                                                         id="inputNombre0" onchange="changeNameDataStream(this);" placeholder="Nombre" required>
                                                 </div>
-                                                <div class="col-md-7 mb-3">
-                                                    <label><strong>Datastream format</strong></label>
-                                                    <input type="text" class="form-control inputs" name="inputDataStreamFormat0"
-                                                        id="inputDataStreamFormat0" placeholder="Datastream format"
-                                                       required>
-                                                </div>
+                                                <div class="col-md-5 mb-3">
+													<label ><strong>Datastream format</strong></label>
+													<select class="form-control" name="selectDataStreamFormat0" id="selectDataStreamFormat0">
+                                                        <option>None</option>
+                                                        <option>int</option>
+														<option>float</option>
+														<option>string</option>
+														<option>char</option>
+														<option>bool</option>
+														<option>boolean</option>
+														<option>serializable</option>
+													</select>
+												</div>
                                             </div>
 
                                             <div class="form-row">

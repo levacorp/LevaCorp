@@ -414,7 +414,7 @@
 										<div class="div-principal" id="dataStream00">
 											<h2 id="dataStreamH200">{{ datastreams.datastream_id }}</h2>
 											<div class="form-row">
-												<div class="col-md-5 mb-3">
+												<div class="col-md-7 mb-3">
 													<label ><strong>Nombre</strong></label>
 
 													<input
@@ -428,18 +428,18 @@
 														onchange="changeNameDataStream(this);"
 													></input>
 												</div>
-												<div class="col-md-7 mb-3">
+												<div class="col-md-5 mb-3">
 													<label ><strong>Datastream format</strong></label>
-
-													<input
-														type="text"
-														class="form-control inputs"
-														name="inputDataStreamFormat00"
-														id="inputDataStreamFormat00"
-														placeholder="Datastream format"
-														value="{{ datastreams.format }}"
-														required="required"
-													></input>
+													<select class="form-control" name="selectDataStreamFormat00" id="selectDataStreamFormat00">
+														<option>None</option>
+														<option>int</option>
+														<option>float</option>
+														<option>string</option>
+														<option>char</option>
+														<option>bool</option>
+														<option>boolean</option>
+														<option>serializable</option>
+													</select>
 												</div>
 											</div>
 										
