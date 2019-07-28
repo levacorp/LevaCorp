@@ -16,9 +16,8 @@ export class ElementosPorHabitacionPage implements OnInit {
   ngOnInit() {
     this.elementos = this.dataService.getElementos(); // Carga todos los elementos
   }
-
-  prueba(elem)
-  {
-    this.router.navigate(['dispositivos-elemento', elem.srcElement.id]);
+  /*Se encarga de redirigir el elemento seleccionado a la pagina donde se muestras sus dispositivos asociados*/
+  routeDispositivosElemento(id: string )  {
+    this.router.navigate(['dispositivos-elemento', id]);
   }
 }

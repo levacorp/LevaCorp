@@ -4,12 +4,12 @@ import { FormsModule } from '@angular/forms';
 import { Routes, RouterModule } from '@angular/router';
 import { PipesModule } from 'src/app/pipes/pipes.module';
 import { IonicModule } from '@ionic/angular';
-import { DispositivosElementoPage } from './dispositivos-elemento.page';
+import { DispositivoPage } from './dispositivo.page';
 
 const routes: Routes = [
   {
     path: '',
-    component: DispositivosElementoPage
+    component: DispositivoPage
   }
 ];
 
@@ -21,6 +21,6 @@ const routes: Routes = [
     RouterModule.forChild(routes),
     PipesModule
   ],
-  declarations: [DispositivosElementoPage]
+  declarations: [DispositivoPage]
 })
-export class DispositivosElementoPageModule {}
+export class DispositivoPageModule {}
