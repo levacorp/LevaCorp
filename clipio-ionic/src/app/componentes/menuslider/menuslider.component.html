@@ -1,34 +1,42 @@
 <!--Menu slider-->
-  <ion-menu side="start" contentId="principal" menuId="menuPrincipal">
-    <ion-header>
-      <ion-toolbar translucent>
-        <ion-img class="img-perfil" src="/assets/icon/UserLogo.png" slot="start"></ion-img>
-        <ion-title>Menu</ion-title>
-      </ion-toolbar>
-    </ion-header>
-    <ion-content>
-        
-      <ion-list>
+<ion-menu side="start" contentId="principal" menuId="menuPrincipal">
+  <ion-header>
+    <ion-toolbar translucent>
+      <ion-img class="img-perfil" src="/assets/icon/UserLogo.png" slot="start"></ion-img>
+      <ion-title>Menu</ion-title>
+    </ion-toolbar>
+  </ion-header>
+  <ion-content>
+
+    <ion-list>
+      <ion-menu-toggle>
         <ion-item>
           <ion-img src="/assets/icon/PaginaPrincipal.png" slot="start"></ion-img>
           <ion-label (click)="pushInicio()">Inicio</ion-label>
         </ion-item>
-        <ion-item>
-            
+      </ion-menu-toggle>
 
+      <ion-menu-toggle>
+        <ion-item>
           <ion-img src="/assets/icon/Edificios.png" slot="start"></ion-img>
           <ion-label (click)="pushEdificio()">Edificio</ion-label>
         </ion-item>
+      </ion-menu-toggle>
+
+      <ion-menu-toggle>
         <ion-item>
-          <ion-img src="/assets/icon/preferencias.png" slot="start" ></ion-img>
+          <ion-img src="/assets/icon/preferencias.png" slot="start"></ion-img>
           <ion-label (click)="pushPreferencia()">Preferencias</ion-label>
         </ion-item>
-        <ion-item >
+      </ion-menu-toggle>
+
+      <ion-menu-toggle>
+        <ion-item>
           <ion-img src="/assets/icon/logout.png" slot="start"></ion-img>
-          <ion-label >Cerrar sesion</ion-label>
+          <ion-label>Cerrar sesion</ion-label>
         </ion-item>
-        
-      </ion-list>
-      
-    </ion-content>
-  </ion-menu>
+      </ion-menu-toggle>
+    </ion-list>
+
+  </ion-content>
+</ion-menu>
