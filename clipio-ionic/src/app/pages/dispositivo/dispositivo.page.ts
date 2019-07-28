@@ -3,6 +3,7 @@ import { Observable } from 'rxjs';
 import { DataService } from 'src/app/services/data.service';
 import {IonSlides} from '@ionic/angular';
 import { ActivatedRoute } from '@angular/router';
+import { LoadingController } from '@ionic/angular';
 
 
 
@@ -14,18 +15,19 @@ import { ActivatedRoute } from '@angular/router';
 })
 export class DispositivoPage implements OnInit {
   argumento = null;
+  dataStreams: Observable<any>;
+  InformacionBasica: Observable<any>;
 
-  elementos: Observable<any>;
   @ViewChild(IonSlides) slides: IonSlides;
-
   segment = 'Recursos';
 
-  constructor(private activatedRoute: ActivatedRoute , private dataService: DataService ) { }
+  constructor(public loadingController: LoadingController, private activatedRoute: ActivatedRoute , private dataService: DataService ) { }
 
   ngOnInit() {
       this.argumento = this.activatedRoute.snapshot.paramMap.get('id');
-      this.elementos = this.dataService.getElementos(); // Carga todos los elementos
-  }
+      this.dataStreams = this.dataService.getEstadoDataStreams(); // Carga todos los elementos
+      this.InformacionBasica = this.dataService.getInfoBasicaDispositivo();
+    }
   segmentButtonClicked(event) {
     const segEscogido = event.detail.value;
     if (segEscogido === 'Recursos') {
@@ -44,5 +46,23 @@ export class DispositivoPage implements OnInit {
       }
       });
     }
+  estadoActuador1(event)  {
+    console.log(event.target.id);
+    if (event.detail.checked)    {
+      console.log('1');
 
+    } else {
+      console.log('0');
+    }
   }
+  async estadoActuador() {
+    const loading = await this.loadingController.create({
+      spinner: null,
+      message: 'Espere por favor...',
+      translucent: true,
+    });
+    await loading.present();
+    loading.lastElementChild.insertAdjacentHTML( 'afterbegin', '<ion-spinner name="circles" color="danger" ></ion-spinner> ');
+    this.loadingController.dismiss();
+  }
+}
