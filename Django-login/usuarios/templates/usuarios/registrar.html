@@ -2,89 +2,97 @@
 {% block content %}
 {% load staticfiles %}
 
-<div class="fondo"></div>   
+<!--Fondo de la pagina-->
+<div class="fondo"></div>
+<!--Pagina al 100% de altura y anchura-->
 <div class="container h-100">
     <div class="d-flex justify-content-center h-100">
+        <!--Carta para el formulario-->
         <div class="user_card" style="height: 580px; ">
+            <!--Imagen del formulario-->
             <div class="d-flex justify-content-center">
                 <div class="brand_logo_container">
                     <img src="{% static 'img/logoClipio.png' %}" class="brand_logo" alt="Logo">
                 </div>
             </div>
 
-                <form method="POST" style="margin-top:100px">
-                    {% csrf_token %}
-                    <div class="input-group mb-3">
-                        <div class="input-group-append">
-                            <span class="input-group-text"><i class="fas fa-user"></i></span>
-                        </div>
-                        <input type="text" name="username" class="form-control input_user" required
-                            placeholder="usuario">
-                    </div>
-                    <div class="input-group mb-3">
-                        <div class="input-group-append">
-                            <span class="input-group-text"><i class="fas fa-user"></i></span>
-                        </div>
-                        <input type="text" name="first_name" class="form-control input_user" required
-                            placeholder="Nombre">
-                    </div>
-                    <div class="input-group mb-3">
-                            <div class="input-group-append">
-                                <span class="input-group-text"><i class="fas fa-user"></i></span>
-                            </div>
-                            <input type="text" name="last_name" class="form-control input_user" required
-                                placeholder="Apellido">
-                    </div>
-                    
-                    <div class="input-group mb-3">
-                            <div class="input-group-append">
-                                <span class="input-group-text"><i class="fas fa-user"></i></span>
-                            </div>
-                            <input required type="text" name="email" id = "email"  onchange="email_validate(this.value);" class="form-control input_user"
-                             placeholder="email"/>
-                             <div class="input-group">
-                                                 <div class="status" id="status"></div>
-                            </div>
-                            
-                    </div>
+            <form method="POST" style="margin-top:100px">
+                {% csrf_token %}
 
-                    <div class="input-group mb-3">
-                            <div class="input-group-append">
-                                <span class="input-group-text"><i class="fas fa-key"></i></span>
-                            </div>
-                            <input required name="password1" type="password" class="form-control input_pass" minlength="8" maxlenght="14" id="pass1"
-                                placeholder="Contraseña">
-                        </div>
-                        <div class="input-group mb-2">
-                                <div class="input-group-append">
-                                    <span class="input-group-text"><i class="fas fa-key"></i></span>
-                                </div>
-                                <input required name="password2" type="password" class="form-control inputpass" minlength="8" maxlenght="14" placeholder="Ingrese de nuevo la contraseña"  id="pass2" onkeyup="checkPass(); return false;" />
-                                <div class="input-group mb-1">
-                                <span id="confirmMessage" class="confirmMessage"></span>
-                            </div>
-                            </div>
-                    <div class="d-flex justify-content-center mt-3 login_container">
-                        <button type="submit" name="button" class="btn login_btn">Registrar</button>
+                <!--Agrupa el borde izquiero rojo con el input-->
+                <div class="input-group mb-3">
+                    <!--Borde izquierdo rojo para el campo-->
+                    <div class="input-group-append">
+                        <span class="input-group-text"><i class="fas fa-user"></i></span>
                     </div>
-                </form>
-            
+                    <!--Campo de ingreso de datos-->
+                    <input type="text" name="username" class="form-control input_user" required placeholder="usuario">
+                </div>
+                <div class="input-group mb-3">
+                    <div class="input-group-append">
+                        <span class="input-group-text"><i class="fas fa-user"></i></span>
+                    </div>
+                    <input type="text" name="first_name" class="form-control input_user" required placeholder="Nombre">
+                </div>
+                <div class="input-group mb-3">
+                    <div class="input-group-append">
+                        <span class="input-group-text"><i class="fas fa-user"></i></span>
+                    </div>
+                    <input type="text" name="last_name" class="form-control input_user" required placeholder="Apellido">
+                </div>
 
-            <div class="justify-content-center mt-3 login_container " >
-                    <a href="{% url 'login' %}" name="button" class="btn login_btn">Regresar</a>
+                <div class="input-group mb-3">
+                    <div class="input-group-append">
+                        <span class="input-group-text"><i class="fas fa-user"></i></span>
+                    </div>
+                    <input required type="text" name="email" id="email" onchange="email_validate(this.value);"
+                        class="form-control input_user" placeholder="email" />
+                    <div class="input-group">
+                        <div class="status" id="status"></div>
+                    </div>
                 </div>
-                <div class="d-flex justify-content-center  login_container">
-                        {% if messages %}
-                        {% for message in messages %}
-                        <div class="alert alert-{{ message.tags }}">
-                            {{ message }}
-                        </div>
-                        {% endfor %}
-                        {% endif %}
+
+                <div class="input-group mb-3">
+                    <div class="input-group-append">
+                        <span class="input-group-text"><i class="fas fa-key"></i></span>
+                    </div>
+                    <input required name="password1" type="password" class="form-control input_pass" minlength="8"
+                        maxlenght="14" id="pass1" placeholder="Contraseña">
                 </div>
+                <div class="input-group mb-2">
+                    <div class="input-group-append">
+                        <span class="input-group-text"><i class="fas fa-key"></i></span>
+                    </div>
+                    <input required name="password2" type="password" class="form-control inputpass" minlength="8"
+                        maxlenght="14" placeholder="Ingrese de nuevo la contraseña" id="pass2"
+                        onkeyup="checkPass(); return false;" />
+                    <div class="input-group mb-1">
+                        <span id="confirmMessage" class="confirmMessage"></span>
+                    </div>
+                </div>
+                <!--Boton con metodo submit post del formulario-->
+                <div class="d-flex justify-content-center mt-3 login_container">
+                    <button type="submit" name="button" class="btn login_btn">Registrar</button>
+                </div>
+            </form>
+
+            <!--Llama a una funcion Django para regresar-->
+            <div class="justify-content-center mt-3 login_container ">
+                <a href="{% url 'login' %}" name="button" class="btn login_btn">Regresar</a>
+            </div>
+            <!--Aparece si existe un error al iniciar sesion-->
+            <div class="d-flex justify-content-center  login_container">
+                {% if messages %}
+                {% for message in messages %}
+                <div class="alert alert-{{ message.tags }}">
+                    {{ message }}
+                </div>
+                {% endfor %}
+                {% endif %}
+            </div>
         </div>
 
-       
+
 
     </div>
 
@@ -96,4 +104,3 @@
 </div>
 
 {% endblock %}
-

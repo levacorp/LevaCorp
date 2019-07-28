@@ -2,38 +2,62 @@
 
 {% block content %}
 {% load navBarTags %}
+<!--Contenedor principal para que la pagina, permite visualizar todo al 100% de la pantalla-->
 <div id="wrapper" class="active">
-    <!-- Sidebar -->
+    <!-- NavBar -->
     {% listarDispositivos %}
     {% include 'navBar.html' with dispositivos=dispositivos %}
 
     <!-- Fin Navbar -->
 
-    <!-- Page content -->
+    <!-- Page content, divide el navbar del contenido de la derecha -->
     <div id="page-content-wrapper">
         <!-- Keep all page content within the page-content inset div! -->
         <div class="page-content inset">
+            <!--Fondo de la pagina-->
             <div class="fondo"></div>
+            <!--Contenedor para la carta principal de la pagina, controla padding top-->
             <div class="wizard-container">
+                <!--Contenedor que controla padding left y right-->
                 <div class="container cont-principal">
+                    <!--Carta para el contenido principal-->
                     <div class="card wizard-card justify-content-center">
                         <div class="div-principal">
                             <h1 class="text-center">CLIPIO</h1>
-                            <h5 class="text-center pb-5">ESCENARIO DE INTERACCIÓN SEMÁNTICA DE OBJETOS INTELIGENTES EN LA WEB DE LAS COSAS</h5>
-                            <p class="card-text text-justify">Entorno físico mediado con herramientas semánticas donde los objetos inteligentes ofrecen sus recursos, funcionalidades e interactúan de forma dinámica con otros objetos inteligentes para generar nuevos servicios .
-                                Este escenario toma como base la arquitectura propuesta por el Dr Miguel Ángel Niño Zambrano en su tesis de doctorado, la cual fue implementada por Dalila Riobamba y Santiago Guerrero. Posteriormente, Andrea Pabón y Julian Rojas propusieron un modelo de perfil de usuario para la IoT, y lo incorporaron al escenario, con el fin que los objetos pudieran identificar el usuario con el que interactuan y ofrecerles servicios de acuerdo a sus preferencias.
-                            </p>
-                            <p>
-                                Contacto:</br>
-                                manzamb@unicauca.edu.co</br>
-                                jlr@unicauca.edu.co</br>
-                                andreapabon@unicauca.edu.co</br>
+                            <h5 class="text-center pb-5">ESCENARIO DE INTERACCIÓN SEMÁNTICA DE OBJETOS INTELIGENTES EN
+                                LA WEB DE LAS COSAS</h5>
+                            <p class="card-text text-justify">Entorno físico mediado con herramientas semánticas donde
+                                los objetos inteligentes ofrecen sus recursos, funcionalidades e interactúan de forma
+                                dinámica con otros objetos inteligentes para generar nuevos servicios .
+                                Este escenario toma como base la arquitectura propuesta por el Dr Miguel Ángel Niño
+                                Zambrano en su tesis de doctorado, la cual fue implementada por Dalila Riobamba y
+                                Santiago Guerrero. Posteriormente, Andrea Pabón y Julian Rojas propusieron un modelo de
+                                perfil de usuario para la IoT, y lo incorporaron al escenario, con el fin que los
+                                objetos pudieran identificar el usuario con el que interactuan y ofrecerles servicios de
+                                acuerdo a sus preferencias.
                             </p>
                         </div>
                     </div>
                 </div>
             </div>
+            <!--Contenedor del footer, separa footer del navbar-->
+            <div class="cont-principal p-5">
+                <!--Footer, aplicar fondo con la propiedad text-(colorNuevo)-50 -->
+                <footer id="sticky-footer" class="py-4 text-dark-50 rounded">
+                    <div class="form-row justify-content-end">
+                        <small>Contacto </small>
+                    </div>
+                    <div class="form-row justify-content-end">
+                        <small>manzamb@unicauca.edu.co</small>
+                    </div>
+                    <div class="form-row justify-content-end">
+                        <small>jlr@unicauca.edu.co</small>
+                    </div>
+                    <div class="form-row justify-content-end">
+                        <small>andreapabon@unicauca.edu.co</small>
+                    </div>
+                </footer>
+            </div>
         </div>
     </div>
-</div>
-{% endblock %}
+    {% endblock %}
