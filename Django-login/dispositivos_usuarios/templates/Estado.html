@@ -1,6 +1,7 @@
 {% extends 'base.html' %}
 {% load navBarTags %}
 {% block content %}
+<!--Contenedor principal para que la pagina, permite visualizar todo al 100% de la pantalla-->
 <div id="wrapper" class="active">
     <!-- Sidebar -->
     {% listarDispositivos %}
@@ -11,44 +12,54 @@
     <script src="{% static 'js\jqueryEstadosDispositivos.js' %}"></script>
     <!-- Fin Navbar -->
 
-    <!-- Page content -->
+    <!-- Page content, divide el navbar del contenido de la derecha -->
     <div id="page-content-wrapper">
         <!-- Keep all page content within the page-content inset div! -->
         <div class="page-content inset">
+            <!--Fondo de la pagina-->
             <div class="fondo"></div>
+            <!--Contenedor para la carta principal de la pagina, controla padding top-->
             <div class="wizard-container">
+                <!--Contenedor que controla padding left y right-->
                 <div class="container cont-principal">
+                    <!--Carta para el contenido principal-->
                     <div class="card wizard-card justify-content-center">
+                        <!--Controla el contenido de la carta-->
                         <div class="div-principal">
                             <h1 class="text-center pb-5"> ESTADO </h1>
                             <h4 class="card-title">Estado de los dispositivos </h4>
                             <div class="card-columns">
-                                
+                                <!--Recorre todos los objetos que se carguen desde la logica-->
                                 {% for obj in lista %}
+                                <!--Boton que engloba la carta que contiene un dispositivo-->
                                 <a href={% url 'estados' obj.idDisp obj.nombre %}>
-                                        <div class="card">
-                                            <div class="card-body">
-                                                <h5 class="card-title">
-                                                    <div class="row">
-                                                        <div class="col-8"><strong>{{ obj.nombre }}</strong></div>
-                                                        <div class="col-4">
-                                                         
-                                                            <label class="switch" >
-                                                                    <input disabled type="checkbox" id='{{ obj.nombre }}'></input>
-                                                                    <span class="slider round"></span>
-                                                            </label>
-                                                         
-                                                          
-                                                        </div>
-                                                        <h6 class="p-3" id={{ obj.idDisp }}>Cargando...</h6>
+                                    <!--Carta-->
+                                    <div class="card">
+                                        <!--Cuerpo de la carta-->
+                                        <div class="card-body">
+                                            <h5 class="card-title">
+                                                <div class="row">
+                                                    <!--Columna de tamaño 8 que contendra el nombre del dispositivo-->
+                                                    <div class="col-8"><strong>{{ obj.nombre }}</strong></div>
+                                                    <!--Columna de tamaño 4 para el switch de prender y apagar-->
+                                                    <div class="col-4">
+
+                                                        <label class="switch">
+                                                            <input disabled type="checkbox"
+                                                                id='{{ obj.nombre }}'></input>
+                                                            <span class="slider round"></span>
+                                                        </label>
+
                                                     </div>
-                                                </h5>
-                                            </div>
+                                                    <h6 class="p-3" id={{ obj.idDisp }}>Cargando...</h6>
+                                                </div>
+                                            </h5>
                                         </div>
+                                    </div>
                                 </a>
                                 {% endfor %}
                                 {% for obj in lista %}
-                                    <script>handlerConectar('{{ obj.nombre }}', '{{ obj.ipDisp }}', '{{ obj.idDisp }}');</script>
+                                <script>handlerConectar('{{ obj.nombre }}', '{{ obj.ipDisp }}', '{{ obj.idDisp }}');</script>
                                 {% endfor %}
                             </div>
                         </div>
