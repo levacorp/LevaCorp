@@ -1,4 +1,4 @@
-import { Component, OnInit } from '@angular/core';
+import { Component, Output, OnInit, EventEmitter } from '@angular/core';
 import { Router } from '@angular/router';
 
 @Component({
@@ -8,6 +8,9 @@ import { Router } from '@angular/router';
 })
 export class CrearPage implements OnInit {
 
+  onReadEvent = new EventEmitter();
+  onReadAction = new EventEmitter();
+
   direccionEvento = null;
   direccionAccion = null;
   constructor(private router: Router) { }
@@ -16,12 +19,10 @@ export class CrearPage implements OnInit {
   }
 
   direccionLeidaEvento(dir: string) {
-    // this.direccionEvento = dir;
     this.router.navigate(['/lectura-qr', '1', dir]);
   }
 
   direccionLeidaAccion(dir: string) {
-    // this.direccionAccion = dir;
     this.router.navigate(['/lectura-qr', '2', dir]);
   }
 
@@ -31,5 +32,12 @@ export class CrearPage implements OnInit {
 
   eliminarAccion() {
     this.direccionAccion = null;
+  }
+
+  asignarEvento(evento: string) {
+    this.direccionEvento = evento;
+  }
+  asignarAccion(accion: string) {
+    this.direccionAccion = accion;
   }
 }

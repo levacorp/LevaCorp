@@ -20,4 +20,7 @@ export class ElementosPorHabitacionPage implements OnInit {
   routeDispositivosElemento(id: string )  {
     this.router.navigate(['dispositivos-elemento', id]);
   }
+  pushCrearEdificio(){
+    
+  }
 }

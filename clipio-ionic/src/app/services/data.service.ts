@@ -21,5 +21,4 @@ export class DataService {
   getEdificios() {
     return this.http.get('https://jsonplaceholder.typicode.com/users');
   }
-
-
+}

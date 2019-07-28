@@ -38,6 +38,7 @@
               <!--<ion-thumbnail>
                 <app-escaner (onReadDevice)="direccionLeidaEvento($event)"></app-escaner>
               </ion-thumbnail>-->
+              <ion-label>Prueba</ion-label>
               <ion-button (click)="direccionLeidaEvento('http://192.168.0.23/Identificator?osid=708637323')"></ion-button>
             </ion-col>
             <ion-col>
@@ -46,8 +47,7 @@
           </ion-row>
         <!-- Fin Caso lectura QR Evento -->
         <!-- Evento seleccionado sensor o actuador -->
-          <ion-label *ngIf="direccionEvento">{{ direccionEvento }}</ion-label>
-          
+          <ion-label (onReadEvent)="asignarEvento($event)"></ion-label>
         <!-- Fin Evento seleccionado sensor o actuador -->
       </ion-card-content>
   </ion-card>
