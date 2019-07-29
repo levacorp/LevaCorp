@@ -13,31 +13,38 @@ export class CrearPage implements OnInit {
 
   direccionEvento = null;
   direccionAccion = null;
+
+  datastreamEvento = null;
+  datastreamAccion = null;
+
   constructor(private router: Router) { }
 
   ngOnInit() {
   }
 
-  direccionLeidaEvento(dir: string) {
-    this.router.navigate(['/lectura-qr', '1', dir]);
+  guardarDireccionEvento(dir: string) {
+    this.direccionEvento = dir;
   }
 
-  direccionLeidaAccion(dir: string) {
-    this.router.navigate(['/lectura-qr', '2', dir]);
+  guardarDireccionAccion(dir: string) {
+    this.direccionAccion = dir;
   }
 
   eliminarEvento() {
+    this.datastreamEvento = null;
     this.direccionEvento = null;
   }
 
   eliminarAccion() {
+    this.datastreamAccion = null;
     this.direccionAccion = null;
   }
 
   asignarEvento(evento: string) {
-    this.direccionEvento = evento;
+    this.datastreamEvento = evento;
   }
   asignarAccion(accion: string) {
-    this.direccionAccion = accion;
+    this.datastreamAccion = accion;
   }
+  
 }

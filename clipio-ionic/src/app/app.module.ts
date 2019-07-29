@@ -13,6 +13,7 @@ import { ComponentsModule } from './componentes/componentesglobales.module';
 import { HttpClientModule } from '@angular/common/http';
 import { PipesModule } from './pipes/pipes.module';
 import { HTTP} from '@ionic-native/http/ngx';
+import { CommonModule } from '@angular/common';
 
 
 @NgModule({
@@ -24,7 +25,8 @@ import { HTTP} from '@ionic-native/http/ngx';
     AppRoutingModule,
     PipesModule,
     ComponentsModule,
-    HttpClientModule
+    HttpClientModule,
+    CommonModule
   ],
   providers: [
     StatusBar,
