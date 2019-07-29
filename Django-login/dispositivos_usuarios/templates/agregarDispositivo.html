@@ -1,57 +1,71 @@
 {% extends 'base.html' %}
 {% load navBarTags %}
 {% block content %}
-
+<!--Contenedor principal para que la pagina, permite visualizar todo al 100% de la pantalla-->
 <div id="wrapper" class="active">
+    <!-- Sidebar -->
     {% listarDispositivos %}
     {% include 'navBar.html' with dispositivos=dispositivos %}
+    <!-- Fin Navbar -->
 
     <!-- Page content -->
     <div id="page-content-wrapper">
         <!-- Keep all page content within the page-content inset div! -->
         <div class="page-content inset">
+            <!--Fondo de la pagina-->
             <div class="fondo"></div>
+            <!--Contenedor para la carta principal de la pagina, controla padding top-->
             <div class="wizard-container">
+                <!--Contenedor que controla padding left y right-->
                 <div class="container cont-principal">
+                    <!--Carta para el contenido principal-->
                     <div class="card wizard-card justify-content-center">
                         <div class="div-principal">
+                            <!--Contenido de la pagina-->
                             <h1 class="text-center">Agregar Dispositivo</h1>
+                            <!--Formulario para agregar un dispositivo-->
                             <form>
+                                <!--Fila para buscar un dispositivo-->
                                 <div class="row">
                                     <div class="col-md-12 p-3 mb-3">
-                                        <h4 >Buscar dispositivo existente:</h5>
-                                        <div class="row">
-                                            <form method="POST">
-                                                {% csrf_token %}
-                                                <div class="col col-3">
-                                                    <input name="id" type="text" class="form-control inputs"
-                                                         placeholder="ID" value="" required>
-                                                </div>
-                                                <div class="col-9">
-                                                    <button type="submit" class="btn btn-danger" name="button"
-                                                        formmethod="post">Buscar</button>
-                                                </div>
-                                            </form>
+                                        <h4>Buscar dispositivo existente:</h5>
                                             <div class="row">
-                                                {% if messages %}
-                                                {% for message in messages %}
-                                                <div class="alert alert-{{ message.tags }}">
-                                                    <h5>{{ message }}</h5>
+                                                <form method="POST">
+                                                    {% csrf_token %}
+                                                    <!--Ocupa 3 columnas de 12-->
+                                                    <div class="col col-3">
+                                                        <input name="id" type="text" class="form-control inputs"
+                                                            placeholder="ID" value="" required>
+                                                    </div>
+                                                    <!--Ocupa 9 columnas de 12-->
+                                                    <div class="col-9">
+                                                        <!--Boton buscar con metodo submit post-->
+                                                        <button type="submit" class="btn btn-danger" name="button"
+                                                            formmethod="post">Buscar</button>
+                                                    </div>
+                                                </form>
+                                                <!--Muestra un mensaje en caso de algun evento-->
+                                                <div class="row">
+                                                    {% if messages %}
+                                                    {% for message in messages %}
+                                                    <div class="alert alert-{{ message.tags }}">
+                                                        <h5>{{ message }}</h5>
+                                                    </div>
+                                                    {% endfor %}
+                                                    {% endif %}
                                                 </div>
-                                                {% endfor %}
-                                                {% endif %}
                                             </div>
-                                        </div>
                                     </div>
                                 </div>
+                                <!--Fila para crear un dispositivo-->
                                 <div class="row">
                                     <div class="col-md-12">
                                         <h4 for="">Crear un nuevo dispositivo:</h4>
                                     </div>
                                 </div>
-
                                 <div class="row">
                                     <div class="col-md-4 mb-3">
+                                        <!--Boton crear llama a metodo de back-->
                                         <button type="button" class="btn btn-danger" name="Crear"
                                             onclick="location.href='{% url 'crear' %}'">Crear</button>
                                     </div>

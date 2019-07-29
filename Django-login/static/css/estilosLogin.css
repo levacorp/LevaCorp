@@ -11,6 +11,7 @@
         background-attachment: fixed;
        
     }
+    /* Estilo carta formulario */
     .user_card {
         height: 350px;
         width: 350px;
@@ -28,6 +29,7 @@
         border-radius: 5px;
 
     }
+    /* Contenedor para el logo */
     .brand_logo_container {
         position: absolute;
         height: 170px;
@@ -38,7 +40,7 @@
         padding: 10px;
         text-align: center;
     }
-    
+    /* imagen del logo */
     .brand_logo {
         height: 150px;
         width: 150px;
@@ -48,11 +50,13 @@
     .form_container {
         margin-top: 100px;
     }
+    /* Estilo para los botones */
     .login_btn {
         width: 100%;
         background: #e53935 !important;
         color: white !important;
     }
+    /* Estilo para los botones */
     .login_btn:focus {
         box-shadow: none !important;
         outline: 0px !important;
@@ -60,6 +64,7 @@
     .login_container {
         padding: 0 2rem;
     }
+    /* Estilo para agrupar input */
     .input-group-text {
         background: #e53935 !important;
         color: white !important;

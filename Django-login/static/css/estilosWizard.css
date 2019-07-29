@@ -1,37 +1,38 @@
+/* Estilo para los input */
 .form-control {
     height: 37px;
 }
-
+/* Margenes para la posicion de la carta */
 .cont-principal {
     padding-right: 50px;
     padding-left: 50px;
     margin-right: auto;
     margin-left: auto;
 }
-
+/* Estilo para los botonos del wizard */
 .boton-footer{
     padding: 10px 10px;
 }
-
+/* Estilo para p de la barra de navegacion del wizard */
 .stepwizard-step p {
     margin-top: 20px;
 }
-
+/* Estilo para cada row de la barra de navegacion del wizard  */
 .stepwizard-row {
     display: table-row;
 }
-
+/* Estilo para la barra de navegacion del wizard */
 .stepwizard {
     display: table;
     width: 100%;
 }
-
+/* Estilo para boton de la barra de navegacion del wizard */
 .stepwizard-step button[disabled] {
 
     opacity: 1 !important;
     filter: alpha(opacity=100) !important;
 }
-
+/* Estilo para cada row de la barra de navegacion del wizard despues de elegir opcion*/
 .stepwizard-row:before {
     top: 14px;
     bottom: 0;
@@ -40,13 +41,13 @@
     height: 1px;
     background-color: #ccc;
 }
-
+/* Estilo para cada opcion de la barra de navegacion del wizard */
 .stepwizard-step {
 
     display: table-cell;
     text-align: center;
 }
-
+/* Contenedor del wizard */
 .wizard-container {
     padding-top: 20px;
     z-index: 3;
@@ -55,7 +56,7 @@
 .wizard-container .wizard-navigation {
     position: absolute;
 }
-
+/* Estilo para la carta que contiene el wizard*/
 .card {
     background-color: #FFFFFF;
     padding: 15px 10px;
@@ -64,16 +65,17 @@
     color: rgba(0, 0, 0, 0.87);
     background: #fff;
 }
-
+/* Estilo para el wizard */
 .wizard-card {
     min-height: 410px;
     box-shadow: 0 16px 24px 2px rgba(0, 0, 0, 0.14), 0 6px 30px 5px rgba(0, 0, 0, 0.12), 0 8px 10px -5px rgba(0, 0, 0, 0.2);
 }
-
+/* Estilo para el Titulo del wizard */
 .wizard-title {
     box-shadow: 0 16px 24px 2px rgba(0, 0, 0, 0.14), 0 6px 30px 5px rgba(0, 0, 0, 0.12), 0 8px 10px -5px rgba(0, 0, 0, 0.2);
 }
 
+/* OPCIONES ADICIANALES DEL WIZARD */
 .wizard-card .picture-container {
     position: absolute;
     cursor: pointer;
@@ -212,6 +214,8 @@
     color: #999999;
     font-size: 14px;
 }
+
+/*  */
 #botonSensoresActuadores{
     margin-top: -48px;
 }

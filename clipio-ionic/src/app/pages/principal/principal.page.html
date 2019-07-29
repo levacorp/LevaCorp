@@ -38,36 +38,15 @@
 
   <!--Pestañas de las habitaciones-->
   <div class="barraSegmento">
+    <!--Carga todas las haticaciones, ionsegment en modo ios-->
     <ion-segment color="danger" mode="ios" (ionChange)="segmentButtonClicked($event)" scrollable>
       <ion-segment-button value="{{ habitacion.id }}" *ngFor="let habitacion of habitaciones | async">
         <ion-label>{{ habitacion.id }}</ion-label>
       </ion-segment-button>
-<<<<<<< HEAD
     </ion-segment>
-    <!--<ion-segment color="danger" mode="ios" (ionChange)="segmentButtonClicked($event)" scrollable>
-=======
-      </ion-segment>-->
-    <ion-segment color="danger"  (ionChange)="segmentButtonClicked($event)" scrollable>
->>>>>>> 0a67cdafce514c5fe4fb130127806fe12a88014d
-      <ion-segment-button value="1">
-        <ion-label>Habitacion</ion-label>
-      </ion-segment-button>
-      <ion-segment-button value="2">
-        <ion-label>Sala</ion-label>
-      </ion-segment-button>
-      <ion-segment-button value="3">
-        <ion-label>Patio</ion-label>
-      </ion-segment-button>
-    </ion-segment>-->
   </div>
   <!--Fin Pestañas de las habitaciones-->
-<<<<<<< HEAD
-
-  <!--Carga de los elementos filtrados por segmento escogido-->
-  <ion-grid class="contenidoSegmento">
-=======
   <ion-grid class="contenidoSegmento">,
->>>>>>> 0a67cdafce514c5fe4fb130127806fe12a88014d
     <ion-row>
       <!--Acomoda el numero de tarjetas de acuerdo al tamaño de pantalla-->
       <ion-col size="6" size-sm="4" size-md="3" size-lg="2"

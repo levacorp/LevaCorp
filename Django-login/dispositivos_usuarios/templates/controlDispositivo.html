@@ -1,6 +1,7 @@
 {% extends 'base.html' %}
 {% load navBarTags %}
 {% block content %}
+<!--Contenedor principal para que la pagina, permite visualizar todo al 100% de la pantalla-->
 <div id="wrapper" class="active">
     <!-- Sidebar -->
     {% listarDispositivos %}
@@ -8,157 +9,173 @@
 
     <!-- Fin Navbar -->
 
-    <!-- Page content -->
+    <!-- Page content, divide el navbar del contenido de la derecha -->
     <div id="page-content-wrapper">
         <!-- Keep all page content within the page-content inset div! -->
         <div class="page-content inset">
+            <!--Fondo de la pagina-->
             <div class="fondo"></div>
+            <!--Contenedor para la carta principal de la pagina, controla padding top-->
             <div class="wizard-container">
+                <!--Contenedor que controla padding left y right-->
                 <div class="container cont-principal">
+                    <!--Carta para el contenido principal-->
                     <div class="card wizard-card justify-content-center">
                         <div class="div-principal">
+                            <!--Contenido de la pagina-->
+                            <!--Carga el nombre del dispositivo a visualizar-->
                             <h1 class="text-center"> {{ nombre }}</h1>
                             {% if mensaje == "" %}
-                                {% if not diccionario %}
+                            {% if not diccionario %}
                             <h5 class=text-center>No se encontró el dispositivo</h5>
-                                {% else %}
-                                <h5 class="text-center">Estado de los sensores y actuadores </h5>
-                                <div class="card-deck">
-                                    {% for key, values in diccionario.items %}
-                                    <div class="col-sm-4 py-2">
-                                        <div class="card h-100 margen-cartas">
-                                            <div class="card-body">
-                                                <h5 class="card-title">
-                                                    <div class="row">
-                                                        <div class="col-sm"><h4> {{ key }} </h4></div>
-                                                        {% if values.0 == 'bool' %}
-                                                        
-                                                        <div class="col-sm pt-1">
-                                                                <label class="switch" id=contenedor{{ key }} for={{ key }}>
-                                                                       
-                                                                       
-
-                                                                        {% if values.1 == '1' %}
-                                                                        <input type="checkbox" 
-                                                                           onclick="handlerActuador(this, '{{ ipDispositivo }}', '{{ idDispositivo }}')" id={{ key }} name={{ key }} checked>
-                                                                       {% else %}
-                                                                       <input type="checkbox" 
-                                                                           onclick="handlerActuador(this, '{{ ipDispositivo }}', '{{ idDispositivo }}')" id={{ key }} name={{ key }}>
-                                                                       {% endif %}
-                                                                       <span class="slider round"></span>
-                                                                      </label>   
-                                                           
-                                                                
-                                                   
-                                                            
-                                                        </div>
-                                                        {% else%}
-                                                        <div class="container-fluid">
-                                                            <div class="row">
-                                                                <div class="col-sm-4">
-                                                                    <label for="valor">Valor:</label>
-                                                                </div>
-                                                                <div class="col-sm" id="valor">
-                                                                    <p><b>{{ values.1 }}</b></p>
-                                                                </div>
+                            {% else %}
+                            <h5 class="text-center">Estado de los sensores y actuadores </h5>
+                            <!--Carta que contiene la informacion de los sensores y actuadores-->
+                            <div class="card-deck">
+                                <!--Se recorre el diccionario con la key y el valor en el que vienen los sensores y actuadores-->
+                                {% for key, values in diccionario.items %}
+                                <!--Se divide cada carta en 4 columnas de 12-->
+                                <div class="col-sm-4 py-2">
+                                    <div class="card h-100 margen-cartas">
+                                        <div class="card-body">
+                                            <h5 class="card-title">
+                                                <div class="row">
+                                                    <!--Nombre del sensor actuador-->
+                                                    <!--Se hace una columna responsive para acomodar el nombre-->
+                                                    <div class="col-sm">
+                                                        <h4> {{ key }} </h4>
+                                                    </div>
+                                                    <!--Si es un actuador-->
+                                                    {% if values.0 == 'bool' %}
+                                                    <!--Se hace una columna responsive para acomodar el switch-->
+                                                    <div class="col-sm pt-1">
+                                                        <!--Switch para prender y apagar actuador-->
+                                                        <!--El switch toma el valor de contenedor+key-->
+                                                        <label class="switch" id=contenedor{{ key }} for={{ key }}>
+                                                            <!--Si el valor esta en uno marcar como prendido-->
+                                                            {% if values.1 == '1' %}
+                                                            <input type="checkbox"
+                                                                onclick="handlerActuador(this, '{{ ipDispositivo }}', '{{ idDispositivo }}')"
+                                                                id={{ key }} name={{ key }} checked>
+                                                            <!--Si el valor esta en uno marcar como apagado-->
+                                                            {% else %}
+                                                            <input type="checkbox"
+                                                                onclick="handlerActuador(this, '{{ ipDispositivo }}', '{{ idDispositivo }}')"
+                                                                id={{ key }} name={{ key }}>
+                                                            {% endif %}
+                                                            <span class="slider round"></span>
+                                                        </label>
+                                                    </div>
+                                                    <!--Si es un sensor-->
+                                                    {% else%}
+                                                    <div class="container-fluid">
+                                                        <!--Se crea otra fila para poner el valor del sensor-->
+                                                        <div class="row">
+                                                            <!--Toma 4 columnas de 12-->
+                                                            <div class="col-sm-4">
+                                                                <label for="valor">Valor:</label>
+                                                            </div>
+                                                            <!--Valor del sensor-->
+                                                            <!--Toma 4 columnas de 12-->
+                                                            <div class="col-sm" id="valor">
+                                                                <p><b>{{ values.1 }}</b></p>
                                                             </div>
                                                         </div>
-                                                        {% endif %}
                                                     </div>
-                                                </h5>
-                                            </div>
+                                                    {% endif %}
+                                                </div>
+                                            </h5>
                                         </div>
-                                    </div>
-                                    {% endfor %}
-                                    </div>
-                                    <div class="container boton-footer">
-                                            <div class="row mr-4 justify-content-end">
-                                                <button onclick="location.href='{% url 'infoDispositivo' idDispositivo %}'" class="btn btn-danger " >Ver informacion del dispositivo</button>
-                                            </div>
-                                    </div>
-                                {% endif %}
-                            {% else%}
-                                <form method="POST">
-                                {% csrf_token %}
-                                <div class="container">
-                                    <div class="row mt-4 ml-1 ">
-                                        <div class="col col-4">
-                                                <input name="ipDispositivo" type="text" class="form-control inputs"
-                                                 placeholder="Nueva IP" required>
-                                        </div>
-                                        <div class="col  col-6"><button type="submit" class="btn btn-danger" name="btnIP">Cambiar Ip</button>
-                                        </div>
-                                    </div>
-                                    <div class="row ml-3 mt-4">
-                                                <h5 class="card-title">{{ mensaje }},Ingrese una nueva ip </h5>
                                     </div>
                                 </div>
-                                </form>
-                                <div class="row justify-content-center pt-2" >
-                                 
-                                        <div class="col-md-12">
-    
-                                            <!-- content go here -->
-    
-                                            <div class="div-principal">
-                                                <div class="row">
-                                                    <div class="col-md-4 mb-3">
-                                                        <label for="validationDefault01"><strong>ID</strong></label>
-                                                        <strong class="form-control inputs">{{ infoBasica.getId }}</strong>
-                                                       
-                                                    </div>
-    
-                                                    <div class="col-md-4 mb-3">
-                                                        <label for="validationDefault02"><strong>Titulo</strong></label>
-                                                        <strong class="form-control inputs">{{ infoBasica.getTitle }}</strong>
-                                                           
-                                                        
-                                                    </div>
-    
-                                                    <div class="col-md-4 mb-3">
-                                                        <label for="validationDefault02"><strong>IP</strong></label>
-                                                        <p class="form-control inputs">{{ ipDispositivo }}</p>
-                                                    </div>
-    
-                                                </div>
-    
-                                                <div class="row">
-                                                    <div class="col-md-4">
-                                                        <label for="validationDefault03"><strong>localizacion</strong></label>
-                                                    </div>
-                                                </div>
-    
-                                                <div class="row">
-                                                    <div class="col-md-4 mb-3">
-                                                            <p class="form-control inputs">{{ infoBasica.getLocation.lat }}</p>
-                                                    </div>
-    
-                                                    <div class="col-md-4 mb-3">
-                                                            <p class="form-control inputs">{{ infoBasica.getLocation.lon }}</p>
-                                                    </div>
-    
-                                                    <div class="col-md-4 mb-3">
-                                                        <p class="form-control inputs">{{ infoBasica.getLocation.ele }}</p>
-                                                    </div>
-                                                </div>
-    
-                                                <div class="form-group">
-                                                    <label for="DescripcionDisp"><strong>Descripcion</strong></label>
-    
-                                                    <textarea
-                                                        disabled
-                                                        class="form-control"
-                                                        id="exampleFormControlTextarea1"
-                                                        name="descripcion"
-                                                        rows="3"
-                                                    >{{ infoBasica.getDescription }}</textarea>
-                                                </div>
+                                {% endfor %}
+                            </div>
+                            <!--Boton Informacion del dispositivo-->
+                            <div class="container boton-footer">
+                                <div class="row mr-4 justify-content-end">
+                                    <button onclick="location.href='{% url 'infoDispositivo' idDispositivo %}'"
+                                        class="btn btn-danger ">Ver informacion del dispositivo</button>
+                                </div>
+                            </div>
+                            {% endif %}
+                            <!--SI NO SE ENCUENTRA LA IP DEL DISPOSITIVO-->
+                            {% else%}
+                            <!--Formulario para pedir la nueva IP del dispositivo-->
+                            <form method="POST">
+                                {% csrf_token %}
+                                <div class="container">
+                                    <!--Fila para los campos-->
+                                    <div class="row mt-4 ml-1 ">
+                                        <!--Toma 4 columnas de 12-->
+                                        <div class="col col-4">
+                                            <input name="ipDispositivo" type="text" class="form-control inputs"
+                                                placeholder="Nueva IP" required>
+                                        </div>
+                                        <!--Toma 6 columnas de 12-->
+                                        <div class="col col-6"><button type="submit" class="btn btn-danger"
+                                                name="btnIP">Cambiar Ip</button>
+                                        </div>
+                                    </div>
+                                    <!--Carga el mensaje que llega del back-->
+                                    <div class="row ml-3 mt-4">
+                                        <h5 class="card-title">{{ mensaje }},Ingrese una nueva ip </h5>
+                                    </div>
+                                </div>
+                            </form>
+                            <!--CARGA LA INFORMACION BASICA DEL DISPOSITIVO-->
+                            <div class="row justify-content-center pt-2">
+                                <div class="col-md-12">
+                                    <!-- CONTENIDO -->
+                                    <div class="div-principal">
+                                        <!--Fila para los primeros campos-->
+                                        <div class="row">
+                                            <!--Toma 4 columnas de 12-->
+                                            <div class="col-md-4 mb-3">
+                                                <label for="validationDefault01"><strong>ID</strong></label>
+                                                <strong class="form-control inputs">{{ infoBasica.getId }}</strong>
+                                            </div>
+                                            <!--Toma 4 columnas de 12-->
+                                            <div class="col-md-4 mb-3">
+                                                <label for="validationDefault02"><strong>Titulo</strong></label>
+                                                <strong class="form-control inputs">{{ infoBasica.getTitle }}</strong>
+                                            </div>
+                                            <!--Toma 4 columnas de 12-->
+                                            <div class="col-md-4 mb-3">
+                                                <label for="validationDefault02"><strong>IP</strong></label>
+                                                <p class="form-control inputs">{{ ipDispositivo }}</p>
                                             </div>
                                         </div>
-                                    
+                                        <!--Fila para los siguientes campos-->
+                                        <div class="row">
+                                            <div class="col-md-4">
+                                                <label for="validationDefault03"><strong>localizacion</strong></label>
+                                            </div>
+                                        </div>
+                                        <!--Fila para los siguientes campos-->
+                                        <div class="row">
+                                            <!--Toma 4 columnas de 12-->
+                                            <div class="col-md-4 mb-3">
+                                                <p class="form-control inputs">{{ infoBasica.getLocation.lat }}</p>
+                                            </div>
+                                            <!--Toma 4 columnas de 12-->
+                                            <div class="col-md-4 mb-3">
+                                                <p class="form-control inputs">{{ infoBasica.getLocation.lon }}</p>
+                                            </div>
+                                            <!--Toma 4 columnas de 12-->
+                                            <div class="col-md-4 mb-3">
+                                                <p class="form-control inputs">{{ infoBasica.getLocation.ele }}</p>
+                                            </div>
+                                        </div>
+                                        <!--Fila para los siguientes campos-->
+                                        <div class="form-group">
+                                            <label for="DescripcionDisp"><strong>Descripcion</strong></label>
+
+                                            <textarea disabled class="form-control" id="exampleFormControlTextarea1"
+                                                name="descripcion" rows="3">{{ infoBasica.getDescription }}</textarea>
+                                        </div>
                                     </div>
-    
-                            
+                                </div>
+                            </div>
                             {% endif %}
                         </div>
                     </div>

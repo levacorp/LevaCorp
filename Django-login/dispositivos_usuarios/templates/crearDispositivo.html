@@ -1,7 +1,7 @@
 {% extends 'base.html' %}
 {% load navBarTags %}
 {% block content %}
-
+<!--Contenedor principal para que la pagina, permite visualizar todo al 100% de la pantalla-->
 <div id="wrapper" class="active">
     <!-- Navbar -->
     {% listarDispositivos %}
@@ -9,48 +9,61 @@
 
     <!-- Fin Navbar -->
 
-    <!-- Page content -->
+    <!-- Page content, divide el navbar del contenido de la derecha -->
     <div id="page-content-wrapper">
         <!-- Keep all page content within the page-content inset div! -->
         <div class="page-content inset">
+            <!--Fondo de la pagina-->
             <div class="fondo"></div>
+            <!--Contenedor para la carta principal de la pagina, controla padding top-->
             <div class="wizard-container">
+                <!--Contenedor que controla padding left y right-->
                 <div class="container cont-principal">
                     {% if mensaje %}
                     <div class="alert alert-{{ mensaje.0 }}" role="alert">
                         {{ mensaje.1 }}
                     </div>
                     {% endif %}
+                    <!--Carta para el contenido principal-->
                     <div class="card wizard-card" id="wizard">
+                        <!--Barra de navegacion del wizard-->
                         <div class="stepwizard">
+                            <!--Row que contendra las opciones-->
                             <div class="stepwizard-row setup-panel">
+                                <!--Opcion de la barra de navegacion-->
                                 <div class="stepwizard-step">
-                                    <a href="#step-1"  class="btn btn-danger btn-circle ">General</a>
+                                    <a href="#step-1" class="btn btn-danger btn-circle ">General</a>
                                 </div>
-
+                                <!--Opcion de la barra de navegacion-->
                                 <div class="stepwizard-step">
-                                    <a href="#step-2"  class="btn btn-danger"
-                                        disabled="disabled">Tags</a>
+                                    <a href="#step-2" class="btn btn-danger" disabled="disabled">Tags</a>
                                 </div>
-
+                                <!--Opcion de la barra de navegacion-->
                                 <div class="stepwizard-step">
-                                    <a href="#step-3"  class="btn btn-danger"
-                                        disabled="disabled">Datastreams</a>
+                                    <a href="#step-3" class="btn btn-danger" disabled="disabled">Datastreams</a>
                                 </div>
 
                             </div>
                         </div>
+
+                        <!--Formulario del wizard-->
                         <form method="POST">
                             {% csrf_token %}
+                            <!--Formulario para la primera opcion del wizard-->
                             <div class="row setup-content justify-content-center p-4" id="step-1">
                                 <div class="col-xs-12">
                                     <div class="col-md-12">
                                         <h3 class="text-center">INFORMACIÓN GENERAL</h3>
-                                        <!-- content go here -->
                                         <div class="div-principal">
+
+                                            <!-- CONTENIDO -->
+                                            <!--Fila para los primeros campos-->
                                             <div class="row">
+                                                <!--Tamaño de cada input-->
                                                 <div class="col-md-4 mb-3">
+                                                    <!--Label con el nombre del input-->
                                                     <label for="validationDefault01"><strong>ID</strong></label>
+                                                    <!--Input con la informacion cargada-->
                                                     <input type="text" class="form-control inputs" name="idDispositivo"
                                                         id="validationDefault01" placeholder="ID" value="" required>
                                                 </div>
@@ -65,13 +78,18 @@
                                                         id="validationDefault02" placeholder="IP" value="" required>
                                                 </div>
                                             </div>
+                                            <!--Fila para los siguientes campos-->
                                             <div class="row">
                                                 <div class="col-md-4">
-                                                    <label for="validationDefault03"><strong>Localizacion</strong></label>
+                                                    <label
+                                                        for="validationDefault03"><strong>Localizacion</strong></label>
                                                 </div>
                                             </div>
+                                            <!--Fila para los siguientes campos-->
                                             <div class="row">
+                                                <!--Tamaño de cada input-->
                                                 <div class="col-md-4 mb-3">
+                                                    <!--Input con la informacion cargada-->
                                                     <input type="text" class="form-control inputs"
                                                         name="localizacionLatitud" id="validationDefault04"
                                                         placeholder="Latitud" value="" required>
@@ -87,12 +105,14 @@
                                                         placeholder="Elevacion" value="" required>
                                                 </div>
                                             </div>
+                                            <!--Fila para los siguientes campos-->
                                             <div class="form-group">
                                                 <label for="DescripcionDisp"><strong>Descripcion</strong></label>
                                                 <textarea class="form-control" id="exampleFormControlTextarea1"
                                                     name="descripcion" rows="3"></textarea>
                                             </div>
                                         </div>
+                                        <!--Boton siguiente-->
                                         <div class="container boton-footer">
                                             <div class="row justify-content-end">
                                                 <button class="btn btn-danger nextBtn" type="button">Siguiente</button>
@@ -101,41 +121,49 @@
                                     </div>
                                 </div>
                             </div>
-
+                            <!--Formulario para la segunda opcion (TAGS) del wizard-->
                             <div class="row setup-content justify-content-center p-4" id="step-2">
                                 <div class="col-xs-12">
                                     <div class="col-md-12">
                                         <h3 class="text-center">Tags</h3>
-                                        <!-- content go here -->
                                         <div id=tags class="div-principal">
 
+                                            <!--CONTENIDO-->
+
+                                            <!--Fila para los primeros campos (se organizan en columnas segun bootstrap)-->
 
                                             <div class="form-row">
+                                                <!--Ocupa 3 columnas de 12-->
                                                 <div class="col col-6 col-md-3">
                                                     <div class="row col-md-4 mb-3">
-                                                        <label for="validationDefault01"><strong>Entidad</strong></label>
+                                                        <label
+                                                            for="validationDefault01"><strong>Entidad</strong></label>
                                                     </div>
                                                 </div>
+                                                <!--Ocupa 8 columnas de 12-->
                                                 <div class="col col-12 col-md-8">
                                                     <div class="row">
+                                                        <!--Ocupa la mitad de las 8 columnas-->
                                                         <div class="col-md-6 mb-3">
                                                             <input type="text" class="form-control inputs"
                                                                 name="tagEntidadEsp" id="validationDefault05"
-                                                                placeholder="Español"  required>
+                                                                placeholder="Español" required>
                                                         </div>
+                                                        <!--Ocupa la mitad de las 8 columnas-->
                                                         <div class="col-md-6 mb-3">
                                                             <input type="text" class="form-control inputs"
                                                                 name="tagEntidadIng" id="validationDefault05"
-                                                                placeholder="English"  required>
+                                                                placeholder="English" required>
                                                         </div>
                                                     </div>
                                                 </div>
                                             </div>
-
+                                            <!--Fila para los primeros campos (ver codigo para los campos ENTIDAD)-->
                                             <div class="form-row">
                                                 <div class="col col-6 col-md-3">
                                                     <div class="row col-md-4 mb-3">
-                                                        <label for="validationDefault01"><strong>Funcionalidad</strong></label>
+                                                        <label
+                                                            for="validationDefault01"><strong>Funcionalidad</strong></label>
                                                     </div>
                                                 </div>
                                                 <div class="col col-12 col-md-8">
@@ -143,7 +171,7 @@
                                                         <div class="col-md-6 mb-3">
                                                             <input type="text" class="form-control inputs"
                                                                 name="tagFuncionalidadEsp" id="validationDefault05"
-                                                                placeholder="Español"  required>
+                                                                placeholder="Español" required>
                                                         </div>
                                                         <div class="col-md-6 mb-3">
                                                             <input type="text" class="form-control inputs"
@@ -153,7 +181,7 @@
                                                     </div>
                                                 </div>
                                             </div>
-
+                                            <!--Fila para los primeros campos (ver codigo para los campos ENTIDAD)-->
                                             <div class="form-row">
                                                 <div class="col col-6 col-md-3">
                                                     <div class="row col-md-4 mb-3">
@@ -165,7 +193,7 @@
                                                         <div class="col-md-6 mb-3">
                                                             <input type="text" class="form-control inputs"
                                                                 name="tagNombreEsp" id="validationDefault05"
-                                                                placeholder="Español"  required>
+                                                                placeholder="Español" required>
                                                         </div>
                                                         <div class="col-md-6 mb-3">
                                                             <input type="text" class="form-control inputs"
@@ -175,7 +203,10 @@
                                                     </div>
                                                 </div>
                                             </div>
+                                            <!--Contador oculto para el numero de tags cargados para un el dispositivo-->
                                             <input id="contadorTags" type="hidden" value="0">
+                                            <!--Fila para los organizar los campos (ver codigo para los campos ENTIDAD)-->
+                                            <!--Todos los id son necesarios-->
                                             <div class="form-row">
                                                 <div class="col col-6 col-md-3">
                                                     <div class="row col-md-4 mb-3">
@@ -197,7 +228,9 @@
                                                 </div>
                                             </div>
                                         </div>
+                                        <!--Boton siguiente-->
                                         <div class="container boton-footer">
+                                            <!--Justifica el boton a la derecha-->
                                             <div class="row justify-content-end">
                                                 <button class="btn btn-danger nextBtn" type="button">Siguiente</button>
                                             </div>
@@ -205,28 +238,34 @@
                                     </div>
                                 </div>
                             </div>
-
+                            <!--Formulario para la tercera opcion (DATASTREAMS) del wizard-->
                             <div class="row setup-content justify-content-center p-4" id="step-3">
-                                   <div class="col-xs-12">
+                                <div class="col-xs-12">
                                     <div class="col-md-12">
                                         <h3 class="text-center">Datastreams</h3></br>
-                                        <!-- content go here -->
                                         <div id="dataStreams">
                                         <div class="div-principal" id="dataStream0">
                                                 <h2 id="dataStreamH20">Nuevo Datastream</h2> 
 
                                             <div class="form-row">
-                                                <div class="col-md-5 mb-3">
+                                                <div class="col-md-7 mb-3">
                                                     <label><strong>Nombre</strong></label>
                                                     <input type="text" class="form-control inputs" name="inputNombre0"
                                                         id="inputNombre0" onchange="changeNameDataStream(this);" placeholder="Nombre" required>
                                                 </div>
-                                                <div class="col-md-7 mb-3">
-                                                    <label><strong>Datastream format</strong></label>
-                                                    <input type="text" class="form-control inputs" name="inputDataStreamFormat0"
-                                                        id="inputDataStreamFormat0" placeholder="Datastream format"
-                                                       required>
-                                                </div>
+                                                <div class="col-md-5 mb-3">
+													<label ><strong>Datastream format</strong></label>
+													<select class="form-control" name="selectDataStreamFormat0" id="selectDataStreamFormat0">
+                                                        <option>None</option>
+                                                        <option>int</option>
+														<option>float</option>
+														<option>string</option>
+														<option>char</option>
+														<option>bool</option>
+														<option>boolean</option>
+														<option>serializable</option>
+													</select>
+												</div>
                                             </div>
 
                                             <div class="form-row">
@@ -257,83 +296,132 @@
                                                 </div>
                                             </div>
 
-                                            <div class="form-row">
-                                                <div class="col col-6 col-md-3">
-                                                    <label><strong>Unidad</strong></label>
-                                                </div>
-                                            </div>
+                                            <!-- CONTENIDO -->
 
-                                            <div class="form-row">
-                                                <div class="col-md-4 mb-3">
-                                                    <input type="text" class="form-control inputs" name="inputSimbolo0"
-                                                        id="inputSimbolo0" placeholder="Símbolo" 
-                                                        value="">
-                                                </div>
-                                                <div class="col-md-4 mb-3">
-                                                    <input type="text" class="form-control inputs" name="inputEtiqueta0"
-                                                        id="inputEtiqueta0" placeholder="Etiqueta" 
-                                                        value="">
-                                                </div>
-                                                <div class="col-md-4 mb-3">
-
-                                                    <input type="text" class="form-control inputs" name="inputTipo0"
-                                                        id="inputTipo0" placeholder="Tipo" value="">
-
-                                                </div>
-                                            </div>
-
-                                            <div class="form-row" >
-                                                <div class="container border rounded-lg" id="tagsDataStream0">
-
-                                                    <div class="row">
-                                                        <div class="col-md-4 mb-3 p-2">
-                                                            <label ><strong>Añadir tags</strong></label>
-                                                        </div>
+                                            <!--Contenedor principal para un datastream, id necesario para que funcione dinamicamente-->
+                                            <div class="div-principal" id="dataStream0">
+                                                <!--Titulo el datastream, id necesario para que funcione dinamicamente-->
+                                                <h2 id="dataStreamH20">Nuevo Datastream</h2>
+                                                <!--Fila para los primeros campos-->
+                                                <div class="form-row">
+                                                    <div class="col mb-3">
+                                                        <label><strong>Nombre</strong></label>
+                                                        <input type="text" class="form-control inputs"
+                                                            name="inputNombre0" id="inputNombre0"
+                                                            onchange="changeNameDataStream(this);" placeholder="Nombre"
+                                                            required>
                                                     </div>
-                                                    <div class="row">
-                                                        <div class="col col-6 col-md-1">
-                                                            <div class="row col-md-4 mb-3">
-                                                                <button type="button" id="buttonAgregarTagDataStream0" onclick="agregarTagDataStream(this)" 
-                                                                    class="rounded-circle btn btn-outline-success">+</button>
+                                                </div>
+                                                <!--Fila para los siguientes campos-->
+                                                <div class="form-row">
+                                                    <!--Columna que ocupa 4 espacios de 12-->
+                                                    <div class="col-md-4 mb-3">
+                                                        <label><strong>Valor maximo</strong></label>
+                                                        <input type="text" class="form-control inputs"
+                                                            name="inputValorMaximo0" id="inputValorMaximo0"
+                                                            placeholder="Valor Maximo" required>
+                                                    </div>
+                                                    <!--Columna que ocupa 4 espacios de 12-->
+                                                    <div class="col-md-4 mb-3">
+                                                        <label><strong>Valor minimo</strong></label>
+                                                        <input type="text" class="form-control inputs"
+                                                            name="inputValorMinimo0" id="inputValorMinimo0"
+                                                            placeholder="Valor Minimo" required>
+                                                    </div>
+                                                </div>
+                                                <!--Fila para los siguientes campos-->
+                                                <div class="form-row">
+                                                    <div class="col col-6 col-md-3">
+                                                        <label><strong>Unidad</strong></label>
+                                                    </div>
+                                                </div>
+                                                <!--Fila para los siguientes campos-->
+                                                <div class="form-row">
+                                                    <!--Columna que ocupa 4 espacios de 12-->
+                                                    <div class="col-md-4 mb-3">
+                                                        <input type="text" class="form-control inputs"
+                                                            name="inputSimbolo0" id="inputSimbolo0"
+                                                            placeholder="Símbolo" value="">
+                                                    </div>
+                                                    <!--Columna que ocupa 4 espacios de 12-->
+                                                    <div class="col-md-4 mb-3">
+                                                        <input type="text" class="form-control inputs"
+                                                            name="inputEtiqueta0" id="inputEtiqueta0"
+                                                            placeholder="Etiqueta" value="">
+                                                    </div>
+                                                    <!--Columna que ocupa 4 espacios de 12-->
+                                                    <div class="col-md-4 mb-3">
+                                                        <input type="text" class="form-control inputs" name="inputTipo0"
+                                                            id="inputTipo0" placeholder="Tipo" value="">
+                                                    </div>
+                                                </div>
+                                                <!--Fila para los siguientes campos-->
+                                                <div class="form-row">
+                                                    <!--Contenedor para los TAGS del DATASTREAM, ids necesarios-->
+                                                    <div class="container border rounded-lg" id="tagsDataStream0">
+                                                        <!--Fila para los agregar un nuevo tag-->
+                                                        <div class="row">
+                                                            <div class="col-md-4 mb-3 p-2">
+                                                                <label><strong>Añadir tags</strong></label>
                                                             </div>
-                                                            
                                                         </div>
-                                                        <div class="col col-12 col-md-8">
-                                                            <div class="row">
-                                                                <div class="col-md-6 mb-3">
-                                                                    <input type="text" class="form-control inputs"
-                                                                        id="inputTagDataStreamEspanol0" placeholder="Español"
-                                                                         >
-                                                                </div>
-                                                                <div class="col-md-6 mb-3">
-                                                                    <input type="text" class="form-control inputs"
-                                                                        id="inputTagDataStreamIngles0" placeholder="English"
-                                                                         >
-                                                                </div>
-                                                            </div>  
-                                                        </div>
-                                       
-                                                    </div>
-                                                    
-                                                </div>
-                                            </div>
-                                            <div class="container p-3">
-                                                <div class="row justify-content-end">
-                                                    <button type="button" onclick="agregarDataStream()" class="btn btn-outline-secondary">Añadir otro
-                                                        datastream</button>
-                                                </div>
-                                            </div>
-                                        </div>
-                                        </div>
 
-                                        <div class="container boton-footer">
-                                            <div class="row justify-content-end">
-                                                <button class="btn btn-danger btn-lg nextBtn" name="descargarJson" type="submit">Descargar JSON</button>
+                                                        <div class="row">
+                                                            <!--Boton agregar tag-->
+                                                            <!--Toma 1 columna de 12-->
+                                                            <div class="col col-6 col-md-1">
+                                                                <div class="row col-md-4 mb-3">
+                                                                    <button type="button"
+                                                                        id="buttonAgregarTagDataStream0"
+                                                                        onclick="agregarTagDataStream(this)"
+                                                                        class="rounded-circle btn btn-outline-success">+</button>
+                                                                </div>
+
+                                                            </div>
+                                                            <!--Toma 8 columnas de 12-->
+                                                            <div class="col col-12 col-md-8">
+                                                                <div class="row">
+                                                                    <!--Tag español-->
+                                                                    <div class="col-md-6 mb-3">
+                                                                        <input type="text" class="form-control inputs"
+                                                                            id="inputTagDataStreamEspanol0"
+                                                                            placeholder="Español">
+                                                                    </div>
+                                                                    <!--Tag ingles-->
+                                                                    <div class="col-md-6 mb-3">
+                                                                        <input type="text" class="form-control inputs"
+                                                                            id="inputTagDataStreamIngles0"
+                                                                            placeholder="English">
+                                                                    </div>
+                                                                </div>
+                                                            </div>
+
+                                                        </div>
+
+                                                    </div>
+                                                </div>
+                                                <!--Boton agregar datastream-->
+                                                <div class="container p-3">
+                                                    <div class="row justify-content-end">
+                                                        <button type="button" onclick="agregarDataStream()"
+                                                            class="btn btn-outline-secondary">Añadir otro
+                                                            datastream</button>
+                                                    </div>
+                                                </div>
                                             </div>
                                         </div>
+                                        <!--Descargar JSON-->
                                         <div class="container boton-footer">
                                             <div class="row justify-content-end">
-                                                <button class="btn btn-danger btn-lg nextBtn" name="inicializar" type="submit">Guardar e Inicializar</button>
+                                                <button class="btn btn-danger btn-lg nextBtn" name="descargarJson"
+                                                    type="submit">Descargar JSON</button>
+                                            </div>
+                                        </div>
+                                        <!--Guardar e inicializar-->
+                                        <div class="container boton-footer">
+                                            <div class="row justify-content-end">
+                                                <button class="btn btn-danger btn-lg nextBtn" name="inicializar"
+                                                    type="submit">Guardar e Inicializar</button>
                                             </div>
                                         </div>
                                     </div>

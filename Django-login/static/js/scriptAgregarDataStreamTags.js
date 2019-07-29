@@ -31,8 +31,7 @@ function cambiarIdsDataSreams()
 {
     var contDataStream = 0;
     
-    while(true){
-        
+    while(true){       
         if(document.getElementById("dataStream00")){
             elemento = document.getElementById("dataStream00");
             elemento.id = "dataStream" + contDataStream;
@@ -44,9 +43,9 @@ function cambiarIdsDataSreams()
             inputNombre.id = "inputNombre" + contDataStream;
             inputNombre.name = "inputNombre" + contDataStream;
 
-            inputDataStreamFormat=document.getElementById("inputDataStreamFormat00")
-            inputDataStreamFormat.id = "inputDataStreamFormat" + contDataStream;
-            inputDataStreamFormat.name = "inputDataStreamFormat" + contDataStream;
+            selectDataStreamFormat=document.getElementById("selectDataStreamFormat00")
+            selectDataStreamFormat.id = "selectDataStreamFormat" + contDataStream;
+            selectDataStreamFormat.name = "selectDataStreamFormat" + contDataStream;
             
             inpuValorMaximo=document.getElementById("inputValorMaximo00")
             inpuValorMaximo.id = "inputValorMaximo" + contDataStream;
@@ -173,8 +172,8 @@ function agregarDataStream()
 {
     var dataStreams = document.getElementById("dataStreams");
     cantidadDataStreams++;
-    nombre='<div class="div-principal" id="dataStream'+cantidadDataStreams+'"><h2 id="dataStreamH2'+cantidadDataStreams+'">Nuevo datastream</h2><div class="form-row"><div class="col-md-5 mb-3"><label><strong>Nombre</strong></label><input type="text" class="form-control inputs" name="inputNombre'+cantidadDataStreams+'"id="inputNombre'+cantidadDataStreams+'" onchange="changeNameDataStream(this);" placeholder="Nombre"required></div>'
-    dataStreamFormat='<div class="col-md-7 mb-3"><label><strong>Datastream format</strong></label><input type="text" class="form-control inputs" name="inputDataStreamFormat'+cantidadDataStreams+'" id="inputDataStreamFormat'+cantidadDataStreams+'" placeholder="Datastream format"required></div></div>'
+    nombre='<div class="div-principal" id="dataStream'+cantidadDataStreams+'"><h2 id="dataStreamH2'+cantidadDataStreams+'">Nuevo datastream</h2><div class="form-row"><div class="col-md-7 mb-3"><label><strong>Nombre</strong></label><input type="text" class="form-control inputs" name="inputNombre'+cantidadDataStreams+'"id="inputNombre'+cantidadDataStreams+'" onchange="changeNameDataStream(this);" placeholder="Nombre"required></div>'
+    dataStreamFormat='<div class="col-md-5 mb-3"><label><strong>Datastream format</strong></label><select class="form-control" name="selectDataStreamFormat'+cantidadDataStreams+'" id="selectDataStreamFormat'+cantidadDataStreams+'"><option>None</option><option>int</option><option>float</option><option>string</option><option>char</option><option>bool</option><option>boolean</option><option>serializable</option></select></div></div>'
     valorMaximo='<div class="form-row"><div class="col-md-4 mb-3"><label><strong>Valor maximo</strong></label><input type="text" class="form-control inputs" name="inputValorMaximo'+cantidadDataStreams+'"id="inputValorMaximo'+cantidadDataStreams+'" placeholder="Valor Maximo"required></div>'
     valorMinimo='<div class="col-md-4 mb-3"><label><strong>Valor minimo</strong></label><input type="text" class="form-control inputs" name="inputValorMinimo'+cantidadDataStreams+'"id="inputValorMinimo'+cantidadDataStreams+'" placeholder="Valor Minimo"required></div></div>'
     unidades='<div class="form-row"><div class="col col-6 col-md-3"><label><strong>Unidad</strong></label></div></div><div class="form-row"><div class="col-md-4 mb-3"><input type="text" class="form-control inputs" name="inputSimbolo'+cantidadDataStreams+'"id="inputSimbolo'+cantidadDataStreams+'" placeholder="Símbolo"></div><div class="col-md-4 mb-3"><input type="text" class="form-control inputs" name="inputEtiqueta'+cantidadDataStreams+'" id="inputEtiqueta'+cantidadDataStreams+'" placeholder="Etiqueta"></div><div class="col-md-4 mb-3"><input type="text" class="form-control inputs" name="inputTipo'+cantidadDataStreams+'"id="inputTipo'+cantidadDataStreams+'" placeholder="Tipo"></div></div>'
@@ -209,9 +208,9 @@ function EliminarDataStream(comp)
         inputNombreSiguiente.setAttribute("name",("inputNombre"+idDataStreamActual));
         inputNombreSiguiente.id="inputNombre"+idDataStreamActual;
 
-        inputDataStreamFormatSiguiente=document.getElementById("inputDataStreamFormat"+(idDataStreamActual+1));
-        inputDataStreamFormatSiguiente.setAttribute("name",("inputDataStreamFormat"+idDataStreamActual));
-        inputDataStreamFormatSiguiente.id="inputDataStreamFormat"+idDataStreamActual;
+        selectDataStreamFormatSiguiente=document.getElementById("selectDataStreamFormat"+(idDataStreamActual+1));
+        selectDataStreamFormatSiguiente.setAttribute("name",("selectDataStreamFormat"+idDataStreamActual));
+        selectDataStreamFormatSiguiente.id="selectDataStreamFormat"+idDataStreamActual;
 
         inputValorMaximoSiguiente=document.getElementById("inputValorMaximo"+(idDataStreamActual+1));
         inputValorMaximoSiguiente.setAttribute("name",("inputValorMaximo"+idDataStreamActual));
