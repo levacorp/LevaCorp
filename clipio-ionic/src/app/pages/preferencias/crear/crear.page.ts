@@ -46,5 +46,4 @@ export class CrearPage implements OnInit {
   asignarAccion(accion: string) {
     this.datastreamAccion = accion;
   }
-  
 }
