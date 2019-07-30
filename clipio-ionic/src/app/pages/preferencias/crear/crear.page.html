@@ -49,7 +49,38 @@
             <app-lectura-qr [dirInput]="direccionEvento" tipoInput="1" (onReadEvent)="asignarEvento($event)"></app-lectura-qr>
           </ng-container>
           <ng-container *ngIf="direccionEvento && datastreamEvento">
-            <ion-label>Evento seleccionado: {{ datastreamEvento }}</ion-label>
+            <ion-row>
+              <ion-col>
+                <ion-text>
+                  <h1>{{ datastreamEvento }}</h1>
+                </ion-text>
+              </ion-col>
+              <!-- Si datastream es un actuador -->
+              <ion-col>
+                <ng-container *ngIf="dsFormatEvento === 'bool'">
+                    <ion-select interface="popover">
+                      <ion-select-option value="on" selected>encendido</ion-select-option>
+                      <ion-select-option value="off">apagado</ion-select-option>
+                    </ion-select>    
+                </ng-container>
+                <!-- Fin Si datastream es un actuador -->
+                <!-- Si datastream no es un actuador -->
+                <ng-container *ngIf="dsFormatEvento != 'bool'">   
+                    <ion-select interface="popover">
+                      <ion-select-option value="menor" selected>menor</ion-select-option>
+                      <ion-select-option value="mayor">mayor</ion-select-option>
+                      <ion-select-option value="igual">igual</ion-select-option>
+                    </ion-select>
+                </ng-container>
+              </ion-col>
+              <ion-col>
+                <ng-container *ngIf="dsFormatEvento != 'bool'">
+                  <ion-input placeholder="Valor" required="true"></ion-input>
+                </ng-container>
+              </ion-col>
+              <!-- Fin Si datastream no es un actuador -->
+            </ion-row>
+            <ion-input placeholder="Significado de este evento" required="true"></ion-input>
           </ng-container>
       </ion-card-content>
   </ion-card>
@@ -82,10 +113,21 @@
         </ion-row>
       <!-- Fin Caso seleccionado sensor o actuador -->
       <ng-container *ngIf="direccionAccion && !datastreamAccion">
-          <app-lectura-qr [dirInput]="direccionAccion" tipoInput="1" (onReadEvent)="asignarAccion($event)"></app-lectura-qr>
+          <app-lectura-qr [dirInput]="direccionAccion" tipoInput="2" (onReadAction)="asignarAccion($event)"></app-lectura-qr>
         </ng-container>
         <ng-container *ngIf="direccionAccion && datastreamAccion">
-          <ion-label>Accion seleccionada: {{ datastreamAccion }}</ion-label>
+          <ion-row>
+            <ion-col>
+              <ion-label>{{ datastreamAccion }}</ion-label>
+            </ion-col>
+            <ion-col>
+              <ion-select interface="popover">
+                <ion-select-option value="on" selected>encender</ion-select-option>
+                <ion-select-option value="off">apagar</ion-select-option>
+              </ion-select>
+            </ion-col>
+          </ion-row>
+          <ion-input placeholder="Significado de esta accion" required="true"></ion-input>
         </ng-container>
     </ion-card-content>
   </ion-card>

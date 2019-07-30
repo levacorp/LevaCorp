@@ -16,6 +16,7 @@ export class CrearPage implements OnInit {
 
   datastreamEvento = null;
   datastreamAccion = null;
+  dsFormatEvento = null;
 
   constructor(private router: Router) { }
 
@@ -40,9 +41,11 @@ export class CrearPage implements OnInit {
     this.direccionAccion = null;
   }
 
-  asignarEvento(evento: string) {
-    this.datastreamEvento = evento;
+  asignarEvento($event) {
+    this.datastreamEvento = $event.nombre;
+    this.dsFormatEvento = $event.dsFormat;
   }
+
   asignarAccion(accion: string) {
     this.datastreamAccion = accion;
   }

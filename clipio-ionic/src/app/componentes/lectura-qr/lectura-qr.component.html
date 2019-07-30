@@ -10,7 +10,7 @@
       </ion-card-header>
     </ion-card>
       <ion-list *ngFor="let item of data;let i = index">
-          <ion-card (click)="enviarEvento(item[0])">
+          <ion-card (click)="enviarEvento(item[0], item[2])">
             <ion-card-header>
               <ion-toolbar>
                 <!-- Nombre del Actuador o Sensor -->
@@ -35,16 +35,16 @@
           </ion-card>
       </ion-list>
 </ng-container>
-  <ion-content *ngIf="tipo === '2'">  <!-- Datos Actuadores -->
-    <ion-card>
-      <ion-card-header>
-        <ion-card-title>
-          <ion-label>{{ nombreDispositivo }}</ion-label>
-        </ion-card-title>
-      </ion-card-header>
+<ng-container *ngIf="tipo === '2'">  <!-- Datos Actuadores -->
+  <ion-card>
+    <ion-card-header>
+      <ion-card-title>
+        <ion-label>{{ nombreDispositivo }}</ion-label>
+      </ion-card-title>
+    </ion-card-header>
   </ion-card>
     <ion-list *ngFor="let item of data;let i = index">
-        <ion-card *ngIf="item[2] == 'bool'">
+        <ion-card *ngIf="item[2] == 'bool'" (click)="enviarAccion(item[0])">
           <ion-card-header>
             <ion-toolbar>
               <!-- Nombre del Actuador -->
@@ -63,8 +63,8 @@
           </ion-card-content>
         </ion-card>
     </ion-list>
-  </ion-content>
-  <ion-content *ngIf="tipo === '3'">
+  </ng-container>
+  <ng-container *ngIf="tipo === '3'">
         <ion-list>
           <ion-item>
             <ion-card>
@@ -72,4 +72,4 @@
             </ion-card>
           </ion-item>
         </ion-list>
-  </ion-content>
+  </ng-container>
