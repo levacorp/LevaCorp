@@ -43,7 +43,7 @@ function cambiarIdsDataSreams()
             inputNombre.id = "inputNombre" + contDataStream;
             inputNombre.name = "inputNombre" + contDataStream;
 
-            selectDataStreamFormat=document.getElementById("selectDataStreamFormat00")
+            selectDataStreamFormat=document.getElementById("selectDataStreamFormat00");
             selectDataStreamFormat.id = "selectDataStreamFormat" + contDataStream;
             selectDataStreamFormat.name = "selectDataStreamFormat" + contDataStream;
             

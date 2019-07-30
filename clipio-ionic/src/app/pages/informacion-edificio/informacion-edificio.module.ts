@@ -5,13 +5,12 @@ import { Routes, RouterModule } from '@angular/router';
 
 import { IonicModule } from '@ionic/angular';
 
-import { HttpClientModule } from '@angular/common/http';
-import { LecturaQRPage } from './lectura-qr.page';
+import { InformacionEdificioPage } from './informacion-edificio.page';
 
 const routes: Routes = [
   {
     path: '',
-    component: LecturaQRPage
+    component: InformacionEdificioPage
   }
 ];
 
@@ -20,9 +19,8 @@ const routes: Routes = [
     CommonModule,
     FormsModule,
     IonicModule,
-    RouterModule.forChild(routes),
-    HttpClientModule
+    RouterModule.forChild(routes)
   ],
-  declarations: [LecturaQRPage]
+  declarations: [InformacionEdificioPage]
 })
-export class LecturaQRPageModule {}
+export class InformacionEdificioPageModule { }

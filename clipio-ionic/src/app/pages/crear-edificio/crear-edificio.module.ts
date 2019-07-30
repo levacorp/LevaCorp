@@ -6,6 +6,7 @@ import { Routes, RouterModule } from '@angular/router';
 import { IonicModule } from '@ionic/angular';
 
 import { CrearEdificioPage } from './crear-edificio.page';
+import { ComponentsModule } from 'src/app/componentes/componentesglobales.module';
 
 const routes: Routes = [
   {
@@ -19,8 +20,9 @@ const routes: Routes = [
     CommonModule,
     FormsModule,
     IonicModule,
-    RouterModule.forChild(routes)
+    RouterModule.forChild(routes),
+    ComponentsModule
   ],
   declarations: [CrearEdificioPage]
 })
-export class CrearEdificioPageModule {}
+export class CrearEdificioPageModule { }

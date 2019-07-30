@@ -1,10 +1,21 @@
 <!--Menu slider-->
 <ion-menu side="start" contentId="principal" menuId="menuPrincipal">
   <ion-header>
-    <ion-toolbar translucent>
-      <ion-img class="img-perfil" src="/assets/icon/UserLogo.png" slot="start"></ion-img>
-      <ion-title>Menu</ion-title>
-    </ion-toolbar>
+    <ion-menu-toggle>
+      <ion-card class="carta_menu" color="danger" (click)="pushPerfil()">
+        <ion-row>
+          <ion-col size="3" ion-justify-content-center>
+            <ion-img class="img-perfil" src="/assets/icon/UserLogo.png"></ion-img>
+          </ion-col>
+          <ion-col size="9" class="user_name">
+            <ion-card-title> User</ion-card-title>
+          </ion-col>
+        </ion-row>
+        <ion-row>
+          <ion-card-subtitle> user@hormail.com</ion-card-subtitle>
+        </ion-row>
+      </ion-card>
+    </ion-menu-toggle>
   </ion-header>
   <ion-content>
 
@@ -30,13 +41,19 @@
         </ion-item>
       </ion-menu-toggle>
 
+
+    </ion-list>
+
+  </ion-content>
+
+  <ion-footer>
+    <ion-toolbar>
       <ion-menu-toggle>
-        <ion-item>
+        <ion-item class="footer">
           <ion-img src="/assets/icon/logout.png" slot="start"></ion-img>
           <ion-label>Cerrar sesion</ion-label>
         </ion-item>
       </ion-menu-toggle>
-    </ion-list>
-
-  </ion-content>
+    </ion-toolbar>
+  </ion-footer>
 </ion-menu>

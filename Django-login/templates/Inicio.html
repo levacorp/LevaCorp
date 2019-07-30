@@ -20,6 +20,11 @@
             <div class="wizard-container">
                 <!--Contenedor que controla padding left y right-->
                 <div class="container cont-principal">
+                    {% if mensaje %}
+                    <div class="alert alert-{{ mensaje.0 }}" role="alert">
+                        {{ mensaje.1 }}
+                    </div>
+                    {% endif %}
                     <!--Carta para el contenido principal-->
                     <div class="card wizard-card justify-content-center">
                         <div class="div-principal">

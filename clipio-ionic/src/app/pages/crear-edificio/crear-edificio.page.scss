@@ -1,21 +1,19 @@
-img{
-    height: 90px;
-    width: 90px;
+img {
+  height:50% ;
+  width: 50% ;
+  margin: auto;
+  display: block;
 }
 
 ion-card{
-    display: flex;
-    flex-direction: column;
-    width: 100% ;
-    margin: 0 ;
-  }
+  width: 100% !important; 
+  display: block;
+}
+.tamanoCartaPrincipal{
+  width: 100px;
+}
 
-.centrado{
-    align-content: center;
-    align-items: center;
-    align-self: center;
-    margin-left: auto;
-    margin-right: auto;
-    vertical-align: middle;
-    text-align: center;
-  }
+.principal{
+  padding-left: 20%;
+  padding-right: 20%;
+}
