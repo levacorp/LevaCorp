@@ -10,6 +10,9 @@ import { Router } from '@angular/router';
 })
 export class ElementosPorHabitacionPage implements OnInit {
   elementos: Observable<any>;
+  habitacion = '1';
+  filtro = '1';
+
   constructor(private dataService: DataService , private router: Router) { }
 
   /* Inicializa los atributos a utilizar */
@@ -19,5 +22,12 @@ export class ElementosPorHabitacionPage implements OnInit {
   /*Se encarga de redirigir el elemento seleccionado a la pagina donde se muestras sus dispositivos asociados*/
   routeDispositivosElemento(id: string )  {
     this.router.navigate(['dispositivos-elemento', id]);
+  }
+  routeCrearElemento()  {
+    this.router.navigate(['crear-elemento', this.habitacion]);
+  }
+  segmentButtonClicked(event) {
+    const segEscogido = event.detail.value;
+    this.filtro = segEscogido;
   }
 }

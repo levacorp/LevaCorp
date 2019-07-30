@@ -16,7 +16,9 @@ const routes: Routes = [
     loadChildren: './pages/elementos-por-habitacion/elementos-por-habitacion.module#ElementosPorHabitacionPageModule' },
   { path: 'dispositivos-elemento/:id',
    loadChildren: './pages/dispositivos-elemento/dispositivos-elemento.module#DispositivosElementoPageModule' },
-  { path: 'dispositivo/:id', loadChildren: './pages/dispositivo/dispositivo.module#DispositivoPageModule' }
+  { path: 'dispositivo/:id', loadChildren: './pages/dispositivo/dispositivo.module#DispositivoPageModule' },
+  { path: 'crear-elemento/:elemento', loadChildren: './pages/crear-elemento/crear-elemento.module#CrearElementoPageModule' }
+
 ];
 @NgModule({
   imports: [RouterModule.forRoot(routes)],
