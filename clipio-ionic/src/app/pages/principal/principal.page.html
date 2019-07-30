@@ -4,13 +4,18 @@
       <ion-menu-button color="danger" menu="menuPrincipal"></ion-menu-button>
     </ion-buttons>
     <ion-title>Inicio</ion-title>
+    <ion-buttons slot="end">
+      <ion-button slot="icon-only" color="danger" (click)="cargarEdificios($event)">
+        <ion-icon mode="ios" name="business"></ion-icon>
+      </ion-button>
+    </ion-buttons>
   </ion-toolbar>
 </ion-header>
 
 <ion-content>
   <!--Carta para las notificaciones-->
   <div class="cartaEdificio">
-    <ion-button expand="full" color="danger" (click)="cargarEdificios($event)">Bienvenido a Casa</ion-button>
+    <ion-button expand="full" color="danger">Bienvenido a {{argumento}}</ion-button>
   </div>
 
   <ion-card class="tamanoCarta setScroll">
