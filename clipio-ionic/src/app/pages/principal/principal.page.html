@@ -47,17 +47,6 @@
       <ion-segment-button value="{{ habitacion }}" *ngFor="let habitacion of habitaciones">
         <ion-label>{{ habitacion }}</ion-label>
       </ion-segment-button>
-      </ion-segment>
-    <ion-segment color="danger"  (ionChange)="segmentButtonClicked($event)" scrollable>
-      <ion-segment-button value="1">
-        <ion-label>Habitacion</ion-label>
-      </ion-segment-button>
-      <ion-segment-button value="2">
-        <ion-label>Sala</ion-label>
-      </ion-segment-button>
-      <ion-segment-button value="3">
-        <ion-label>Patio</ion-label>
-      </ion-segment-button>
     </ion-segment>
   </div>
   <!--Fin Pestañas de las habitaciones-->
