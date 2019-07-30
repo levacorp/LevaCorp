@@ -3,8 +3,8 @@ import { PreloadAllModules, RouterModule, Routes } from '@angular/router';
 
 const routes: Routes = [
 
-  { path: '', redirectTo: 'principal', pathMatch: 'full' },
-  { path: 'principal', loadChildren: './pages/principal/principal.module#PrincipalPageModule' },
+  { path: '', redirectTo: 'principal/casa', pathMatch: 'full' },
+  { path: 'principal/:edificio', loadChildren: './pages/principal/principal.module#PrincipalPageModule' },
   { path: 'preferencias', loadChildren: './pages/preferencias/preferencias.module#PreferenciasPageModule' },
   // { path: 'elementos-habitacion', loadChildren: './elementos-habitacion/elementos-habitacion.module#ElementosHabitacionPageModule' },
   { path: 'edificio', loadChildren: './pages/edificio/edificio.module#EdificioPageModule' },

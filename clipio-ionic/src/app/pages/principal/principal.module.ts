@@ -8,6 +8,7 @@ import { IonicModule } from '@ionic/angular';
 import { PrincipalPage } from './principal.page';
 import { ComponentsModule } from '../../componentes/componentesglobales.module';
 import { PipesModule } from '../../pipes/pipes.module';
+import { PopoverEdificiosInicioComponent } from '../../componentes/popover-edificios-inicio/popover-edificios-inicio.component';
 
 const routes: Routes = [
   {
@@ -17,13 +18,16 @@ const routes: Routes = [
 ];
 
 @NgModule({
+  entryComponents: [
+    PopoverEdificiosInicioComponent
+  ],
   imports: [
     CommonModule,
     FormsModule,
     IonicModule,
     RouterModule.forChild(routes),
     PipesModule,
-    ComponentsModule
+    ComponentsModule,
   ],
   declarations: [PrincipalPage]
 })
