@@ -31,7 +31,7 @@ def buscar(request, id):
             return crearDispositivo(request)
 
     disp = ConexionIndiceSemantico(id)
-    return render(request, "crearDispositivoTemp.html", {'disp': disp})
+    return render(request, "crearDispositivoExistente.html", {'disp': disp})
 
 
 @login_required()                                                   # El usuario debe estar autenticado
@@ -44,7 +44,7 @@ def infoDispositivo(request, id):
                                                idDispositivo=disp.getId())
     ipDisp = siExiste.ipDispositivo
     args = {'disp': disp, 'ipDisp': ipDisp}
-    return render(request, "crearDispositivoTemp.html", args)
+    return render(request, "crearDispositivoExistente.html", args)
 
 
 @login_required()                                                   #El usuario debe estar autenticado

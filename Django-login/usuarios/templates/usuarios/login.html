@@ -2,10 +2,14 @@
 {% block content %}
 {% load staticfiles %}
 
+<!--Fondo de la pagina-->
 <div class="fondo"></div>
+<!--Pagina al 100% de altura y anchura-->
 <div class="container h-100">
     <div class="d-flex justify-content-center h-100">
+        <!--Carta para el formulario-->
         <div class="user_card" >
+            <!--Imagen del formulario-->
             <div class="d-flex justify-content-center" style="margin: 10%">
                 <div class="brand_logo_container">
                     <img src="{% static 'img/logoClipio.png' %}" class="brand_logo" alt="Logo">
@@ -13,31 +17,39 @@
             </div>
                 <form method="POST">
                     {% csrf_token %}
-                    
+
+                    <!--Agrupa el borde izquiero rojo con el input-->
                     <div class="input-group mb-3">
+                        <!--Borde izquierdo rojo para el campo-->
                         <div class="input-group-append">
                             <span class="input-group-text"><i class="fas fa-user"></i></span>
                         </div>
+                        <!--Campo de ingreso de datos-->
                         <input type="text" name="username" class="form-control input_user" value=""
                             placeholder="Usuario">
                     </div>
+                    <!--Agrupa el borde izquiero rojo con el input-->
                     <div class="input-group mb-2">
+                        <!--Borde izquierdo rojo para el campo-->
                         <div class="input-group-append">
                             <span class="input-group-text"><i class="fas fa-key"></i></span>
                         </div>
+                        <!--Campo de ingreso de datos-->
                         <input type="password" name="password" class="form-control input_pass" value=""
                             placeholder="Contraseña">
                     </div>
+                    <!--Boton con metodo submit post del formulario-->
                     <div class="d-flex justify-content-center mt-3 login_container">
                         <button type="submit" name="button" class="btn login_btn">Ingresar</button>
                     </div>
                 </form>
             
             
-          
+            <!--Boton de registrar que llama una funcion de Django en href-->
             <div class="justify-content-center mt-3 login_container">
                     <a href= {% url 'registrar' %} name="button" class="btn login_btn">Registrar</a>
             </div>
+            <!--Aparece si existe un error al iniciar sesion-->
             <div class="d-flex justify-content-center mt-2 login_container">
                 {% if messages %}
                     {% for message in messages %}

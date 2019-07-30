@@ -1,0 +1,102 @@
+<?xml version='1.0' encoding='utf-8'?>
+<Objects>
+  <Object>
+    <InfoItem name="BuildingEnvironment">
+      <InfoItem name="Building">
+        <InfoItem name="name_building">
+          <value type="string">casa</value>
+        </InfoItem>
+        <InfoItem name="flats_building">
+          <value type="int">1</value>
+        </InfoItem>
+        <InfoItem name="Objetos">
+          <InfoItem name="oos">
+            <InfoItem name="ip_object">
+              <value type="string">192.168.123.103</value>
+            </InfoItem>
+            <InfoItem name="id_object">
+              <value type="string">1650241840</value>
+            </InfoItem>
+            <InfoItem name="name_object">
+              <value type="string">NodoCoordinador</value>
+            </InfoItem>
+          </InfoItem>
+        </InfoItem>
+        <InfoItem name="house_parts">
+          <InfoItem name="part">
+            <InfoItem name="name_part">
+              <value type="string">cocina</value>
+            </InfoItem>
+            <InfoItem name="type_part">
+              <value type="string">Kitchen</value>
+            </InfoItem>
+            <InfoItem name="flat_number">
+              <value type="string">Piso No. 1</value>
+            </InfoItem>
+            <InfoItem name="Objetos">
+              <InfoItem name="oos">
+                <InfoItem name="ip_object">
+                  <value type="string">192.168.123.107</value>
+                </InfoItem>
+                <InfoItem name="id_object">
+                  <value type="string">1931642039</value>
+                </InfoItem>
+                <InfoItem name="name_object">
+                  <value type="string">Regulador de Humedad en Planta</value>
+                </InfoItem>
+              </InfoItem>
+            </InfoItem>
+          </InfoItem>
+          <InfoItem name="part">
+            <InfoItem name="name_part">
+              <value type="string">cuarto Santiago</value>
+            </InfoItem>
+            <InfoItem name="type_part">
+              <value type="string">Bedroom</value>
+            </InfoItem>
+            <InfoItem name="flat_number">
+              <value type="string">Piso No. 1</value>
+            </InfoItem>
+            <InfoItem name="Objetos">
+              <InfoItem name="oos">
+                <InfoItem name="ip_object">
+                  <value type="string">192.168.123.105</value>
+                </InfoItem>
+                <InfoItem name="id_object">
+                  <value type="string">78091938</value>
+                </InfoItem>
+                <InfoItem name="name_object">
+                  <value type="string">Regulador de Luz</value>
+                </InfoItem>
+              </InfoItem>
+            </InfoItem>
+          </InfoItem>
+          <InfoItem name="part">
+            <InfoItem name="name_part">
+              <value type="string">sala</value>
+            </InfoItem>
+            <InfoItem name="type_part">
+              <value type="string">LivingRoom</value>
+            </InfoItem>
+            <InfoItem name="flat_number">
+              <value type="string">Piso No. 1</value>
+            </InfoItem>
+            <InfoItem name="Objetos">
+              <InfoItem name="oos">
+                <InfoItem name="ip_object">
+                  <value type="string">192.168.123.106</value>
+                </InfoItem>
+                <InfoItem name="id_object">
+                  <value type="string">708637323</value>
+                </InfoItem>
+                <InfoItem name="name_object">
+                  <value type="string">Regulador de Temperatura</value>
+                </InfoItem>
+              </InfoItem>
+            </InfoItem>
+          </InfoItem>
+        </InfoItem>
+      </InfoItem>
+    </InfoItem>
+  </Object>
+</Objects>
