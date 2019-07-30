@@ -5,39 +5,3 @@ ion-card-content{
 ion-toggle{
     margin-top:-10px; 
 }
-ion-spinner.spinner-ios line {
-    stroke : #d33939;
-}	
-ion-spinner svg {
-    stroke: red;
-    fill: red;
-  }
-  .spinner-ios line, .spinner-ios-small line {
-    stroke: #f53d3d;
-  }
-  ion-spinner * {
-    width: 28px;
-    height: 28px;
-    stroke: #444;
-    fill: #222;
-  }  
-  spinner-ios-circles-color{
-    stroke: #444;
-    fill: #222;
-  }	
-  sc-ion-loading-md md spinner-circles hydrated{
-    stroke: #444;
-    fill: #222;
-  }
-  .spinner-bubbles.sc-ion-loading-md, .spinner-circles.sc-ion-loading-md, .spinner-crescent.sc-ion-loading-md, .spinner-dots.sc-ion-loading-md, .spinner-lines.sc-ion-loading-md, .spinner-lines-small.sc-ion-loading-md{
-      color : #d33939;
-  }
- 
-  .spinner-circles.sc-ion-loading-md{
-    color : #d33939;
-
-  }
-  ion-spinner.sc-ion-loading-md.md.spinner-circles.hydrated{
-    color : #d33939;
-
-  }

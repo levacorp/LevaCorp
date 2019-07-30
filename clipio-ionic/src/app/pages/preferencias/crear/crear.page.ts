@@ -1,4 +1,4 @@
-import { Component, OnInit } from '@angular/core';
+import { Component, Output, OnInit, EventEmitter } from '@angular/core';
 import { Router } from '@angular/router';
 
 @Component({
@@ -8,28 +8,45 @@ import { Router } from '@angular/router';
 })
 export class CrearPage implements OnInit {
 
+  onReadEvent = new EventEmitter();
+  onReadAction = new EventEmitter();
+
   direccionEvento = null;
   direccionAccion = null;
+
+  datastreamEvento = null;
+  datastreamAccion = null;
+  dsFormatEvento = null;
+
   constructor(private router: Router) { }
 
   ngOnInit() {
   }
 
-  direccionLeidaEvento(dir: string) {
-    // this.direccionEvento = dir;
-    this.router.navigate(['/lectura-qr', '1', dir]);
+  guardarDireccionEvento(dir: string) {
+    this.direccionEvento = dir;
   }
 
-  direccionLeidaAccion(dir: string) {
-    // this.direccionAccion = dir;
-    this.router.navigate(['/lectura-qr', '2', dir]);
+  guardarDireccionAccion(dir: string) {
+    this.direccionAccion = dir;
   }
 
   eliminarEvento() {
+    this.datastreamEvento = null;
     this.direccionEvento = null;
   }
 
   eliminarAccion() {
+    this.datastreamAccion = null;
     this.direccionAccion = null;
+  }
+
+  asignarEvento($event) {
+    this.datastreamEvento = $event.nombre;
+    this.dsFormatEvento = $event.dsFormat;
+  }
+
+  asignarAccion(accion: string) {
+    this.datastreamAccion = accion;
   }
 }

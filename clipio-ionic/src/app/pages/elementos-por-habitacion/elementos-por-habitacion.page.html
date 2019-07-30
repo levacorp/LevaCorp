@@ -13,6 +13,18 @@
 
 <!--Se encargara de mostrar todos los elementos de la habitacion-->
 <ion-content>
+  <!--Pestañas de las habitaciones-->
+  <div class="barraSegmento">
+      <ion-segment color="danger"  (ionChange)="segmentButtonClicked($event)" scrollable>
+        <ion-segment-button value="1">
+          <ion-label>Habitacion</ion-label>
+        </ion-segment-button>
+        <ion-segment-button value="2">
+          <ion-label>Sala</ion-label>
+        </ion-segment-button>
+      </ion-segment>
+    </div>
+    <!--Fin Pestañas de las habitaciones-->
   <ion-grid class="contenidoSegmento">
     <ion-row>
       <!--Acomoda el numero de tarjetas de acuerdo al tamaño de pantalla-->
@@ -35,8 +47,8 @@
   </ion-grid>
 </ion-content>
  <!-- fab placed to the top end -->
-<ion-fab vertical="bottom" horizontal="end" slot="fixed" >
-      <ion-fab-button (click)="pushCrearEdificio()"  color="danger" >
+<ion-fab  vertical="bottom" horizontal="end" slot="fixed" >
+      <ion-fab-button (click)="routeCrearElemento()" color="danger" >
         <ion-icon name="add"></ion-icon>
       </ion-fab-button>
  </ion-fab>
