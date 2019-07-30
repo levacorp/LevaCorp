@@ -17,9 +17,6 @@ export class DataService {
   getHabitaciones() {
     return this.http.get('https://jsonplaceholder.typicode.com/users');
   }
-  getInformacionEdificio(){
-    return this.http.get('https://jsonplaceholder.typicode.com/users');
-  }
   /*Obtiene el json de todos los edificios*/
 
   getEdificios() {
