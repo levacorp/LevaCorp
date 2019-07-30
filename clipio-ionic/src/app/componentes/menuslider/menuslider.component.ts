@@ -26,13 +26,17 @@ export class MenusliderComponent implements OnInit {
   constructor(private menu: MenuController, private barcodeScanner: BarcodeScanner, private router: Router) { }
   ngOnInit() { }
 
-  pushEdificio(){
+  pushPerfil() {
+    this.router.navigate(['/perfil']);
+  }
+  pushEdificio() {
     this.router.navigate(['/edificio']);
   }
   pushInicio() {
     this.router.navigate(['/principal']);
   }
-  pushPreferencia(){
-      this.router.navigate(['/preferencias']);
+  pushPreferencia() {
+    this.router.navigate(['/preferencias']);
   }
+
 }

@@ -6,7 +6,8 @@ import { Component, OnInit } from '@angular/core';
   styleUrls: ['./crear-edificio.page.scss'],
 })
 export class CrearEdificioPage implements OnInit {
-
+  nombre: String;
+  piso: String;
   constructor() { }
 
   ngOnInit() {

@@ -1,23 +1,20 @@
 <ion-header>
-
   <ion-toolbar color="danger">
     <ion-buttons slot="start">
       <ion-back-button defaultHref="/"></ion-back-button>
     </ion-buttons>
-    <ion-title>Edificio</ion-title>
-
+    <ion-title>Informacion Edificio</ion-title>
   </ion-toolbar>
 </ion-header>
 
 <ion-content>
-
   <ion-grid class="contenidoSegmento">
     <ion-row>
       <!--Acomoda el numero de tarjetas de acuerdo al tamaño de pantalla-->
-      <ion-col size="6" size-sm="4" size-md="3" size-lg="2" *ngFor="let elemento of edificios | async">
+      <ion-col size="6" size-sm="4" size-md="3" size-lg="2" *ngFor="let elemento of informacionEdificio | async">
         <!--Carga de los elementos filtrados por segmento escogido-->
-        <ion-card (click)="pushInformacionEdificio()">
-          <img src="/assets/icon/house.png" />
+        <ion-card>
+          <img src="/assets/icon/hotel.png" />
           <ion-card-header>
             <ion-card-title>{{ elemento.username }}</ion-card-title>
           </ion-card-header>
@@ -30,10 +27,3 @@
     </ion-row>
   </ion-grid>
 </ion-content>
-
-<!-- fab placed to the top end -->
-<ion-fab vertical="bottom" horizontal="end" slot="fixed">
-  <ion-fab-button (click)="pushCrearEdificio()" color="danger">
-    <ion-icon name="add"></ion-icon>
-  </ion-fab-button>
-</ion-fab>

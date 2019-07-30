@@ -12,7 +12,7 @@ import { BarcodeScanner } from '@ionic-native/barcode-scanner/ngx';
 import { ComponentsModule } from './componentes/componentesglobales.module';
 import { HttpClientModule } from '@angular/common/http';
 import { PipesModule } from './pipes/pipes.module';
-import { HTTP} from '@ionic-native/http/ngx';
+import { HTTP } from '@ionic-native/http/ngx';
 
 
 @NgModule({

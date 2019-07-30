@@ -38,6 +38,7 @@
 
   <!--Pestañas de las habitaciones-->
   <div class="barraSegmento">
+    <!--Carga todas las haticaciones, ionsegment en modo ios-->
     <ion-segment color="danger" mode="ios" (ionChange)="segmentButtonClicked($event)" scrollable>
       <ion-segment-button value="{{ habitacion.id }}" *ngFor="let habitacion of habitaciones | async">
         <ion-label>{{ habitacion.id }}</ion-label>

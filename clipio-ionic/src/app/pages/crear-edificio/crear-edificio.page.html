@@ -1,42 +1,47 @@
 <ion-header>
-  <ion-toolbar>
+  <ion-toolbar color="danger">
     <ion-buttons slot="start">
       <ion-back-button defaultHref="/"></ion-back-button>
     </ion-buttons>
     <ion-title>Nuevo Edificio</ion-title>
   </ion-toolbar>
 </ion-header>
-
+<!--Pagina en la que se pide los atributos del edificio como nombre y piso para poder ser creado posteriormente-->
 <ion-content>
-  <ion-card>
-    <ion-item>
-      <img src="/assets/icon/house.png" />
-
-    </ion-item>
-  </ion-card>
-  <ion-card>
-    <ion-grid>
-
+  <div class="principal">
+    <ion-toolbar>
       <ion-row>
-        <ion-text>Nombre</ion-text>
+        <ion-col>
+          <!--Carta para la imagen principal de la pagina-->
+          <ion-card color="danger" class="tamanoCartaPrincipal">
+            <img src="/assets/icon/house.png" />
+          </ion-card>
+        </ion-col>
       </ion-row>
+    </ion-toolbar>
+    <ion-toolbar>
+      <!--Carta para los atributos del edificio-->
+      <ion-card text-center>
+        <ion-list>
+          <ion-item text-center>
+            <ion-label position="floating"> Nombre </ion-label>
+            <ion-input type="text" color="danger"></ion-input>
+          </ion-item>
+          <ion-item text-center>
+            <ion-label position="floating"> Piso</ion-label>
+            <ion-input type="text" color="danger"></ion-input>
+          </ion-item>
+        </ion-list>
+      </ion-card>
+    </ion-toolbar>
+    <!--Boton para guardar el edificio denominado "Listo"-->
+    <ion-toolbar>
       <ion-row>
-        <ion-label>_________________</ion-label>
+        <ion-col col-6 offset-3 text-center>
+          <ion-button color="danger">Listo</ion-button>
+        </ion-col>
       </ion-row>
-      <ion-row>
-        <ion-text>Piso</ion-text>
-      </ion-row>
-      <ion-row>
-        <ion-label>_________________</ion-label>
-      </ion-row>
-    </ion-grid>
-  </ion-card>
-  <ion-toolbar>
-    <div>
-      <ion-button (click)="clickedStar()">
-        <ion-text>listo</ion-text>
-      </ion-button>
-    </div>
-  </ion-toolbar>
+    </ion-toolbar>
+  </div>
 
 </ion-content>
