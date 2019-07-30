@@ -31,6 +31,8 @@ def infoDispositivo(request, id):
     if request.method == "POST":
         if 'descargarJson' in request.POST:                               # Redirige a la vista para descargar
             return crearDispositivo(request)                                # el JSON cargado en el formulario
+        if 'inicializar' in request.POST:
+            return crearDispositivo(request)
     disp = ConexionIndiceSemantico(id)                                      # Carga la información del dispositivo
     siExiste = Dispositivo_Usuario.objects.get(idUsuario=request.user,      # ya existente
                                                idDispositivo=disp.getId())
@@ -173,7 +175,7 @@ def crearDispositivo(request):                                      # Método qu
                     request.POST.get('inputEtiqueta' + str(cont)),
                     request.POST.get('inputTipo' + str(cont)),
                     listaTags,
-                    request.POST.get('datastream_format' + str(cont))
+                    request.POST.get('selectDataStreamFormat' + str(cont))
                 ])
             else:
                 existeDataStream = False
@@ -200,7 +202,7 @@ def crearDispositivo(request):                                      # Método qu
                                                 idDispositivo=idDispositivo,
                                                 ipDispositivo=request.POST.get('ip'))
                     nuevo.save()
-                return redirect("homepage", {'mensaje': ['success', 'Inicializacion Satisfactoria!']})
+                return render(request, "Inicio.html", {'mensaje': ['success', 'Inicializacion Satisfactoria!']})
             else:
                 return render(request, 'crearDispositivo.html', {'mensaje': ['danger', 'No se ha Inicializado el dispositivo']})
 
