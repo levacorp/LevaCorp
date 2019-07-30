@@ -37,7 +37,7 @@ export class DataService {
     const houseParts = [];
     // tslint:disable-next-line: prefer-for-of
     console.log(infoEdificio);
-    //console.log('nombre:', infoEdificio.InfoItem.name);
+    // console.log('nombre:', infoEdificio.InfoItem.name);
   }
 
   /*Obtiene la informacion de un solo edificio. Params: xml con la info de todos los edificios, nombre del edificio a buscar*/
