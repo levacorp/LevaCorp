@@ -22,6 +22,11 @@ export class DataService {
   getEdificios() {
     return this.http.get('https://jsonplaceholder.typicode.com/users');
   }
+
+  getInformacionEdificio() {
+    return this.http.get('https://jsonplaceholder.typicode.com/users');
+  }
+
   getXML() {
 
     console.log(xml2js);

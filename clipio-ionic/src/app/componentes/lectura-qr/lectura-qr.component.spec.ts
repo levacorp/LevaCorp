@@ -1,22 +1,22 @@
 import { CUSTOM_ELEMENTS_SCHEMA } from '@angular/core';
 import { async, ComponentFixture, TestBed } from '@angular/core/testing';
 
-import { LecturaQRPage } from './lectura-qr.page';
+import { LecturaQrComponent } from './lectura-qr.component';
 
-describe('LecturaQRPage', () => {
-  let component: LecturaQRPage;
-  let fixture: ComponentFixture<LecturaQRPage>;
+describe('LecturaQrComponent', () => {
+  let component: LecturaQrComponent;
+  let fixture: ComponentFixture<LecturaQrComponent>;
 
   beforeEach(async(() => {
     TestBed.configureTestingModule({
-      declarations: [ LecturaQRPage ],
+      declarations: [ LecturaQrComponent ],
       schemas: [CUSTOM_ELEMENTS_SCHEMA],
     })
     .compileComponents();
   }));
 
   beforeEach(() => {
-    fixture = TestBed.createComponent(LecturaQRPage);
+    fixture = TestBed.createComponent(LecturaQrComponent);
     component = fixture.componentInstance;
     fixture.detectChanges();
   });
