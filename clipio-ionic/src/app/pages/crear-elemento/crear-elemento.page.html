@@ -1,0 +1,49 @@
+<ion-header>
+  <ion-toolbar>
+      <ion-buttons slot="start">
+          <ion-back-button></ion-back-button>
+        </ion-buttons> 
+    <ion-title>crearElemento</ion-title>
+  </ion-toolbar>
+</ion-header>
+
+<ion-content>
+    <ion-card>
+        <ion-card-header>
+            <img src="/assets/icon/camara1.png"/>
+        </ion-card-header>
+        <ion-card-content>
+            <form [formGroup]="myForm" (ngSubmit)="saveData()" size="8" class="ion-padding">
+                <ion-list>
+                  <ion-item>
+                    <ion-input formControlName="nombre" type="text" placeholder="Nombre"></ion-input>
+                  </ion-item>            
+                  <ion-item>
+                    <ion-label>Tipo</ion-label>
+                    <ion-select formControlName="tipo" >
+                      <ion-select-option value="Dog">Dog</ion-select-option>
+                    </ion-select>
+                  </ion-item>
+                  <ion-item>
+                      <ion-label>Tipo Viva</ion-label>
+                      <ion-select formControlName="tipoViva">
+                        <ion-select-option value="Doga">Doga</ion-select-option>
+                      </ion-select>
+                  </ion-item>
+                  <ion-item>
+                        <ion-input formControlName="especie" type="text" placeholder="Especie"></ion-input>
+                  </ion-item> 
+                  <ion-item>
+                          <ion-input formControlName="comida" type="text" placeholder="Comida"></ion-input>
+                  </ion-item>   
+                </ion-list>
+                <ion-row class="ion-justify-content-center">
+                    <ion-button  color="danger" type="submit" [disabled]="!myForm.valid">Crear</ion-button>
+                </ion-row>
+              </form>
+        </ion-card-content>
+      </ion-card>
+    
+  
+
+</ion-content>

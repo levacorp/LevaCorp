@@ -3,6 +3,7 @@ import {ActivatedRoute, Router} from '@angular/router';
 import { DataService } from 'src/app/services/data.service';
 import { Observable } from 'rxjs';
 
+
 @Component({
   selector: 'app-dispositivos-elemento',
   templateUrl: './dispositivos-elemento.page.html',
@@ -11,6 +12,8 @@ import { Observable } from 'rxjs';
 export class DispositivosElementoPage implements OnInit {
   argumento = null;
   elementos: Observable<any>;
+
+
 
   constructor( private activatedRoute: ActivatedRoute , private dataService: DataService , private router: Router) {   }
   /* Inicializa los atributos a utilizar */
@@ -28,4 +31,5 @@ export class DispositivosElementoPage implements OnInit {
 
    }
 
+  
 }
