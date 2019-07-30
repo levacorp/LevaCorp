@@ -12,7 +12,7 @@ export class DataService {
   getElementos() {
     return this.http.get('https://jsonplaceholder.typicode.com/posts');
   }
-  
+
   /*Obtiene el json de todas las habitaciones*/
   getHabitaciones() {
     return this.http.get('https://jsonplaceholder.typicode.com/users');
