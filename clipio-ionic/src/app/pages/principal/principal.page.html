@@ -9,6 +9,10 @@
 
 <ion-content>
   <!--Carta para las notificaciones-->
+  <div class="cartaEdificio">
+    <ion-button expand="full" color="danger" (click)="cargarEdificios($event)">Bienvenido a Casa</ion-button>
+  </div>
+
   <ion-card class="tamanoCarta setScroll">
     <ion-card-header>
       <ion-card-title>Tus notificaciones</ion-card-title>
@@ -40,8 +44,8 @@
   <div class="barraSegmento">
     <!--Carga todas las haticaciones, ionsegment en modo ios-->
     <ion-segment color="danger" mode="ios" (ionChange)="segmentButtonClicked($event)" scrollable>
-      <ion-segment-button value="{{ habitacion.id }}" *ngFor="let habitacion of habitaciones | async">
-        <ion-label>{{ habitacion.id }}</ion-label>
+      <ion-segment-button value="{{ habitacion }}" *ngFor="let habitacion of habitaciones">
+        <ion-label>{{ habitacion }}</ion-label>
       </ion-segment-button>
     </ion-segment>
   </div>
