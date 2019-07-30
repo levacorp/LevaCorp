@@ -17,12 +17,12 @@ export class CrearPage implements OnInit {
 
   direccionLeidaEvento(dir: string) {
     this.direccionEvento = dir;
-    this.router.navigate(['/lectura-qr', '1', dir]);
+    // this.router.navigate(['/lectura-qr', '1', dir]);
   }
 
   direccionLeidaAccion(dir: string) {
     this.direccionAccion = dir;
-    this.router.navigate(['/lectura-qr', '2', dir]);
+    // this.router.navigate(['/lectura-qr', '2', dir]);
   }
 
   eliminarEvento() {

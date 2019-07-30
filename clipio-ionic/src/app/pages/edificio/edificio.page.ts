@@ -9,16 +9,19 @@ import { Router } from '@angular/router';
   styleUrls: ['./edificio.page.scss'],
 })
 export class EdificioPage implements OnInit {
- 
+
   edificios: Observable<any>;
-  constructor(private dataservice: DataService,private router: Router) { }
+  constructor(private dataservice: DataService, private router: Router) { }
 
   ngOnInit() {
-    this.edificios= this.dataservice.getEdificios();
+    this.edificios = this.dataservice.getEdificios();
   }
-  pushCrearEdificio(){
+  pushCrearEdificio() {
     this.router.navigate(['/crear-edificio']);
-    
-}
+
+  }
+  pushInformacionEdificio() {
+    this.router.navigate(['/informacion-edificio']);
+  }
 
 }
