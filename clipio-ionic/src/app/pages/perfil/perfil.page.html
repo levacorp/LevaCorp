@@ -1,0 +1,57 @@
+<ion-header>
+  <ion-toolbar color="danger">
+    <ion-buttons slot="start">
+      <ion-back-button defaultHref="/"></ion-back-button>
+    </ion-buttons>
+    <ion-title>Perfil</ion-title>
+  </ion-toolbar>
+</ion-header>
+
+<ion-content>
+  <div class="principal">
+
+    <ion-toolbar>
+      <!--Carta capturar la informacion del usuario-->
+      <ion-card text-center class="tamanoCartaPrincipal">
+        <ion-list>
+
+          <ion-item text-center>
+            <img slot="start" src="/assets/icon/UserLogo.png" />
+            <ion-label position="floating"> Nombre </ion-label>
+            <ion-input type="text" color="danger"></ion-input>
+          </ion-item>
+          <ion-item text-center>
+            <img slot="start" src="/assets/icon/house.png" />
+            <ion-label position="floating"> E-mail </ion-label>
+            <ion-input type="text" color="danger"></ion-input>
+          </ion-item>
+          <ion-item text-center>
+            <img slot="start" src="/assets/icon/house.png" />
+            <ion-label position="floating"> Genero </ion-label>
+            <ion-input type="text" color="danger"></ion-input>
+          </ion-item>
+          <ion-item text-center>
+            <img slot="start" src="/assets/icon/house.png" />
+            <ion-label position="floating"> Telefono</ion-label>
+            <ion-input type="text" color="danger"></ion-input>
+          </ion-item>
+          <ion-item text-center>
+            
+            <img slot="start" src="/assets/icon/house.png" />
+            <ion-label position="floating"> Ocupacion </ion-label>
+            <ion-input type="text" color="danger"></ion-input>
+          </ion-item>
+        </ion-list>
+      </ion-card>
+    </ion-toolbar>
+
+    <!--Boton para guardar la informacion del usuarios-->
+    <ion-toolbar>
+      <ion-row>
+        <ion-col col-6 offset-3 text-center>
+          <ion-button color="danger">Listo</ion-button>
+        </ion-col>
+      </ion-row>
+    </ion-toolbar>
+  </div>
+</ion-content>
