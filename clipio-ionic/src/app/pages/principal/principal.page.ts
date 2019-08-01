@@ -20,7 +20,7 @@ export class PrincipalPage implements OnInit {
   argumento = null;
 
   constructor(private dataService: DataService, public popoverController: PopoverController,
-    private router: Router, private activatedRoute: ActivatedRoute) { }
+              private router: Router, private activatedRoute: ActivatedRoute) { }
 
   /* Inicializa los atributos a utilizar */
   ngOnInit() {
@@ -28,8 +28,6 @@ export class PrincipalPage implements OnInit {
     this.argumento = this.activatedRoute.snapshot.paramMap.get('edificio');
     this.habitaciones = this.dataService.getListaHabitaciones(this.argumento);
     console.log(this.dataService.getHabitaciones('casa'));
-    var obj = this.dataService.getHabitaciones('casa');
-    var myJSON = JSON.stringify(obj);
 
     //document.getElementById("inp").innerHTML = myJSON;
     //console.log('elementos: ', this.dataService.getElementos('casa', 'cocina'));
