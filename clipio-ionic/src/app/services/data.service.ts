@@ -9,11 +9,42 @@ import { FiltroElementosPipe } from '../pipes/filtro-elementos.pipe';
 export class DataService {
   constructor(private http: HttpClient) { }
 
-  /*Obtiene el json de todos los elementos*/
-  getElementos2(nombreEdificio: string, nombreHabitacion: string) {
-    const elementos = [];
+  /* Obtiene los nombres de los elementos de una habitacion. Retorna: [nombreHabitacion1, nombreHabitacion2,...] */
+  getListaElementosPorHabitacion(nombreEdificio: string, nombreHabitacion: string) {
+    const listaElementos = [];
+    let nombreElemento;
+    /* Obtiene la informacion de toda la habitacion */
+    const elementosHabitacion = this.getElementosPorHabitacion(nombreEdificio, nombreHabitacion);
+    // tslint:disable-next-line: prefer-for-of
+    for (let i = 0; i < elementosHabitacion.length; i++) {
+      /* Obtiene el nombre del elemento */
+      nombreElemento = elementosHabitacion[i].InfoItem[0].InfoItem[0].value[0]._;
+      listaElementos.push(nombreElemento);
+    }
+    return listaElementos;
+  }
+
+  /* Retorna la informacion de toda una habitacion */
+  getElementosPorHabitacion(nombreEdificio: string, nombreHabitacion: string) {
+    let elementosHabitacion = [];
     const habitaciones = this.getHabitaciones(nombreEdificio);
-    console.log(habitaciones);
+    /* Se recorre la informacion de todas las habitaciones */
+    // tslint:disable-next-line: prefer-for-of
+    for (let i = 0; i < habitaciones.length; i++) {
+      if (habitaciones[i].InfoItem[0].value[0]._ === nombreHabitacion) {
+        /* Se recorre cada InfoItem de la habitacion hasta encontrar uno que contenga Things */
+        // tslint:disable-next-line: prefer-for-of
+        for (let j = 0; j < habitaciones[i].InfoItem.length; j++) {
+          if (habitaciones[i].InfoItem[j].$.name === 'Things') {
+            /* Se añade el elemento que contiene las Things */
+            elementosHabitacion = habitaciones[i].InfoItem[j].InfoItem;
+            break;
+          }
+        }
+        break;
+      }
+    }
+    return elementosHabitacion;
   }
 
   getInformacionEdificio() {
@@ -22,6 +53,7 @@ export class DataService {
   getElementos() {
     return this.http.get('https://jsonplaceholder.typicode.com/posts');
   }
+
   /*Obtiene el json de todas las habitaciones*/
   getListaHabitaciones(nombreEdificio: string) {
     const infoEdificio = this.getEdificio(this.getEdificios(), nombreEdificio);
@@ -38,6 +70,8 @@ export class DataService {
     }
     return habitaciones;
   }
+
+  /* Obtiene la informacion de todas las habitaciones */
   getHabitaciones(nombreEdificio: string) {
     const infoEdificio = this.getEdificio(this.getEdificios(), nombreEdificio);
     const habitaciones = [];

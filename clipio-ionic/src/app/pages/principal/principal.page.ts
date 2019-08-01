@@ -16,7 +16,7 @@ export class PrincipalPage implements OnInit {
   @ViewChild(IonSegment) segmentoelementos: IonSegment;
   elementos: any[];
   habitaciones: any[];
-  filtro = '1';
+  filtro = 'cocina';
   argumento = null;
 
   constructor(private dataService: DataService, public popoverController: PopoverController,
@@ -27,21 +27,18 @@ export class PrincipalPage implements OnInit {
     this.dataService.getXMLBuildingEnviroment();
     this.argumento = this.activatedRoute.snapshot.paramMap.get('edificio');
     this.habitaciones = this.dataService.getListaHabitaciones(this.argumento);
-    console.log(this.dataService.getHabitaciones('casa'));
-
-    //document.getElementById("inp").innerHTML = myJSON;
-    //console.log('elementos: ', this.dataService.getElementos('casa', 'cocina'));
-    //console.log(json.Objects.Object[0].InfoItem[0].InfoItem[0].InfoItem[0]);
-    // tslint:disable-next-line: forin
-    // this.segmentoelementos.value = '1'; // Elemento del segmento seleccionado por defecto
-    //this.elementos = this.dataService.getElementos(); // Carga todos los elementos
-    //this.habitaciones = this.dataService.getHabitaciones();
+    this.cargarElementosPorHabitacion();
   }
   /* Cuando se requiere traer los elementos filtrados o sin filtrar iguala el atributo filtro
-    al filtro escogido*/
+    al filtro escogido y carga los elementos para el filtro*/
   segmentButtonClicked(event) {
     const segEscogido = event.detail.value;
     this.filtro = segEscogido;
+    this.cargarElementosPorHabitacion();
+  }
+
+  cargarElementosPorHabitacion() {
+    this.elementos = this.dataService.getListaElementosPorHabitacion(this.argumento, this.filtro);
   }
   /* Carga todos los edificios en un popover y obtiene la respuesta del popover */
   async cargarEdificios(ev: any) {
