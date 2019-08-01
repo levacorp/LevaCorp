@@ -46,6 +46,43 @@
                 </InfoItem>
               </InfoItem>
             </InfoItem>
+            <InfoItem name="Things">
+              <InfoItem name="Thing">
+                <InfoItem name="Living_Thing">
+                  <InfoItem name="name_thing">
+                    <value type="string">Planta</value>
+                  </InfoItem>
+                  <InfoItem name="type_thing">
+                    <value type="string">living_thing</value>
+                  </InfoItem>
+                  <InfoItem name="score_thing">
+                    <value type="string">98.0</value>
+                  </InfoItem>
+                  <InfoItem name="type_living_thing">
+                    <value type="string">Planta</value>
+                  </InfoItem>
+                  <InfoItem name="specie_living_thing">
+                    <value type="string">Flor</value>
+                  </InfoItem>
+                  <InfoItem name="food_living_thing">
+                    <value type="string">agua</value>
+                  </InfoItem>
+                </InfoItem>
+              </InfoItem>
+              <InfoItem name="Thing">
+                <InfoItem name="Non_Living_Thing">
+                  <InfoItem name="name_thing">
+                    <value type="string">Carro</value>
+                  </InfoItem>
+                  <InfoItem name="type_thing">
+                    <value type="string">non_living_thing</value>
+                  </InfoItem>
+                  <InfoItem name="score_thing">
+                    <value type="string">98.0</value>
+                  </InfoItem>
+                </InfoItem>
+              </InfoItem>
+            </InfoItem>
           </InfoItem>
           <InfoItem name="part">
             <InfoItem name="name_part">
@@ -67,6 +104,43 @@
                 </InfoItem>
                 <InfoItem name="name_object">
                   <value type="string">Regulador de Luz</value>
+                </InfoItem>
+              </InfoItem>
+            </InfoItem>
+            <InfoItem name="Things">
+              <InfoItem name="Thing">
+                <InfoItem name="Living_Thing">
+                  <InfoItem name="name_thing">
+                    <value type="string">Gato</value>
+                  </InfoItem>
+                  <InfoItem name="type_thing">
+                    <value type="string">living_thing</value>
+                  </InfoItem>
+                  <InfoItem name="score_thing">
+                    <value type="string">100.0</value>
+                  </InfoItem>
+                  <InfoItem name="type_living_thing">
+                    <value type="string">Planta</value>
+                  </InfoItem>
+                  <InfoItem name="specie_living_thing">
+                    <value type="string">Flor</value>
+                  </InfoItem>
+                  <InfoItem name="food_living_thing">
+                    <value type="string">agua</value>
+                  </InfoItem>
+                </InfoItem>
+              </InfoItem>
+              <InfoItem name="Thing">
+                <InfoItem name="Non_Living_Thing">
+                  <InfoItem name="name_thing">
+                    <value type="string">Moto</value>
+                  </InfoItem>
+                  <InfoItem name="type_thing">
+                    <value type="string">non_living_thing</value>
+                  </InfoItem>
+                  <InfoItem name="score_thing">
+                    <value type="string">100.0</value>
+                  </InfoItem>
                 </InfoItem>
               </InfoItem>
             </InfoItem>

@@ -1,6 +1,7 @@
 import { Injectable } from '@angular/core';
 import { HttpClient } from '@angular/common/http';
 import * as xml2js from 'xml2js';
+import { FiltroElementosPipe } from '../pipes/filtro-elementos.pipe';
 
 @Injectable({
   providedIn: 'root'
@@ -9,16 +10,21 @@ export class DataService {
   constructor(private http: HttpClient) { }
 
   /*Obtiene el json de todos los elementos*/
-  getElementos() {
-    return this.http.get('https://jsonplaceholder.typicode.com/posts');
+  getElementos2(nombreEdificio: string, nombreHabitacion: string) {
+    const elementos = [];
+    const habitaciones = this.getHabitaciones(nombreEdificio);
+    console.log(habitaciones);
   }
+
   getInformacionEdificio() {
     return this.http.get('https://jsonplaceholder.typicode.com/posts');
   }
+  getElementos() {
+    return this.http.get('https://jsonplaceholder.typicode.com/posts');
+  }
   /*Obtiene el json de todas las habitaciones*/
-  getHabitaciones(nombreEdificio: string) {
+  getListaHabitaciones(nombreEdificio: string) {
     const infoEdificio = this.getEdificio(this.getEdificios(), nombreEdificio);
-    console.log(infoEdificio);
     const habitaciones = [];
     /* Se recorre el edificio para buscar las habitaciones */
     // tslint:disable-next-line: prefer-for-of
@@ -32,12 +38,20 @@ export class DataService {
     }
     return habitaciones;
   }
-
-  getHouseParts(infoEdificio) {
-    const houseParts = [];
+  getHabitaciones(nombreEdificio: string) {
+    const infoEdificio = this.getEdificio(this.getEdificios(), nombreEdificio);
+    const habitaciones = [];
+    /* Se recorre el edificio para buscar las habitaciones */
     // tslint:disable-next-line: prefer-for-of
-    console.log(infoEdificio);
-    // console.log('nombre:', infoEdificio.InfoItem.name);
+    for (let i = 0; i < infoEdificio.length; i++) {
+      if (infoEdificio[i].$.name === 'house_parts') {
+        // tslint:disable-next-line: prefer-for-of
+        for (let j = 0; j < infoEdificio[i].InfoItem.length; j++) {
+          habitaciones.push(infoEdificio[i].InfoItem[j]);
+        }
+      }
+    }
+    return habitaciones;
   }
 
   /*Obtiene la informacion de un solo edificio. Params: xml con la info de todos los edificios, nombre del edificio a buscar*/
@@ -81,7 +95,7 @@ export class DataService {
   getXMLBuildingEnviroment() {
     let json;
     // tslint:disable-next-line: max-line-length
-    const xml = '<?xml version="1.0" encoding="ISO-8859-1"?><Objects><Object><InfoItem name="BuildingEnvironment"><InfoItem name="Building"><InfoItem name="name_building"><value type="string">casa</value></InfoItem><InfoItem name="flats_building"><value type="int">1</value></InfoItem><InfoItem name="Objetos"><InfoItem name="oos"><InfoItem name="ip_object"><value type="string">192.168.123.103</value></InfoItem><InfoItem name="id_object"><value type="string">1650241840</value></InfoItem><InfoItem name="name_object"><value type="string">NodoCoordinador</value></InfoItem></InfoItem></InfoItem><InfoItem name="house_parts"><InfoItem name="part"><InfoItem name="name_part"><value type="string">cocina</value></InfoItem><InfoItem name="type_part"><value type="string">Kitchen</value></InfoItem><InfoItem name="flat_number"><value type="string">Piso No. 1</value></InfoItem><InfoItem name="Objetos"><InfoItem name="oos"><InfoItem name="ip_object"><value type="string">192.168.123.107</value></InfoItem><InfoItem name="id_object"><value type="string">1931642039</value></InfoItem><InfoItem name="name_object"><value type="string">Regulador de Humedad en Planta</value></InfoItem></InfoItem></InfoItem></InfoItem><InfoItem name="part"><InfoItem name="name_part"><value type="string">cuarto Santiago</value></InfoItem><InfoItem name="type_part"><value type="string">Bedroom</value></InfoItem><InfoItem name="flat_number"><value type="string">Piso No. 1</value></InfoItem><InfoItem name="Objetos"><InfoItem name="oos"><InfoItem name="ip_object"><value type="string">192.168.123.105</value></InfoItem><InfoItem name="id_object"><value type="string">78091938</value></InfoItem><InfoItem name="name_object"><value type="string">Regulador de Luz</value></InfoItem></InfoItem></InfoItem></InfoItem><InfoItem name="part"><InfoItem name="name_part"><value type="string">sala</value></InfoItem><InfoItem name="type_part"><value type="string">LivingRoom</value></InfoItem><InfoItem name="flat_number"><value type="string">Piso No. 1</value></InfoItem><InfoItem name="Objetos"><InfoItem name="oos"><InfoItem name="ip_object"><value type="string">192.168.123.106</value></InfoItem><InfoItem name="id_object"><value type="string">708637323</value></InfoItem><InfoItem name="name_object"><value type="string">Regulador de Temperatura</value></InfoItem></InfoItem></InfoItem></InfoItem></InfoItem></InfoItem></InfoItem></Object></Objects>';
+    const xml = '<?xml version="1.0" encoding="UTF-8"?><Objects><Object><InfoItem name="BuildingEnvironment"><InfoItem name="Building"><InfoItem name="name_building"><value type="string">casa</value></InfoItem><InfoItem name="flats_building"><value type="int">1</value></InfoItem><InfoItem name="Objetos"><InfoItem name="oos"><InfoItem name="ip_object"><value type="string">192.168.123.103</value></InfoItem><InfoItem name="id_object"><value type="string">1650241840</value></InfoItem><InfoItem name="name_object"><value type="string">NodoCoordinador</value></InfoItem></InfoItem></InfoItem><InfoItem name="house_parts"><InfoItem name="part"><InfoItem name="name_part"><value type="string">cocina</value></InfoItem><InfoItem name="type_part"><value type="string">Kitchen</value></InfoItem><InfoItem name="flat_number"><value type="string">Piso No. 1</value></InfoItem><InfoItem name="Objetos"><InfoItem name="oos"><InfoItem name="ip_object"><value type="string">192.168.123.107</value></InfoItem><InfoItem name="id_object"><value type="string">1931642039</value></InfoItem><InfoItem name="name_object"><value type="string">Regulador de Humedad en Planta</value></InfoItem></InfoItem></InfoItem><InfoItem name="Things"><InfoItem name="Thing"><InfoItem name="Living_Thing"><InfoItem name="name_thing"><value type="string">Planta</value></InfoItem><InfoItem name="type_thing"><value type="string">living_thing</value></InfoItem><InfoItem name="score_thing"><value type="string">98.0</value></InfoItem><InfoItem name="type_living_thing"><value type="string">Planta</value></InfoItem><InfoItem name="specie_living_thing"><value type="string">Flor</value></InfoItem><InfoItem name="food_living_thing"><value type="string">agua</value></InfoItem></InfoItem></InfoItem><InfoItem name="Thing"><InfoItem name="Non_Living_Thing"><InfoItem name="name_thing"><value type="string">Carro</value></InfoItem><InfoItem name="type_thing"><value type="string">non_living_thing</value></InfoItem><InfoItem name="score_thing"><value type="string">98.0</value></InfoItem></InfoItem></InfoItem></InfoItem></InfoItem><InfoItem name="part"><InfoItem name="name_part"><value type="string">cuarto Santiago</value></InfoItem><InfoItem name="type_part"><value type="string">Bedroom</value></InfoItem><InfoItem name="flat_number"><value type="string">Piso No. 1</value></InfoItem><InfoItem name="Objetos"><InfoItem name="oos"><InfoItem name="ip_object"><value type="string">192.168.123.105</value></InfoItem><InfoItem name="id_object"><value type="string">78091938</value></InfoItem><InfoItem name="name_object"><value type="string">Regulador de Luz</value></InfoItem></InfoItem></InfoItem><InfoItem name="Things"><InfoItem name="Thing"><InfoItem name="Living_Thing"><InfoItem name="name_thing"><value type="string">Gato</value></InfoItem><InfoItem name="type_thing"><value type="string">living_thing</value></InfoItem><InfoItem name="score_thing"><value type="string">100.0</value></InfoItem><InfoItem name="type_living_thing"><value type="string">Planta</value></InfoItem><InfoItem name="specie_living_thing"><value type="string">Flor</value></InfoItem><InfoItem name="food_living_thing"><value type="string">agua</value></InfoItem></InfoItem></InfoItem><InfoItem name="Thing"><InfoItem name="Non_Living_Thing"><InfoItem name="name_thing"><value type="string">Moto</value></InfoItem><InfoItem name="type_thing"><value type="string">non_living_thing</value></InfoItem><InfoItem name="score_thing"><value type="string">100.0</value></InfoItem></InfoItem></InfoItem></InfoItem></InfoItem><InfoItem name="part"><InfoItem name="name_part"><value type="string">sala</value></InfoItem><InfoItem name="type_part"><value type="string">LivingRoom</value></InfoItem><InfoItem name="flat_number"><value type="string">Piso No. 1</value></InfoItem><InfoItem name="Objetos"><InfoItem name="oos"><InfoItem name="ip_object"><value type="string">192.168.123.106</value></InfoItem><InfoItem name="id_object"><value type="string">708637323</value></InfoItem><InfoItem name="name_object"><value type="string">Regulador de Temperatura</value></InfoItem></InfoItem></InfoItem></InfoItem></InfoItem></InfoItem></InfoItem></Object></Objects>';
     const parseString = require('xml2js').parseString;
 
     parseString(xml, function (err, result) {

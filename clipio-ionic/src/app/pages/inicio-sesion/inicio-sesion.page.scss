@@ -1,0 +1,36 @@
+.contenido
+{
+    justify-content: center;
+    align-self: center;
+    box-align: center;
+    align-items: center;
+    padding: 10%;
+    margin: 10%;
+    margin-top: 10%;
+}
+
+.fondo{
+    position: fixed;
+    min-width: 100%;
+    min-height: 100%;
+    top: 50%;
+    left: 50%;
+    transform: translateX(-50%) translateY(-50%);
+	z-index: -1;
+}
+
+.principal{
+    padding-top: 40%;
+    padding-left: 15%;
+    padding-right: 15%;
+}
+
+ion-content{
+    --background: url(/assets/img/fondoClipio.png) no-repeat center/cover fixed;
+}
+
+@media only screen and (max-width: 767px) {
+    body {
+        --background: url('/assets/img/fondoClipio.png') center center cover no-repeat fixed;
+    }
+}

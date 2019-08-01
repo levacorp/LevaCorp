@@ -38,5 +38,8 @@ export class MenusliderComponent implements OnInit {
   pushPreferencia() {
     this.router.navigate(['/preferencias']);
   }
+  pushCerrarSesion() {
+    this.router.navigate(['/inicio-sesion']);
+  }
 
 }

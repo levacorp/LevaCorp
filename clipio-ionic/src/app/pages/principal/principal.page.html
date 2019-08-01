@@ -15,7 +15,7 @@
 <ion-content>
   <!--Carta para las notificaciones-->
   <div class="cartaEdificio">
-    <ion-button expand="full" color="danger">Bienvenido a {{argumento}}</ion-button>
+    <ion-item expand="full" color="danger">Bienvenido a {{argumento}}</ion-item>
   </div>
 
   <ion-card class="tamanoCarta setScroll">
@@ -59,6 +59,7 @@
   <!--Carga de los elementos filtrados por segmento escogido-->
   <ion-grid class="contenidoSegmento">
     <ion-row>
+      <ion-input placeholder="Enter Input" id="inp"></ion-input>
       <!--Acomoda el numero de tarjetas de acuerdo al tamaño de pantalla-->
       <ion-col size="6" size-sm="4" size-md="3" size-lg="2"
         *ngFor="let elemento of (elementos | async) | filtroElementos: filtro:'userId'">
