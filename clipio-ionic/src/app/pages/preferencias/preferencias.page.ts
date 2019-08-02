@@ -1,6 +1,8 @@
 import { Component, OnInit } from '@angular/core';
 import { Router } from '@angular/router';
 import { AlertController } from '@ionic/angular';
+import { DataUserService } from 'src/app/services/data-user.service';
+import { DataService } from 'src/app/services/data.service';
 
 @Component({
   selector: 'app-preferencias',
@@ -9,9 +11,13 @@ import { AlertController } from '@ionic/angular';
 })
 export class PreferenciasPage implements OnInit {
 
-  constructor(private router: Router, public alertController: AlertController) { }
+  listaECAs = [];
+  constructor(private router: Router, public alertController: AlertController,
+    private dataUserService: DataUserService, private dataService: DataService) { }
 
   ngOnInit() {
+    this.listaECAs = this.dataUserService.getListaECA();
+    console.log(this.listaECAs);
   }
 
   async handlerEliminarECA() {

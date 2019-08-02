@@ -28,6 +28,7 @@ export class PrincipalPage implements OnInit {
     this.argumento = this.activatedRoute.snapshot.paramMap.get('edificio');
     this.habitaciones = this.dataService.getListaHabitaciones(this.argumento);
     this.cargarElementosPorHabitacion();
+    this.dataService.listarECAs();
   }
   /* Cuando se requiere traer los elementos filtrados o sin filtrar iguala el atributo filtro
     al filtro escogido y carga los elementos para el filtro*/
