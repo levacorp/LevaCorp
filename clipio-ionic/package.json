@@ -43,9 +43,11 @@
     "stream": "0.0.2",
     "timers": "^0.1.1",
     "tslib": "^1.9.0",
+    "x2js": "^3.3.1",
     "xml-js": "^1.6.11",
     "xml-to-json-stream": "^1.1.0",
     "xml-writer": "^1.7.0",
+    "xml2js": "^0.4.19",
     "zone.js": "~0.8.29"
   },
   "devDependencies": {

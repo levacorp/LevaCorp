@@ -41,6 +41,11 @@ export class PrincipalPage implements OnInit {
   cargarElementosPorHabitacion() {
     this.elementos = this.dataService.getListaElementosPorHabitacion(this.argumento, this.filtro);
   }
+
+  pushElemento(){
+    this.router.navigate(['//mostrar']);
+  }
+
   /* Carga todos los edificios en un popover y obtiene la respuesta del popover */
   async cargarEdificios(ev: any) {
     const popover = await this.popoverController.create({
