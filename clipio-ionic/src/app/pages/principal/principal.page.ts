@@ -42,8 +42,9 @@ export class PrincipalPage implements OnInit {
     this.elementos = this.dataService.getListaElementosPorHabitacion(this.argumento, this.filtro);
   }
 
-  pushElemento(){
-    this.router.navigate(['//mostrar']);
+  pushElemento(elemento) {
+    console.log('params: ', this.filtro, '+', elemento);
+    this.router.navigate(['dispositivos-elemento', this.filtro, elemento]);
   }
 
   /* Carga todos los edificios en un popover y obtiene la respuesta del popover */
@@ -58,8 +59,7 @@ export class PrincipalPage implements OnInit {
     await popover.present();
     const { data } = await popover.onWillDismiss();
     if (data) {
-      console.log('padre: ', data);
-      this.router.navigate(['/principal/casa']);
+      this.router.navigate(['/principal', data.edificio]);
     }
   }
 

@@ -21,7 +21,7 @@ const routes: Routes = [
   { path: 'informacion-edificio',
    loadChildren: './pages/informacion-edificio/informacion-edificio.module#InformacionEdificioPageModule', canActivate: [AuthGuardService] },
   { path: 'asociacion-elemento-dispositivo',
-   loadChildren: './pages/asociacion-elemento-dispositivo/asociacion-elemento-dispositivo.module#AsociacionElementoDispositivoPageModule' },
+   loadChildren: './pages/asociacion-elemento-dispositivo/asociacion-elemento-dispositivo.module#AsociacionElementoDispositivoPageModule'},
   { path: 'elementos-por-habitacion/:habitacion',
     loadChildren: './pages/elementos-por-habitacion/elementos-por-habitacion.module#ElementosPorHabitacionPageModule',
      canActivate: [AuthGuardService]},

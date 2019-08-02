@@ -43,7 +43,7 @@ export class PreferenciasPage implements OnInit {
     await alert.present();
   }
 
-  pushMostrar() {
-    this.router.navigate(['/preferencias/mostrar']);
+  pushMostrar(nombre) {
+    this.router.navigate(['/preferencias/mostrar/', nombre]);
   }
 }

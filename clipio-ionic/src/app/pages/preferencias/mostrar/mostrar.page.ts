@@ -1,5 +1,6 @@
 import { Component, OnInit } from '@angular/core';
-import { Router } from '@angular/router';
+import { Router, ActivatedRoute } from '@angular/router';
+import { DataUserService } from 'src/app/services/data-user.service';
 
 @Component({
   selector: 'app-mostrar',
@@ -8,9 +9,14 @@ import { Router } from '@angular/router';
 })
 export class MostrarPage implements OnInit {
 
-  constructor(private router: Router) { }
+  nombreECA = null;
+  ECA = null;
+
+  constructor(private dataUserService: DataUserService, private router: Router, private activatedRoute: ActivatedRoute) { }
 
   ngOnInit() {
+    this.nombreECA = this.activatedRoute.snapshot.paramMap.get('nombre');
+    this.ECA = this.dataUserService.getECA(this.nombreECA);
   }
 
   pushModificarECA() {
