@@ -1,6 +1,9 @@
 <ion-header>
-    <ion-toolbar>
-      <ion-title>Editar Preferencia</ion-title>
+    <ion-toolbar color="danger">
+      <ion-buttons slot="start" >
+        <ion-back-button></ion-back-button>
+      </ion-buttons>
+      <ion-title>Preferencia</ion-title>
     </ion-toolbar>
   </ion-header>
   
@@ -11,7 +14,7 @@
         <ion-card-title>
         </ion-card-title>
         <ion-item>
-          <ion-label required="true">ECA1</ion-label>
+          <ion-label required="true">{{ECA.nombreECA}}</ion-label>
         </ion-item>
       </ion-card-header>
     </ion-card>
@@ -28,7 +31,7 @@
           <!--TODO: Mostrar Evento-->
   
           <ion-item>
-            <ion-label required="true">Significado</ion-label>
+            <ion-label required="true">{{ ECA.significadoEvento }}</ion-label>
           </ion-item>
         </ion-card-content>
       </ion-card>
@@ -46,7 +49,7 @@
   
   
           <ion-item>
-            <ion-label required="true">Significado</ion-label>
+            <ion-label required="true">{{ ECA.significadoAccion }}</ion-label>
           </ion-item>
         </ion-card-content>
       </ion-card>

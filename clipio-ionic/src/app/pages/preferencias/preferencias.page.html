@@ -13,18 +13,18 @@
   <ion-card>
     <ion-card-header>
         <ion-toolbar>
-          <ion-title (click)="pushMostrar()">{{ eca.nombreECA }}</ion-title>
-          <ion-toggle color="success" slot="end" *ngIf="eca.estadoECA == 'on'" checked></ion-toggle>
-          <ion-toggle color="success" slot="end" *ngIf="eca.estadoECA == 'off'"></ion-toggle>
+          <ion-card-title (click)="pushMostrar(eca.nombreECA)">{{ eca.nombreECA }}</ion-card-title>
+          <ion-toggle color="success" mode="ios" slot="end" *ngIf="eca.estadoECA == 'on'" checked></ion-toggle>
+          <ion-toggle color="success" mode="ios" slot="end" *ngIf="eca.estadoECA == 'off'"></ion-toggle>
           <ion-buttons slot="end">
             <ion-button (click)="handlerEliminarECA()">
-              <ion-icon slot="icon-only" color="danger" name="trash"></ion-icon>
+              <ion-icon slot="icon-only" color="danger" name="trash" mode="md"></ion-icon>
             </ion-button>
           </ion-buttons>
         </ion-toolbar>
     </ion-card-header>
     <ion-card-content>
-      <div (click)="pushMostrar()">
+      <div (click)="pushMostrar(eca.nombreECA)">
         <ion-grid>
       <ion-row>
         <ion-col>
@@ -47,7 +47,11 @@
             </ng-template>
           </ion-toolbar>
         </ion-col>
-        <ion-col><ion-icon name="arrow-round-forward" style="zoom:2.0;text-align:center;"></ion-icon></ion-col>
+        <ion-col>
+          <div class="icon-arrow-container">
+            <ion-icon name="arrow-round-forward" class="icon-arrow" style="zoom:2.0"></ion-icon>
+          </div>
+        </ion-col>
         <ion-col>
           <ion-toolbar>
             <ion-label>{{eca.significadoAccion}}</ion-label>
