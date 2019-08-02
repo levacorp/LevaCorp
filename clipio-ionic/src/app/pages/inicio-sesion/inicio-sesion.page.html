@@ -6,15 +6,15 @@
       </div>
 
       <ion-label position="floating">Ingresa tus datos:</ion-label>
-      <form [formGroup]="inicioSesionForm">
+      <form>
         <ion-item text-center>
           <ion-label position="floating"> E-mail: </ion-label>
-          <ion-input formControlName="email" type="text" #email></ion-input>
+          <ion-input type="text" #email></ion-input>
         </ion-item>
 
         <ion-item text-center>
           <ion-label position="floating"> Contraseña: </ion-label>
-          <ion-input formControlName="password" type="password" #password></ion-input>
+          <ion-input type="password" #password></ion-input>
         </ion-item>
       </form>
       <ion-toolbar>

@@ -20,7 +20,7 @@ const routes: Routes = [
   { path: 'asociacion-elemento-dispositivo', loadChildren: './pages/asociacion-elemento-dispositivo/asociacion-elemento-dispositivo.module#AsociacionElementoDispositivoPageModule' },
   { path: 'elementos-por-habitacion/:habitacion',
     loadChildren: './pages/elementos-por-habitacion/elementos-por-habitacion.module#ElementosPorHabitacionPageModule',
-    canActivate: [AuthGuardService] },
+     },
   { path: 'dispositivos-elemento/:habitacion/:elemento',
    loadChildren: './pages/dispositivos-elemento/dispositivos-elemento.module#DispositivosElementoPageModule',
    canActivate: [AuthGuardService] },

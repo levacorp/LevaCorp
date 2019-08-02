@@ -24,6 +24,6 @@ export class InformacionEdificioPage implements OnInit {
   }
 
   pushElementoHabitacion(argumento) {
-    this.router.navigate(['/elementos-por-habitacion/',argumento]);
+    this.router.navigate(['/elementos-por-habitacion/', argumento]);
   }
 }
