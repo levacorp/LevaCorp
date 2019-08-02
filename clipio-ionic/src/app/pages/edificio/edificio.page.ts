@@ -1,7 +1,8 @@
-import { Component, OnInit } from '@angular/core';
+import { Component, OnInit, Input,Output,EventEmitter } from '@angular/core';
 import { Observable } from 'rxjs';
 import { DataService } from 'src/app/services/data.service';
 import { Router } from '@angular/router';
+import { ActivatedRoute } from '@angular/router';
 
 @Component({
   selector: 'app-edificio',
@@ -10,18 +11,21 @@ import { Router } from '@angular/router';
 })
 export class EdificioPage implements OnInit {
 
-  edificios: Observable<any>;
-  constructor(private dataservice: DataService, private router: Router) { }
+  edificios: any[];
+  argumento = null;
+  constructor(private dataservice: DataService, private router: Router, private activatedRoute: ActivatedRoute ) { }
 
   ngOnInit() {
-    this.edificios = this.dataservice.getEdificios();
+    this.edificios = this.dataservice.getListaEdificios();
+    console.log(this.edificios);
+    this.argumento = this.activatedRoute.snapshot.paramMap.get('nombre');
   }
   pushCrearEdificio() {
     this.router.navigate(['/crear-edificio']);
 
   }
-  pushInformacionEdificio() {
-    this.router.navigate(['/informacion-edificio']);
+  pushInformacionEdificio(argumento) {
+    this.router.navigate(['/informacion-edificio/',argumento]);
   }
 
 }
