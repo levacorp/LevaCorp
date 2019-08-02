@@ -5,6 +5,7 @@ import { Routes, RouterModule } from '@angular/router';
 import { PipesModule } from 'src/app/pipes/pipes.module';
 import { IonicModule } from '@ionic/angular';
 import { DispositivosElementoPage } from './dispositivos-elemento.page';
+import { ComponentsModule } from 'src/app/componentes/componentesglobales.module';
 
 const routes: Routes = [
   {
@@ -19,7 +20,8 @@ const routes: Routes = [
     FormsModule,
     IonicModule,
     RouterModule.forChild(routes),
-    PipesModule
+    PipesModule,
+    ComponentsModule
   ],
   declarations: [DispositivosElementoPage]
 })

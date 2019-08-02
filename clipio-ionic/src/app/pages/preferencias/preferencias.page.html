@@ -1,6 +1,5 @@
 <ion-header>
   <ion-toolbar color="danger">
-      
       <ion-buttons slot="start">
         <ion-back-button></ion-back-button>
       </ion-buttons>
@@ -10,11 +9,13 @@
 
 <!-- Lista de Preferencias -->
 <ion-content>
+  <ion-list *ngFor="let eca of listaECAs">
   <ion-card>
     <ion-card-header>
         <ion-toolbar>
-          <ion-title (click)="pushMostrar()">ECA1</ion-title>
-          <ion-toggle color="success" slot="end"></ion-toggle>
+          <ion-title (click)="pushMostrar()">{{ eca.nombreECA }}</ion-title>
+          <ion-toggle color="success" slot="end" *ngIf="eca.estadoECA == 'on'" checked></ion-toggle>
+          <ion-toggle color="success" slot="end" *ngIf="eca.estadoECA == 'off'"></ion-toggle>
           <ion-buttons slot="end">
             <ion-button (click)="handlerEliminarECA()">
               <ion-icon slot="icon-only" color="danger" name="trash"></ion-icon>
@@ -28,19 +29,43 @@
       <ion-row>
         <ion-col>
           <ion-toolbar>
-            <ion-label>Si hace mucho calor</ion-label>
+            <ion-label>{{ eca.significadoEvento }}</ion-label>
           </ion-toolbar>
           <ion-toolbar>
-            <ion-label>Tempratura mayor a 30°</ion-label>
+            <ion-label>{{ eca.datastreamEvent }}</ion-label>
+            <ng-container *ngIf="eca.dsFormatEvento === 'bool' || eca.dsFormatEvento === 'boolean';else eventSensor">
+              <ng-container *ngIf="eca.valorEvento == 1">
+                <ion-label>encendido</ion-label>
+              </ng-container>
+              <ng-container *ngIf="eca.valorEvento == 0">
+                <ion-label>apagado</ion-label>
+              </ng-container>
+            </ng-container>
+            <ng-template #eventSensor>
+              <ion-label> {{ eca.comparadorEvento }} que </ion-label>
+              <ion-label>{{ eca.valorEvento }}</ion-label>
+            </ng-template>
           </ion-toolbar>
         </ion-col>
         <ion-col><ion-icon name="arrow-round-forward" style="zoom:2.0;text-align:center;"></ion-icon></ion-col>
         <ion-col>
           <ion-toolbar>
-            <ion-label>Encender el ventilador</ion-label>
+            <ion-label>{{eca.significadoAccion}}</ion-label>
           </ion-toolbar>
           <ion-toolbar>
-            <ion-label>Ventilador ON</ion-label>
+            <ion-label>{{ eca.datastreamAction }} </ion-label>
+            <ng-container *ngIf="eca.dsFormatAccion === 'bool' || eca.dsFormatAccion === 'boolean';else actionSensor">
+              <ng-container *ngIf="eca.valorAccion == 1">
+                    <ion-label>ON</ion-label>
+                  </ng-container>
+                  <ng-container *ngIf="eca.valorAccion == 0">
+                    <ion-label>OFF</ion-label>
+                  </ng-container>
+                </ng-container>
+                <ng-template #actionSensor>
+                  <ion-label>{{ eca.comparadorAction }} que </ion-label>
+                  <ion-label>{{ eca.valorAccion }}</ion-label>
+                </ng-template>
           </ion-toolbar>
         </ion-col>
       </ion-row>
@@ -48,6 +73,7 @@
     </div>
     </ion-card-content>
   </ion-card>
+  </ion-list>
   <ion-fab vertical="bottom" horizontal="end" slot="fixed" >
     <ion-fab-button routerLink="./crear" color="danger" >
       <ion-icon name="add"></ion-icon>

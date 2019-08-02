@@ -64,7 +64,7 @@ export class CrearPage implements OnInit {
   async guardarDireccionEvento(dir: string) {
     /* Si la direccion leída no contiene los siguientes caracteres se considera inválida */
     if (dir.indexOf('/Identificator?osid=') === -1) {
-      console.log('Direccion no válida');       // TODO
+      console.log('Direccion no válida');
       const alert = await this.alertController.create({
         header: 'Atención!',
         message: 'El QR leído no contiene una direccion válida',

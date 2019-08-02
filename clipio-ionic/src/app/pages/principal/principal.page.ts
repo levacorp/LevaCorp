@@ -28,6 +28,7 @@ export class PrincipalPage implements OnInit {
     this.argumento = this.activatedRoute.snapshot.paramMap.get('edificio');
     this.habitaciones = this.dataService.getListaHabitaciones(this.argumento);
     this.cargarElementosPorHabitacion();
+    this.dataService.listarECAs();
   }
   /* Cuando se requiere traer los elementos filtrados o sin filtrar iguala el atributo filtro
     al filtro escogido y carga los elementos para el filtro*/
@@ -40,6 +41,11 @@ export class PrincipalPage implements OnInit {
   cargarElementosPorHabitacion() {
     this.elementos = this.dataService.getListaElementosPorHabitacion(this.argumento, this.filtro);
   }
+
+  pushElemento(){
+    this.router.navigate(['//mostrar']);
+  }
+
   /* Carga todos los edificios en un popover y obtiene la respuesta del popover */
   async cargarEdificios(ev: any) {
     const popover = await this.popoverController.create({
