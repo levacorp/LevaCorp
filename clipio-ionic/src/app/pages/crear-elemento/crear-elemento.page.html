@@ -17,10 +17,10 @@
                 <ion-list>
                   <ion-item>
                     <ion-input formControlName="nombre" type="text" placeholder="Nombre"></ion-input>
-                  </ion-item>            
+                  </ion-item>             
                   <ion-item>
                     <ion-label>Tipo</ion-label>
-                    <ion-select formControlName="tipo" >
+                    <ion-select formControlName="tipo" (ionChange)="esviva()" >
                       <ion-select-option value="vivo">Vivo</ion-select-option>
                       <ion-select-option value="no vivo">No vivo</ion-select-option>
                     </ion-select>
@@ -32,7 +32,7 @@
                       <ion-label slot="end">100</ion-label>
                   </ion-range>
                 </ion-item>
-                <div *ngIf="formElemento.value.tipo == 'vivo'" formArrayName="viva">
+                <div  formArrayName="viva">
                     <ion-item>
                         <ion-label>Tipo Viva</ion-label>
                         <ion-select formControlName="tipoViva">
