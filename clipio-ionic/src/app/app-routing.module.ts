@@ -15,16 +15,20 @@ const routes: Routes = [
   // tslint:disable-next-line: max-line-length
   { path: 'informacion-edificio', loadChildren: './pages/informacion-edificio/informacion-edificio.module#InformacionEdificioPageModule', canActivate: [AuthGuardService] },
   { path: 'perfil', loadChildren: './pages/perfil/perfil.module#PerfilPageModule', canActivate: [AuthGuardService] },
-
   // tslint:disable-next-line: max-line-length
-  { path: 'asociacion-elemento-dispositivo', loadChildren: './pages/asociacion-elemento-dispositivo/asociacion-elemento-dispositivo.module#AsociacionElementoDispositivoPageModule' },
+  { path: 'asociacion-elemento-dispositivo', loadChildren: './pages/asociacion-elemento-dispositivo/asociacion-elemento-dispositivo.module#AsociacionElementoDispositivoPageModule', canActivate: [AuthGuardService] },
   { path: 'elementos-por-habitacion/:habitacion',
-    loadChildren: './pages/elementos-por-habitacion/elementos-por-habitacion.module#ElementosPorHabitacionPageModule' },
+    loadChildren: './pages/elementos-por-habitacion/elementos-por-habitacion.module#ElementosPorHabitacionPageModule',
+    canActivate: [AuthGuardService] },
   { path: 'dispositivos-elemento/:habitacion/:elemento',
-   loadChildren: './pages/dispositivos-elemento/dispositivos-elemento.module#DispositivosElementoPageModule' },
-  { path: 'dispositivo/:id', loadChildren: './pages/dispositivo/dispositivo.module#DispositivoPageModule' },
-  { path: 'crear-elemento/:elemento', loadChildren: './pages/crear-elemento/crear-elemento.module#CrearElementoPageModule' },
-  { path: 'crear-dispositivo/:habitacion/:dispositivo/:dir', loadChildren: './pages/crear-dispositivo/crear-dispositivo.module#CrearDispositivoPageModule' },
+   loadChildren: './pages/dispositivos-elemento/dispositivos-elemento.module#DispositivosElementoPageModule',
+   canActivate: [AuthGuardService] },
+  // tslint:disable-next-line: max-line-length
+  { path: 'dispositivo/:id', loadChildren: './pages/dispositivo/dispositivo.module#DispositivoPageModule', canActivate: [AuthGuardService] },
+  // tslint:disable-next-line: max-line-length
+  { path: 'crear-elemento/:elemento', loadChildren: './pages/crear-elemento/crear-elemento.module#CrearElementoPageModule', canActivate: [AuthGuardService] },
+  // tslint:disable-next-line: max-line-length
+  { path: 'crear-dispositivo/:habitacion/:dispositivo/:dir', loadChildren: './pages/crear-dispositivo/crear-dispositivo.module#CrearDispositivoPageModule', canActivate: [AuthGuardService] },
   { path: 'inicio-sesion', loadChildren: './pages/inicio-sesion/inicio-sesion.module#InicioSesionPageModule' },
   { path: 'registro', loadChildren: './pages/registro/registro.module#RegistroPageModule' }
 

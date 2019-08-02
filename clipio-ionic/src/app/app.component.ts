@@ -30,7 +30,7 @@ export class AppComponent {
       this.authService.authenticationState.subscribe(state => {
         console.log('Auth: ', state); /* Imprime el estado actual. True=Autenticado, False=No autenticado; */
         if (state) {
-          this.router.navigate(['principal/casa']); /* Si esta autenticado se redirige a la pagina principal por defecto */
+          this.router.navigate(['principal/Casa']); /* Si esta autenticado se redirige a la pagina principal por defecto */
         } else {
           this.router.navigate(['inicio-sesion']); /* Si no se redirige al inicio de sesion */
         }
