@@ -37,19 +37,6 @@ export class DataService {
     return datosInicioSesion;
   }
 
-  setDatosInicioSesion() {
-    const XMLWriter = require('xml-writer');
-    const xw = new XMLWriter();
-    xw.startDocument();
-    xw.startElement('Objects');
-    xw.startElemento('Object');
-    xw.writeAttribute('foo', 'value');
-    xw.text('Some content');
-    xw.endDocument();
-
-    console.log(xw.toString());
-  }
-
   /* Obtiene los nombres de los elementos de una habitacion. Retorna: [nombreHabitacion1, nombreHabitacion2,...] */
   getListaElementosPorHabitacion(nombreEdificio: string, nombreHabitacion: string) {
     const listaElementos = [];
