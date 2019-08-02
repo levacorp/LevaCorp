@@ -3,7 +3,7 @@
       <ion-buttons slot="start">
           <ion-back-button></ion-back-button>
         </ion-buttons>    
-    <ion-title>{{argumento}}</ion-title>
+    <ion-title>{{elemento}}</ion-title>
   </ion-toolbar>
 </ion-header>
 
@@ -12,13 +12,13 @@
       <ion-row>
         <!--Acomoda el numero de tarjetas de acuerdo al tamaño de pantalla-->
         <ion-col size="6" size-sm="4" size-md="3" size-lg="2"
-        *ngFor="let elemento of (elementos | async) | filtroElementos: '8':'userId'">
+        *ngFor="let dispositivo of (dispositivos | async) | filtroElementos: '8':'userId'">
         <!--Carga de los elementos filtrados por la habitacion escogida-->
           
-          <ion-card  id="elemento.userId" (click)="routeDispositivo(elemento.userId)" >
+          <ion-card  id="dispositivo.userId" (click)="routeDispositivo(dispositivo.userId)" >
             <img src="/assets/icon/camara1.png"/>
             <ion-card-header  >
-              <ion-card-title>{{ elemento.userId }}</ion-card-title>
+              <ion-card-title>{{ dispositivo.userId }}</ion-card-title>
             </ion-card-header>
           </ion-card>
           <!--Fin Carga de los elementos filtrados por la habitacion escogido-->
@@ -26,10 +26,11 @@
       </ion-row>
     </ion-grid>
   </ion-content>
-
+  
   <!-- fab placed to the top end -->
   <ion-fab vertical="bottom" horizontal="end" slot="fixed" >
-      <ion-fab-button (click)="pushCrearElemento()"  color="danger" >
+      <ion-fab-button color="danger" >
         <ion-icon name="add"></ion-icon>
+          <app-escaner (onReadDevice)="pushCrearDispositivo($event)"></app-escaner>
       </ion-fab-button>
     </ion-fab>

@@ -28,7 +28,7 @@ export class AppComponent {
 
       /* Al iniciar la aplicacion se comprueba si esta autenticado */
       this.authService.authenticationState.subscribe(state => {
-        console.log('Auth: ', state); /* Imprime el estado actual. True=Autenticado, False=No autenticado; */
+        console.log('Sesion Iniciada: ', state); /* Imprime el estado actual. True=Autenticado, False=No autenticado; */
         if (state) {
           this.router.navigate(['principal/casa']); /* Si esta autenticado se redirige a la pagina principal por defecto */
         } else {

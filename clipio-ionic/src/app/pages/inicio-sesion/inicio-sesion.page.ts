@@ -1,7 +1,7 @@
 import { Component, OnInit, ViewChild } from '@angular/core';
 import { AuthenticationService } from '../../services/authentication.service';
-import { EmailValidator } from '@angular/forms';
-import { DataService } from '../../services/data.service';
+import { FormControl, FormBuilder, FormGroup, Validators } from '@angular/forms';
+import { GenerateXMLService } from '../../services/generate-xml.service';
 
 @Component({
   selector: 'app-inicio-sesion',
@@ -9,20 +9,21 @@ import { DataService } from '../../services/data.service';
   styleUrls: ['./inicio-sesion.page.scss'],
 })
 export class InicioSesionPage implements OnInit {
+  public inicioSesionForm: FormGroup;
 
   @ViewChild('email') email;
   @ViewChild('password') password;
 
-  constructor(private authServices: AuthenticationService, private dataService: DataService) { }
+  constructor(private authServices: AuthenticationService, private generateXMLService: GenerateXMLService,
+              public formBuilder: FormBuilder) {  }
 
   ngOnInit() {
-    this.dataService.getDatosInicioSesion();
   }
 
   login() {
+    alert('Bienvenido:' + this.email.value);
+    console.log('XML Inicio Sesion:', this.generateXMLService.crearXMLInicioSesion(this.email.value, this.password.value).toString());
     this.authServices.login();
-    console.log(this.email.value);
-    console.log(this.password.value);
   }
 
 }

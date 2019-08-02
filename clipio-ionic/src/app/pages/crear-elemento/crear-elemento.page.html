@@ -13,32 +13,42 @@
             <img src="/assets/icon/camara1.png"/>
         </ion-card-header>
         <ion-card-content>
-            <form [formGroup]="myForm" (ngSubmit)="saveData()" size="8" class="ion-padding">
+            <form [formGroup]="formElemento" (ngSubmit)="saveData()" size="8" class="ion-padding">
                 <ion-list>
                   <ion-item>
                     <ion-input formControlName="nombre" type="text" placeholder="Nombre"></ion-input>
-                  </ion-item>            
+                  </ion-item>             
                   <ion-item>
                     <ion-label>Tipo</ion-label>
-                    <ion-select formControlName="tipo" >
-                      <ion-select-option value="Dog">Dog</ion-select-option>
+                    <ion-select formControlName="tipo" (ionChange)="esviva()" >
+                      <ion-select-option value="vivo">Vivo</ion-select-option>
+                      <ion-select-option value="no vivo">No vivo</ion-select-option>
                     </ion-select>
                   </ion-item>
-                  <ion-item>
-                      <ion-label>Tipo Viva</ion-label>
-                      <ion-select formControlName="tipoViva">
-                        <ion-select-option value="Doga">Doga</ion-select-option>
-                      </ion-select>
-                  </ion-item>
-                  <ion-item>
-                        <ion-input formControlName="especie" type="text" placeholder="Especie"></ion-input>
-                  </ion-item> 
-                  <ion-item>
-                          <ion-input formControlName="comida" type="text" placeholder="Comida"></ion-input>
-                  </ion-item>   
+                  <ion-item >
+                    <ion-label class="score" >Score:</ion-label>
+                    <ion-range formControlName="score" min="0" max="100" pin  color="danger">
+                      <ion-label slot="start">0</ion-label>
+                      <ion-label slot="end">100</ion-label>
+                  </ion-range>
+                </ion-item>
+                <div  formArrayName="viva">
+                    <ion-item>
+                        <ion-label>Tipo Viva</ion-label>
+                        <ion-select formControlName="tipoViva">
+                          <ion-select-option value="Doga">Doga</ion-select-option>
+                        </ion-select>
+                    </ion-item>
+                    <ion-item>
+                          <ion-input formControlName="especie" type="text" placeholder="Especie"></ion-input>
+                    </ion-item> 
+                    <ion-item>
+                            <ion-input formControlName="comida" type="text" placeholder="Comida"></ion-input>
+                    </ion-item>   
+                </div> 
                 </ion-list>
                 <ion-row class="ion-justify-content-center">
-                    <ion-button  color="danger" type="submit" [disabled]="!myForm.valid">Crear</ion-button>
+                    <ion-button  color="danger" type="submit" [disabled]="!formElemento.valid">Crear</ion-button>
                 </ion-row>
               </form>
         </ion-card-content>

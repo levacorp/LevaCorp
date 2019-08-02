@@ -1,7 +1,8 @@
-import { Component, OnInit } from '@angular/core';
+import { Component, OnInit, Input } from '@angular/core';
 import { Observable } from 'rxjs';
 import { DataService } from 'src/app/services/data.service';
-import { Router } from '@angular/router';
+import { Router, ActivatedRoute } from '@angular/router';
+
 
 @Component({
   selector: 'app-informacion-edificio',
@@ -9,12 +10,20 @@ import { Router } from '@angular/router';
   styleUrls: ['./informacion-edificio.page.scss'],
 })
 export class InformacionEdificioPage implements OnInit {
-  informacionEdificio: Observable<any>;
-  constructor(private dataservice: DataService, private router: Router) { }
+  
+  informacionEdificio: any[];
+  nombreEdificio=null;
+  argumento = null;
+  constructor(private dataservice: DataService, private router: Router, private activatedRoute: ActivatedRoute) { }
 
   ngOnInit() {
-    this.informacionEdificio = this.dataservice.getInformacionEdificio();
+    this.nombreEdificio= this.activatedRoute.snapshot.paramMap.get('argumento');
+    this.informacionEdificio = this.dataservice.getListaHabitaciones(this.nombreEdificio);
+    this.argumento = this.activatedRoute.snapshot.paramMap.get('nombre');
 
   }
 
+  pushElementoHabitacion(argumento) {
+    this.router.navigate(['/elementos-por-habitacion/', argumento]);
+  }
 }

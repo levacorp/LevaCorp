@@ -7,6 +7,45 @@ export class GenerateXMLService {
 
   constructor() { }
 
+  crearXMLInicioSesion(email: string, password: string) {
+
+    const XMLWriter = require('xml-writer');
+    const xw = new XMLWriter();
+    xw.startDocument();
+    xw.startElement('Objects');
+    xw.startElement('Object');
+    xw.startElement('InfoItem');
+    xw.writeAttribute('name', 'application');
+
+    xw.startElement('InfoItem');
+    xw.writeAttribute('name', 'name_app');
+    xw.startElement('value');
+    xw.writeAttribute('type', 'string');
+    xw.text('Clipio');
+    xw.endElement();
+    xw.endElement();
+
+    xw.startElement('InfoItem');
+    xw.writeAttribute('name', 'user_app');
+    xw.startElement('value');
+    xw.writeAttribute('type', 'string');
+    xw.text(email);
+    xw.endElement();
+    xw.endElement();
+
+    xw.startElement('InfoItem');
+    xw.writeAttribute('name', 'password_app');
+    xw.startElement('value');
+    xw.writeAttribute('type', 'string');
+    xw.text(password);
+    xw.endElement();
+    xw.endElement();
+
+    xw.endDocument();
+    return xw;
+    //console.log(xw.toString());
+  }
+
   crearECA(json, infoAccion, infoEvento) {
     // console.log(json.value);
     json = json.value;
