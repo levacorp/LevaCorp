@@ -20,7 +20,9 @@ export class DispositivoPage implements OnInit {
 
   @ViewChild(IonSlides) slides: IonSlides;
   segment = 'Recursos';
-
+  slideOpts = {
+    speed: 200
+  };
   constructor(public loadingController: LoadingController, private activatedRoute: ActivatedRoute , private dataService: DataService ) { }
 
   ngOnInit() {

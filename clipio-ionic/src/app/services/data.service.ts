@@ -1,5 +1,5 @@
 import { Injectable } from '@angular/core';
-import { HttpClient } from '@angular/common/http';
+import { HttpClient, HttpHeaders } from '@angular/common/http';
 import * as xml2js from 'xml2js';
 
 @Injectable({
@@ -145,6 +145,18 @@ export class DataService {
     });
     // json.Objects.Object[0].InfoItem--->Informacion general del dispositivo + informacion de datastreams
     return jason.Objects.Object[0].InfoItem[0].MetaData[0].InfoItem;
+  }
+  crearElemento(elemento){
+    console.log(elemento);
+    var headers = new HttpHeaders();
+          headers = headers.append('Content-Type', 'text/xml');
+          headers = headers.append('Accept', 'text/xml');
+    let body =  '<request>' 
+                '<username>Username</username>' 
+                '<password>Password</password>' 
+                '</request>';
+
+    return this.http.post('https://66.128.132.126:8002/?event=account_login',body , { headers: headers, responseType: 'text' });
   }
 
 }

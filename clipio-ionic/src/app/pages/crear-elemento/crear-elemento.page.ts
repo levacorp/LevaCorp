@@ -1,6 +1,7 @@
 import { Component, OnInit } from '@angular/core';
 import { FormBuilder, FormGroup, Validators } from '@angular/forms';
 import { Router, ActivatedRoute } from '@angular/router';
+import { DataService } from 'src/app/services/data.service';
 
 
 @Component({
@@ -9,15 +10,17 @@ import { Router, ActivatedRoute } from '@angular/router';
   styleUrls: ['./crear-elemento.page.scss'],
 })
 export class CrearElementoPage implements OnInit {
-  public myForm: FormGroup;
+  public formElemento: FormGroup;
   argumento = null;
 
-  constructor(private activatedRoute: ActivatedRoute, public router: Router, public formBuilder: FormBuilder) {
+  constructor(private activatedRoute: ActivatedRoute, public router: Router, public formBuilder: FormBuilder,
+              private dataService: DataService) {
     this.argumento = this.activatedRoute.snapshot.paramMap.get('elemento');
-    this.myForm = formBuilder.group({
+    this.formElemento = formBuilder.group({
     nombre: ['', Validators.required],
-    tipo: [''],
-    tipoViva: [''],
+    tipo: ['', Validators.required],
+    tipoViva: ['', Validators.required],
+    score: ['', Validators.required] ,
     especie: ['', Validators.required],
     comida: ['', Validators.required],
   });
@@ -25,8 +28,8 @@ export class CrearElementoPage implements OnInit {
   ngOnInit() {
   }
   saveData() {
-    console.log(this.myForm.value);
-    this.router.navigate(['elementos-por-habitacion']);
+    this.dataService.crearElemento(this.formElemento.value);
+    this.router.navigate(['elementos-por-habitacion', this.argumento]);
   }
 
 }

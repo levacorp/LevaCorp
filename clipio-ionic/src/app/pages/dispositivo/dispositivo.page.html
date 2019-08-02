@@ -1,10 +1,10 @@
 <!--Se encarga de mostrar el navbar -->
 <ion-header>
     <ion-toolbar>
-
         <ion-buttons slot="start">
           <ion-back-button></ion-back-button>
         </ion-buttons>
+        
       <ion-title>{{argumento}}</ion-title>
     </ion-toolbar>
 </ion-header>
@@ -21,9 +21,8 @@
         </ion-segment-button>
    </ion-segment>
    <!--Fin pestañas del dispositivo-->
-   
     <!--Muestra el numero de slider en la pagina-->
-    <ion-slides  (ionSlideDidChange)="slideChanged()">
+    <ion-slides  (ionSlideDidChange)="slideChanged()" [options]="slideOpts">
         <!--Slide dispositivos inteligentes-->
         <ion-slide>
             <ion-grid>

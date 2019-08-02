@@ -3,7 +3,7 @@ import { PreloadAllModules, RouterModule, Routes } from '@angular/router';
 
 const routes: Routes = [
 
-  { path: '', redirectTo: 'principal/casa', pathMatch: 'full' },
+  { path: '', redirectTo: 'elementos-por-habitacion/casa', pathMatch: 'full' },
   { path: 'principal/:edificio', loadChildren: './pages/principal/principal.module#PrincipalPageModule' },
   { path: 'preferencias', loadChildren: './pages/preferencias/preferencias.module#PreferenciasPageModule' },
   // { path: 'elementos-habitacion', loadChildren: './elementos-habitacion/elementos-habitacion.module#ElementosHabitacionPageModule' },
@@ -16,12 +16,14 @@ const routes: Routes = [
 
   // tslint:disable-next-line: max-line-length
   { path: 'asociacion-elemento-dispositivo', loadChildren: './pages/asociacion-elemento-dispositivo/asociacion-elemento-dispositivo.module#AsociacionElementoDispositivoPageModule' },
-  { path: 'elementos-por-habitacion',
+  { path: 'elementos-por-habitacion/:habitacion',
     loadChildren: './pages/elementos-por-habitacion/elementos-por-habitacion.module#ElementosPorHabitacionPageModule' },
-  { path: 'dispositivos-elemento/:id',
+  { path: 'dispositivos-elemento/:habitacion/:elemento',
    loadChildren: './pages/dispositivos-elemento/dispositivos-elemento.module#DispositivosElementoPageModule' },
   { path: 'dispositivo/:id', loadChildren: './pages/dispositivo/dispositivo.module#DispositivoPageModule' },
-  { path: 'crear-elemento/:elemento', loadChildren: './pages/crear-elemento/crear-elemento.module#CrearElementoPageModule' }
+  { path: 'crear-elemento/:elemento', loadChildren: './pages/crear-elemento/crear-elemento.module#CrearElementoPageModule' },
+  { path: 'crear-dispositivo/:habitacion/:dispositivo/:dir', loadChildren: './pages/crear-dispositivo/crear-dispositivo.module#CrearDispositivoPageModule' }
+
 
 ];
 @NgModule({
