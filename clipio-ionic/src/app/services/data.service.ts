@@ -1,7 +1,6 @@
 import { Injectable } from '@angular/core';
 import { HttpClient } from '@angular/common/http';
 import * as xml2js from 'xml2js';
-import { FiltroElementosPipe } from '../pipes/filtro-elementos.pipe';
 import { DataUserService } from 'src/app/services/data-user.service';
 
 @Injectable({
@@ -10,6 +9,48 @@ import { DataUserService } from 'src/app/services/data-user.service';
 export class DataService {
 
   constructor(private http: HttpClient, private dataUserService: DataUserService) { }
+
+  getXMLInicioSesion() {
+    let json;
+    // tslint:disable-next-line: max-line-length
+    const xml = '<?xml version="1.0" encoding="UTF-8"?><Objects><Object><InfoItem name="application"><InfoItem name="name_app"><value type="string">Clipio</value></InfoItem><InfoItem name="user_app"><value type="string">julian@gmail.com</value></InfoItem><InfoItem name="password_app"><value type="string">7TRVtu3p9mXTwnEzGdYeIw==</value></InfoItem></InfoItem></Object></Objects>';
+    const parseString = require('xml2js').parseString;
+
+    parseString(xml, function (err, result) {
+      if (err) {
+        alert('error');
+      } else {
+        json = result;
+      }
+
+    });
+    return json;
+  }
+
+  /* Obtiene los datos de inicio de sesion. Retorna un arreglo con [{email:email,contraseña:contraseña}] */
+  getDatosInicioSesion() {
+    const datosInicioSesion = [];
+    const infoInicioSesion = this.getXMLInicioSesion().Objects.Object[0].InfoItem[0].InfoItem;
+    // tslint:disable-next-line: prefer-for-of
+    if (infoInicioSesion.length >= 3) {
+      datosInicioSesion.push({ email: infoInicioSesion[1].value[0]._ });
+      datosInicioSesion.push({ password: infoInicioSesion[2].value[0]._ });
+    }
+    return datosInicioSesion;
+  }
+
+  setDatosInicioSesion() {
+    const XMLWriter = require('xml-writer');
+    const xw = new XMLWriter();
+    xw.startDocument();
+    xw.startElement('Objects');
+    xw.startElemento('Object');
+    xw.writeAttribute('foo', 'value');
+    xw.text('Some content');
+    xw.endDocument();
+
+    console.log(xw.toString());
+  }
 
   /* Obtiene los nombres de los elementos de una habitacion. Retorna: [nombreHabitacion1, nombreHabitacion2,...] */
   getListaElementosPorHabitacion(nombreEdificio: string, nombreHabitacion: string) {

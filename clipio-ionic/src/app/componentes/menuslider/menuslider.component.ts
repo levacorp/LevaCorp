@@ -7,6 +7,7 @@ import { FormsModule } from '@angular/forms';
 import { IonicModule } from '@ionic/angular'
 import { Router } from '@angular/router';
 import { EscanerComponent } from '../escaner/escaner.component';
+import { AuthenticationService } from '../../services/authentication.service';
 
 @NgModule({
   imports: [
@@ -23,7 +24,8 @@ export class AppRoutingModule { }
 })
 export class MenusliderComponent implements OnInit {
 
-  constructor(private menu: MenuController, private barcodeScanner: BarcodeScanner, private router: Router) { }
+  constructor(private menu: MenuController, private barcodeScanner: BarcodeScanner,
+              private router: Router, private authService: AuthenticationService) { }
   ngOnInit() { }
 
   pushPerfil() {
@@ -39,7 +41,8 @@ export class MenusliderComponent implements OnInit {
     this.router.navigate(['/preferencias']);
   }
   pushCerrarSesion() {
-    this.router.navigate(['/inicio-sesion']);
+    this.authService.logout();
+    //this.router.navigate(['/inicio-sesion']);
   }
 
 }
