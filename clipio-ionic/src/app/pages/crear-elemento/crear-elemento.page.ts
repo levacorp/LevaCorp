@@ -1,5 +1,5 @@
 import { Component, OnInit } from '@angular/core';
-import { FormBuilder, FormGroup, Validators } from '@angular/forms';
+import { FormBuilder, FormGroup, Validators, FormArray } from '@angular/forms';
 import { Router, ActivatedRoute } from '@angular/router';
 import { DataService } from 'src/app/services/data.service';
 
@@ -19,8 +19,18 @@ export class CrearElementoPage implements OnInit {
     this.formElemento = formBuilder.group({
     nombre: ['', Validators.required],
     tipo: ['', Validators.required],
-    tipoViva: ['', Validators.required],
-    score: ['', Validators.required] ,
+    score: [''] ,
+    tipoViva: this.formBuilder.array([])
+  });
+}
+esviva()
+{
+  let tipoViva = this.formElemento.get('viva') as FormArray;
+  tipoViva.push(this.camposExtra());
+}
+camposExtra() {
+    return this.formBuilder.group({
+    viva: ['', Validators.required],
     especie: ['', Validators.required],
     comida: ['', Validators.required],
   });
