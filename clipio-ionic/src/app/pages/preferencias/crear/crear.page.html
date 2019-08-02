@@ -1,141 +1,241 @@
 <ion-header>
-  <ion-toolbar color="danger">
-      <ion-buttons slot="start">
-        <ion-back-button></ion-back-button>
-      </ion-buttons>
+  <ion-toolbar>
+    <ion-buttons slot="start">
+      <ion-back-button></ion-back-button>
+    </ion-buttons>
+
     <ion-title>Nueva Preferencia</ion-title>
   </ion-toolbar>
 </ion-header>
 
 <ion-content>
-  <ion-card>
-    <!-- Card Nombre -->
-    <ion-card-header>
-      <ion-card-title>
-          <ion-input placeholder="Nombre" required="true"></ion-input>
-      </ion-card-title>
-    </ion-card-header>
-  </ion-card>
+  <form [formGroup]="crearECAForm" (ngSubmit)="capturarDatos()">
+    <ion-card>
+      <!-- Card Nombre -->
 
-  <ion-card>
-    <!-- Card Evento -->
-    <ion-card-header>
-      <ion-toolbar>
+      <ion-card-header>
         <ion-card-title>
-          Evento
+          <ion-input
+            placeholder="Nombre"
+            required="true"
+            formControlName="nombre"
+          ></ion-input>
         </ion-card-title>
-        <ion-buttons *ngIf="direccionEvento && datastreamEvento" slot="end">
-            <ion-button color="danger" (click)="eliminarEvento()">
-              <ion-icon slot="icon-only" name="trash"></ion-icon>
+      </ion-card-header>
+    </ion-card>
+
+    <ion-card>
+      <!-- Card Evento -->
+
+      <ion-card-header>
+        <ion-toolbar>
+          <ion-card-title>Evento</ion-card-title>
+
+          <ion-buttons
+            *ngIf="direccionEvento"
+            slot="end"
+          >
+            <ion-button
+              color="danger"
+              (click)="eliminarEvento()"
+            >
+              <ion-icon
+                slot="icon-only"
+                name="trash"
+              ></ion-icon>
             </ion-button>
-        </ion-buttons>
-      </ion-toolbar>
-    </ion-card-header>
+          </ion-buttons>
+        </ion-toolbar>
+      </ion-card-header>
+
       <ion-card-content>
         <!-- Caso de lectura QR Evento -->
-          <ion-row *ngIf="!direccionEvento"> 
-            <ion-col>
+
+        <ion-row *ngIf="!direccionEvento">
+          <ion-col>
               <ion-thumbnail>
-                <app-escaner (onReadDevice)="guardarDireccionEvento($event)"></app-escaner>
+                <!--<app-escaner (onReadDevice)="guardarDireccionEvento($event)" #childComponentEvent></app-escaner>
+                <!-- Imagen QR como botón
+                <ion-img src="/assets/img/qr-code-scan.png" (click)="childComponentEvent.leerCodigo()" style="width:150px;height:150px;"></ion-img>-->
+                
               </ion-thumbnail>
-              <!--ion-button (click)="guardarDireccionEvento('http://192.168.0.23/Identificator?osid=708637323')">Boton Evento</ion-button>-->
-            </ion-col>
-            <ion-col>
-              <ion-label>Leer Código QR Evento</ion-label>
-            </ion-col>
-          </ion-row>
+            <ion-button (click)="guardarDireccionEvento('http://192.168.0.23/Identificator?osid=708637323')">Boton Evento</ion-button>
+            <!--<ion-button (click)="pruebaDatosXML()">Mandar XML Prueba</ion-button>-->
+          </ion-col>
+
+          <ion-col>
+            <ion-label>Leer Código QR Evento</ion-label>
+          </ion-col>
+        </ion-row>
+
         <!-- Fin Caso lectura QR Evento -->
-          <ng-container *ngIf="direccionEvento && !datastreamEvento">
-            <app-lectura-qr [dirInput]="direccionEvento" tipoInput="1" (onReadEvent)="asignarEvento($event)"></app-lectura-qr>
-          </ng-container>
-          <ng-container *ngIf="direccionEvento && datastreamEvento">
+
+        <ng-container *ngIf="direccionEvento && !datastreamEvento">
+          <app-lectura-qr
+            [dirInput]="direccionEvento"
+            tipoInput="1"
+            (onReadEvent)="handlerAsignarEvento($event)"
+          ></app-lectura-qr>
+        </ng-container>
+
+        <ng-container *ngIf="direccionEvento && datastreamEvento">
+          <div formGroupName="evento">
             <ion-row>
               <ion-col>
                 <ion-text>
                   <h1>{{ datastreamEvento }}</h1>
                 </ion-text>
               </ion-col>
-              <!-- Si datastream es un actuador -->
-              <ion-col>
-                <ng-container *ngIf="dsFormatEvento === 'bool'">
-                    <ion-select interface="popover">
-                      <ion-select-option value="on" selected>encendido</ion-select-option>
-                      <ion-select-option value="off">apagado</ion-select-option>
-                    </ion-select>    
-                </ng-container>
-                <!-- Fin Si datastream es un actuador -->
-                <!-- Si datastream no es un actuador -->
-                <ng-container *ngIf="dsFormatEvento != 'bool'">   
-                    <ion-select interface="popover">
-                      <ion-select-option value="menor" selected>menor</ion-select-option>
-                      <ion-select-option value="mayor">mayor</ion-select-option>
-                      <ion-select-option value="igual">igual</ion-select-option>
-                    </ion-select>
-                </ng-container>
-              </ion-col>
-              <ion-col>
-                <ng-container *ngIf="dsFormatEvento != 'bool'">
-                  <ion-input placeholder="Valor" required="true"></ion-input>
-                </ng-container>
-              </ion-col>
-              <!-- Fin Si datastream no es un actuador -->
+
+              <!-- Si datastream es un ACTUADOR -->
+
+              <ng-container *ngIf="dsFormatEvento === 'bool' || dsFormatEvento === 'boolean';else eventoSensor">
+                <ion-col>
+                  <ion-select
+                    interface="popover"
+                    formControlName="valor"
+                  >
+                    <ion-select-option value="1" selected>encendido</ion-select-option>
+                    <ion-select-option value="0">apagado</ion-select-option>
+                  </ion-select>
+                </ion-col>
+              </ng-container>
+
+              <!-- Fin Si datastream es un ACTUADOR -->
+              <!-- Si datastream es un SENSOR -->
+
+              <ng-template #eventoSensor>
+                <ion-col>
+                  <ion-select
+                    interface="popover"
+                    formControlName="comparador"
+                  >
+                    <ion-select-option
+                      value="menor"
+                      selected="selected"
+                    >menor</ion-select-option>
+
+                    <ion-select-option value="mayor">mayor</ion-select-option>
+                    <ion-select-option value="igual">igual</ion-select-option>
+                  </ion-select>
+                </ion-col>
+
+                <ion-col>
+                  <ion-input
+                    placeholder="Valor"
+                    required="true"
+                    formControlName="valor"
+                  ></ion-input>
+                </ion-col>
+              </ng-template>
+
+              <!-- Fin Si datastream es un SENSOR -->
             </ion-row>
-            <ion-input placeholder="Significado de este evento" required="true"></ion-input>
-          </ng-container>
+            
+            <ion-input
+              placeholder="Significado de este evento"
+              required="true"
+              formControlName="significado"
+            ></ion-input>
+          </div>
+        </ng-container>
       </ion-card-content>
-  </ion-card>
-  <ion-card>
-    <!-- Card Accion -->
-    <ion-card-header>
-      <ion-toolbar>
-          <ion-card-title>
-            Acción
-          </ion-card-title>
-          <ion-buttons *ngIf="direccionAccion && datastreamAccion" slot="end">
-            <ion-button color="danger" (click)="eliminarAccion()">
-              <ion-icon slot="icon-only" name="trash"></ion-icon>
+    </ion-card>
+
+    <ion-card>
+      <!-- Card Accion -->
+
+      <ion-card-header>
+        <ion-toolbar>
+          <ion-card-title>Acción</ion-card-title>
+
+          <ion-buttons
+            *ngIf="direccionAccion"
+            slot="end"
+          >
+            <ion-button
+              color="danger"
+              (click)="eliminarAccion()"
+            >
+              <ion-icon
+                slot="icon-only"
+                name="trash"
+              ></ion-icon>
             </ion-button>
           </ion-buttons>
-      </ion-toolbar>
-    </ion-card-header>
+        </ion-toolbar>
+      </ion-card-header>
 
-    <ion-card-content>
-      <!-- Caso seleccionado sensor o actuador -->
-        <ion-row *ngIf="!direccionAccion"> 
+      <ion-card-content>
+        <!-- Caso seleccionado sensor o actuador -->
+
+        <ion-row *ngIf="!direccionAccion">
           <ion-col>
             <ion-thumbnail>
-              <app-escaner (onReadDevice)="guardarDireccionAccion($event)"></app-escaner>
+              <app-escaner (onReadDevice)="guardarDireccionAccion($event)" #childComponentAction></app-escaner>
+              <!-- Imagen QR como botón -->
+              <ion-img src="/assets/img/qr-code-scan.png" (click)="childComponentAction.leerCodigo()" style="width:150px;height:150px;"></ion-img>
             </ion-thumbnail>
+
+            <!--ion-button (click)="guardarDireccionAccion('http://192.168.0.23/Identificator?osid=708637323')">Boton Accion</ion-button>-->
           </ion-col>
+
           <ion-col>
             <ion-label>Leer Código QR Acción</ion-label>
           </ion-col>
         </ion-row>
-      <!-- Fin Caso seleccionado sensor o actuador -->
-      <ng-container *ngIf="direccionAccion && !datastreamAccion">
-          <app-lectura-qr [dirInput]="direccionAccion" tipoInput="2" (onReadAction)="asignarAccion($event)"></app-lectura-qr>
+
+        <!-- Fin Caso seleccionado sensor o actuador -->
+
+        <ng-container *ngIf="direccionAccion && !datastreamAccion">
+          <app-lectura-qr
+            [dirInput]="direccionAccion"
+            tipoInput="2"
+            (onReadAction)="handlerAsignarAccion($event)"
+          ></app-lectura-qr>
         </ng-container>
+
         <ng-container *ngIf="direccionAccion && datastreamAccion">
-          <ion-row>
-            <ion-col>
-              <ion-label>{{ datastreamAccion }}</ion-label>
-            </ion-col>
-            <ion-col>
-              <ion-select interface="popover">
-                <ion-select-option value="on" selected>encender</ion-select-option>
-                <ion-select-option value="off">apagar</ion-select-option>
-              </ion-select>
-            </ion-col>
-          </ion-row>
-          <ion-input placeholder="Significado de esta accion" required="true"></ion-input>
+          <div formGroupName="accion">
+            <ion-row>
+              <ion-col>
+                <ion-label>{{ datastreamAccion }}</ion-label>
+              </ion-col>
+
+              <ion-col>
+                <ion-select
+                  interface="popover"
+                  formControlName="valor"
+                >
+                  <ion-select-option
+                    value="1"
+                    selected="selected"
+                  >encender</ion-select-option>
+
+                  <ion-select-option value="0">apagar</ion-select-option>
+                </ion-select>
+              </ion-col>
+            </ion-row>
+
+            <ion-input
+              placeholder="Significado de esta accion"
+              required="true"
+              formControlName="significado"
+            ></ion-input>
+          </div>
         </ng-container>
-    </ion-card-content>
-  </ion-card>
-  <ion-card *ngIf="datastreamEvento && datastreamAccion">
-    <ion-header>
-      <ion-button expand="full" color="danger">
-        Listo
-      </ion-button>
-    </ion-header>
-  </ion-card>
+      </ion-card-content>
+    </ion-card>
+
+    <ion-card *ngIf="datastreamEvento && datastreamAccion">
+      <ion-header>
+        <ion-button
+          type="submit"
+          expand="full"
+          color="danger"
+          [disabled]="crearECAForm.invalid"
+        >Listo</ion-button>
+      </ion-header>
+    </ion-card>
+  </form>
 </ion-content>

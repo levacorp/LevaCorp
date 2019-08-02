@@ -14,8 +14,10 @@
 
 <ion-content>
   <!--Carta para las notificaciones-->
-  <div class="cartaEdificio">
-    <ion-button expand="full" color="danger">Bienvenido a {{argumento}}</ion-button>
+  <div>
+    <ion-item expand="full" color="danger" class="cartaEdificio">
+      <ion-label><b>Bienvenido a {{argumento}}</b></ion-label>
+    </ion-item>
   </div>
 
   <ion-card class="tamanoCarta setScroll">
@@ -61,14 +63,13 @@
     <ion-row>
       <!--Acomoda el numero de tarjetas de acuerdo al tamaño de pantalla-->
       <ion-col size="6" size-sm="4" size-md="3" size-lg="2"
-        *ngFor="let elemento of (elementos | async) | filtroElementos: filtro:'userId'">
+                *ngFor="let elemento of elementos">
         <ion-card>
           <img src="/assets/icon/camara1.png" />
           <ion-card-header>
-            <ion-card-title>{{ elemento.userId }}</ion-card-title>
+            <ion-card-title>{{ elemento }}</ion-card-title>
           </ion-card-header>
           <ion-card-content>
-            {{ elemento.body }}
           </ion-card-content>
         </ion-card>
       </ion-col>

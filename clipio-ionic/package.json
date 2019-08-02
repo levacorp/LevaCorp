@@ -28,6 +28,7 @@
     "@ionic-native/status-bar": "^5.0.0",
     "@ionic/angular": "^4.1.0",
     "@ionic/pro": "2.0.4",
+    "@ionic/storage": "^2.2.0",
     "@types/request": "^2.48.2",
     "@types/xml2js": "0.4.4",
     "cordova-android": "8.0.0",
@@ -42,9 +43,13 @@
     "stream": "0.0.2",
     "timers": "^0.1.1",
     "tslib": "^1.9.0",
-    "xml2js": "^0.4.19",
     "xml-js": "^1.6.11",
     "xml-to-json-stream": "^1.1.0",
+    "xml-writer": "^1.7.0",
+<<<<<<< HEAD
+    "xml2js": "^0.4.19",
+=======
+>>>>>>> 3a48d52720fd7c59c525fcc19bbbe271446ce490
     "zone.js": "~0.8.29"
   },
   "devDependencies": {

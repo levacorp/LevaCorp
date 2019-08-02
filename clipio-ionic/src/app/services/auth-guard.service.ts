@@ -1,0 +1,15 @@
+import { Injectable } from '@angular/core';
+import { CanActivate } from '@angular/router'; // duda
+import { AuthenticationService } from './authentication.service';
+
+@Injectable({
+  providedIn: 'root'
+})
+export class AuthGuardService implements CanActivate {
+
+  constructor(private authService: AuthenticationService) { }
+  /* Comprueba si un usuario esta autenticado */
+  canActivate(): boolean {
+    return this.authService.isAuthenticated();
+  }
+}
