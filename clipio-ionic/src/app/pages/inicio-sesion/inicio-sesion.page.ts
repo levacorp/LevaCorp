@@ -15,7 +15,7 @@ export class InicioSesionPage implements OnInit {
   @ViewChild('password') password;
 
   constructor(private authServices: AuthenticationService, private generateXMLService: GenerateXMLService,
-    public formBuilder: FormBuilder) {  }
+              public formBuilder: FormBuilder) {  }
 
   ngOnInit() {
   }
