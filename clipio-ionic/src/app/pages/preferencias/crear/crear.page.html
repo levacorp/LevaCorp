@@ -54,12 +54,12 @@
         <ion-row *ngIf="!direccionEvento">
           <ion-col>
               <ion-thumbnail>
-                <app-escaner (onReadDevice)="guardarDireccionEvento($event)" #childComponentEvent></app-escaner>
-                <!-- Imagen QR como botón -->
-                <ion-img src="/assets/img/qr-code-scan.png" (click)="childComponentEvent.leerCodigo()" style="width:150px;height:150px;"></ion-img>
+                <!--<app-escaner (onReadDevice)="guardarDireccionEvento($event)" #childComponentEvent></app-escaner>
+                <!-- Imagen QR como botón
+                <ion-img src="/assets/img/qr-code-scan.png" (click)="childComponentEvent.leerCodigo()" style="width:150px;height:150px;"></ion-img>-->
                 
               </ion-thumbnail>
-            <!--ion-button (click)="guardarDireccionEvento('http://192.168.0.23/Identificator?osid=708637323')">Boton Evento</ion-button>-->
+            <ion-button (click)="guardarDireccionEvento('http://192.168.0.23/Identificator?osid=708637323')">Boton Evento</ion-button>
             <!--<ion-button (click)="pruebaDatosXML()">Mandar XML Prueba</ion-button>-->
           </ion-col>
 
@@ -95,20 +95,10 @@
                     interface="popover"
                     formControlName="valor"
                   >
-                    <ion-select-option
-                      value="1"
-                      selected="selected"
-                    >encendido</ion-select-option>
-
+                    <ion-select-option value="1" selected>encendido</ion-select-option>
                     <ion-select-option value="0">apagado</ion-select-option>
                   </ion-select>
                 </ion-col>
-
-                <ion-input
-                  placeholder="Significado de este evento"
-                  required="true"
-                  formControlName="significado"
-                ></ion-input>
               </ng-container>
 
               <!-- Fin Si datastream es un ACTUADOR -->
@@ -126,7 +116,6 @@
                     >menor</ion-select-option>
 
                     <ion-select-option value="mayor">mayor</ion-select-option>
-
                     <ion-select-option value="igual">igual</ion-select-option>
                   </ion-select>
                 </ion-col>
@@ -138,16 +127,16 @@
                     formControlName="valor"
                   ></ion-input>
                 </ion-col>
-
-                <ion-input
-                  placeholder="Significado de este evento"
-                  required="true"
-                  formControlName="significado"
-                ></ion-input>
               </ng-template>
 
               <!-- Fin Si datastream es un SENSOR -->
             </ion-row>
+            
+            <ion-input
+              placeholder="Significado de este evento"
+              required="true"
+              formControlName="significado"
+            ></ion-input>
           </div>
         </ng-container>
       </ion-card-content>

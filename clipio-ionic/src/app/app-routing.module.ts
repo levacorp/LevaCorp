@@ -19,6 +19,16 @@ const routes: Routes = [
   { path: 'perfil', loadChildren: './pages/perfil/perfil.module#PerfilPageModule', canActivate: [AuthGuardService] },
 
   // tslint:disable-next-line: max-line-length
+<<<<<<< HEAD
+  { path: 'asociacion-elemento-dispositivo', loadChildren: './pages/asociacion-elemento-dispositivo/asociacion-elemento-dispositivo.module#AsociacionElementoDispositivoPageModule' },
+  { path: 'elementos-por-habitacion/:habitacion',
+    loadChildren: './pages/elementos-por-habitacion/elementos-por-habitacion.module#ElementosPorHabitacionPageModule' },
+  { path: 'dispositivos-elemento/:habitacion/:elemento',
+   loadChildren: './pages/dispositivos-elemento/dispositivos-elemento.module#DispositivosElementoPageModule' },
+  { path: 'dispositivo/:id', loadChildren: './pages/dispositivo/dispositivo.module#DispositivoPageModule' },
+  { path: 'crear-elemento/:elemento', loadChildren: './pages/crear-elemento/crear-elemento.module#CrearElementoPageModule' },
+  { path: 'crear-dispositivo/:habitacion/:dispositivo/:dir', loadChildren: './pages/crear-dispositivo/crear-dispositivo.module#CrearDispositivoPageModule' }
+=======
   { path: 'asociacion-elemento-dispositivo', loadChildren: './pages/asociacion-elemento-dispositivo/asociacion-elemento-dispositivo.module#AsociacionElementoDispositivoPageModule', canActivate: [AuthGuardService] },
   { path: 'elementos-por-habitacion',
     // tslint:disable-next-line: max-line-length
@@ -32,6 +42,7 @@ const routes: Routes = [
   { path: 'crear-elemento/:elemento', loadChildren: './pages/crear-elemento/crear-elemento.module#CrearElementoPageModule', canActivate: [AuthGuardService] },
   { path: 'inicio-sesion', loadChildren: './pages/inicio-sesion/inicio-sesion.module#InicioSesionPageModule' },
   { path: 'registro', loadChildren: './pages/registro/registro.module#RegistroPageModule' }
+>>>>>>> 056c3cacceee6a1c909a4465505b18fc8ee32be6
 
 
 ];
