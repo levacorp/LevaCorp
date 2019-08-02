@@ -16,9 +16,14 @@ export class DataService {
   getHabitaciones() {
     return this.http.get('https://jsonplaceholder.typicode.com/users');
   }
-  /*Obtiene el json de todos los edificios*/
 
+  /* Obtiene el json de todos los edificios */
   getEdificios() {
     return this.http.get('https://jsonplaceholder.typicode.com/users');
+  }
+
+  crearECA(xml: string) {
+    // ToDo: Mirar que retorna el Servidor PU
+    // const url =  this.urlServidor + "RegistrarPreferencia?email=" + email + "&mac=" + mac + "&data=" + xml;
   }
 }
