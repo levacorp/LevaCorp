@@ -14,9 +14,9 @@ import { Router, ActivatedRoute } from '@angular/router';
 export class PrincipalPage implements OnInit {
 
   @ViewChild(IonSegment) segmentoelementos: IonSegment;
-  elementos: Observable<any>;
+  elementos: any[];
   habitaciones: any[];
-  filtro = '1';
+  filtro = 'cocina';
   argumento = null;
 
   constructor(private dataService: DataService, public popoverController: PopoverController,
@@ -26,34 +26,35 @@ export class PrincipalPage implements OnInit {
   ngOnInit() {
     this.dataService.getXMLBuildingEnviroment();
     this.argumento = this.activatedRoute.snapshot.paramMap.get('edificio');
-    this.habitaciones = this.dataService.getHabitaciones(this.argumento);
-    //console.log(json.Objects.Object[0].InfoItem[0].InfoItem[0].InfoItem[0]);
-    // tslint:disable-next-line: forin
-    // this.segmentoelementos.value = '1'; // Elemento del segmento seleccionado por defecto
-    //this.elementos = this.dataService.getElementos(); // Carga todos los elementos
-    //this.habitaciones = this.dataService.getHabitaciones();
+    this.habitaciones = this.dataService.getListaHabitaciones(this.argumento);
+    this.cargarElementosPorHabitacion();
   }
   /* Cuando se requiere traer los elementos filtrados o sin filtrar iguala el atributo filtro
-    al filtro escogido*/
+    al filtro escogido y carga los elementos para el filtro*/
   segmentButtonClicked(event) {
     const segEscogido = event.detail.value;
     this.filtro = segEscogido;
+    this.cargarElementosPorHabitacion();
+  }
+
+  cargarElementosPorHabitacion() {
+    this.elementos = this.dataService.getListaElementosPorHabitacion(this.argumento, this.filtro);
   }
   /* Carga todos los edificios en un popover y obtiene la respuesta del popover */
   async cargarEdificios(ev: any) {
-      const popover = await this.popoverController.create({
-        component: PopoverEdificiosInicioComponent,
-        event: ev,
-        translucent: true,
-        cssClass: 'popoverEdificio', /* css necesario para el estilo del popover (se guarda en los estilos generales app.css)*/
-        mode: 'md', /* Aplicar material design a todos los dispositivos */
-      });
-      await popover.present();
-      const { data } = await popover.onWillDismiss();
-      if (data) {
-        console.log('padre: ', data);
-        this.router.navigate(['/principal/casa']);
-      }
+    const popover = await this.popoverController.create({
+      component: PopoverEdificiosInicioComponent,
+      event: ev,
+      translucent: true,
+      cssClass: 'popoverEdificio', /* css necesario para el estilo del popover (se guarda en los estilos generales app.css)*/
+      mode: 'md', /* Aplicar material design a todos los dispositivos */
+    });
+    await popover.present();
+    const { data } = await popover.onWillDismiss();
+    if (data) {
+      console.log('padre: ', data);
+      this.router.navigate(['/principal/casa']);
+    }
   }
 
 }

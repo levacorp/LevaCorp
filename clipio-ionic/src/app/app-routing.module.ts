@@ -3,7 +3,7 @@ import { PreloadAllModules, RouterModule, Routes } from '@angular/router';
 
 const routes: Routes = [
 
-  { path: '', redirectTo: 'principal/casa', pathMatch: 'full' },
+  { path: '', redirectTo: 'inicio-sesion', pathMatch: 'full' },
   { path: 'principal/:edificio', loadChildren: './pages/principal/principal.module#PrincipalPageModule' },
   { path: 'preferencias', loadChildren: './pages/preferencias/preferencias.module#PreferenciasPageModule' },
   // { path: 'elementos-habitacion', loadChildren: './elementos-habitacion/elementos-habitacion.module#ElementosHabitacionPageModule' },
@@ -21,7 +21,10 @@ const routes: Routes = [
   { path: 'dispositivos-elemento/:id',
    loadChildren: './pages/dispositivos-elemento/dispositivos-elemento.module#DispositivosElementoPageModule' },
   { path: 'dispositivo/:id', loadChildren: './pages/dispositivo/dispositivo.module#DispositivoPageModule' },
-  { path: 'crear-elemento/:elemento', loadChildren: './pages/crear-elemento/crear-elemento.module#CrearElementoPageModule' }
+  { path: 'crear-elemento/:elemento', loadChildren: './pages/crear-elemento/crear-elemento.module#CrearElementoPageModule' },
+  { path: 'inicio-sesion', loadChildren: './pages/inicio-sesion/inicio-sesion.module#InicioSesionPageModule' },
+  { path: 'registro', loadChildren: './pages/registro/registro.module#RegistroPageModule' }
+
 
 ];
 @NgModule({
