@@ -10,20 +10,20 @@
 </ion-header>
 
 <ion-content>
-
+  <ion-buttons>
+    <ion-button href="elementos-por-habitacion">Elementos por habitacion
+    </ion-button>
+  </ion-buttons>
   <ion-grid class="contenidoSegmento">
     <ion-row>
       <!--Acomoda el numero de tarjetas de acuerdo al tamaño de pantalla-->
-      <ion-col size="6" size-sm="4" size-md="3" size-lg="2" *ngFor="let elemento of edificios | async">
+      <ion-col size="6" size-sm="4" size-md="3" size-lg="2" *ngFor="let elemento of edificios ">
         <!--Carga de los elementos filtrados por segmento escogido-->
-        <ion-card (click)="pushInformacionEdificio()">
+        <ion-card  nombre="elemento" (click)="pushInformacionEdificio(elemento)">
           <img src="/assets/icon/house.png" />
           <ion-card-header>
-            <ion-card-title>{{ elemento.username }}</ion-card-title>
+            <ion-card-title>{{ elemento}}</ion-card-title>
           </ion-card-header>
-          <ion-card-content>
-            {{ elemento.email }}
-          </ion-card-content>
         </ion-card>
         <!--Fin Carga de los elementos filtrados por segmento escogido-->
       </ion-col>

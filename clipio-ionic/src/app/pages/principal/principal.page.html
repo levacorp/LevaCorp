@@ -4,11 +4,22 @@
       <ion-menu-button color="danger" menu="menuPrincipal"></ion-menu-button>
     </ion-buttons>
     <ion-title>Inicio</ion-title>
+    <ion-buttons slot="end">
+      <ion-button slot="icon-only" color="danger" (click)="cargarEdificios($event)">
+        <ion-icon mode="ios" name="business"></ion-icon>
+      </ion-button>
+    </ion-buttons>
   </ion-toolbar>
 </ion-header>
 
 <ion-content>
   <!--Carta para las notificaciones-->
+  <div>
+    <ion-item expand="full" color="danger" class="cartaEdificio">
+      <ion-label><b>Bienvenido a {{argumento}}</b></ion-label>
+    </ion-item>
+  </div>
+
   <ion-card class="tamanoCarta setScroll">
     <ion-card-header>
       <ion-card-title>Tus notificaciones</ion-card-title>
@@ -40,19 +51,8 @@
   <div class="barraSegmento">
     <!--Carga todas las haticaciones, ionsegment en modo ios-->
     <ion-segment color="danger" mode="ios" (ionChange)="segmentButtonClicked($event)" scrollable>
-      <ion-segment-button value="{{ habitacion.id }}" *ngFor="let habitacion of habitaciones | async">
-        <ion-label>{{ habitacion.id }}</ion-label>
-      </ion-segment-button>
-      </ion-segment>
-    <ion-segment color="danger"  (ionChange)="segmentButtonClicked($event)" scrollable>
-      <ion-segment-button value="1">
-        <ion-label>Habitacion</ion-label>
-      </ion-segment-button>
-      <ion-segment-button value="2">
-        <ion-label>Sala</ion-label>
-      </ion-segment-button>
-      <ion-segment-button value="3">
-        <ion-label>Patio</ion-label>
+      <ion-segment-button value="{{ habitacion }}" *ngFor="let habitacion of habitaciones">
+        <ion-label>{{ habitacion }}</ion-label>
       </ion-segment-button>
     </ion-segment>
   </div>
@@ -63,14 +63,13 @@
     <ion-row>
       <!--Acomoda el numero de tarjetas de acuerdo al tamaño de pantalla-->
       <ion-col size="6" size-sm="4" size-md="3" size-lg="2"
-        *ngFor="let elemento of (elementos | async) | filtroElementos: filtro:'userId'">
+                *ngFor="let elemento of elementos">
         <ion-card>
           <img src="/assets/icon/camara1.png" />
           <ion-card-header>
-            <ion-card-title>{{ elemento.userId }}</ion-card-title>
+            <ion-card-title>{{ elemento }}</ion-card-title>
           </ion-card-header>
           <ion-card-content>
-            {{ elemento.body }}
           </ion-card-content>
         </ion-card>
       </ion-col>

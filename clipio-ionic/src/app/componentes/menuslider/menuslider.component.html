@@ -19,25 +19,25 @@
   </ion-header>
   <ion-content>
 
-    <ion-list>
+    <ion-list class="listaMenu">
       <ion-menu-toggle>
-        <ion-item>
+        <ion-item (click)="pushInicio()" lines="full">
           <ion-img src="/assets/icon/PaginaPrincipal.png" slot="start"></ion-img>
-          <ion-label (click)="pushInicio()">Inicio</ion-label>
+          <ion-label>Inicio</ion-label>
         </ion-item>
       </ion-menu-toggle>
 
       <ion-menu-toggle>
-        <ion-item>
+        <ion-item (click)="pushEdificio()" lines="full">
           <ion-img src="/assets/icon/Edificios.png" slot="start"></ion-img>
-          <ion-label (click)="pushEdificio()">Edificio</ion-label>
+          <ion-label>Edificio</ion-label>
         </ion-item>
       </ion-menu-toggle>
 
       <ion-menu-toggle>
-        <ion-item>
+        <ion-item (click)="pushPreferencia()" lines="full">
           <ion-img src="/assets/icon/preferencias.png" slot="start"></ion-img>
-          <ion-label (click)="pushPreferencia()">Preferencias</ion-label>
+          <ion-label>Preferencias</ion-label>
         </ion-item>
       </ion-menu-toggle>
 
@@ -49,7 +49,7 @@
   <ion-footer>
     <ion-toolbar>
       <ion-menu-toggle>
-        <ion-item class="footer">
+        <ion-item (click)="pushCerrarSesion()" class="footer" lines="full">
           <ion-img src="/assets/icon/logout.png" slot="start"></ion-img>
           <ion-label>Cerrar sesion</ion-label>
         </ion-item>

@@ -1,0 +1,9 @@
+<ion-item color="danger" class="centrarTexto" lines="full">
+  <ion-label>¿Cambiar de edificio? Escoge uno:</ion-label>
+</ion-item>
+
+<ion-list lines="none" class="tamanoLista">
+  <ion-item color="light" *ngFor="let edificio of listaEdificios" detail (click)="onClick( edificio )">
+    <ion-label>{{ edificio }}</ion-label>
+  </ion-item>
+</ion-list>

@@ -4,3 +4,8 @@
 // styles are for the entire app and not just one component. Additionally, this 
 // file can hold Sass mixins, functions, and placeholder classes to be imported 
 // and used throughout the application.
+
+.popoverEdificio .popover-content{
+    width: 100% !important; //Da el tamaño del popover
+    left: 0px !important; //El popover por defecto tiene left 12px
+}

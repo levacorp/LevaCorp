@@ -28,6 +28,7 @@
     "@ionic-native/status-bar": "^5.0.0",
     "@ionic/angular": "^4.1.0",
     "@ionic/pro": "2.0.4",
+    "@ionic/storage": "^2.2.0",
     "@types/request": "^2.48.2",
     "@types/xml2js": "0.4.4",
     "cordova-android": "8.0.0",
