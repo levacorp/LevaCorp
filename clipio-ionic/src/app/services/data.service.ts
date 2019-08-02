@@ -236,4 +236,9 @@ export class DataService {
     return jason.Objects.Object[0].InfoItem[0].MetaData[0].InfoItem;
   }
 
+
+  crearECA(xml: string) {
+    // ToDo: Mirar que retorna el Servidor PU
+    // const url =  this.urlServidor + "RegistrarPreferencia?email=" + email + "&mac=" + mac + "&data=" + xml;
+  }
 }
