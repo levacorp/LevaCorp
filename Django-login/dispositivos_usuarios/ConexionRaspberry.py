@@ -74,7 +74,7 @@ class ConexionRaspberry:
     def inicializar(self, ip, dataJson):
 
         url = 'http://' + ip + '/StartObject'
-
+        print(json.dumps(dataJson))
         try:
             requests.post(url, data={'json': json.dumps(dataJson)})
             return True
