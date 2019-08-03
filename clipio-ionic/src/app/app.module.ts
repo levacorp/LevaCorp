@@ -15,6 +15,8 @@ import { PipesModule } from './pipes/pipes.module';
 import { HTTP} from '@ionic-native/http/ngx';
 import { CommonModule } from '@angular/common';
 import { IonicStorageModule } from '@ionic/storage';
+import { Uid } from '@ionic-native/uid/ngx';
+import { AndroidPermissions } from '@ionic-native/android-permissions/ngx';
 
 @NgModule({
   declarations: [AppComponent],
@@ -32,6 +34,8 @@ import { IonicStorageModule } from '@ionic/storage';
   providers: [
     StatusBar,
     SplashScreen,
+    Uid,
+    AndroidPermissions,
     { provide: RouteReuseStrategy, useClass: IonicRouteStrategy },
     BarcodeScanner,
     HTTP
