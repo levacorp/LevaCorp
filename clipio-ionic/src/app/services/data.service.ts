@@ -2,13 +2,18 @@ import { Injectable } from '@angular/core';
 import { HttpClient, HttpHeaders } from '@angular/common/http';
 import * as xml2js from 'xml2js';
 import { DataUserService } from 'src/app/services/data-user.service';
+import { EnviarXMLService } from './enviar-xml.service';
 
 @Injectable({
   providedIn: 'root'
 })
 export class DataService {
-
-  constructor(private http: HttpClient, private dataUserService: DataUserService) { }
+  constructor(
+    private http: HttpClient,
+    private dataUserService: DataUserService,
+    private enviarXML : EnviarXMLService
+     
+    ) { }
 
   getXMLInicioSesion() {
     let json;
@@ -391,9 +396,10 @@ export class DataService {
     xw.startElement('value').writeAttribute('type', 'string');
     xw.text(contraseña).endElement('/InfoItem').endElement('/InfoItem');
 
-    xw.endDocument();
-    console.log("xmlRegistrar");
+    xw.endDocument();    
     console.log(xw.toString());
+    
+    this.enviarXML.registrarUsuario(email,xw);
   }
   setXMLRegistrarEdificio(json) {
     var XMLWriter = require('xml-writer');

@@ -25,18 +25,24 @@ export class RegistrarPage implements OnInit {
       nombre: '',
       apellido: '',
       email: ['', [Validators.required, Validators.email]],
-      contraseña: ['', Validators.required, Validators.minLength(6), Validators.pattern('^(?=.*?[A-Z])(?=.*?[a-z])(?=.*?[0-9]).{6,12}$')],
+      contraseña: ['', Validators.required],
       confirmacionContraseña: ['', Validators.required]
     });
-
-
   }
 
   ngOnInit() {
 
     console.log(this.dataservice.setXMLPerson());
   }
- 
+
+
+  saveData() {
+    if (this.myform.valid) {
+      this.myform.value.contraseña = this.encrypt.encrypt(this.myform.value.contraseña);
+      this.dataservice.setXMLRegistrar(this.myform);
+      console.log(this.myform.value);
+    }
+  }
   matchingPasswords(passwordKey: string, confirmPasswordKey: string) {
     return (group: FormGroup): { [key: string]: any } => {
       let contraseña = group.controls[passwordKey];
@@ -49,12 +55,4 @@ export class RegistrarPage implements OnInit {
       }
     }
   }
-  saveData() {
-    if (this.myform.valid) {
-      this.myform.value.contraseña = this.encrypt.encrypt(this.myform.value.contraseña);
-      this.dataservice.setXMLRegistrar(this.myform);
-      console.log(this.myform.value);
-    }
-  }
-
 }
