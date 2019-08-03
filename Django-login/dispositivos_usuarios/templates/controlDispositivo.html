@@ -46,7 +46,7 @@
                                                         <h4> {{ key }} </h4>
                                                     </div>
                                                     <!--Si es un actuador-->
-                                                    {% if values.0 == 'bool' %}
+                                                    {% if values.0 == 'bool' or values.0 == 'boolean' %}
                                                     <!--Se hace una columna responsive para acomodar el switch-->
                                                     <div class="col-sm pt-1">
                                                         <!--Switch para prender y apagar actuador-->

@@ -235,30 +235,63 @@ def crearJSON(idDispositivo, titulo, localizacionLatitud, localizacionLongitud, 
 
     datastreamsDef = []
     for i in datastreams:   # 0:id - 1:max_value - 2:min_value - 3:symbol - 4:label - 5:unitType - 6:tags - 7:datastream_format
-        if i[3] == "":      # Cuando el Simbolo está vacio
-            i[3] = None
-        if i[4] == "":      # Cuando el Label está vacio
-            i[4] = None
-        if i[5] == "":      # Cuando la Unidad está vacia
-            i[5] = 0
-        datastreamsDef.append(
-            {
-                "datastream_format": i[7],
-                "feedid": None,
-                "id": i[0],
-                "current_value": None,
-                "at": datetime.now().strftime("%m/%d/%Y %H:%M:%S"),
-                "max_value": i[1],
-                "min_value": i[2],
-                "tags": i[6],
-                "unit": {
-                    "symbol": i[3],
-                    "label": i[4],
-                    "unitType": i[5]
-                },
-                "datapoints": None,
-            }
-        )
+        auxJson = {}
+        if i[7] == 'None':
+            auxJson['datastream_format'] = None
+        else:
+            auxJson['datastream_format'] = i[7]
+        auxJson['feedid'] = None
+        auxJson['id'] = i[0]
+        auxJson['current_value'] = None
+        auxJson['at'] = datetime.now().strftime("%m/%d/%Y %H:%M:%S")
+        if i[1] == 'None':
+            auxJson['max_value'] = None
+        else:
+            auxJson['max_value'] = i[1]
+        if i[2] == 'None':
+            auxJson['min_value'] = None
+        else:
+            auxJson['min_value'] = i[2]
+        auxJson['tags'] = i[6]
+
+
+        # Simbolo de datastream
+        auxJsonUnit = {}
+        if i[3] == "" or i[3] == "None":      # Cuando el Simbolo está vacio
+            auxJsonUnit['symbol'] = None
+        else:
+            auxJsonUnit['symbol'] = i[3]
+        if i[4] == "" or i[4] == "None":      # Cuando el Label está vacio
+            auxJsonUnit['label'] = None
+        else:
+            auxJsonUnit['label'] = i[4]
+        if i[5] == "" or i[5] == "None":      # Cuando la Unidad está vacia
+            auxJsonUnit['unitType'] = 0
+        else:
+            auxJsonUnit['unitType'] = i[5]
+        auxJson['unit'] = auxJsonUnit
+        auxJson['datapoints'] = None
+        datastreamsDef.append(auxJson)
+
+    # Auxiliar para crear localizacion
+    auxJsonLocation = {}
+    auxJsonLocation['name'] = None
+    auxJsonLocation['domain'] = 0
+    if (localizacionLatitud == "None"):
+        auxJsonLocation['lat'] = None
+    else:
+        auxJsonLocation['lat'] = str(localizacionLatitud)
+    if (localizacionLongitud == "None"):
+        auxJsonLocation['lon'] = None
+    else:
+        auxJsonLocation['lon'] = str(localizacionLongitud)
+    if (localizacionElevacion == "None"):
+        auxJsonLocation['ele'] = None
+    else:
+        auxJsonLocation['ele'] = str(localizacionElevacion)
+    auxJsonLocation['exposure'] = 0
+    auxJsonLocation['disposition'] = 0
+    # Fin Auxiliar para crear localizacion
     tagsDef = [tagEntidadEsp, tagEntidadIng, tagFuncionalidadEsp, tagFuncionalidadIng, tagNombreEsp, tagNombreIng]
     tagsDef.extend(tags)
     diccionario = {}
@@ -278,15 +311,7 @@ def crearJSON(idDispositivo, titulo, localizacionLatitud, localizacionLongitud, 
                            "version": None,
                            "website": None,
                            "datastreams": datastreamsDef,
-                           "location": {
-                               "name": None,
-                               "domain": 0,
-                               "lat": str(localizacionLatitud),
-                               "lon": str(localizacionLongitud),
-                               "ele": str(localizacionElevacion),
-                               "exposure": 0,
-                               "disposition": 0
-                           },
+                           "location": auxJsonLocation,
                            "TitleHTML": "<a style=\"color: #336600; font-size:110%;\"  href=\"https://xively.com/feeds/" + str(idDispositivo) + "\" >" + titulo + "</a>",
                            "URLMostrar": "https://xively.com/feeds/" + str(idDispositivo)
                            }

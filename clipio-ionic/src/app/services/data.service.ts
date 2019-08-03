@@ -13,8 +13,7 @@ export class DataService {
   constructor(
     private http: HttpClient,
     private dataUserService: DataUserService,
-
-  ) { }
+    ) { }
 
   getXMLInicioSesion() {
     let json;
@@ -41,7 +40,8 @@ export class DataService {
       datosInicioSesion.push({ email: infoInicioSesion[1].value[0]._ });
       datosInicioSesion.push({ password: infoInicioSesion[2].value[0]._ });
     }
-    return datosInicioSesion;
+    this.dataUserService.setDatosUsuario(datosInicioSesion);
+    // return datosInicioSesion;
   }
 
   /* Obtiene los nombres de los elementos de una habitacion. Retorna: [nombreHabitacion1, nombreHabitacion2,...] */
@@ -56,9 +56,38 @@ export class DataService {
       nombreElemento = elementosHabitacion[i].InfoItem[0].InfoItem[0].value[0]._;
       listaElementos.push(nombreElemento);
     }
-    return listaElementos;
+    this.dataUserService.setListaElementosPorHabitacion(listaElementos);
+    //return listaElementos;
+  }
+  /* Obtiene el nombre de todos los edificios */
+  getListaEdificios() {
+    const listaEdificios = [];    /* Se crea una lista que solamente contendra los nombres de los edificios */
+    const infoEdificios = this.getEdificios();
+    // tslint:disable-next-line: prefer-for-of
+    for (let i = 0; i < infoEdificios.length; i++) {
+      listaEdificios.push(infoEdificios[i].InfoItem[0].value[0]._);   /* Se agrega el nombre de cada edificio a la lista */
+    }
+    this.dataUserService.setListaEdificios(listaEdificios);
+    //return listaEdificios;
   }
 
+  /*Obtiene el json de todas las habitaciones*/
+  getListaHabitaciones(nombreEdificio: string) {
+    const infoEdificio = this.getEdificio(this.getEdificios(), nombreEdificio);
+    const habitaciones = [];
+    /* Se recorre el edificio para buscar las habitaciones */
+    // tslint:disable-next-line: prefer-for-of
+    for (let i = 0; i < infoEdificio.length; i++) {
+      if (infoEdificio[i].$.name === 'house_parts') {
+        // tslint:disable-next-line: prefer-for-of
+        for (let j = 0; j < infoEdificio[i].InfoItem.length; j++) {
+          habitaciones.push(infoEdificio[i].InfoItem[j].InfoItem[0].value[0]._);
+        }
+      }
+    }
+    this.dataUserService.setListaHabitaciones(habitaciones);
+    //return habitaciones;
+  }
   /* Retorna la informacion de toda una habitacion */
   getElementosPorHabitacion(nombreEdificio: string, nombreHabitacion: string) {
     let elementosHabitacion = [];
@@ -87,23 +116,6 @@ export class DataService {
   }
   getElementos() {
     return this.http.get('https://jsonplaceholder.typicode.com/posts');
-  }
-
-  /*Obtiene el json de todas las habitaciones*/
-  getListaHabitaciones(nombreEdificio: string) {
-    const infoEdificio = this.getEdificio(this.getEdificios(), nombreEdificio);
-    const habitaciones = [];
-    /* Se recorre el edificio para buscar las habitaciones */
-    // tslint:disable-next-line: prefer-for-of
-    for (let i = 0; i < infoEdificio.length; i++) {
-      if (infoEdificio[i].$.name === 'house_parts') {
-        // tslint:disable-next-line: prefer-for-of
-        for (let j = 0; j < infoEdificio[i].InfoItem.length; j++) {
-          habitaciones.push(infoEdificio[i].InfoItem[j].InfoItem[0].value[0]._);
-        }
-      }
-    }
-    return habitaciones;
   }
 
   /* Obtiene la informacion de todas las habitaciones */
@@ -150,16 +162,7 @@ export class DataService {
     const infoEdificios = json.Objects.Object[0].InfoItem[0].InfoItem;    /*Se obtiene solamente la lista de edificios*/
     return infoEdificios;
   }
-  /* Obtiene el nombre de todos los edificios */
-  getListaEdificios() {
-    const listaEdificios = [];    /* Se crea una lista que solamente contendra los nombres de los edificios */
-    const infoEdificios = this.getEdificios();
-    // tslint:disable-next-line: prefer-for-of
-    for (let i = 0; i < infoEdificios.length; i++) {
-      listaEdificios.push(infoEdificios[i].InfoItem[0].value[0]._);   /* Se agrega el nombre de cada edificio a la lista */
-    }
-    return listaEdificios;
-  }
+
   /* Obtiene el XML BuildingEnviroment y lo retorna como objeto */
   getXMLBuildingEnviroment() {
     let json;

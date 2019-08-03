@@ -4,6 +4,7 @@ import { FormControl, FormBuilder, FormGroup, Validators } from '@angular/forms'
 import { GenerateXMLService } from '../../services/generate-xml.service';
 import { Router } from '@angular/router';
 import { EncryptService } from '../../services/encrypt.service';
+import { DeviceServicesService } from '../../services/device-services.service';
 
 @Component({
   selector: 'app-inicio-sesion',
@@ -40,6 +41,6 @@ export class InicioSesionPage implements OnInit {
 
   pushRegistro() {
     this.router.navigate(['/registrar']);
-
   }
+
 }

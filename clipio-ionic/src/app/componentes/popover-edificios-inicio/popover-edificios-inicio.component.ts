@@ -1,6 +1,7 @@
 import { Component, OnInit } from '@angular/core';
 import { DataService } from '../../services/data.service';
 import { PopoverController } from '@ionic/angular';
+import { DataUserService } from '../../services/data-user.service';
 
 @Component({
   selector: 'app-popover-edificios-inicio',
@@ -11,10 +12,10 @@ export class PopoverEdificiosInicioComponent implements OnInit {
 
   listaEdificios: any[] = [];
 
-  constructor(private dataService: DataService, private popoverCtrl: PopoverController) { }
+  constructor(private dataUserService: DataUserService, private popoverCtrl: PopoverController) { }
 
   ngOnInit() {
-    this.listaEdificios = this.dataService.getListaEdificios();
+    this.listaEdificios = this.dataUserService.getListaEdificios();
   }
 
   /* Manda el valor que se obtuvo del popover a a clase que lo llamó */
