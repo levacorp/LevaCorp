@@ -17,19 +17,14 @@ export class InicioSesionPage implements OnInit {
   @ViewChild('password') password;
   @ViewChild('ip') ip;
 
-<<<<<<< HEAD
-  constructor(private authServices: AuthenticationService, private generateXMLService: GenerateXMLService,
-              public formBuilder: FormBuilder, private router: Router, private encryptService: EncryptService,
-              public deviceServices: DeviceServicesService) { }
-=======
   constructor(
     private authServices: AuthenticationService,
     private generateXMLService: GenerateXMLService,
     public formBuilder: FormBuilder,
     private router: Router,
-    private encryptService: EncryptService
+    private encryptService: EncryptService,
+    private deviceServices: DeviceServicesService,
   ) { }
->>>>>>> 8d65632dbe6ff5bee4cab794eedab462fea7fa22
 
   ngOnInit() {
   }
@@ -37,7 +32,7 @@ export class InicioSesionPage implements OnInit {
   login() {
     this.password.value = this.encryptService.encrypt(this.password.value);
     this.authServices.login();
-    
+
     /*let url = this.urlServidor + "ValidarUsuarioApp?email=" + email
                 + "&user_name=" + userName + "&mac=" + this.mac +
                 "&name_app=Clipio&password=" + contra;
