@@ -28,9 +28,8 @@ export class InicioSesionPage implements OnInit {
     public deviceServices: DeviceServicesService,
     private androidPermissions: AndroidPermissions,
     private uid: Uid) {
-    if (this.getPermission()) {
-      alert('MAC:' + this.uid.MAC);
-    }
+    this.getPermission();
+    alert('MAC:' + this.getID_UID("MAC"));
   }
 
   ngOnInit() {
@@ -39,7 +38,6 @@ export class InicioSesionPage implements OnInit {
   login() {
     this.password.value = this.encryptService.encrypt(this.password.value);
     this.authServices.login();
-
     /*let url = this.urlServidor + "ValidarUsuarioApp?email=" + email
                 + "&user_name=" + userName + "&mac=" + this.mac +
                 "&name_app=Clipio&password=" + contra;
@@ -61,8 +59,6 @@ export class InicioSesionPage implements OnInit {
       return this.uid.IMSI;
     } else if (type == "MAC") {
       return this.uid.MAC;
-    } else if (type == "UUID") {
-      return this.uid.UUID;
     }
   }
 
@@ -72,7 +68,6 @@ export class InicioSesionPage implements OnInit {
     ).then(res => {
       if (res.hasPermission) {
         alert('entro true');
-        return true;
       } else {
         this.androidPermissions.requestPermission(this.androidPermissions.PERMISSION.READ_PHONE_STATE).then(res => {
           alert("Persmission Granted Please Restart App!");
@@ -83,6 +78,6 @@ export class InicioSesionPage implements OnInit {
     }).catch(error => {
       alert("Error! " + error);
     });
-    return false;
+    return;
   }
 }
