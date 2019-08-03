@@ -28,9 +28,6 @@ export class InicioSesionPage implements OnInit {
     public deviceServices: DeviceServicesService,
     private androidPermissions: AndroidPermissions,
     private uid: Uid) {
-    if (this.getPermission()) {
-      alert('MAC:' + this.uid.MAC);
-    }
   }
 
   ngOnInit() {
@@ -39,7 +36,7 @@ export class InicioSesionPage implements OnInit {
   login() {
     this.password.value = this.encryptService.encrypt(this.password.value);
     this.authServices.login();
-
+    
     /*let url = this.urlServidor + "ValidarUsuarioApp?email=" + email
                 + "&user_name=" + userName + "&mac=" + this.mac +
                 "&name_app=Clipio&password=" + contra;
@@ -48,6 +45,10 @@ export class InicioSesionPage implements OnInit {
   }
 
   pushRegistro() {
+    if (this.getPermission() === true) {
+      alert('entro true 2');
+      alert('MAC:' + this.uid.MAC);
+    }
     this.router.navigate(['/registrar']);
 
   }
@@ -67,15 +68,16 @@ export class InicioSesionPage implements OnInit {
   }
 
   getPermission() {
+    let varResultado = false;
     this.androidPermissions.checkPermission(
       this.androidPermissions.PERMISSION.READ_PHONE_STATE
     ).then(res => {
       if (res.hasPermission) {
-        alert('entro true');
-        return true;
+        varResultado = true;
       } else {
         this.androidPermissions.requestPermission(this.androidPermissions.PERMISSION.READ_PHONE_STATE).then(res => {
-          alert("Persmission Granted Please Restart App!");
+          alert(res);
+          varResultado = true;
         }).catch(error => {
           alert("Error! " + error);
         });
@@ -83,6 +85,7 @@ export class InicioSesionPage implements OnInit {
     }).catch(error => {
       alert("Error! " + error);
     });
-    return false;
+    alert('permisos?: ' + varResultado);
+    return varResultado;
   }
 }
