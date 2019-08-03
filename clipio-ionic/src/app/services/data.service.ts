@@ -265,7 +265,7 @@ export class DataService {
   setXMLPerson() {
 
   }
-
+//crea el XML para el perfil del usuario
   setXMLPerfil(json) {
     var XMLWriter = require('xml-writer');
     let xw = new XMLWriter;
@@ -310,7 +310,7 @@ export class DataService {
     xw.text(email);
 
     xw.endDocument();
-    console.log(xw.toString());
+   // console.log(xw.toString());
   }
 
 
@@ -368,4 +368,64 @@ export class DataService {
     }
     this.dataUserService.setListaECA(lista);
   }
+
+  setXMLRegistrar(json) {
+    var XMLWriter = require('xml-writer');
+    let xw = new XMLWriter;
+    json = json.value;
+    var nombreApp = json.nombreApp, contraseña = json.contraseña,  email = json.email;
+    xw.startDocument();
+    xw.startElement('Objects');
+    xw.startElement('Object');
+
+    xw.startElement('InfoItem').writeAttribute('name', 'application');
+    xw.startElement('InfoItem').writeAttribute('name', 'name_app');
+    xw.startElement('value').writeAttribute('type', 'string');
+    xw.text(nombreApp).endElement('/InfoItem').endElement('/InfoItem');
+
+    xw.startElement('InfoItem').writeAttribute('name', 'user_app');
+    xw.startElement('value').writeAttribute('type', 'string');
+    xw.text(email).endElement('/InfoItem').endElement('/InfoItem');
+
+    xw.startElement('InfoItem').writeAttribute('name', 'password_app');
+    xw.startElement('value').writeAttribute('type', 'string');
+    xw.text(contraseña).endElement('/InfoItem').endElement('/InfoItem');
+
+    xw.endDocument();
+    console.log("xmlRegistrar");
+    console.log(xw.toString());
+  }
+  setXMLRegistrarEdificio(json) {
+    var XMLWriter = require('xml-writer');
+    let xw = new XMLWriter;
+    json = json.value;
+    var nombre= json.nombre, piso = json.piso,  email = json.email;
+    xw.startDocument();
+    xw.startElement('Objects');
+    xw.startElement('Object');
+
+    xw.startElement('InfoItem').writeAttribute('name', 'BuildingEnvironment');
+    xw.startElement('InfoItem').writeAttribute('name', 'Building');
+    xw.startElement('InfoItem').writeAttribute('name', 'name_building');
+    xw.startElement('value').writeAttribute('type', 'string');
+    xw.text(nombre).endElement('/InfoItem').endElement('/InfoItem');
+
+    xw.startElement('InfoItem').writeAttribute('name', 'Flat');
+    xw.startElement('InfoItem').writeAttribute('name', 'name_thing');
+    xw.startElement('value').writeAttribute('type', 'string');
+    xw.text(piso).endElement('/InfoItem').endElement('/InfoItem');
+
+    xw.startElement('InfoItem').writeAttribute('name', 'name_part');
+    xw.startElement('value').writeAttribute('type', 'string');
+    xw.text('Flat').endElement('/InfoItem').endElement('/InfoItem');
+
+    xw.startElement('InfoItem').writeAttribute('name', 'name_building');
+    xw.startElement('value').writeAttribute('type', 'string');
+    xw.text(nombre).endElement('/InfoItem').endElement('/InfoItem');
+
+    xw.endDocument();
+    console.log("xmlRegistrar");
+    console.log(xw.toString());
+  }
+
 }
