@@ -5,8 +5,6 @@ import { GenerateXMLService } from '../../services/generate-xml.service';
 import { Router } from '@angular/router';
 import { EncryptService } from '../../services/encrypt.service';
 import { DeviceServicesService } from '../../services/device-services.service';
-import { AndroidPermissions } from '@ionic-native/android-permissions/ngx';
-import { Uid } from '@ionic-native/uid/ngx';
 
 @Component({
   selector: 'app-inicio-sesion',
@@ -26,58 +24,19 @@ export class InicioSesionPage implements OnInit {
     private router: Router,
     private encryptService: EncryptService,
     public deviceServices: DeviceServicesService,
-    private androidPermissions: AndroidPermissions,
-    private uid: Uid) {
-    this.getPermission();
-    alert('MAC:' + this.getID_UID("MAC"));
-  }
+  ) { }
 
   ngOnInit() {
   }
 
   login() {
     this.password.value = this.encryptService.encrypt(this.password.value);
-    this.authServices.login();
-    /*let url = this.urlServidor + "ValidarUsuarioApp?email=" + email
-                + "&user_name=" + userName + "&mac=" + this.mac +
-                "&name_app=Clipio&password=" + contra;
-        return url;*/
+    console.log('logueado: ', this.authServices.login());
     //console.log('XML Inicio Sesion:', this.generateXMLService.crearXMLInicioSesion(this.email.value, this.password.value).toString());
   }
 
   pushRegistro() {
     this.router.navigate(['/registrar']);
-
   }
 
-  getID_UID(type) {
-    if (type == "IMEI") {
-      return this.uid.IMEI;
-    } else if (type == "ICCID") {
-      return this.uid.ICCID;
-    } else if (type == "IMSI") {
-      return this.uid.IMSI;
-    } else if (type == "MAC") {
-      return this.uid.MAC;
-    }
-  }
-
-  getPermission() {
-    this.androidPermissions.checkPermission(
-      this.androidPermissions.PERMISSION.READ_PHONE_STATE
-    ).then(res => {
-      if (res.hasPermission) {
-        alert('entro true');
-      } else {
-        this.androidPermissions.requestPermission(this.androidPermissions.PERMISSION.READ_PHONE_STATE).then(res => {
-          alert("Persmission Granted Please Restart App!");
-        }).catch(error => {
-          alert("Error! " + error);
-        });
-      }
-    }).catch(error => {
-      alert("Error! " + error);
-    });
-    return;
-  }
 }

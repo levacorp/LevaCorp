@@ -6,8 +6,8 @@ import { DataService } from './data.service';
   providedIn: 'root'
 })
 export class DataUserService {
-  private ip: string;
-  private mac: string;
+  private IP: string;
+  private MAC: string = '02:00:00:00';
   nombreEdificioActual: string;
   nombreHabitacionActual: string;
 
@@ -17,14 +17,22 @@ export class DataUserService {
   listaEdificios = [];
   elementosPorHabitacion = [];
 
-  constructor(private dataService: DataService) { }
+  constructor() { }
 
-  getIp() {
-    return this.ip;
+  getIP() {
+    return this.IP;
   }
 
-  setIP(ip: string) {
-    this.ip = ip;
+  setIP(IP: string) {
+    this.IP = IP;
+  }
+
+  getMAC() {
+    return this.MAC;
+  }
+
+  setMAC(MAC: string) {
+    this.MAC = MAC;
   }
 
   getDatosUsuario() {
