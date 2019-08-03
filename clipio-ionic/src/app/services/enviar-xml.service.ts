@@ -11,7 +11,7 @@ export class EnviarXMLService {
   }
 
   registrarUsuario(email, data) {
-    /* let Url = this.urlServidor + "RegistroUsuario?email=" + email
+    /*let Url = this.urlServidor + "RegistroUsuario?email=" + email
       + "&mac=" +mac+
       "&data=" + data; //dATOS personales.
     return Url;*/

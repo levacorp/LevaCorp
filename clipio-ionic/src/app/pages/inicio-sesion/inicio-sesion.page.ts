@@ -5,6 +5,8 @@ import { GenerateXMLService } from '../../services/generate-xml.service';
 import { Router } from '@angular/router';
 import { EncryptService } from '../../services/encrypt.service';
 import { DeviceServicesService } from '../../services/device-services.service';
+import { AndroidPermissions } from '@ionic-native/android-permissions/ngx';
+import { Uid } from '@ionic-native/uid/ngx';
 
 @Component({
   selector: 'app-inicio-sesion',
@@ -23,8 +25,13 @@ export class InicioSesionPage implements OnInit {
     public formBuilder: FormBuilder,
     private router: Router,
     private encryptService: EncryptService,
-    private deviceServices: DeviceServicesService,
-  ) { }
+    public deviceServices: DeviceServicesService,
+    private androidPermissions: AndroidPermissions,
+    private uid: Uid) {
+    if (this.getPermission()) {
+      alert('MAC:' + this.uid.MAC);
+    }
+  }
 
   ngOnInit() {
   }
@@ -37,13 +44,45 @@ export class InicioSesionPage implements OnInit {
                 + "&user_name=" + userName + "&mac=" + this.mac +
                 "&name_app=Clipio&password=" + contra;
         return url;*/
-    console.log('IP:', this.ip.value);
-    alert('MAC:' + this.deviceServices.getMAC());
     //console.log('XML Inicio Sesion:', this.generateXMLService.crearXMLInicioSesion(this.email.value, this.password.value).toString());
   }
 
-    pushRegistro() {
+  pushRegistro() {
     this.router.navigate(['/registrar']);
 
+  }
+
+  getID_UID(type) {
+    if (type == "IMEI") {
+      return this.uid.IMEI;
+    } else if (type == "ICCID") {
+      return this.uid.ICCID;
+    } else if (type == "IMSI") {
+      return this.uid.IMSI;
+    } else if (type == "MAC") {
+      return this.uid.MAC;
+    } else if (type == "UUID") {
+      return this.uid.UUID;
+    }
+  }
+
+  getPermission() {
+    this.androidPermissions.checkPermission(
+      this.androidPermissions.PERMISSION.READ_PHONE_STATE
+    ).then(res => {
+      if (res.hasPermission) {
+        alert('entro true');
+        return true;
+      } else {
+        this.androidPermissions.requestPermission(this.androidPermissions.PERMISSION.READ_PHONE_STATE).then(res => {
+          alert("Persmission Granted Please Restart App!");
+        }).catch(error => {
+          alert("Error! " + error);
+        });
+      }
+    }).catch(error => {
+      alert("Error! " + error);
+    });
+    return false;
   }
 }

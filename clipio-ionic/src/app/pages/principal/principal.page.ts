@@ -1,9 +1,9 @@
 import { Component, OnInit, ViewChild } from '@angular/core';
 import { DataService } from '../../services/data.service';
-import { Observable } from 'rxjs';
 import { IonSegment, PopoverController } from '@ionic/angular';
 import { PopoverEdificiosInicioComponent } from '../../componentes/popover-edificios-inicio/popover-edificios-inicio.component';
 import { Router, ActivatedRoute } from '@angular/router';
+import { DataUserService } from '../../services/data-user.service';
 
 @Component({
   selector: 'app-principal',
@@ -20,15 +20,17 @@ export class PrincipalPage implements OnInit {
   argumento = null;
 
   constructor(private dataService: DataService, public popoverController: PopoverController,
-              private router: Router, private activatedRoute: ActivatedRoute) { }
+              private router: Router, private activatedRoute: ActivatedRoute, private dataUserService: DataUserService) { }
 
   /* Inicializa los atributos a utilizar */
   ngOnInit() {
-    this.dataService.getXMLBuildingEnviroment();
     this.argumento = this.activatedRoute.snapshot.paramMap.get('edificio');
-    this.habitaciones = this.dataService.getListaHabitaciones(this.argumento);
-    this.cargarElementosPorHabitacion();
+    this.dataService.getListaEdificios();
+    this.dataService.getListaHabitaciones(this.argumento);
+    this.dataService.getListaElementosPorHabitacion(this.argumento, this.filtro);
     this.dataService.listarECAs();
+    this.habitaciones = this.dataUserService.getListaHabitaciones();
+    this.cargarElementosPorHabitacion();
   }
   /* Cuando se requiere traer los elementos filtrados o sin filtrar iguala el atributo filtro
     al filtro escogido y carga los elementos para el filtro*/
@@ -39,7 +41,7 @@ export class PrincipalPage implements OnInit {
   }
 
   cargarElementosPorHabitacion() {
-    this.elementos = this.dataService.getListaElementosPorHabitacion(this.argumento, this.filtro);
+    this.elementos = this.dataUserService.getListaElementosPorHabitacion();
   }
 
   pushElemento(elemento) {
