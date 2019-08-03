@@ -272,24 +272,6 @@ def crearJSON(idDispositivo, titulo, localizacionLatitud, localizacionLongitud, 
         auxJson['unit'] = auxJsonUnit
         auxJson['datapoints'] = None
         datastreamsDef.append(auxJson)
-        '''datastreamsDef.append(
-            {
-                "datastream_format": i[7],
-                "feedid": None,
-                "id": i[0],
-                "current_value": None,
-                "at": datetime.now().strftime("%m/%d/%Y %H:%M:%S"),
-                "max_value": i[1],
-                "min_value": i[2],
-                "tags": i[6],
-                "unit": {
-                    "symbol": i[3],
-                    "label": i[4],
-                    "unitType": i[5]
-                },
-                "datapoints": None,
-            }
-        )'''
 
     # Auxiliar para crear localizacion
     auxJsonLocation = {}
