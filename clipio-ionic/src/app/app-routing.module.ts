@@ -22,9 +22,10 @@ const routes: Routes = [
   { path: 'dispositivos-elemento/:habitacion/:elemento',
    loadChildren: './pages/dispositivos-elemento/dispositivos-elemento.module#DispositivosElementoPageModule' },
   { path: 'crear-dispositivo/:habitacion/:dispositivo/:dir', loadChildren: './pages/crear-dispositivo/crear-dispositivo.module#CrearDispositivoPageModule' },
+  { path: 'principal/:edificio', loadChildren: './pages/principal/principal.module#PrincipalPageModule', canActivate: [AuthGuardService] },
+  
   { path: 'inicio-sesion', loadChildren: './pages/inicio-sesion/inicio-sesion.module#InicioSesionPageModule' },
-  { path: 'registro', loadChildren: './pages/registro/registro.module#RegistroPageModule' }
-
+  { path: 'registro', loadChildren: './pages/registro/registro.module#RegistroPageModule' },
 ];
 @NgModule({
   imports: [RouterModule.forRoot(routes)],

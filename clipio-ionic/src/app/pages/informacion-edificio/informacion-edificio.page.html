@@ -13,10 +13,14 @@
       <!--Acomoda el numero de tarjetas de acuerdo al tamaño de pantalla-->
       <ion-col size="6" size-sm="4" size-md="3" size-lg="2" *ngFor="let elemento of informacionEdificio ">
         <!--Carga de los elementos filtrados por segmento escogido-->
+<<<<<<< HEAD
         <ion-card nombre="elemento" (click)="pushElementoHabitacion(elemento)">
+=======
+        <ion-card  nombre="elemento" (click)="pushElementoHabitacion(elemento)">
+>>>>>>> 5ff8f2511cd6db7f0d10435e5abc617052aec380
           <img src="/assets/icon/hotel.png" />
           <ion-card-header>
-            <ion-card-title>{{ elemento}}</ion-card-title>
+            <ion-card-title>{{elemento}}</ion-card-title>
           </ion-card-header>
         </ion-card>
         <!--Fin Carga de los elementos filtrados por segmento escogido-->

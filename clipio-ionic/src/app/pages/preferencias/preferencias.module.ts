@@ -21,7 +21,7 @@ const routes: Routes = [
     loadChildren: './modificar/modificar.module#ModificarPageModule'
   },
   {
-    path: 'mostrar',
+    path: 'mostrar/:nombre',
     loadChildren: './mostrar/mostrar.module#MostrarPageModule'
   },
 ];

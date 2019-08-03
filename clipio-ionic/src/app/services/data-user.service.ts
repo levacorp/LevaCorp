@@ -15,4 +15,13 @@ export class DataUserService {
   getListaECA() {
     return this.listaECA;
   }
+
+  getECA(nombre: string) {
+    for (let i = 0; i < this.listaECA.length; i++) {
+      if (this.listaECA[i].nombreECA === nombre) {
+        return this.listaECA[i];
+      }
+    }
+    return null;
+  }
 }

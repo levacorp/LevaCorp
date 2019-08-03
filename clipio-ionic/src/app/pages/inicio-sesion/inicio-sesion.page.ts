@@ -3,6 +3,7 @@ import { AuthenticationService } from '../../services/authentication.service';
 import { FormControl, FormBuilder, FormGroup, Validators } from '@angular/forms';
 import { GenerateXMLService } from '../../services/generate-xml.service';
 import { Router } from '@angular/router';
+import { EncryptService } from '../../services/encrypt.service';
 
 @Component({
   selector: 'app-inicio-sesion',
@@ -10,7 +11,6 @@ import { Router } from '@angular/router';
   styleUrls: ['./inicio-sesion.page.scss'],
 })
 export class InicioSesionPage implements OnInit {
-  public inicioSesionForm: FormGroup;
 
   @ViewChild('email') email;
   @ViewChild('password') password;
@@ -19,18 +19,20 @@ export class InicioSesionPage implements OnInit {
     private authServices: AuthenticationService,
     private generateXMLService: GenerateXMLService,
     public formBuilder: FormBuilder,
-    private router: Router
+    private router: Router,
+    private encryptService: EncryptService
   ) { }
 
   ngOnInit() {
   }
 
   login() {
-    alert('Bienvenido:' + this.email.value);
-    console.log('XML Inicio Sesion:', this.generateXMLService.crearXMLInicioSesion(this.email.value, this.password.value).toString());
+    this.password.value = this.encryptService.encrypt(this.password.value);
     this.authServices.login();
+    console.log('XML Inicio Sesion:', this.generateXMLService.crearXMLInicioSesion(this.email.value, this.password.value).toString());
   }
-   pushRegistro() {
+
+    pushRegistro() {
     this.router.navigate(['/registrar']);
 
   }
