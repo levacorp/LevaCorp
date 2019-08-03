@@ -11,9 +11,7 @@ export class DataService {
   constructor(
     private http: HttpClient,
     private dataUserService: DataUserService,
-    private enviarXML : EnviarXMLService
-     
-    ) { }
+    private enviarXML: EnviarXMLService) { }
 
   getXMLInicioSesion() {
     let json;
@@ -41,7 +39,8 @@ export class DataService {
       datosInicioSesion.push({ email: infoInicioSesion[1].value[0]._ });
       datosInicioSesion.push({ password: infoInicioSesion[2].value[0]._ });
     }
-    return datosInicioSesion;
+    this.dataUserService.setDatosUsuario(datosInicioSesion);
+    // return datosInicioSesion;
   }
 
   /* Obtiene los nombres de los elementos de una habitacion. Retorna: [nombreHabitacion1, nombreHabitacion2,...] */
@@ -56,9 +55,38 @@ export class DataService {
       nombreElemento = elementosHabitacion[i].InfoItem[0].InfoItem[0].value[0]._;
       listaElementos.push(nombreElemento);
     }
-    return listaElementos;
+    this.dataUserService.setListaElementosPorHabitacion(listaElementos);
+    //return listaElementos;
+  }
+  /* Obtiene el nombre de todos los edificios */
+  getListaEdificios() {
+    const listaEdificios = [];    /* Se crea una lista que solamente contendra los nombres de los edificios */
+    const infoEdificios = this.getEdificios();
+    // tslint:disable-next-line: prefer-for-of
+    for (let i = 0; i < infoEdificios.length; i++) {
+      listaEdificios.push(infoEdificios[i].InfoItem[0].value[0]._);   /* Se agrega el nombre de cada edificio a la lista */
+    }
+    this.dataUserService.setListaEdificios(listaEdificios);
+    //return listaEdificios;
   }
 
+  /*Obtiene el json de todas las habitaciones*/
+  getListaHabitaciones(nombreEdificio: string) {
+    const infoEdificio = this.getEdificio(this.getEdificios(), nombreEdificio);
+    const habitaciones = [];
+    /* Se recorre el edificio para buscar las habitaciones */
+    // tslint:disable-next-line: prefer-for-of
+    for (let i = 0; i < infoEdificio.length; i++) {
+      if (infoEdificio[i].$.name === 'house_parts') {
+        // tslint:disable-next-line: prefer-for-of
+        for (let j = 0; j < infoEdificio[i].InfoItem.length; j++) {
+          habitaciones.push(infoEdificio[i].InfoItem[j].InfoItem[0].value[0]._);
+        }
+      }
+    }
+    this.dataUserService.setListaHabitaciones(habitaciones);
+    //return habitaciones;
+  }
   /* Retorna la informacion de toda una habitacion */
   getElementosPorHabitacion(nombreEdificio: string, nombreHabitacion: string) {
     let elementosHabitacion = [];
@@ -87,23 +115,6 @@ export class DataService {
   }
   getElementos() {
     return this.http.get('https://jsonplaceholder.typicode.com/posts');
-  }
-
-  /*Obtiene el json de todas las habitaciones*/
-  getListaHabitaciones(nombreEdificio: string) {
-    const infoEdificio = this.getEdificio(this.getEdificios(), nombreEdificio);
-    const habitaciones = [];
-    /* Se recorre el edificio para buscar las habitaciones */
-    // tslint:disable-next-line: prefer-for-of
-    for (let i = 0; i < infoEdificio.length; i++) {
-      if (infoEdificio[i].$.name === 'house_parts') {
-        // tslint:disable-next-line: prefer-for-of
-        for (let j = 0; j < infoEdificio[i].InfoItem.length; j++) {
-          habitaciones.push(infoEdificio[i].InfoItem[j].InfoItem[0].value[0]._);
-        }
-      }
-    }
-    return habitaciones;
   }
 
   /* Obtiene la informacion de todas las habitaciones */
@@ -150,16 +161,7 @@ export class DataService {
     const infoEdificios = json.Objects.Object[0].InfoItem[0].InfoItem;    /*Se obtiene solamente la lista de edificios*/
     return infoEdificios;
   }
-  /* Obtiene el nombre de todos los edificios */
-  getListaEdificios() {
-    const listaEdificios = [];    /* Se crea una lista que solamente contendra los nombres de los edificios */
-    const infoEdificios = this.getEdificios();
-    // tslint:disable-next-line: prefer-for-of
-    for (let i = 0; i < infoEdificios.length; i++) {
-      listaEdificios.push(infoEdificios[i].InfoItem[0].value[0]._);   /* Se agrega el nombre de cada edificio a la lista */
-    }
-    return listaEdificios;
-  }
+
   /* Obtiene el XML BuildingEnviroment y lo retorna como objeto */
   getXMLBuildingEnviroment() {
     let json;
@@ -254,23 +256,23 @@ export class DataService {
     // json.Objects.Object[0].InfoItem--->Informacion general del dispositivo + informacion de datastreams
     return jason.Objects.Object[0].InfoItem[0].MetaData[0].InfoItem;
   }
-  crearElemento(elemento){
+  crearElemento(elemento) {
     console.log(elemento);
     var headers = new HttpHeaders();
-          headers = headers.append('Content-Type', 'text/xml');
-          headers = headers.append('Accept', 'text/xml');
-    let body =  '<request>' 
-                '<username>Username</username>' 
-                '<password>Password</password>' 
-                '</request>';
+    headers = headers.append('Content-Type', 'text/xml');
+    headers = headers.append('Accept', 'text/xml');
+    let body = '<request>'
+    '<username>Username</username>'
+    '<password>Password</password>'
+    '</request>';
 
-    return this.http.post('https://66.128.132.126:8002/?event=account_login',body , { headers: headers, responseType: 'text' });
+    return this.http.post('https://66.128.132.126:8002/?event=account_login', body, { headers: headers, responseType: 'text' });
   }
 
   setXMLPerson() {
 
   }
-//crea el XML para el perfil del usuario
+  //crea el XML para el perfil del usuario
   setXMLPerfil(json) {
     var XMLWriter = require('xml-writer');
     let xw = new XMLWriter;
@@ -315,7 +317,7 @@ export class DataService {
     xw.text(email);
 
     xw.endDocument();
-   // console.log(xw.toString());
+    // console.log(xw.toString());
   }
 
 
@@ -335,7 +337,7 @@ export class DataService {
 
     let js;
     const parseString = require('xml2js').parseString;
-    parseString(xml, function(err, result) {
+    parseString(xml, function (err, result) {
       js = result;
     });
 
@@ -378,7 +380,7 @@ export class DataService {
     var XMLWriter = require('xml-writer');
     let xw = new XMLWriter;
     json = json.value;
-    var nombreApp = json.nombreApp, contraseña = json.contraseña,  email = json.email;
+    var nombreApp = json.nombreApp, contraseña = json.contraseña, email = json.email;
     xw.startDocument();
     xw.startElement('Objects');
     xw.startElement('Object');
@@ -396,16 +398,16 @@ export class DataService {
     xw.startElement('value').writeAttribute('type', 'string');
     xw.text(contraseña).endElement('/InfoItem').endElement('/InfoItem');
 
-    xw.endDocument();    
+    xw.endDocument();
     console.log(xw.toString());
-    
-    this.enviarXML.registrarUsuario(email,xw);
+
+    this.enviarXML.registrarUsuario(email, xw);
   }
   setXMLRegistrarEdificio(json) {
     var XMLWriter = require('xml-writer');
     let xw = new XMLWriter;
     json = json.value;
-    var nombre= json.nombre, piso = json.piso,  email = json.email;
+    var nombre = json.nombre, piso = json.piso, email = json.email;
     xw.startDocument();
     xw.startElement('Objects');
     xw.startElement('Object');
