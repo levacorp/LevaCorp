@@ -17,9 +17,19 @@ export class InicioSesionPage implements OnInit {
   @ViewChild('password') password;
   @ViewChild('ip') ip;
 
+<<<<<<< HEAD
   constructor(private authServices: AuthenticationService, private generateXMLService: GenerateXMLService,
               public formBuilder: FormBuilder, private router: Router, private encryptService: EncryptService,
               public deviceServices: DeviceServicesService) { }
+=======
+  constructor(
+    private authServices: AuthenticationService,
+    private generateXMLService: GenerateXMLService,
+    public formBuilder: FormBuilder,
+    private router: Router,
+    private encryptService: EncryptService
+  ) { }
+>>>>>>> 8d65632dbe6ff5bee4cab794eedab462fea7fa22
 
   ngOnInit() {
   }
@@ -37,8 +47,8 @@ export class InicioSesionPage implements OnInit {
     //console.log('XML Inicio Sesion:', this.generateXMLService.crearXMLInicioSesion(this.email.value, this.password.value).toString());
   }
 
-  registrar() {
+    pushRegistro() {
     this.router.navigate(['/registrar']);
-  }
 
+  }
 }

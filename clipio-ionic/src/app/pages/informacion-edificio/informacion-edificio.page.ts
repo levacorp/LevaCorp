@@ -20,7 +20,6 @@ export class InformacionEdificioPage implements OnInit {
     this.nombreEdificio= this.activatedRoute.snapshot.paramMap.get('argumento');
     this.informacionEdificio = this.dataservice.getListaHabitaciones(this.nombreEdificio);
     this.argumento = this.activatedRoute.snapshot.paramMap.get('nombre');
-
   }
 
   pushElementoHabitacion(argumento) {
