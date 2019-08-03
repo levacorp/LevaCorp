@@ -6,17 +6,16 @@
       </div>
 
       <ion-label position="floating">Ingresa tus datos:</ion-label>
-      <form>
-        <ion-item text-center>
-          <ion-label position="floating"> E-mail: </ion-label>
-          <ion-input type="text" #email></ion-input>
-        </ion-item>
+      <ion-item text-center>
+        <ion-label position="floating"> E-mail: </ion-label>
+        <ion-input type="text" #email></ion-input>
+      </ion-item>
 
-        <ion-item text-center>
-          <ion-label position="floating"> Contraseña: </ion-label>
-          <ion-input type="password" #password></ion-input>
-        </ion-item>
-      </form>
+      <ion-item text-center>
+        <ion-label position="floating"> Contraseña: </ion-label>
+        <ion-input type="password" #password></ion-input>
+      </ion-item>
+
       <ion-toolbar>
         <ion-row>
           <ion-col col-6 offset-3 text-center>
@@ -25,7 +24,7 @@
         </ion-row>
         <ion-row>
           <ion-col col-6 offset-3 text-center>
-            <ion-button color="danger">Registrarse</ion-button>
+            <ion-button (click)="registrar()" color="danger">Registrarse</ion-button>
           </ion-col>
         </ion-row>
       </ion-toolbar>
