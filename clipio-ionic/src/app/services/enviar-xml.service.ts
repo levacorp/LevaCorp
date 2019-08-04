@@ -21,4 +21,9 @@ export class EnviarXMLService {
     this.dataservice.postRegistrarUsuario(Url,data);
 
   }
+  consultarDatosPersonales(){
+    
+  }
+
+
 }

@@ -4,6 +4,7 @@ import { Observable } from 'rxjs';
 import { IonSlides } from '@ionic/angular';
 import { DataService } from 'src/app/services/data.service';
 import { GenerateXMLService } from 'src/app/services/generate-xml.service';
+import { RaspberryService } from 'src/app/services/raspberry.service';
 
 
 @Component({
@@ -22,19 +23,28 @@ export class CrearDispositivoPage implements OnInit {
   idDispositivo;
   nombreDispositivo;
   nombreThing;
+  datos: any = null;
+
 
   @ViewChild(IonSlides) slides: IonSlides;
   segment = 'Recursos';
   slideOpts = {
     speed: 200
   };
-  constructor(private activatedRoute: ActivatedRoute, public router: Router, private dataService: DataService
+  constructor(private activatedRoute: ActivatedRoute, public router: Router, 
+    private raspService : RaspberryService, private dataService: DataService
     ,private generateXml: GenerateXMLService) { }
 
-  ngOnInit() {
-    alert(this.activatedRoute.snapshot.paramMap.get('dir'));
-
-
+  async ngOnInit() {
+    const xmlDatos = await this.raspService.requestRaspberry(this.activatedRoute.snapshot.paramMap.get('dir'));
+    if (xmlDatos === null) {
+    } else {
+      this.InformacionBasica = this.dataService.getInfoBasicaDispositivo(xmlDatos);
+      this.idDispositivo = this.InformacionBasica[0].value[0]._;
+      this.ipDispositivo = this.InformacionBasica[18].value[0]._;
+      const xmlDataStreams = this.raspService.requestRaspberry('http://' + this.ipDispositivo + '/SendState?osid=' + this.idDispositivo);
+      this.dataStreams = this.dataService.getEstadoDataStreams(xmlDataStreams);
+    }
     if (this.activatedRoute.snapshot.paramMap.keys.length === 3) {
       this.edificio = this.activatedRoute.snapshot.paramMap.get('edificio');
       this.habitacion = this.activatedRoute.snapshot.paramMap.get('habitacion');
@@ -43,9 +53,8 @@ export class CrearDispositivoPage implements OnInit {
       this.nombreThing = this.activatedRoute.snapshot.paramMap.get('nameThing');
       this.tipoAsociacion = 'dispositivoElemento';
     }
-    this.dataStreams = this.dataService.getEstadoDataStreams(); // Carga todos los elementos
-    this.InformacionBasica = this.dataService.getInfoBasicaDispositivo();
   }
+
   segmentButtonClicked(event) {
     const segEscogido = event.detail.value;
     if (segEscogido === 'Recursos') {

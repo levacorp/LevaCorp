@@ -35,9 +35,11 @@ export class PrincipalPage implements OnInit {
     this.argumento = this.activatedRoute.snapshot.paramMap.get('edificio');
     this.dataService.getListaEdificios();
     this.dataService.getListaHabitaciones(this.argumento);
+    this.dataUserService.getListaHabitaciones();
     this.dataService.getListaElementosPorHabitacion(this.argumento, this.filtro);
     this.dataService.listarECAs();
     this.habitaciones = this.dataUserService.getListaHabitaciones();
+    console.log(this.habitaciones);
     this.cargarElementosPorHabitacion();
   }
   /* Cuando se requiere traer los elementos filtrados o sin filtrar iguala el atributo filtro
