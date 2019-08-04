@@ -17,7 +17,7 @@ export class DataUserService {
   listaEdificios = [];
   elementosPorHabitacion = [];
 
-  constructor(private dataService: DataService) { }
+  constructor() { }
 
   getIp() {
     return this.ip;

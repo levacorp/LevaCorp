@@ -45,10 +45,7 @@ export class InicioSesionPage implements OnInit {
   }
 
   pushRegistro() {
-    if (this.getPermission() === true) {
-      alert('entro true 2');
-      alert('MAC:' + this.uid.MAC);
-    }
+    
     this.router.navigate(['/registrar']);
 
   }
