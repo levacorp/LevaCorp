@@ -172,6 +172,7 @@ export class GenerateXMLService {
     json = json.value;
     var nombreApp = json.nombreApp, contraseña = json.contrasena,  email = json.email;
     xw.startDocument();
+   // xw.Encoding= Encoding.UTF8;
     xw.startElement('Objects');
     xw.startElement('Object');
 

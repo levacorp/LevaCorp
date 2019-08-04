@@ -1,5 +1,4 @@
 import { Component, OnInit, Input,Output,EventEmitter } from '@angular/core';
-import { Observable } from 'rxjs';
 import { DataService } from 'src/app/services/data.service';
 import { Router } from '@angular/router';
 import { ActivatedRoute } from '@angular/router';

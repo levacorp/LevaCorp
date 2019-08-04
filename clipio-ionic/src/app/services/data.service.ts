@@ -1,10 +1,12 @@
 import { Injectable } from '@angular/core';
-import { HttpClient, HttpHeaders } from '@angular/common/http';
+import { HttpClient, HttpHeaders} from '@angular/common/http';
 import * as xml2js from 'xml2js';
 import { DataUserService } from 'src/app/services/data-user.service';
 import { EnviarXMLService } from './enviar-xml.service';
 import { Observable } from 'rxjs';
+import { HTTP } from '@ionic-native/http/ngx';
 
+ 
 @Injectable({
   providedIn: 'root'
 })
@@ -12,8 +14,9 @@ export class DataService {
   datosPost: Observable<any>;
   constructor(
     private http: HttpClient,
+    private httpNative: HTTP,
     private dataUserService: DataUserService,
-    ) { }
+  ) { }
 
   getXMLInicioSesion() {
     let json;
@@ -203,9 +206,26 @@ export class DataService {
     console.log(res);
     return res;
   }
-  postRegistrarUsuario(url: string, data) {
-    this.datosPost= this.http.get("/registroUsuario");
+  postRegistrarUsuario(url: string, email: string, mac: string, data) {
+    console.log("consulta");
+   // console.log(this.http.get());
+
+  /*   new Promise((resolve, reject) => {
+      console.log( this.http.get(url).subscribe(res => {
+         resolve(res); //devolvemos la respuesta de la llamada http
+      }, (err) => {
+         reject(err); //devolvemos el error si se diera
+      }));             
+    })*/
+   this.httpNative.get(url, {}, {})
+      .then(data => {
+        console.log(data.data);
+      })
+      .catch(error => {
+        console.log(error.error);
+      })
   }
+
   getEstadoDataStreams() {
     // tslint:disable-next-line: max-line-length
     const xml = '<Objects><Object><id>708637323</id><send_state><InfoItem name="calefactor"><value type="bool">1</value></InfoItem><InfoItem name="temperatura"><value type="float">24.7048950195</value></InfoItem><InfoItem name="ventilador"><value type="bool">0</value></InfoItem><InfoItem name="Reloj"><value type="string">27/07/2019 18:44</value></InfoItem><InfoItem name="proximidad"><value type="float">0</value></InfoItem></send_state></Object></Objects>';
@@ -226,6 +246,7 @@ export class DataService {
       json = result;
     });
     return json;
+
   }
   getPerfilUsuario() {
     const usuario = this.getXMLPerfilUsuario().Objects.Object[0].InfoItem[0];

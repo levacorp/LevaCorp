@@ -22,15 +22,15 @@ export class CrearEdificioPage implements OnInit {
     public alertController: AlertController
   ) {
     this.myform = this.formBuilder.group({
-      nombre: ['', Validators.required],
-      piso: ['', Validators.required]
+      nombre: ['', Validators.compose([Validators.required])],
+      piso: ['', Validators.compose([Validators.required])]
     });
 
   }
 
   ngOnInit() {
   }
-  //metodo que guarda y envia el formulario para crear el xml apra registrar un nuevo edificio
+  //metodo que guarda y envia el formulario para crear el xml para registrar un nuevo edificio
   saveData() {
     if (this.myform.valid) {
       this.generarXML.setXMLRegistrarEdificio(this.myform);

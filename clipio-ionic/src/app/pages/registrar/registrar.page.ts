@@ -73,7 +73,7 @@ export class RegistrarPage implements OnInit {
       message.style.color = badColor;
       message.innerHTML = "*Las contraseñas son incorrectas";
     }
-    console.log(pass1,pass2);
+    //console.log(pass1,pass2);
 
   }
   async exitosoAlert() {
