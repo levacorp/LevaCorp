@@ -5,8 +5,6 @@ import { GenerateXMLService } from '../../services/generate-xml.service';
 import { Router } from '@angular/router';
 import { EncryptService } from '../../services/encrypt.service';
 import { DeviceServicesService } from '../../services/device-services.service';
-import { AndroidPermissions } from '@ionic-native/android-permissions/ngx';
-import { Uid } from '@ionic-native/uid/ngx';
 
 @Component({
   selector: 'app-inicio-sesion',
@@ -15,74 +13,36 @@ import { Uid } from '@ionic-native/uid/ngx';
 })
 export class InicioSesionPage implements OnInit {
 
-  @ViewChild('email') email;
-  @ViewChild('password') password;
-  @ViewChild('ip') ip;
+  myform: FormGroup;
 
   constructor(
     private authServices: AuthenticationService,
     private generateXMLService: GenerateXMLService,
     public formBuilder: FormBuilder,
     private router: Router,
-    private encryptService: EncryptService,
-    public deviceServices: DeviceServicesService,
-    private androidPermissions: AndroidPermissions,
-    private uid: Uid) {
+    private encryptService: EncryptService
+  ) {
+    this.myform = this.formBuilder.group({
+      dirIp: ['', Validators.compose([Validators.required])],
+      email: ['', Validators.compose([Validators.required, Validators.email])],
+      contrasena: ['', Validators.compose([Validators.required, Validators.minLength(8)])]
+    });
   }
 
   ngOnInit() {
   }
 
   login() {
-    this.password.value = this.encryptService.encrypt(this.password.value);
+    // this.password.value = this.encryptService.encrypt(this.password.value);
+    this.myform.value.contrasena = this.encryptService.encrypt(this.myform.value.contrasena);
     this.authServices.login();
-    
-    /*let url = this.urlServidor + "ValidarUsuarioApp?email=" + email
-                + "&user_name=" + userName + "&mac=" + this.mac +
-                "&name_app=Clipio&password=" + contra;
-        return url;*/
-    //console.log('XML Inicio Sesion:', this.generateXMLService.crearXMLInicioSesion(this.email.value, this.password.value).toString());
+
+    // console.log('XML Inicio Sesion:', this.generateXMLService.crearXMLInicioSesion(this.myform.value.contrasena, this.myform.value.contrasena.password).toString());
+
   }
 
   pushRegistro() {
     
     this.router.navigate(['/registrar']);
-
-  }
-
-  getID_UID(type) {
-    if (type == "IMEI") {
-      return this.uid.IMEI;
-    } else if (type == "ICCID") {
-      return this.uid.ICCID;
-    } else if (type == "IMSI") {
-      return this.uid.IMSI;
-    } else if (type == "MAC") {
-      return this.uid.MAC;
-    } else if (type == "UUID") {
-      return this.uid.UUID;
-    }
-  }
-
-  getPermission() {
-    let varResultado = false;
-    this.androidPermissions.checkPermission(
-      this.androidPermissions.PERMISSION.READ_PHONE_STATE
-    ).then(res => {
-      if (res.hasPermission) {
-        varResultado = true;
-      } else {
-        this.androidPermissions.requestPermission(this.androidPermissions.PERMISSION.READ_PHONE_STATE).then(res => {
-          alert(res);
-          varResultado = true;
-        }).catch(error => {
-          alert("Error! " + error);
-        });
-      }
-    }).catch(error => {
-      alert("Error! " + error);
-    });
-    alert('permisos?: ' + varResultado);
-    return varResultado;
   }
 }

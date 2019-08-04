@@ -5,13 +5,18 @@ ion-img{
 .img-perfil{ 
     height: 61px;
     width: 61px;
+    text-align:center;    
+    margin: auto;
+    display: block;
 }
+
 .carta_menu{
     height: 100%;
     width: 100%;
     margin: 0%;
     padding: 10%;
     padding-top: 10%;
+    text-align:center;    
     }
 
 ion-header{
@@ -26,4 +31,7 @@ ion-header{
 
 .listaMenu{
     margin-top: 10px;
+}
+ion-input{
+    font-size: 12pt;
 }

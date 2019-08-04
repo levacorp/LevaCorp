@@ -1,6 +1,5 @@
 import { Component, OnInit, ViewChild } from '@angular/core';
 import { DataService } from 'src/app/services/data.service';
-import { Observable } from 'rxjs';
 import { Router, ActivatedRoute } from '@angular/router';
 import { IonSlides } from '@ionic/angular';
 
@@ -10,10 +9,11 @@ import { IonSlides } from '@ionic/angular';
   styleUrls: ['./elementos-por-habitacion.page.scss'],
 })
 export class ElementosPorHabitacionPage implements OnInit {
-  elementos: Observable<any>;
-  dispositivos: Observable<any>;
+  elementos: any[];
+  dispositivos: any[];
+  edificio: string;
   habitacion: string;
-  segment = 'elementos';
+  segment;
   @ViewChild(IonSlides) slides: IonSlides;
   slideOpts = {
     speed: 200
@@ -24,20 +24,24 @@ export class ElementosPorHabitacionPage implements OnInit {
 
   /* Inicializa los atributos a utilizar */
   ngOnInit() {
+    this.segment = 'elementos';
+    this.edificio = this.activatedRoute.snapshot.paramMap.get('edificio');
     this.habitacion = this.activatedRoute.snapshot.paramMap.get('habitacion');
-    this.elementos = this.dataService.getElementos(); // Carga todos los elementos
-    this.dispositivos = this.dataService.getElementos();
+    this.elementos = this.dataService.getElementosPorHabitacion(this.edificio, this.habitacion); // Carga todos los elementos
+    this.dispositivos = this.dataService.getDispositivosPorHabitacion(this.edificio, this.habitacion);
   }
   /*Se encarga de redirigir el elemento seleccionado a la pagina donde se muestras sus dispositivos asociados*/
   routeDispositivosElemento(elemento: string )  {
     this.router.navigate(['dispositivos-elemento', this.habitacion, elemento]);
   }
-  routeCrearElemOdispositivo()  {
-    if (this.segment === 'elementos') {
-      this.router.navigate(['crear-elemento', this.habitacion]);
-    } else{
-
-    }
+  routeCrearElemnto()  {
+      this.router.navigate(['crear-elemento', this.edificio, this.habitacion]);
+  }
+  routeAsociarDispositivo(dir) {
+    this.router.navigate(['crear-dispositivo', this.edificio, this.habitacion , dir]);
+  }
+  routeDispositivo(ip, id) {
+    this.router.navigate(['dispositivo', ip, id]);
   }
   segmentButtonClicked(event) {
     const segEscogido = event.detail.value;

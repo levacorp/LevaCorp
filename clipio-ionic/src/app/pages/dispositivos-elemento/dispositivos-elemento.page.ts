@@ -31,7 +31,7 @@ export class DispositivosElementoPage implements OnInit {
    }
 
    pushCrearDispositivo(dir: string) {
-      this.router.navigate(['crear-dispositivo',this.habitacion, this.elemento, dir]);
+      this.router.navigate(['crear-dispositivo', this.habitacion, this.elemento, dir]);
   }
 
 

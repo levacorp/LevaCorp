@@ -45,6 +45,17 @@
                   <value type="string">Regulador de Humedad en Planta</value>
                 </InfoItem>
               </InfoItem>
+              <InfoItem name="oos">
+                <InfoItem name="ip_object">
+                  <value type="string">192.168.123.107</value>
+                </InfoItem>
+                <InfoItem name="id_object">
+                  <value type="string">1931642039</value>
+                </InfoItem>
+                <InfoItem name="name_object">
+                  <value type="string">Regulador de Humedad en Planta</value>
+                </InfoItem>
+              </InfoItem>
             </InfoItem>
             <InfoItem name="Things">
               <InfoItem name="Thing">
