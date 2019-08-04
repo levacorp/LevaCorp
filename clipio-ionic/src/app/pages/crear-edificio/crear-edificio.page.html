@@ -8,40 +8,39 @@
 </ion-header>
 <!--Pagina en la que se pide los atributos del edificio como nombre y piso para poder ser creado posteriormente-->
 <ion-content>
-  <div class="principal">
-    <ion-toolbar>
-      <ion-row>
-        <ion-col>
-          <!--Carta para la imagen principal de la pagina-->
-          <ion-card color="danger" class="tamanoCartaPrincipal">
-            <img src="/assets/icon/house.png" />
-          </ion-card>
-        </ion-col>
-      </ion-row>
-    </ion-toolbar>
-    <ion-toolbar>
-      <!--Carta para los atributos del edificio-->
-      <ion-card text-center>
-        <ion-list>
-          <ion-item text-center>
-            <ion-label position="floating"> Nombre </ion-label>
-            <ion-input type="text" ></ion-input>
-          </ion-item>
-          <ion-item text-center>
-            <ion-label position="floating"> Piso</ion-label>
-            <ion-input type="text" ></ion-input>
-          </ion-item>
-        </ion-list>
-      </ion-card>
-    </ion-toolbar>
-    <!--Boton para guardar el edificio denominado "Listo"-->
-    <ion-toolbar>
-      <ion-row>
-        <ion-col col-6 offset-3 text-center>
-          <ion-button color="danger">Listo</ion-button>
-        </ion-col>
-      </ion-row>
-    </ion-toolbar>
-  </div>
-
+  <form [formGroup]='myform' (ngSubmit)='saveData()'>
+    <div class="principal">
+      <ion-toolbar>
+        <ion-row>
+          <ion-col>
+            <!--Carta para la imagen principal de la pagina-->
+            <ion-card color="danger" class="tamanoCartaPrincipal">
+              <img src="/assets/icon/house.png" />
+            </ion-card>
+          </ion-col>
+        </ion-row>
+      </ion-toolbar>
+      <ion-toolbar>
+        <!--Carta para los atributos del edificio-->
+        <ion-card text-center>
+          <ion-list>
+            <ion-item text-center>
+              <ion-input type="text" placeholder="Nombre" formControlName="nombre"></ion-input>
+            </ion-item>
+            <ion-item text-center>
+              <ion-input type="text"  placeholder="Numero de Pisos"formControlName="piso"></ion-input>
+            </ion-item>
+          </ion-list>
+        </ion-card>
+      </ion-toolbar>
+      <!--Boton para guardar el edificio denominado "Listo"-->
+      <ion-toolbar>
+        <ion-row>
+          <ion-col col-6 offset-3 text-center>
+            <ion-button color="danger"  type="submit" mat-raised-button [disabled]="!myfrom.valid" >Listo</ion-button>
+          </ion-col>
+        </ion-row>
+      </ion-toolbar>
+    </div>
+  </form>
 </ion-content>

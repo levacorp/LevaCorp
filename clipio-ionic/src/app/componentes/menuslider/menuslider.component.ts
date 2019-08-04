@@ -8,6 +8,7 @@ import { IonicModule } from '@ionic/angular'
 import { Router } from '@angular/router';
 import { EscanerComponent } from '../escaner/escaner.component';
 import { AuthenticationService } from '../../services/authentication.service';
+import { DataService } from 'src/app/services/data.service';
 
 @NgModule({
   imports: [
@@ -23,10 +24,17 @@ export class AppRoutingModule { }
   styleUrls: ['./menuslider.component.scss'],
 })
 export class MenusliderComponent implements OnInit {
-
-  constructor(private menu: MenuController, private barcodeScanner: BarcodeScanner,
-              private router: Router, private authService: AuthenticationService) { }
-  ngOnInit() { }
+  perfil: any[];
+  constructor(
+    private menu: MenuController,
+    private barcodeScanner: BarcodeScanner,
+    private router: Router,
+    private authService: AuthenticationService,
+    private dataservice: DataService
+  ) { }
+  ngOnInit() {
+    this.perfil = this.dataservice.getPerfilUsuario();
+  }
 
   pushPerfil() {
     this.router.navigate(['/perfil']);

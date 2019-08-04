@@ -6,11 +6,9 @@ const routes: Routes = [
 
   { path: '', redirectTo: 'inicio-sesion', pathMatch: 'full' },
   { path: 'principal/:edificio', loadChildren: './pages/principal/principal.module#PrincipalPageModule', canActivate: [AuthGuardService]},
-  { path: 'preferencias', loadChildren: './pages/preferencias/preferencias.module#PreferenciasPageModule',
-   canActivate: [AuthGuardService] },
+  { path: 'preferencias', loadChildren: './pages/preferencias/preferencias.module#PreferenciasPageModule', canActivate: [AuthGuardService] },
   { path: 'edificio', loadChildren: './pages/edificio/edificio.module#EdificioPageModule', canActivate: [AuthGuardService] },
-  { path: 'crear-edificio', loadChildren: './pages/crear-edificio/crear-edificio.module#CrearEdificioPageModule',
-   canActivate: [AuthGuardService] },
+  { path: 'crear-edificio', loadChildren: './pages/crear-edificio/crear-edificio.module#CrearEdificioPageModule', canActivate: [AuthGuardService] },
   { path: 'informacion-edificio/:argumento', loadChildren: './pages/informacion-edificio/informacion-edificio.module#InformacionEdificioPageModule', canActivate: [AuthGuardService] },
   { path: 'perfil', loadChildren: './pages/perfil/perfil.module#PerfilPageModule', canActivate: [AuthGuardService] },
   { path: 'dispositivos-elemento/:id',
@@ -33,6 +31,7 @@ const routes: Routes = [
    loadChildren: './pages/crear-dispositivo/crear-dispositivo.module#CrearDispositivoPageModule' },
    { path: 'inicio-sesion', loadChildren: './pages/inicio-sesion/inicio-sesion.module#InicioSesionPageModule' },
   { path: 'registro', loadChildren: './pages/registro/registro.module#RegistroPageModule' }
+
 
 ];
 @NgModule({

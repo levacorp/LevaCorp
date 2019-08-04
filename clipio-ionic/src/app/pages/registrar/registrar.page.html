@@ -6,48 +6,57 @@
     <ion-title>Registrar</ion-title>
   </ion-toolbar>
 </ion-header>
+
 <ion-content>
-  <div class="principal">
-    <ion-card class="cartaLogin" text-center>
-      <div class="d-flex justify-content-center" style="margin: 10%">
-        <img src="/assets/img/logoClipio.png" class="brand_logo" alt="Logo">
-      </div>
 
-      <ion-label position="floating">Ingresa tus datos:</ion-label>
-      <ion-list>
-        <ion-item text-center>
-          <ion-label position="floating"> Nombre: </ion-label>
-          <ion-input type="text"> </ion-input>
-        </ion-item>
+  <form [formGroup]='myform' (ngSubmit)='saveData()' novalidate>
+    <div class="principal">
+      <ion-card class="cartaLogin" text-center>
+        <div class="d-flex justify-content-center" style="margin: 10%">
+          <img src="/assets/img/logoClipio.png" class="brand_logo" alt="Logo">
+        </div>
 
-        <ion-item text-center>
-          <ion-label position="floating"> Apellido: </ion-label>
-          <ion-input type="text"> </ion-input>
-        </ion-item>
+        <ion-label position="floating">Ingresa tus datos:</ion-label>
+        <ion-list>
 
-        <ion-item text-center>
-          <ion-label position="floating"> E-mail: </ion-label>
-          <ion-input type="text"></ion-input>
-        </ion-item>
+          <ion-item text-center>
+            <ion-input type="text" placeholder="E-mail" formControlName="email"
+              [class.invalid]="!myform.controls.email.valid && myform.controls.email.dirty"></ion-input>
+          </ion-item>
+          <ion-item class="error-message" *ngIf="!myform.controls.email.valid && myform.controls.email.dirty">
+            <ion-text color="danger"><small> *Estructura correo example@hotmail.com</small>
+            </ion-text>
+          </ion-item>
 
-        <ion-item text-center>
-          <ion-label position="floating"> Contraseña: </ion-label>
-          <ion-input type="password"></ion-input>
-        </ion-item>
+          <ion-item text-center>
+            <ion-input id="contrasena" type="password" placeholder="Contraseña" formControlName="contrasena"
+              [class.invalid]="!myform.controls.contrasena.valid && myform.controls.contrasena.dirty"></ion-input>
+          </ion-item>
+          <ion-item class="error-message" *ngIf="!myform.controls.contrasena.valid && myform.controls.contrasena.dirty">
+            <ion-text color="danger"><small> *Debe tener por lo menos 8 caracteres</small>
+            </ion-text>
+          </ion-item>
+          <ion-item text-center>
+            <ion-input (keyup)="checkPass()" id="confirmacionContrasena" type="password"
+              placeholder="Confirmacion contraseña" formControlName="confirmacionContrasena"
+              [class.invalid]="!myform.controls.confirmacionContrasena.valid && myform.controls.confirmacionContrasena.dirty">
+            </ion-input>
+          </ion-item>
+          <ion-item class="error-message">
+            <ion-text id="confirmMessage" ><small></small>
+            </ion-text>
+          </ion-item>
 
-        <ion-item text-center>
-          <ion-label position="floating"> Repetir contraseña: </ion-label>
-          <ion-input type="password"></ion-input>
-        </ion-item>
-      </ion-list>
-      <ion-toolbar>
+        </ion-list>
+        <ion-toolbar>
 
-        <ion-row>
-          <ion-col col-6 offset-3 text-center>
-            <ion-button color="danger">Registrarse</ion-button>
-          </ion-col>
-        </ion-row>
-      </ion-toolbar>
-    </ion-card>
-  </div>
+          <ion-row>
+            <ion-col col-6 offset-3 text-center>
+              <ion-button color="danger" type="submit" [disabled]="!myform.valid">Registrarse</ion-button>
+            </ion-col>
+          </ion-row>
+        </ion-toolbar>
+      </ion-card>
+    </div>
+  </form>
 </ion-content>

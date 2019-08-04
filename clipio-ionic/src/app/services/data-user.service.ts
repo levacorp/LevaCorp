@@ -1,13 +1,71 @@
+/* GUARDA TODA LA INFORMACION DEL ENTORNO */
 import { Injectable } from '@angular/core';
+import { DataService } from './data.service';
 
 @Injectable({
   providedIn: 'root'
 })
 export class DataUserService {
+  private IP: string;
+  private MAC: string = '02:00:00:00';
+  nombreEdificioActual: string;
+  nombreHabitacionActual: string;
 
+  datosUsuario = [];
   listaECA = [];
+  listaHabitaciones = [];
+  listaEdificios = [];
+  elementosPorHabitacion = [];
 
   constructor() { }
+
+  getIP() {
+    return this.IP;
+  }
+
+  setIP(IP: string) {
+    this.IP = IP;
+  }
+
+  getMAC() {
+    return this.MAC;
+  }
+
+  setMAC(MAC: string) {
+    this.MAC = MAC;
+  }
+
+  getDatosUsuario() {
+    return this.datosUsuario;
+  }
+
+  setDatosUsuario(lista) {
+    this.datosUsuario = lista;
+  }
+
+  getListaElementosPorHabitacion() {
+    return this.elementosPorHabitacion;
+  }
+
+  setListaElementosPorHabitacion(lista) {
+    this.elementosPorHabitacion = lista;
+  }
+
+  getListaEdificios() {
+    return this.listaEdificios;
+  }
+
+  setListaEdificios(lista) {
+    this.listaEdificios = lista;
+  }
+
+  getListaHabitaciones() {
+    return this.listaHabitaciones;
+  }
+
+  setListaHabitaciones(lista) {
+    this.listaHabitaciones = lista;
+  }
 
   setListaECA(lista) {
     this.listaECA = lista;

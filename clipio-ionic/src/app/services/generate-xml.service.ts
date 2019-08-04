@@ -1,11 +1,14 @@
 import { Injectable } from '@angular/core';
+import { EnviarXMLService } from './enviar-xml.service';
 
 @Injectable({
   providedIn: 'root'
 })
 export class GenerateXMLService {
 
-  constructor() { }
+  constructor(
+    private enviarXML : EnviarXMLService
+  ) { }
 
   crearXMLInicioSesion(email: string, password: string) {
 
@@ -290,8 +293,114 @@ export class GenerateXMLService {
     xw.endElement();
     console.log(xw.toString());
   }
-  crearHabitacion()
-  {
+
     
+  //crea el XML para registrar un nuevo edificio
+  setXMLRegistrarEdificio(json) {
+    var XMLWriter = require('xml-writer');
+    let xw = new XMLWriter;
+    json = json.value;
+    var nombre= json.nombre, piso = json.piso,  email = json.email;
+    xw.startDocument();
+    xw.startElement('Objects');
+    xw.startElement('Object');
+
+    xw.startElement('InfoItem').writeAttribute('name', 'BuildingEnvironment');
+    xw.startElement('InfoItem').writeAttribute('name', 'Building');
+    xw.startElement('InfoItem').writeAttribute('name', 'name_building');
+    xw.startElement('value').writeAttribute('type', 'string');
+    xw.text(nombre).endElement('/InfoItem').endElement('/InfoItem');
+
+    xw.startElement('InfoItem').writeAttribute('name', 'Flat');
+    xw.startElement('InfoItem').writeAttribute('name', 'name_thing');
+    xw.startElement('value').writeAttribute('type', 'string');
+    xw.text(piso).endElement('/InfoItem').endElement('/InfoItem');
+
+    xw.startElement('InfoItem').writeAttribute('name', 'name_part');
+    xw.startElement('value').writeAttribute('type', 'string');
+    xw.text('Flat').endElement('/InfoItem').endElement('/InfoItem');
+
+    xw.startElement('InfoItem').writeAttribute('name', 'name_building');
+    xw.startElement('value').writeAttribute('type', 'string');
+    xw.text(nombre).endElement('/InfoItem').endElement('/InfoItem');
+
+    xw.endDocument();
+    console.log("xmlRegistrar");
+    console.log(xw.toString());
+  }
+  //crea el XML para el registrar el usuario en la aplicacion
+  setXMLRegistrar(json) {
+    var XMLWriter = require('xml-writer');
+    let xw = new XMLWriter;
+    json = json.value;
+    var nombreApp = json.nombreApp, contraseña = json.contrasena,  email = json.email;
+    xw.startDocument();
+    xw.startElement('Objects');
+    xw.startElement('Object');
+
+    xw.startElement('InfoItem').writeAttribute('name', 'application');
+    xw.startElement('InfoItem').writeAttribute('name', 'name_app');
+    xw.startElement('value').writeAttribute('type', 'string');
+    xw.text(nombreApp).endElement('/InfoItem').endElement('/InfoItem');
+
+    xw.startElement('InfoItem').writeAttribute('name', 'user_app');
+    xw.startElement('value').writeAttribute('type', 'string');
+    xw.text(email).endElement('/InfoItem').endElement('/InfoItem');
+
+    xw.startElement('InfoItem').writeAttribute('name', 'password_app');
+    xw.startElement('value').writeAttribute('type', 'string');
+    xw.text(contraseña).endElement('/InfoItem').endElement('/InfoItem');
+
+    xw.endDocument();    
+    console.log(xw.toString());
+    
+   this.enviarXML.registrarUsuario(email,xw);
+  }
+  //crea el XML para el perfil del usuario
+  setXMLPerfil(json) {
+    var XMLWriter = require('xml-writer');
+    let xw = new XMLWriter;
+    json = json.value;
+    var nombre = json.nombre, apellido = json.apellido, celular = json.celular, genero = json.genero, fechaNacimiento = json.fechaNacimiento;
+    var facebook = json.facebook, lugarNacimiento = json.lugarNacimiento, email = json.email;
+    xw.startDocument();
+    xw.startElement('Objects');
+    xw.startElement('Object');
+
+    xw.startElement('InfoItem').writeAttribute('name', 'Person');
+    xw.startElement('InfoItem').writeAttribute('name', 'name_person');
+    xw.startElement('value').writeAttribute('type', 'string');
+    xw.text(nombre).endElement('/InfoItem').endElement('/InfoItem');
+
+    xw.startElement('InfoItem').writeAttribute('name', 'surname');
+    xw.startElement('value').writeAttribute('type', 'string');
+    xw.text(apellido).endElement('/InfoItem').endElement('/InfoItem');
+
+    xw.startElement('InfoItem').writeAttribute('name', 'celullar');
+    xw.startElement('value').writeAttribute('type', 'string');
+    xw.text(celular).endElement('/InfoItem').endElement('/InfoItem');
+
+    xw.startElement('InfoItem').writeAttribute('name', 'gender');
+    xw.startElement('value').writeAttribute('type', 'string');
+    xw.text(genero).endElement('/InfoItem').endElement('/InfoItem');
+
+    xw.startElement('InfoItem').writeAttribute('name', 'date_of_birth');
+    xw.startElement('value').writeAttribute('type', 'string');
+    xw.text(fechaNacimiento).endElement('/InfoItem').endElement('/InfoItem');
+
+    xw.startElement('InfoItem').writeAttribute('name', 'facebook');
+    xw.startElement('value').writeAttribute('type', 'string');
+    xw.text(facebook).endElement('/InfoItem').endElement('/InfoItem');
+
+    xw.startElement('InfoItem').writeAttribute('name', 'place:of_birth');
+    xw.startElement('value').writeAttribute('type', 'string');
+    xw.text(lugarNacimiento).endElement('/InfoItem').endElement('/InfoItem');
+
+    xw.startElement('InfoItem').writeAttribute('name', 'email');
+    xw.startElement('value').writeAttribute('type', 'string');
+    xw.text(email);
+
+    xw.endDocument();
+   // console.log(xw.toString());
   }
 }
