@@ -4,13 +4,14 @@ import * as xml2js from 'xml2js';
 import { DataUserService } from 'src/app/services/data-user.service';
 import { EnviarXMLService } from './enviar-xml.service';
 import { Observable } from 'rxjs';
+import { HTTP } from '@ionic-native/http/ngx';
 
 @Injectable({
   providedIn: 'root'
 })
 export class DataService {
   datosPost: Observable<any>;
-  constructor(
+  constructor(private https: HTTP,
     private http: HttpClient,
     private dataUserService: DataUserService,
     ) { }
@@ -226,7 +227,7 @@ export class DataService {
     return res;
   }
   postRegistrarUsuario(url: string, data) {
-    this.datosPost= this.http.get("/registroUsuario");
+    this.datosPost = this.http.get("/registroUsuario");
   }
   getEstadoDataStreams() {
     // tslint:disable-next-line: max-line-length
@@ -286,6 +287,35 @@ export class DataService {
     '</request>';
 
     return this.http.post('https://66.128.132.126:8002/?event=account_login', body, { headers: headers, responseType: 'text' });
+  }
+  a(elemento) {
+    console.log(elemento);
+    var headers = new HttpHeaders();
+    headers = headers.append('Content-Type', 'text/xml');
+    headers = headers.append('Accept', 'text/xml');
+    let body = '<request>'
+    '<username>Username</username>'
+    '<password>Password</password>'
+    '</request>';
+
+    return this.http.post('https://66.128.132.126:8002/?event=account_login', body, { headers: headers, responseType: 'text' });
+  }
+  perfil() {
+    alert('entra');
+    this.https.get('http://10.0.0.17/RegistroUsuario?email?=andrea@unicauca.edu.co&mac=02:00:00:00:00:00&data', {}, {})
+  .then(data => {
+
+    console.log(data.status);
+    console.log(data.data); // data received by server
+    console.log(data.headers);
+  })
+  .catch(error => {
+
+    console.log(error.status);
+    console.log(error.error); // error message as string
+    console.log(error.headers);
+
+  });
   }
 
   crearECA(xml: string) {

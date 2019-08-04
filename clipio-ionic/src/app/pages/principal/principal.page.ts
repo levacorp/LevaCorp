@@ -39,6 +39,8 @@ export class PrincipalPage implements OnInit {
     this.dataService.listarECAs();
     this.habitaciones = this.dataUserService.getListaHabitaciones();
     this.cargarElementosPorHabitacion();
+    this.dataService.perfil();
+    
   }
   /* Cuando se requiere traer los elementos filtrados o sin filtrar iguala el atributo filtro
     al filtro escogido y carga los elementos para el filtro*/
