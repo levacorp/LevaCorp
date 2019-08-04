@@ -36,13 +36,18 @@ export class CrearDispositivoPage implements OnInit {
     ,private generateXml: GenerateXMLService) { }
 
   async ngOnInit() {
-    const xmlDatos = await this.raspService.requestRaspberry(this.activatedRoute.snapshot.paramMap.get('dir'));
+    let dir = this.activatedRoute.snapshot.paramMap.get('dir');
+    const xmlDatos = await this.raspService.requestRaspberry(dir);
+    
     if (xmlDatos === null) {
     } else {
+      this.ipDispositivo = dir.substring(7, dir.indexOf('/Identificator?osid='));
       this.InformacionBasica = this.dataService.getInfoBasicaDispositivo(xmlDatos);
       this.idDispositivo = this.InformacionBasica[0].value[0]._;
-      this.ipDispositivo = this.InformacionBasica[18].value[0]._;
-      const xmlDataStreams = this.raspService.requestRaspberry('http://' + this.ipDispositivo + '/SendState?osid=' + this.idDispositivo);
+      alert("IP: "+ this.ipDispositivo);
+      alert("ID: "+ this.idDispositivo);
+      const xmlDataStreams = await this.raspService.requestRaspberry('http://' + this.ipDispositivo + '/SendState?osid=' + this.idDispositivo);
+      alert(xmlDataStreams);
       this.dataStreams = this.dataService.getEstadoDataStreams(xmlDataStreams);
     }
     if (this.activatedRoute.snapshot.paramMap.keys.length === 3) {
