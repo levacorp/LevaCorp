@@ -76,6 +76,28 @@ export class DataService {
     }
     return elementosHabitacion;
   }
+  /* Retorna los dispositivos de una habitacion */
+  getDispositivosPorHabitacion(nombreEdificio: string, nombreHabitacion: string) {
+    let dispositivosHabitacion = [];
+    const habitaciones = this.getHabitaciones(nombreEdificio);
+    /* Se recorre la informacion de todas las habitaciones */
+    // tslint:disable-next-line: prefer-for-of
+    for (let i = 0; i < habitaciones.length; i++) {
+      if (habitaciones[i].InfoItem[0].value[0]._ === nombreHabitacion) {
+        /* Se recorre cada InfoItem de la habitacion hasta encontrar uno que contenga Objetos */
+        // tslint:disable-next-line: prefer-for-of
+        for (let j = 0; j < habitaciones[i].InfoItem.length; j++) {
+          if (habitaciones[i].InfoItem[j].$.name === 'Objetos') {
+            /* Se añade el elemento que contiene las Things */
+            dispositivosHabitacion = habitaciones[i].InfoItem[j].InfoItem;
+            break;
+          }
+        }
+        break;
+      }
+    }
+    return dispositivosHabitacion;
+  }
 
   getInformacionEdificio() {
     return this.http.get('https://jsonplaceholder.typicode.com/posts');

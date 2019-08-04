@@ -1,5 +1,5 @@
 <ion-header>
-  <ion-toolbar>
+  <ion-toolbar color="danger">
       <ion-buttons slot="start">
           <ion-back-button></ion-back-button>
         </ion-buttons> 
@@ -13,38 +13,42 @@
             <img src="/assets/icon/camara1.png"/>
         </ion-card-header>
         <ion-card-content>
-            <form [formGroup]="formElemento" (ngSubmit)="saveData()" size="8" class="ion-padding">
+            <form [formGroup]="formElemento" (ngSubmit)="crearElemento()" size="8" class="ion-padding">
                 <ion-list>
                   <ion-item>
                     <ion-input formControlName="nombre" type="text" placeholder="Nombre"></ion-input>
                   </ion-item>             
                   <ion-item>
                     <ion-label>Tipo</ion-label>
-                    <ion-select formControlName="tipo" (ionChange)="esviva()" >
+                    <ion-select formControlName="tipo" (ionChange)="tipoElemento($event)" >
                       <ion-select-option value="vivo">Vivo</ion-select-option>
                       <ion-select-option value="no vivo">No vivo</ion-select-option>
                     </ion-select>
                   </ion-item>
                   <ion-item >
                     <ion-label class="score" >Score:</ion-label>
-                    <ion-range formControlName="score" min="0" max="100" pin  color="danger">
+                    <ion-range formControlName="score" [(ngModel)]="valorInialScore" min="0" max="100" pin  color="danger">
                       <ion-label slot="start">0</ion-label>
                       <ion-label slot="end">100</ion-label>
                   </ion-range>
                 </ion-item>
-                <div  formArrayName="viva">
+                <div formArrayName="tipoViva" *ngFor="let direccion of tipoViva.controls; let i = index;"> 
+                   <div [formGroupName]="i">
                     <ion-item>
-                        <ion-label>Tipo Viva</ion-label>
-                        <ion-select formControlName="tipoViva">
-                          <ion-select-option value="Doga">Doga</ion-select-option>
-                        </ion-select>
-                    </ion-item>
-                    <ion-item>
-                          <ion-input formControlName="especie" type="text" placeholder="Especie"></ion-input>
-                    </ion-item> 
-                    <ion-item>
-                            <ion-input formControlName="comida" type="text" placeholder="Comida"></ion-input>
-                    </ion-item>   
+                      <ion-label>Tipo Viva</ion-label>
+                      <ion-select formControlName="viva">
+                        <ion-select-option value="planta">Planta</ion-select-option>
+                        <ion-select-option value="animal">Animal</ion-select-option>
+                      </ion-select>
+                  </ion-item>
+                  <ion-item>
+                        <ion-input formControlName="especie" type="text" placeholder="Especie"></ion-input>
+                  </ion-item> 
+                  <ion-item>
+                          <ion-input formControlName="comida" type="text" placeholder="Comida"></ion-input>
+                  </ion-item>   
+                   </div> 
+                    
                 </div> 
                 </ion-list>
                 <ion-row class="ion-justify-content-center">

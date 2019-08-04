@@ -7,6 +7,7 @@ import { IonicModule } from '@ionic/angular';
 
 import { ElementosPorHabitacionPage } from './elementos-por-habitacion.page';
 import { PipesModule } from 'src/app/pipes/pipes.module';
+import { ComponentsModule } from 'src/app/componentes/componentesglobales.module';
 
 const routes: Routes = [
   {
@@ -21,7 +22,8 @@ const routes: Routes = [
     FormsModule,
     IonicModule,
     RouterModule.forChild(routes),
-    PipesModule
+    PipesModule,
+    ComponentsModule
   ],
   declarations: [ElementosPorHabitacionPage]
 })
