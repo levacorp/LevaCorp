@@ -4,6 +4,7 @@ import { DataService } from 'src/app/services/data.service';
 import {IonSlides} from '@ionic/angular';
 import { ActivatedRoute } from '@angular/router';
 import { LoadingController } from '@ionic/angular';
+import { RaspberryService } from 'src/app/services/raspberry.service';
 
 
 
@@ -23,12 +24,19 @@ export class DispositivoPage implements OnInit {
   slideOpts = {
     speed: 200
   };
-  constructor(public loadingController: LoadingController, private activatedRoute: ActivatedRoute , private dataService: DataService ) { }
+  constructor(public loadingController: LoadingController, private raspService : RaspberryService , private activatedRoute: ActivatedRoute , private dataService: DataService ) { }
 
-  ngOnInit() {
-      this.argumento = this.activatedRoute.snapshot.paramMap.get('id');
-      this.dataStreams = this.dataService.getEstadoDataStreams(); // Carga todos los elementos
-      this.InformacionBasica = this.dataService.getInfoBasicaDispositivo();
+  async ngOnInit() {
+    const ipDispositivo = this.activatedRoute.snapshot.paramMap.get('ip');
+    const idDispositivo = this.activatedRoute.snapshot.paramMap.get('id');
+    const peticionDispositivo = 'http://' + ipDispositivo + '/Identificator?osid=' + idDispositivo;
+    const xmlDatos = await this.raspService.requestRaspberry(peticionDispositivo);
+    if (xmlDatos === null) {
+    } else {
+      this.InformacionBasica = this.dataService.getInfoBasicaDispositivo(xmlDatos);
+      const xmlDataStreams = this.raspService.requestRaspberry('http://' + ipDispositivo + '/SendState?osid=' + idDispositivo);
+      this.dataStreams = this.dataService.getEstadoDataStreams(xmlDataStreams);
+    }
     }
   segmentButtonClicked(event) {
     const segEscogido = event.detail.value;
