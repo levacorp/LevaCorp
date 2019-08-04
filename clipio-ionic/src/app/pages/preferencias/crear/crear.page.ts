@@ -116,7 +116,7 @@ export class CrearPage implements OnInit {
   }
 
   async handlerAsignarEvento($event) {
-    if ($event.error) {
+    if ($event === null) {
       const alert = await this.alertController.create({
         header: 'Atención!',
         message: 'No se encontró información del dispositivo',
@@ -140,7 +140,7 @@ export class CrearPage implements OnInit {
   }
 
   async handlerAsignarAccion($event) {
-    if ($event.error) {
+    if ($event === null) {
       const alert = await this.alertController.create({
         header: 'Atención!',
         message: 'No se encontró información del dispositivo',

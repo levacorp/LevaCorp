@@ -36,11 +36,13 @@ export class InicioSesionPage implements OnInit {
     // this.password.value = this.encryptService.encrypt(this.password.value);
     this.myform.value.contrasena = this.encryptService.encrypt(this.myform.value.contrasena);
     this.authServices.login();
-    console.log('XML Inicio Sesion:', this.generateXMLService.crearXMLInicioSesion(this.myform.value.contrasena, this.myform.value.contrasena.password).toString());
+
+    // console.log('XML Inicio Sesion:', this.generateXMLService.crearXMLInicioSesion(this.myform.value.contrasena, this.myform.value.contrasena.password).toString());
+
   }
 
   pushRegistro() {
+    
     this.router.navigate(['/registrar']);
   }
-
 }
