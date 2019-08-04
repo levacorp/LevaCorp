@@ -40,6 +40,7 @@ export class RegistrarPage implements OnInit {
     if (this.myform.valid) {
       this.myform.value.contrasena = this.encrypt.encrypt(this.myform.value.contrasena);
       this.myform.value.confirmacionContrasena = this.encrypt.encrypt(this.myform.value.confirmacionContrasena);
+      console.log(this.myform.value);
       this.generarXML.setXMLRegistrar(this.myform);
       console.log(this.myform.value);
       this.exitosoAlert();

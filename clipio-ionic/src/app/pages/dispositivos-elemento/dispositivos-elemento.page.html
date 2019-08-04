@@ -1,5 +1,5 @@
   <ion-header>
-  <ion-toolbar>
+  <ion-toolbar color="danger">
       <ion-buttons slot="start">
           <ion-back-button></ion-back-button>
         </ion-buttons>    
@@ -29,8 +29,8 @@
   
   <!-- fab placed to the top end -->
   <ion-fab vertical="bottom" horizontal="end" slot="fixed" >
-      <ion-fab-button color="danger" >
+      <app-escaner (onReadDevice)="pushCrearDispositivo($event)" #childComponentAction></app-escaner>
+      <ion-fab-button color="danger" (click)="childComponentAction.leerCodigo()">
         <ion-icon name="add"></ion-icon>
-          <app-escaner (onReadDevice)="pushCrearDispositivo($event)"></app-escaner>
       </ion-fab-button>
     </ion-fab>

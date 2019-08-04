@@ -23,13 +23,12 @@ export class InformacionEdificioPage implements OnInit {
     private dataUserService: DataUserService) { }
 
   ngOnInit() {
-    this.dataservice.getListaHabitaciones(this.argumento);
     this.nombreEdificio = this.activatedRoute.snapshot.paramMap.get('argumento');
     this.informacionEdificio = this.dataUserService.getListaHabitaciones();
     this.argumento = this.activatedRoute.snapshot.paramMap.get('nombre');
   }
 
   pushElementoHabitacion(argumento) {
-    this.router.navigate(['elementos-por-habitacion', argumento]);
+    this.router.navigate(['elementos-por-habitacion', this.nombreEdificio, argumento]);
   }
 }

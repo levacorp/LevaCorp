@@ -1,4 +1,3 @@
-<!--Se encarga de mostrar el navbar -->
 <ion-header>
   <ion-toolbar color="danger">
     <ion-buttons slot="start">
@@ -28,15 +27,23 @@
            <ion-grid>
                <ion-row>
                    <!--Acomoda el numero de tarjetas de acuerdo al tamaño de pantalla-->
-                  <ion-col size="6" size-sm="4" size-md="3" size-lg="2" *ngFor="let elemento of (elementos | async) | filtroElementos: '8':'userId'">
+                  <ion-col size="6" size-sm="4" size-md="3" size-lg="2" *ngFor="let elemento of elementos">
                     <!--Carga de los elementos filtrados por la habitacion escogida-->
-                    <ion-card  id="elemento.userId" (click)="routeDispositivosElemento(elemento.userId)" >
-                        <img src="/assets/icon/camara1.png"/>
+                    <ion-card  id="{{elemento.InfoItem[0].InfoItem[0].value[0]._}}" (click)="routeDispositivosElemento(elemento.InfoItem[0].InfoItem[0].value[0]._)" >
                         <ion-card-header  >
-                          <ion-card-title>{{ elemento.userId }}</ion-card-title>
+                          <ion-card-title>{{ elemento.InfoItem[0].$.name }}</ion-card-title>
                         </ion-card-header>
+                        <img src="/assets/icon/camara1.png"/>
+
                         <ion-card-content>
-                          {{ elemento.body }}
+                          {{ elemento.InfoItem[0].InfoItem[0].value[0]._ }}
+                          {{ elemento.InfoItem[0].InfoItem[1].value[0]._ }}
+                          {{ elemento.InfoItem[0].InfoItem[2].value[0]._ }}
+                        <div *ngIf="elemento.InfoItem[0].$.name == 'Living_Thing'">
+                          {{ elemento.InfoItem[0].InfoItem[3].value[0]._ }}
+                          {{ elemento.InfoItem[0].InfoItem[4].value[0]._ }}
+                          {{ elemento.InfoItem[0].InfoItem[5].value[0]._ }}
+                        </div>  
                         </ion-card-content>
                       </ion-card>
                       <!--Fin Carga de los elementos filtrados por la habitacion escogido-->          
@@ -48,12 +55,22 @@
        <!--Slide informacion dispositivo-->
        <ion-slide >
            <ion-grid>
-           
+              <ion-row>
+                  <!--Acomoda el numero de tarjetas de acuerdo al tamaño de pantalla-->
+                 <ion-col size="6" size-sm="4" size-md="3" size-lg="2" *ngFor="let dispositivo of dispositivos">
+                   <!--Carga de los elementos filtrados por la habitacion escogida-->
+                   <ion-card  id="{{dispositivo.InfoItem[0].value[0]._}}" (click)="routeDispositivo(dispositivo.InfoItem[0].value[0]._,dispositivo.InfoItem[1].value[0]._)" >
+                       <img src="/assets/icon/camara1.png"/>
+                       <ion-card-content>
+                         {{ dispositivo.InfoItem[2].value[0]._ }}
+                       </ion-card-content>
+                     </ion-card>
+                     <!--Fin Carga de los elementos filtrados por la habitacion escogido-->          
+                 </ion-col>
+              </ion-row>
            </ion-grid>
        </ion-slide>
        <!--Slide fin informacion dispositivo-->
-
-
    </ion-slides>
    <!--Fin slider-->
 </ion-content>
@@ -63,7 +80,15 @@
  <!-- fab placed to the top end -->
  <!-- fab placed to the top end -->
  <ion-fab  vertical="bottom" horizontal="end" slot="fixed" >
-  <ion-fab-button (click)="routeCrearElemOdispositivo()" color="danger" >
-    <ion-icon name="add"></ion-icon>
-  </ion-fab-button>
-</ion-fab>
+    <div *ngIf="segment === 'elementos'; else asociarDispositivo">
+      <ion-fab-button (click)="routeCrearElemnto()" color="danger" >
+          <ion-icon name="add"></ion-icon>
+      </ion-fab-button>
+    </div>
+    <ng-template #asociarDispositivo>
+        <app-escaner (onReadDevice)="routeAsociarDispositivo($event)" #childComponentAction></app-escaner>
+        <ion-fab-button (click)="childComponentAction.leerCodigo()" color="danger" >
+            <ion-icon name="add"></ion-icon>
+        </ion-fab-button>
+    </ng-template>
+  </ion-fab>
