@@ -354,7 +354,7 @@ export class GenerateXMLService {
     xw.endDocument();    
     console.log(xw.toString());
     
-   this.enviarXML.registrarUsuario(email,xw);
+   this.enviarXML.registrarUsuario(email, xw.toString());
   }
   //crea el XML para el perfil del usuario
   setXMLPerfil(json) {
