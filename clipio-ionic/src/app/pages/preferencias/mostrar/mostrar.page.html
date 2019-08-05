@@ -12,6 +12,7 @@
     <!-- Card Nombre -->
       <ion-card-header>
         <ion-card-title>
+          Nombre Preferencia
         </ion-card-title>
         <ion-item>
           <ion-label required="true">{{ECA.nombreECA}}</ion-label>
@@ -30,9 +31,27 @@
   
           <!--TODO: Mostrar Evento-->
   
-          <ion-item>
-            <ion-label required="true">{{ ECA.significadoEvento }}</ion-label>
-          </ion-item>
+          <ion-label>{{ ECA.significadoEvento }}</ion-label>
+          <ion-row>
+            <ion-col>
+              <ion-label>{{ ECA.datastreamEvent }}</ion-label>
+            </ion-col>
+            <ng-container *ngIf="ECA.dsFormatEvento === 'bool' || ECA.dsFormatEvento === 'boolean';else eventSensor">
+                <ion-col>
+                  <ion-label *ngIf="ECA.valorEvento === '1'">Encendido</ion-label>
+                  <ion-label *ngIf="ECA.valorEvento === '0'">Apagado</ion-label>
+                </ion-col>
+            </ng-container>
+            <ng-template #eventSensor>
+              <ion-col>
+                <ion-label>{{ ECA.comparadorEvento }}</ion-label>
+              </ion-col>
+              <ion-col>
+                <ion-label>{{ ECA.valorEvento }}</ion-label>
+              </ion-col>
+            </ng-template>
+          </ion-row>
+
         </ion-card-content>
       </ion-card>
       <ion-card>
@@ -47,10 +66,18 @@
   
           <!--TODO: Mostrar Accion-->
   
-  
-          <ion-item>
-            <ion-label required="true">{{ ECA.significadoAccion }}</ion-label>
-          </ion-item>
+          <ion-label>{{ ECA.significadoAccion }}</ion-label>
+          <ion-row>
+            <ion-col>
+              <ion-label>{{ ECA.datastreamAction }}</ion-label>
+            </ion-col>
+            <ng-container *ngIf="ECA.dsFormatAccion === 'bool' || ECA.dsFormatAccion === 'boolean'">
+                <ion-col>
+                  <ion-label *ngIf="ECA.valorAccion === '1'">Encender</ion-label>
+                  <ion-label *ngIf="ECA.valorAccion === '0'">Apagar</ion-label>
+                </ion-col>  
+            </ng-container>
+          </ion-row>
         </ion-card-content>
       </ion-card>
     <ion-fab vertical="bottom" horizontal="end" slot="fixed" >

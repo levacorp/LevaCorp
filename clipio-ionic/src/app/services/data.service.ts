@@ -5,6 +5,7 @@ import { DataUserService } from 'src/app/services/data-user.service';
 import { EnviarXMLService } from './enviar-xml.service';
 import { Observable } from 'rxjs';
 import { HTTP } from '@ionic-native/http/ngx';
+import { RaspberryService } from './raspberry.service';
 
  
 @Injectable({
@@ -16,7 +17,9 @@ export class DataService {
     private http: HttpClient,
     private httpNative: HTTP,
     private dataUserService: DataUserService,
-  ) { }
+    private requestRaspberryService: RaspberryService,
+  ) { 
+  }
 
   getXMLInicioSesion() {
     let json;
@@ -228,7 +231,7 @@ export class DataService {
     console.log(res);
     return res;
   }
-  postRegistrarUsuario(url: string, email: string, mac: string, data) {
+  async postRegistrarUsuario(url) {
     console.log("consulta");
    // console.log(this.http.get());
 
@@ -237,27 +240,31 @@ export class DataService {
          resolve(res); //devolvemos la respuesta de la llamada http
       }, (err) => {
          reject(err); //devolvemos el error si se diera
-      }));             
-    })*/
-   this.httpNative.get(url, {}, {})
+      }));
+    })*/  
+    let datos = await this.requestRaspberryService.requestRaspberry(url);
+
+    if (datos === null) {
+      alert("Error en la consulta: null");
+    } else {
+      alert(datos);
+    }
+    /*await this.httpNative.get(url, {}, {})
       .then(data => {
-        console.log(data.data);
+        alert(data.data);
       })
       .catch(error => {
-        console.log(error.error);
-      })
+        alert("error: "+error.error);
+      });
+      /*let datosPost= this.http.get(url).subscribe(data => {   // data is already a JSON object
+        alert(data['Objects']);
+      });*/
+      // alert(datosPost);
   }
 
-  getEstadoDataStreams() {
-    // tslint:disable-next-line: max-line-length
-    const xml = '<Objects><Object><id>708637323</id><send_state><InfoItem name="calefactor"><value type="bool">1</value></InfoItem><InfoItem name="temperatura"><value type="float">24.7048950195</value></InfoItem><InfoItem name="ventilador"><value type="bool">0</value></InfoItem><InfoItem name="Reloj"><value type="string">27/07/2019 18:44</value></InfoItem><InfoItem name="proximidad"><value type="float">0</value></InfoItem></send_state></Object></Objects>';
-    // Se parsea el xml a un objeto javascript para poder manejarlo más facil
-    let jason;
-    const parseString = require('xml2js').parseString;
-    parseString(xml, function (err, result) {
-      jason = result;
-    });
-    return jason.Objects.Object[0].send_state[0].InfoItem;
+  getEstadoDataStreams(xml) {
+    
+    return xml.Objects.Object[0].send_state[0].InfoItem;
   }
   getXMLPerfilUsuario() {
     const xml = '<?xml version="1.0" encoding="UTF-8"?><Objects><Object><InfoItem name="Person"><InfoItem name="name_person"><value type="string">Andrea</value></InfoItem><InfoItem name="surname"><value type="string">Pabon</value></InfoItem><InfoItem name="celullar"><value type="string">None</value></InfoItem><InfoItem name="gender"><value type="string">Hombre</value></InfoItem><InfoItem name="date_of_birth"><value type="string">2017-9-18</value></InfoItem><InfoItem name="facebook"><value type="string">None</value></InfoItem><InfoItem name="place_of_birth"><value type="string">Popayan</value></InfoItem><InfoItem name="email"><value type="string">andrea@unicauca.edu.co</value></InfoItem></InfoItem></Object></Objects>';

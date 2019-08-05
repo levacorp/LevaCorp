@@ -16,11 +16,7 @@
           <ion-card-title (click)="pushMostrar(eca.nombreECA)">{{ eca.nombreECA }}</ion-card-title>
           <ion-toggle color="success" mode="ios" slot="end" *ngIf="eca.estadoECA == 'on'" checked></ion-toggle>
           <ion-toggle color="success" mode="ios" slot="end" *ngIf="eca.estadoECA == 'off'"></ion-toggle>
-          <ion-buttons slot="end">
-            <ion-button (click)="handlerEliminarECA()">
-              <ion-icon slot="icon-only" color="danger" name="trash" mode="md"></ion-icon>
-            </ion-button>
-          </ion-buttons>
+          
         </ion-toolbar>
     </ion-card-header>
     <ion-card-content>

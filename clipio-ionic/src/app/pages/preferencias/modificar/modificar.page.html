@@ -8,54 +8,121 @@
 </ion-header>
 
 <ion-content>
-  <ion-card>
-  <!-- Card Nombre -->
-    <ion-card-header>
-      <ion-card-title>
-      </ion-card-title>
-      <ion-item>
-        <ion-input placeholder="Nombre" value="ECA1" required="true"></ion-input>
-      </ion-item>
-    </ion-card-header>
-  </ion-card>
-
-  <ion-card>
-      <!-- Card Evento -->
-      <ion-card-header>
-        <ion-card-title>
-          Evento
-        </ion-card-title>
-      </ion-card-header>
-      <ion-card-content>
-
-        <!--TODO: Mostrar Evento-->
-
-        <ion-item>
-          <ion-input placeholder="Significado" required="true"></ion-input>
-        </ion-item>
-      </ion-card-content>
-    </ion-card>
+  {{ modificarECAForm.value | json }}
+  <form [formGroup]="modificarECAForm" (ngSubmit)="capturarDatos()">
     <ion-card>
-      <!-- Card Accion -->
+    <!-- Card Nombre -->
       <ion-card-header>
         <ion-card-title>
-          Acción
+          Nombre Preferencia
         </ion-card-title>
-      </ion-card-header>
-  
-      <ion-card-content>
-
-        <!--TODO: Mostrar Accion-->
-
-
         <ion-item>
-          <ion-input placeholder="Significado" required="true"></ion-input>
+          <ion-input required="true" value='{{ECA.nombreECA}}' formControlName="nombreECA"></ion-input>
         </ion-item>
-      </ion-card-content>
+      </ion-card-header>
     </ion-card>
-    <ion-header>
-      <ion-button expand="full" color="danger">
-        Guardar
-      </ion-button>
-    </ion-header>
-</ion-content>
+  
+    <ion-card>
+        <!-- Card Evento -->
+        <ion-card-header>
+          <ion-card-title>
+            Evento
+          </ion-card-title>
+        </ion-card-header>
+        <ion-card-content>
+  
+          <!--TODO: Mostrar Evento-->
+  
+          <ion-input required="true" value='{{ ECA.significadoEvento }}' formControlName="significadoEvento"></ion-input>
+          <ion-row>
+            <ion-col>
+              <ion-label>{{ ECA.datastreamEvent }}</ion-label>
+            </ion-col>
+            <ng-container *ngIf="ECA.dsFormatEvento === 'bool' || ECA.dsFormatEvento === 'boolean';else eventSensor">
+                <ion-col>
+                    <ng-container *ngIf="ECA.valorEvento === '1';else eventAct">
+                        <ion-select interface="popover" formGroupName="valorEvento">
+                            <ion-select-option value="0">Apagado</ion-select-option>
+                            <ion-select-option value="1" selected>Encendido</ion-select-option>
+                        </ion-select>
+                    </ng-container>
+                    <ng-template #eventAct>
+                      <ion-select interface="popover" formGroupName="valorEvento">
+                        <ion-select-option value="1">Encendido</ion-select-option>
+                        <ion-select-option value="0" selected>Apagado</ion-select-option>
+                      </ion-select>  
+                    </ng-template>
+                </ion-col>
+            </ng-container>
+            <ng-template #eventSensor>
+              <ion-col>
+                <ion-select interface="popover" formGroupName="comparadorEvento">
+                  <ion-select-option value="menor" *ngIf="ECA.comparadorEvento === 'igual'">menor</ion-select-option>
+                  <ion-select-option value="igual" *ngIf="ECA.comparadorEvento === 'igual'" selected>Igual</ion-select-option>
+                  <ion-select-option value="mayor" *ngIf="ECA.comparadorEvento === 'igual'">mayor</ion-select-option>
+
+                  <ion-select-option value="menor" *ngIf="ECA.comparadorEvento === 'menor'" selected>menor</ion-select-option>
+                  <ion-select-option value="igual" *ngIf="ECA.comparadorEvento === 'menor'">Igual</ion-select-option>
+                  <ion-select-option value="mayor" *ngIf="ECA.comparadorEvento === 'menor'">mayor</ion-select-option>
+
+                  <ion-select-option value="menor" *ngIf="ECA.comparadorEvento === 'mayor'">menor</ion-select-option>
+                  <ion-select-option value="igual" *ngIf="ECA.comparadorEvento === 'mayor'">Igual</ion-select-option>
+                  <ion-select-option value="mayor" *ngIf="ECA.comparadorEvento === 'mayor'" selected>mayor</ion-select-option>
+                          
+                </ion-select>
+              </ion-col>
+              <ion-col>
+                <ion-input required="true" value="{{ ECA.valorEvento }}" formGroupName="valorEvento"></ion-input>
+              </ion-col>
+            </ng-template>
+          </ion-row>
+        </ion-card-content>
+      </ion-card>
+      <ion-card>
+        <!-- Card Accion -->
+        <ion-card-header>
+          <ion-card-title>
+            Acción
+          </ion-card-title>
+        </ion-card-header>
+    
+        <ion-card-content>
+  
+          <!--TODO: Mostrar Accion-->
+  
+          <ion-input required="true" value="{{ ECA.significadoAccion }}" formControlName="significadoAccion"></ion-input>
+          <ion-row>
+            <ion-col>
+              <ion-label>{{ ECA.datastreamAction }}</ion-label>
+            </ion-col>
+            <ng-container *ngIf="ECA.dsFormatAccion === 'bool' || ECA.dsFormatAccion === 'boolean'">
+                <ion-col>
+                  <ng-container *ngIf="ECA.valorAccion === '1';else actionSelect">
+                      <ion-select interface="popover" formGroupName="valorAccion">
+                          <ion-select-option value="0">Apagar</ion-select-option>
+                          <ion-select-option value="1" selected>Encender</ion-select-option>
+                      </ion-select>
+                  </ng-container>
+                  <ng-template #actionSelect>
+                    <ion-select interface="popover" formGroupName="valorAccion">
+                      <ion-select-option value="1">Encender</ion-select-option>
+                      <ion-select-option value="0" selected>Apagar</ion-select-option>
+                    </ion-select>  
+                  </ng-template>
+                </ion-col>  
+            </ng-container>
+          </ion-row>
+        </ion-card-content>
+      </ion-card>
+      <ion-card>
+        <ion-header>
+          <ion-button
+            type="submit"
+            expand="full"
+            color="danger"
+            [disabled]="modificarECAForm.invalid"
+          >Guardar</ion-button>
+        </ion-header>
+      </ion-card>
+    </form>
+  </ion-content>

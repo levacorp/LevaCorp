@@ -17,7 +17,7 @@ const routes: Routes = [
     loadChildren: './crear/crear.module#CrearPageModule'
   },
   {
-    path: 'modificar',
+    path: 'modificar/:nombre',
     loadChildren: './modificar/modificar.module#ModificarPageModule'
   },
   {

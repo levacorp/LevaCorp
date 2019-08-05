@@ -20,7 +20,7 @@ export class MostrarPage implements OnInit {
   }
 
   pushModificarECA() {
-    this.router.navigate(['/preferencias/modificar']);
+    this.router.navigate(['/preferencias/modificar', this.nombreECA]);
   }
 
 }

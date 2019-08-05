@@ -4,6 +4,8 @@ import { IonSegment, PopoverController, IonList } from '@ionic/angular';
 import { PopoverEdificiosInicioComponent } from '../../componentes/popover-edificios-inicio/popover-edificios-inicio.component';
 import { Router, ActivatedRoute } from '@angular/router';
 import { DataUserService } from '../../services/data-user.service';
+import { HttpClient } from '@angular/common/http';
+import { HTTP } from '@ionic-native/http/ngx';
 
 @Component({
   selector: 'app-principal',
@@ -26,10 +28,19 @@ export class PrincipalPage implements OnInit {
     public popoverController: PopoverController,
     private router: Router,
     private activatedRoute: ActivatedRoute,
-    private dataUserService: DataUserService) { }
+    private dataUserService: DataUserService,
+    private httpClient: HttpClient,
+    private nativeHttp: HTTP,
+    ) { }
 
   /* Inicializa los atributos a utilizar */
-  ngOnInit() {
+  async ngOnInit()  {
+   
+    /*await this.nativeHttp.get('http://10.0.0.20:8080/RegistroUsuario?email=c@gmail.com&mac=02:00:00:00:00:00&data=%3C?xml%20version=%221.0%22?%3E%20%3CObjects%3E%3CObject%3E%3CInfoItem%20name=%22application%22%3E%3CInfoItem%20name=%22name_app%22%3E%3Cvalue%20type=%22string%22%3EClipio%3C/value%3E%3C/InfoItem%3E%3CInfoItem%20name=%22user_app%22%3E%3Cvalue%20type=%22string%22%3Ec@gmail.com%3C/value%3E%3C/InfoItem%3E%3CInfoItem%20name=%22password_app%22%3E%3Cvalue%20type=%22string%22%3Esle+3kqQVG+N/aEpSZJkIw==%3C/value%3E%3C/InfoItem%3E%3C/InfoItem%3E%3C/Object%3E%3C/Objects%3E',{}, {}).then(res =>{
+      alert(res.data);
+      });*/
+
+
     console.log('MAC: ', this.dataUserService.getMAC());
     this.notificaciones = ['Daniel ha llegado a casa', 'Forero salio de casa', 'Daniel Gomez ha llegado a casa', 'Vanesa salió de casa'];
     this.argumento = this.activatedRoute.snapshot.paramMap.get('edificio');

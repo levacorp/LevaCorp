@@ -28,13 +28,12 @@ export class RegistrarPage implements OnInit {
       nombreApp: ['Clipio', Validators.required],
       email: ['', Validators.compose([Validators.required, Validators.email])],
       contrasena: ['', Validators.compose([Validators.required, Validators.minLength(8)])],
-      confirmacionContrasena: ['', Validators.compose([Validators.required,Validators.minLength(8)])]
+      confirmacionContrasena: ['', Validators.compose([Validators.required, Validators.minLength(8)])]
     });
   }
 
   ngOnInit() {
   }
-
 
   saveData() {
     if (this.myform.valid) {

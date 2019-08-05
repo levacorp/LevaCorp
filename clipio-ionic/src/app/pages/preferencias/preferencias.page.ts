@@ -20,7 +20,7 @@ export class PreferenciasPage implements OnInit {
     console.log(this.listaECAs);
   }
 
-  async handlerEliminarECA() {
+  /*async handlerEliminarECA() {
     const alert = await this.alertController.create({
       header: 'Atención',
       // subHeader: 'Subtitle',
@@ -41,7 +41,7 @@ export class PreferenciasPage implements OnInit {
     });
 
     await alert.present();
-  }
+  }*/
 
   pushMostrar(nombre) {
     this.router.navigate(['/preferencias/mostrar/', nombre]);

@@ -47,8 +47,8 @@ export class CrearDispositivoPage implements OnInit {
       alert("IP: "+ this.ipDispositivo);
       alert("ID: "+ this.idDispositivo);
       const xmlDataStreams = await this.raspService.requestRaspberry('http://' + this.ipDispositivo + '/SendState?osid=' + this.idDispositivo);
-      alert(xmlDataStreams);
       this.dataStreams = this.dataService.getEstadoDataStreams(xmlDataStreams);
+      alert(this.dataStreams[0].value[0].$.type);
     }
     if (this.activatedRoute.snapshot.paramMap.keys.length === 3) {
       this.edificio = this.activatedRoute.snapshot.paramMap.get('edificio');
