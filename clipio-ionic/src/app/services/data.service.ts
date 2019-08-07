@@ -25,10 +25,11 @@ export class DataService {
     private httpNative: HTTP,
     private dataUserService: DataUserService,
     private requestRaspberryService: RaspberryService,
-  ) { 
+  ) {
   }
 
-  getXMLInicioSesion() {
+  /* Obtiene el XML de un usuario consultando al servidor PU*/
+  getXMLInicioSesion(email: string, pass: string) {
     let json;
     // tslint:disable-next-line: max-line-length
     const xml = '<?xml version="1.0" encoding="UTF-8"?><Objects><Object><InfoItem name="application"><InfoItem name="name_app"><value type="string">Clipio</value></InfoItem><InfoItem name="user_app"><value type="string">julian@gmail.com</value></InfoItem><InfoItem name="password_app"><value type="string">7TRVtu3p9mXTwnEzGdYeIw==</value></InfoItem></InfoItem></Object></Objects>';
@@ -44,10 +45,10 @@ export class DataService {
     return json;
   }
 
-  /* Obtiene los datos de inicio de sesion. Retorna un arreglo con [{email:email,contraseña:contraseña}] */
-  getDatosInicioSesion() {
+  /* Obtiene los datos de inicio de sesion. Retorna un arreglo con [{email:email,password:contraseña}] */
+  getDatosInicioSesion(email: string, pass: string) {
     const datosInicioSesion = [];
-    const infoInicioSesion = this.getXMLInicioSesion().Objects.Object[0].InfoItem[0].InfoItem;
+    const infoInicioSesion = this.getXMLInicioSesion(email, pass).Objects.Object[0].InfoItem[0].InfoItem;
     // tslint:disable-next-line: prefer-for-of
     if (infoInicioSesion.length >= 3) {
       datosInicioSesion.push({ email: infoInicioSesion[1].value[0]._ });

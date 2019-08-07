@@ -4,7 +4,8 @@ import { FormControl, FormBuilder, FormGroup, Validators } from '@angular/forms'
 import { GenerateXMLService } from '../../services/generate-xml.service';
 import { Router } from '@angular/router';
 import { EncryptService } from '../../services/encrypt.service';
-import { DeviceServicesService } from '../../services/device-services.service';
+import { DataService } from '../../services/data.service';
+import { DataUserService } from '../../services/data-user.service';
 
 @Component({
   selector: 'app-inicio-sesion',
@@ -17,10 +18,12 @@ export class InicioSesionPage implements OnInit {
 
   constructor(
     private authServices: AuthenticationService,
-    private generateXMLService: GenerateXMLService,
+    private dataService: DataService,
+    private dataUserService: DataUserService,
     public formBuilder: FormBuilder,
     private router: Router,
-    private encryptService: EncryptService
+    private encryptService: EncryptService,
+    private generateXMLService: GenerateXMLService,
   ) {
     this.myform = this.formBuilder.group({
       dirIp: ['', Validators.compose([Validators.required])],
@@ -33,16 +36,30 @@ export class InicioSesionPage implements OnInit {
   }
 
   login() {
-    // this.password.value = this.encryptService.encrypt(this.password.value);
+
     this.myform.value.contrasena = this.encryptService.encrypt(this.myform.value.contrasena);
+    // Carga los datos a la clase que contiene los datos del entorno
+    this.dataService.getDatosInicioSesion(this.myform.value.email, this.myform.value.contrasena);
+
+    // Descomentar las lineas de abajo cuando se hagan las peticiones XML al servidor PU
+
+    //if (this.verificarUsuario) {
     this.authServices.login();
+    //} else {
+    //  alert('Usuario o contraseña incorrectos');
+    //}
+  }
 
-    // console.log('XML Inicio Sesion:', this.generateXMLService.crearXMLInicioSesion(this.myform.value.contrasena, this.myform.value.contrasena.password).toString());
-
+  verificarUsuario() {
+    let usuarioExistente = false;
+    if (this.dataUserService.datosUsuario["email"] === this.myform.value.email
+        && this.dataUserService.datosUsuario['password'] === this.myform.value.contrasena) {
+      usuarioExistente = true;
+    }
+    return usuarioExistente;
   }
 
   pushRegistro() {
-    
     this.router.navigate(['/registrar']);
   }
 }
