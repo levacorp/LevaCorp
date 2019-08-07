@@ -30,9 +30,13 @@ export class AppComponent {
       this.statusBar.styleDefault();
       this.splashScreen.hide();
 
-      /* Al iniciar la aplicacion se piden permisos para leer la direccion MAC */
-      //this.deviceServicesService.getPermission();
-      //this.dataUserService.setMAC(this.deviceServicesService.getID_UID('MAC'));
+      /* Al iniciar la aplicacion se piden permisos para leer la direccion MAC
+       DESCOMENTAR LAS DOS LINEAS DE ABAJO CUANDO SE TERMINE DE CODIFICAR Y SE VAYA A PROBAR EN TELEFONO,
+       DE LO CONTRARIO MOSTRARA ERROR SI SE ESTA VISUAIZANDO EN NAVEGADOR */
+
+      // this.deviceServicesService.getPermission();
+      // this.dataUserService.setMAC(this.deviceServicesService.getID_UID('MAC'));
+
       if (this.dataUserService.getMAC() !== null) {
         /* Al iniciar la aplicacion se comprueba si esta autenticado */
         this.authService.authenticationState.subscribe(state => {
