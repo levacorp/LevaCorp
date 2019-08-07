@@ -9,13 +9,13 @@
 
 <!-- Lista de Preferencias -->
 <ion-content>
-  <ion-list *ngFor="let eca of listaECAs">
+  <ion-list *ngFor="let eca of listaECAs;index as i">
   <ion-card>
     <ion-card-header>
         <ion-toolbar>
           <ion-card-title (click)="pushMostrar(eca.nombreECA)">{{ eca.nombreECA }}</ion-card-title>
-          <ion-toggle color="success" mode="ios" slot="end" *ngIf="eca.estadoECA == 'on'" checked></ion-toggle>
-          <ion-toggle color="success" mode="ios" slot="end" *ngIf="eca.estadoECA == 'off'"></ion-toggle>
+          <ion-toggle color="success" mode="ios" slot="end" *ngIf="eca.estadoECA == 'on'" checked (ionChange)="apagarECA(i)"></ion-toggle>
+          <ion-toggle color="success" mode="ios" slot="end" *ngIf="eca.estadoECA == 'off'" (ionChange)="encenderECA(i)"></ion-toggle>
           
         </ion-toolbar>
     </ion-card-header>
