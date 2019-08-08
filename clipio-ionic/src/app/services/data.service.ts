@@ -18,13 +18,12 @@ export class DataService {
   /* Email y mac estaticos para todas las peticiones */
   email = 'c@gmail.com';
   mac = '02:00:00:00:00:00';
-  urlServidor = 'http://192.168.0.11:8080';
+  urlServidor = 'http://10.130.2.148:8080';
 
   constructor(private https: HTTP,
     private http: HttpClient,
-    private httpNative: HTTP,
     private dataUserService: DataUserService,
-    private requestRaspberryService: RaspberryService,
+    private requestRaspberryService: RaspberryService
   ) {
   }
 
@@ -446,4 +445,43 @@ export class DataService {
     }
     );
   }
-}
+  async registrarUsuario(xml: string, email) {
+    // ToDo: Mirar que retorna el Servidor PU
+    xml = encodeURIComponent(xml);
+    let respuesta= false;
+    console.log(xml);
+    const url = this.urlServidor + '/RegistroUsuario?email=' + email + '&mac=' + this.mac + '&data=' + xml;
+    await this.http.get(url, {responseType: 'text'})
+    .subscribe(data => {
+    // this.utilidades.alert("Registro exitoso");
+     respuesta=true;
+    }, error => {
+     // this.utilidades.alert("Registro fallido");
+    });
+
+    console.log('Registrada preferencia');
+    // Actualizar lista de Preferencias
+   return respuesta;
+  }
+  async registrarEdificio(xml: string, email) {
+    // ToDo: Mirar que retorna el Servidor PU
+    xml = encodeURIComponent(xml);
+    let respuesta= false;
+    console.log(xml);
+    const url = this.urlServidor + '/RegistrarBuilding?email=' + email + '&mac=' + this.mac + '&data=' + xml;
+    await this.http.get(url, {responseType: 'text'})
+    .subscribe(data => {
+    // this.utilidades.alert("Registro exitoso");
+     respuesta = true;
+    }, error => {
+     // this.utilidades.alert("Registro fallido");
+    });
+
+    console.log('Registrada preferencia');
+    // Actualizar lista de Preferencias
+   return respuesta;
+  }
+ 
+
+  
+  }

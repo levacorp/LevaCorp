@@ -4,6 +4,8 @@ import { FormBuilder, FormGroupName, Validators, FormGroup, FormControl } from '
 import { NavController, AlertController } from '@ionic/angular';
 import { EnviarXMLService } from 'src/app/services/enviar-xml.service';
 import { GenerateXMLService } from 'src/app/services/generate-xml.service';
+import { UtilitiesService } from 'src/app/services/utilities.service';
+import { AuthenticationService } from 'src/app/services/authentication.service';
 @Component({
   selector: 'app-perfil',
   templateUrl: './perfil.page.html',
@@ -12,12 +14,15 @@ import { GenerateXMLService } from 'src/app/services/generate-xml.service';
 export class PerfilPage implements OnInit {
   perfil: any[];
   myform: FormGroup;
+  xmlRegistrarUsuario=null;
   constructor(
     private dataservice: DataService,
     public formBuilder: FormBuilder,
     public navCtrl: NavController,
     private generarXML: GenerateXMLService,
-    public alertController: AlertController
+    public alertController: AlertController,    
+    private utilidades : UtilitiesService,
+    private authservice: AuthenticationService
   ) {
     //componentes del formulario myform
     this.myform = this.formBuilder.group({
@@ -50,27 +55,7 @@ export class PerfilPage implements OnInit {
   }
   //metodo que guarda y envia el formulario para crear el xml del perfil usuario
   saveData() {
-    if (this.myform.valid) {
-      this.generarXML.setXMLPerfil(this.myform);
-      console.log(this.myform.value);
-      this.exitosoAlert();
-    }
-  }
-  async exitosoAlert() {
-    const alert = await this.alertController.create({
-      header: 'Informacion',
-      message: 'Se ha actualizado correctamente.',
-      buttons: ['OK']
-    });
-    await alert.present();
-  }
-
-  async fracasoAlert() {
-    const alert = await this.alertController.create({
-      header: 'Informacion',
-      message: 'No se ha podido actualiar sus datos.',
-      buttons: ['OK']
-    });
-    await alert.present();
-  }
+    
+   
+  } 
 }

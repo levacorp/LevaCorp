@@ -4,6 +4,8 @@ import { FormBuilder, Validators, FormGroup, FormControl } from '@angular/forms'
 import { NavController, AlertController } from '@ionic/angular';
 import { EncryptService } from 'src/app/services/encrypt.service';
 import { GenerateXMLService } from 'src/app/services/generate-xml.service';
+import { UtilitiesService } from 'src/app/services/utilities.service';
+import { AuthenticationService } from 'src/app/services/authentication.service';
 
 
 @Component({
@@ -14,7 +16,8 @@ import { GenerateXMLService } from 'src/app/services/generate-xml.service';
 export class RegistrarPage implements OnInit {
 
   myform: FormGroup;
-  matching_passwords_group: FormGroup;
+  matching_passwords_group: FormGroup;  
+  xmlRegistrarUsuario = null; 
 
   constructor(
     private dataservice: DataService,
@@ -22,7 +25,9 @@ export class RegistrarPage implements OnInit {
     public navCtrl: NavController,
     private generarXML: GenerateXMLService,
     private encrypt: EncryptService,
-    public alertController: AlertController
+    public alertController: AlertController,
+    private utilidades : UtilitiesService, 
+    private authservice : AuthenticationService
   ) {
     this.myform = this.formBuilder.group({
       nombreApp: ['Clipio', Validators.required],
@@ -35,23 +40,31 @@ export class RegistrarPage implements OnInit {
   ngOnInit() {
   }
 
-  saveData() {
-    if (this.myform.valid) {
+  saveData() {  
       this.myform.value.contrasena = this.encrypt.encrypt(this.myform.value.contrasena);
       this.myform.value.confirmacionContrasena = this.encrypt.encrypt(this.myform.value.confirmacionContrasena);
-      console.log(this.myform.value);
-      this.generarXML.setXMLRegistrar(this.myform);
-      console.log(this.myform.value);
-      this.exitosoAlert();
-    }
+     
+      this.xmlRegistrarUsuario = this.generarXML.setXMLRegistrar(this.myform);
+      if (this.myform.valid) {
+        if (this.dataservice.registrarUsuario(this.xmlRegistrarUsuario, this.myform.get('email').value)){
+          this.utilidades.alert("Registro exito");
+          this.authservice.login();
+  
+        } else {
+          this.utilidades.alert("Registro fallido");
+        }
+        console.log(this.myform.value);
+       // this.exitosoAlert();
+      }
+    
   }
 
   checkPass() {
-    //Store the password field objects into variables ...
-    let objPass1 = <HTMLInputElement>document.getElementById('contrasena');
-    let objPass2 = <HTMLInputElement>document.getElementById('confirmacionContrasena');
-    let pass1 = (objPass1).value;
-    let pass2 = (objPass2).value;
+    // Store the password field objects into variables ...
+    const objPass1 = <HTMLInputElement>document.getElementById('contrasena');
+    const objPass2 = <HTMLInputElement>document.getElementById('confirmacionContrasena');
+    const pass1 = (objPass1).value;
+    const pass2 = (objPass2).value;
     //Store the Confimation Message Object ...
     let message = document.getElementById('confirmMessage');
     //Set the colors we will be using ...

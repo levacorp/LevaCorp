@@ -35,17 +35,10 @@ export class CrearEdificioPage implements OnInit {
     if (this.myform.valid) {
       this.generarXML.setXMLRegistrarEdificio(this.myform);
       console.log(this.myform.value);
-      this.exitosoAlert();
+      //this.exitosoAlert();
     }
   }
-  async exitosoAlert() {
-    const alert = await this.alertController.create({
-      header: 'Informacion',
-      message: 'Se ha creado correctamente.',
-      buttons: ['OK']
-    });
-    await alert.present();
-  }
+ 
 
   async fracasoAlert() {
     const alert = await this.alertController.create({
