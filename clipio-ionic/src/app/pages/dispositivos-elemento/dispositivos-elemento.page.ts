@@ -11,6 +11,7 @@ import { Observable } from 'rxjs';
 })
 export class DispositivosElementoPage implements OnInit {
   habitacion = null;
+  edificio = null;
   elemento = null;
   dispositivos: Observable<any>;
 
@@ -19,6 +20,7 @@ export class DispositivosElementoPage implements OnInit {
   constructor( private activatedRoute: ActivatedRoute , private dataService: DataService , private router: Router) {   }
   /* Inicializa los atributos a utilizar */
   ngOnInit() {
+    this.edificio = this.activatedRoute.snapshot.paramMap.get('edificio');
     this.habitacion = this.activatedRoute.snapshot.paramMap.get('habitacion');
     this.elemento = this.activatedRoute.snapshot.paramMap.get('elemento');
     this.dispositivos = this.dataService.getElementos(); // Carga todos los elementos
@@ -31,8 +33,6 @@ export class DispositivosElementoPage implements OnInit {
    }
 
    pushCrearDispositivo(dir: string) {
-      this.router.navigate(['crear-dispositivo', this.habitacion, this.elemento, dir]);
+    this.router.navigate(['crear-dispositivo', this.elemento, this.edificio, this.habitacion , dir]);
   }
-
-
 }

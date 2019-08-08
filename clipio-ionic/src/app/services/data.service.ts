@@ -7,7 +7,7 @@ import { Observable } from 'rxjs';
 import { HTTP } from '@ionic-native/http/ngx';
 import { RaspberryService } from './raspberry.service';
 
- 
+
 @Injectable({
   providedIn: 'root'
 })
@@ -263,7 +263,7 @@ export class DataService {
   }
 
   getEstadoDataStreams(xml) {
-    
+    //retorna los estados del datastream
     return xml.Objects.Object[0].send_state[0].InfoItem;
   }
   getXMLPerfilUsuario() {
@@ -292,33 +292,15 @@ export class DataService {
   }
 
   getInfoBasicaDispositivo(xml) {
-    // Se parsea el xml a un objeto javascript para poder manejarlo más facil
-    // json.Objects.Object[0].InfoItem--->Informacion general del dispositivo + informacion de datastreams
+    // Se pobtiene la infromacion basica de la raspberry
     return xml.Objects.Object[0].InfoItem[0].MetaData[0].InfoItem;
   }
-  crearElemento(elemento) {
-    console.log(elemento);
-    var headers = new HttpHeaders();
-    headers = headers.append('Content-Type', 'text/xml');
-    headers = headers.append('Accept', 'text/xml');
-    let body = '<request>'
-    '<username>Username</username>'
-    '<password>Password</password>'
-    '</request>';
-
-    return this.http.post('https://66.128.132.126:8002/?event=account_login', body, { headers: headers, responseType: 'text' });
+  crearElemento(xml) {
   }
-  a(elemento) {
-    console.log(elemento);
-    var headers = new HttpHeaders();
-    headers = headers.append('Content-Type', 'text/xml');
-    headers = headers.append('Accept', 'text/xml');
-    let body = '<request>'
-    '<username>Username</username>'
-    '<password>Password</password>'
-    '</request>';
+  asociarDispositivo(xml) {
+  }
+  crearHabitacion(xml) {
 
-    return this.http.post('https://66.128.132.126:8002/?event=account_login', body, { headers: headers, responseType: 'text' });
   }
   perfil() {
     alert('entra');

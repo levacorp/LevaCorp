@@ -1,3 +1,4 @@
+<!--Header de la pag-->
 <ion-header>
   <ion-toolbar color="danger">
     <ion-buttons slot="start">
@@ -6,7 +7,7 @@
     <ion-title>{{habitacion}}</ion-title>
   </ion-toolbar>
 </ion-header>
-
+<!--Fin header de la pag-->
 
 <!--Se encargara de mostrar todos los elementos de la habitacion-->
 <ion-content>
@@ -22,47 +23,59 @@
   <!--Fin pestañas del dispositivo-->
    <!--Muestra el numero de slider en la pagina-->
    <ion-slides  (ionSlideDidChange)="slideChanged()" [options]="slideOpts">
-       <!--Slide dispositivos inteligentes-->
+       <!--Slide elementos-->
        <ion-slide>
            <ion-grid>
                <ion-row>
                    <!--Acomoda el numero de tarjetas de acuerdo al tamaño de pantalla-->
                   <ion-col size="6" size-sm="4" size-md="3" size-lg="2" *ngFor="let elemento of elementos">
-                    <!--Carga de los elementos filtrados por la habitacion escogida-->
+                    <!--Carga de los elementos filtrados por la habitacion escogida el id de cada card sera igual al nombre que tenga-->
                     <ion-card  id="{{elemento.InfoItem[0].InfoItem[0].value[0]._}}" (click)="routeDispositivosElemento(elemento.InfoItem[0].InfoItem[0].value[0]._)" >
-                        <ion-card-header  >
+                       <!--Header de la card cargara el nombre del elemento y una imagen preestalecida--> 
+                      <ion-card-header >
                           <ion-card-title>{{ elemento.InfoItem[0].$.name }}</ion-card-title>
                         </ion-card-header>
                         <img src="/assets/icon/camara1.png"/>
-
+                        <!--Mostrara la informacion del elemento-->
                         <ion-card-content>
-                          {{ elemento.InfoItem[0].InfoItem[0].value[0]._ }}
-                          {{ elemento.InfoItem[0].InfoItem[1].value[0]._ }}
-                          {{ elemento.InfoItem[0].InfoItem[2].value[0]._ }}
+                            <ion-item  class="ion-text-center">
+                                <strong>{{ elemento.InfoItem[0].InfoItem[0].value[0]._ }}</strong>
+                            </ion-item>
+                            <ion-item>
+                                <strong>Score:</strong><p>{{ elemento.InfoItem[0].InfoItem[2].value[0]._ }}</p>
+                            </ion-item>
+                              <!--Si el elemento es vivo se mostraran los campos extras Tipo vivo,especie y comida-->
                         <div *ngIf="elemento.InfoItem[0].$.name == 'Living_Thing'">
-                          {{ elemento.InfoItem[0].InfoItem[3].value[0]._ }}
-                          {{ elemento.InfoItem[0].InfoItem[4].value[0]._ }}
-                          {{ elemento.InfoItem[0].InfoItem[5].value[0]._ }}
-                        </div>  
-                        </ion-card-content>
+                            <ion-item>
+                                <strong>Tipo:</strong><p>{{ elemento.InfoItem[0].InfoItem[3].value[0]._ }}</p>
+                            </ion-item>
+                            <ion-item>
+                                <strong>Especie:</strong><p>{{ elemento.InfoItem[0].InfoItem[4].value[0]._ }}</p>
+                            </ion-item>
+                            <ion-item>
+                                <strong>Comida:</strong><p>{{ elemento.InfoItem[0].InfoItem[5].value[0]._ }}</p>
+                            </ion-item>
+                          </div>  
+                      </ion-card-content>
                       </ion-card>
                       <!--Fin Carga de los elementos filtrados por la habitacion escogido-->          
                   </ion-col>
                </ion-row>
              </ion-grid>
        </ion-slide>
-       <!--Slide fin dispositivos inteligentes-->
-       <!--Slide informacion dispositivo-->
+       <!--Slide fin elementos-->
+       <!--Slide  dispositivo-->
        <ion-slide >
            <ion-grid>
               <ion-row>
                   <!--Acomoda el numero de tarjetas de acuerdo al tamaño de pantalla-->
                  <ion-col size="6" size-sm="4" size-md="3" size-lg="2" *ngFor="let dispositivo of dispositivos">
-                   <!--Carga de los elementos filtrados por la habitacion escogida-->
-                   <ion-card  id="{{dispositivo.InfoItem[0].value[0]._}}" (click)="routeDispositivo(dispositivo.InfoItem[0].value[0]._,dispositivo.InfoItem[1].value[0]._)" >
-                       <img src="/assets/icon/camara1.png"/>
+                   <!--Carga de los dispositivos filtrados por la habitacion escogida donde el id sera dado por la ip-->
+                   <ion-card class="card"  id="{{dispositivo.InfoItem[0].value[0]._}}" (click)="routeDispositivo(dispositivo.InfoItem[0].value[0]._,dispositivo.InfoItem[1].value[0]._)" >
+                      <ion-card-title>{{ dispositivo.InfoItem[1].value[0]._ }}</ion-card-title> 
+                      <img src="/assets/icon/camara1.png"/>
                        <ion-card-content>
-                         {{ dispositivo.InfoItem[2].value[0]._ }}
+                            <b>{{ dispositivo.InfoItem[2].value[0]._ }}</b>
                        </ion-card-content>
                      </ion-card>
                      <!--Fin Carga de los elementos filtrados por la habitacion escogido-->          
@@ -72,23 +85,14 @@
        </ion-slide>
        <!--Slide fin informacion dispositivo-->
    </ion-slides>
-   <!--Fin slider-->
+   <!--Fin sliders-->
 </ion-content>
 <!--Fin muestra de elementos de la habitacion-->
-
-
- <!-- fab placed to the top end -->
- <!-- fab placed to the top end -->
- <ion-fab  vertical="bottom" horizontal="end" slot="fixed" >
-    <div *ngIf="segment === 'elementos'; else asociarDispositivo">
-      <ion-fab-button (click)="routeCrearElemnto()" color="danger" >
-          <ion-icon name="add"></ion-icon>
-      </ion-fab-button>
-    </div>
-    <ng-template #asociarDispositivo>
-        <app-escaner (onReadDevice)="routeAsociarDispositivo($event)" #childComponentAction></app-escaner>
-        <ion-fab-button (click)="childComponentAction.leerCodigo()" color="danger" >
-            <ion-icon name="add"></ion-icon>
-        </ion-fab-button>
-    </ng-template>
-  </ion-fab>
+ <!--Boton agregar -->
+<ion-fab  vertical="bottom" horizontal="end" slot="fixed">
+  <ion-fab-button (click)="crearElementoOAsociarDispositivo()" color="danger" >
+    <ion-icon name="add"></ion-icon>
+  </ion-fab-button>
+</ion-fab>
+<!--Se importa el compononte escaner-->
+<app-escaner></app-escaner>

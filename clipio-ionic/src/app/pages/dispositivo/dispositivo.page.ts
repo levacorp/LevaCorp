@@ -30,42 +30,42 @@ export class DispositivoPage implements OnInit {
     const ipDispositivo = this.activatedRoute.snapshot.paramMap.get('ip');
     const idDispositivo = this.activatedRoute.snapshot.paramMap.get('id');
     const peticionDispositivo = 'http://' + ipDispositivo + '/Identificator?osid=' + idDispositivo;
+    // hace una peticion a la raspberry pidiendo  la informacion
     const xmlDatos = await this.raspService.requestRaspberry(peticionDispositivo);
     if (xmlDatos === null) {
     } else {
+      // obtiene la infromacion basica
       this.InformacionBasica = this.dataService.getInfoBasicaDispositivo(xmlDatos);
+      // hace una peticion a las raspberry piedno sus estados
       const xmlDataStreams = this.raspService.requestRaspberry('http://' + ipDispositivo + '/SendState?osid=' + idDispositivo);
+      //obtiene sus estados
       this.dataStreams = this.dataService.getEstadoDataStreams(xmlDataStreams);
     }
     }
-  segmentButtonClicked(event) {
-    const segEscogido = event.detail.value;
-    if (segEscogido === 'Recursos') {
-      this.slides.slideTo(0);
-    } else {
-           this.slides.slideTo(1);
-    }
+ // Evento cuando se da click en un segmento
+ segmentButtonClicked(event) {
+  // Se obtiene el valor del segmento clickeado
+  const segEscogido = event.detail.value;
+  // Se decide que slide mostrar
+  if (segEscogido === 'Recursos') {
+    this.slides.slideTo(0);
+  } else {
+         this.slides.slideTo(1);
   }
-
-  slideChanged() {
-    this.slides.getActiveIndex().then(data => {
-      if ( data === 1) {
-        this.segment = 'Informacion';
-      } else {
-         this.segment = 'Recursos';
-      }
-      });
-    }
-  estadoActuador1(event)  {
-    console.log(event.target.id);
-    if (event.detail.checked)    {
-      console.log('1');
-
+}
+ // Evento cuando se desplaza un slide
+ slideChanged() {
+  this.slides.getActiveIndex().then(data => {
+    // Se cambia la opcion del segmento dependiento de la pagina a la que se deslizo
+    if ( data === 1) {
+      this.segment = 'Informacion';
     } else {
-      console.log('0');
+       this.segment = 'Recursos';
     }
+    });
   }
-  async estadoActuador() {
+  // Hace la peticion de cambio de estado del actuador
+  async estadoActuador(event) {
     const loading = await this.loadingController.create({
       spinner: null,
       message: 'Espere por favor...',
@@ -73,6 +73,12 @@ export class DispositivoPage implements OnInit {
     });
     await loading.present();
     loading.lastElementChild.insertAdjacentHTML( 'afterbegin', '<ion-spinner name="circles" color="danger" ></ion-spinner> ');
+    if (event.detail.checked) {
+      alert('1');
+
+    } else {
+      alert('0');
+    }
     this.loadingController.dismiss();
   }
 }
