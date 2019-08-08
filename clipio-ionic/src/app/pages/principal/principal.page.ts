@@ -48,6 +48,7 @@ export class PrincipalPage implements OnInit {
     this.habitaciones = this.dataUserService.getListaHabitaciones();
     console.log(this.habitaciones);
     this.cargarElementosPorHabitacion();
+    this.dataService.consultarObjetosRelacionados();
   }
   /* Cuando se requiere traer los elementos filtrados o sin filtrar iguala el atributo filtro
     al filtro escogido y carga los elementos para el filtro*/

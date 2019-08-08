@@ -18,7 +18,7 @@ export class DataService {
   /* Email y mac estaticos para todas las peticiones */
   email = 'c@gmail.com';
   mac = '02:00:00:00:00:00';
-  urlServidor = 'http://192.168.0.11:8080';
+  urlServidor = 'http://10.130.2.148:8080';
 
   constructor(private https: HTTP,
     private http: HttpClient,
@@ -303,7 +303,17 @@ export class DataService {
     // Se pobtiene la infromacion basica de la raspberry
     return xml.Objects.Object[0].InfoItem[0].MetaData[0].InfoItem;
   }
-  crearElemento(xml) {
+  async crearElemento(xml) {
+     // ToDo: Mirar que retorna el Servidor PU
+     console.log(xml);
+     const url = this.urlServidor + '/RegistrarThing?email=' + this.email + '&mac=' + this.mac + '&data=' + xml;
+     await this.http.get(url, {responseType: 'text'})
+     .subscribe(data => {
+       alert(data);
+     }, error => {
+       alert(error);
+     });
+    
   }
   asociarDispositivo(xml) {
   }
@@ -343,6 +353,16 @@ export class DataService {
     console.log('Registrada preferencia');
     // Actualizar lista de Preferencias
     this.listarECAs();
+  }
+  async consultarObjetosRelacionados() {
+      // ToDo: Mirar que retorna el Servidor PU
+      const url = this.urlServidor + '/ConsultarObjetosRelated?email=' + this.email + '&mac=' + this.mac;
+      await this.http.get(url, {responseType: 'text'})
+      .subscribe(data => {
+        alert(data);
+      }, error => {
+        alert(error);
+      });
   }
 
   async modificarECA(xml: string) {

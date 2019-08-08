@@ -28,7 +28,8 @@ const routes: Routes = [
    { path: 'crear-dispositivo/:edificio/:habitacion/:dir',
    loadChildren: './pages/crear-dispositivo/crear-dispositivo.module#CrearDispositivoPageModule' },
    { path: 'inicio-sesion', loadChildren: './pages/inicio-sesion/inicio-sesion.module#InicioSesionPageModule' },
-  { path: 'registro', loadChildren: './pages/registro/registro.module#RegistroPageModule' }
+  { path: 'registro', loadChildren: './pages/registro/registro.module#RegistroPageModule' },  { path: 'crear-habitacion', loadChildren: './pages/crear-habitacion/crear-habitacion.module#CrearHabitacionPageModule' }
+
 
 
 ];
