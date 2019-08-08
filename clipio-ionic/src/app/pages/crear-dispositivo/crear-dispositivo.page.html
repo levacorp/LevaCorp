@@ -1,4 +1,4 @@
-<!--Se encarga de mostrar el navbar -->
+<!--Se encarga de mostrar el header -->
 <ion-header>
   <ion-toolbar color="danger">
       <ion-buttons slot="start">
@@ -8,8 +8,8 @@
     <ion-title>Crear Dispositivo</ion-title>
   </ion-toolbar>
 </ion-header>
-<!--Fin del navbar-->
-<!--Se encargara de mostrar todos los elementos de la habitacion-->
+<!--Fin del header-->
+<!--Se encargara de mostrar toda la informacion del dispositivo-->
 <ion-content>
  <!--Pestañas del dispositivo-->
   <ion-segment color="danger" [(ngModel)]="segment" (ionChange)="segmentButtonClicked($event)">
@@ -21,7 +21,7 @@
       </ion-segment-button>
  </ion-segment>
  <!--Fin pestañas del dispositivo-->
-  <!--Muestra el numero de slider en la pagina-->
+  <!--Sliders-->
   <ion-slides  (ionSlideDidChange)="slideChanged()" [options]="slideOpts">
       <!--Slide dispositivos inteligentes-->
       <ion-slide>
@@ -30,13 +30,14 @@
                 <!--Acomoda el numero de tarjetas de acuerdo al tamaño de pantalla-->
                 <ion-col size-xs="6" size-sm="6" size-md="6" size-lg="6"
                   *ngFor="let datastream of dataStreams">
-                  <!--Carga de los elementos filtrados por la habitacion escogida--> 
+                  <!--Carga de los datastreams--> 
                   <ion-card>
                     <ion-card-header  >
                       <ion-card-title><b>{{ datastream.$.name }}</b></ion-card-title>
                     </ion-card-header>
                         <ion-card-content>
-                            <div *ngIf= "datastream.value[0].$.type  == 'bool';else evento"> 
+                          <!--En caso del que dataStream sea un actuador se mostraran unos switch-->
+                            <div *ngIf= "datastream.value[0].$.type  == 'bool' || datastream.value[0].$.type  == 'boolean';else sensor"> 
                                     <div *ngIf= "datastream.value[0]._  == '0';else encendido"> 
                                     <ion-toggle id="{{datastream.$.name}}" disabled="disabled" color="danger" > </ion-toggle>
                                 </div>
@@ -44,18 +45,18 @@
                                     <ion-toggle  id="{{datastream.$.name}}" color="danger" disabled="disabled" checked> </ion-toggle>
                                 </ng-template>  
                             </div>
-                            <ng-template #evento>
+                          <!--En caso de que el dataStream sea un sensor-->
+                            <ng-template #sensor>
                                 <h2><b>{{ datastream.value[0]._}}</b></h2>
                             </ng-template>
                         </ion-card-content>
-                    
                   </ion-card>
-                  <!--Fin Carga de los elementos filtrados por la habitacion escogido-->
+                  <!--Fin Carga de los DataSream-->
                 </ion-col>
               </ion-row>
             </ion-grid>
       </ion-slide>
-      <!--Slide fin dispositivos inteligentes-->
+      <!--Slide fin DataSreams-->
       <!--Slide informacion dispositivo-->
       <ion-slide >
           <ion-grid>
@@ -110,13 +111,11 @@
           </ion-grid>
       </ion-slide>
       <!--Slide fin informacion dispositivo-->
-
-
   </ion-slides>
-  <!--Fin slider-->
+  <!--Fin sliders-->
 </ion-content>
 <!--Fin muestra de elementos de la habitacion-->
-  <!-- fab placed to the top end -->
+  <!-- Boton agregar dispositivo -->
   <ion-fab vertical="bottom" horizontal="end" slot="fixed" >
     <ion-fab-button (click)="pushCrearDispositivo()"  color="danger" >
       <ion-icon name="checkmark"></ion-icon>

@@ -20,8 +20,8 @@ export class EscanerComponent implements OnInit {
   ngOnInit() { }
 
   // Manejador Click de leerCodigo QR
-  leerCodigo() {
-    this.barcodeScanner.scan({ disableSuccessBeep: true, formats : 'QR_CODE', prompt : 'Ponga el código QR dentro del lector' })
+  async leerCodigo() {
+    await this.barcodeScanner.scan({ disableSuccessBeep: true, formats : 'QR_CODE', prompt : 'Ponga el código QR dentro del lector' })
     .then(barcodeData => {
       this.textoQR = barcodeData.text;
       // Envia los datos leidos del QR a la pagina crear preferencia.
@@ -29,7 +29,7 @@ export class EscanerComponent implements OnInit {
      }).catch(err => {
          console.log('Error', err);
      });
-     return this.textoQR;
+    return this.textoQR;
     /*this.barcodeScanner.scan(
       function(result) {
         this.textoQR = result.text;

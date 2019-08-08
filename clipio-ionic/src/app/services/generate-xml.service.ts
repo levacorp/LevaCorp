@@ -260,7 +260,7 @@ export class GenerateXMLService {
               xw.endElement();
             xw.endElement();
             xw.startElement('InfoItem').writeAttribute('name', 'name_building_environment');
-              xw.startElement('value').writeAttribute('type', 'string').text("");
+              xw.startElement('value').writeAttribute('type', 'string').text(habitacion);
               xw.endElement();
             xw.endElement();
           xw.endElement();
@@ -299,7 +299,7 @@ export class GenerateXMLService {
               xw.endElement();
             xw.endElement();
             xw.startElement('InfoItem').writeAttribute('name', 'name_building_environment');
-              xw.startElement('value').writeAttribute('type', 'string').text("");
+              xw.startElement('value').writeAttribute('type', 'string').text(habitacion);
               xw.endElement();
             xw.endElement();
           xw.endElement();
@@ -308,6 +308,7 @@ export class GenerateXMLService {
     xw.endElement();
     console.log(xw.toString());
   }
+  //crea xml de asocion de un dispostivo con una habitacion
   crearAsociacionDispositivosHabitacion(edificio, habitacion , nombreDispositivo, idDispositivo, ipDispositivo)
   {
     const XMLWriter = require('xml-writer');
@@ -330,7 +331,7 @@ export class GenerateXMLService {
               xw.endElement();
             xw.endElement();
             xw.startElement('InfoItem').writeAttribute('name', 'name_house_part');
-              xw.startElement('value').writeAttribute('type', 'string').text("");
+              xw.startElement('value').writeAttribute('type', 'string').text(habitacion);
               xw.endElement();
             xw.endElement();
             xw.startElement('InfoItem').writeAttribute('name', 'name_building');
@@ -347,6 +348,7 @@ export class GenerateXMLService {
     xw.endElement();
     console.log(xw.toString());
   }
+  // crea xml del dispositivo con un elemento
   crearAsociacionDispositivosElemento(nombreThing, nombreDispositivo, idDispositivo, ipDispositivo)
   {
     const XMLWriter = require('xml-writer');
@@ -378,8 +380,35 @@ export class GenerateXMLService {
     xw.endElement();
     console.log(xw.toString());
   }
+  crearHabitacion(edificio, piso, habitacion)
+  {
+    var XMLWriter = require('xml-writer');
+    let xw = new XMLWriter;
+    xw.startDocument();
+    xw.startElement('Objects');
+    xw.startElement('Object');
+    xw.startElement('InfoItem').writeAttribute('name', 'BuildingEnvironment');
+    xw.startElement('InfoItem').writeAttribute('name', habitacion);
+    xw.startElement('InfoItem').writeAttribute('name', 'name_thing');
+    xw.startElement('value').writeAttribute('type', 'string');
+    xw.text(habitacion).endElement('/InfoItem').endElement('InfoItem');
 
-    
+    xw.startElement('InfoItem').writeAttribute('name', 'name_building');
+    xw.startElement('value').writeAttribute('type', 'string');
+    xw.text(edificio).endElement('/InfoItem').endElement('InfoItem');
+
+    xw.startElement('InfoItem').writeAttribute('name', 'name_part');
+    xw.startElement('value').writeAttribute('type', 'string');
+    xw.text(habitacion).endElement('/InfoItem').endElement('InfoItem');
+
+    xw.startElement('InfoItem').writeAttribute('name', 'name_flat');
+    xw.startElement('value').writeAttribute('type', 'string');
+    xw.text(piso).endElement('/InfoItem').endElement('/InfoItem').endElement('/InfoItem');
+    xw.endElement('/Object').endElement('/Objects');
+    xw.endDocument();
+    console.log(xw.toString());
+  }
+
   //crea el XML para registrar un nuevo edificio
   setXMLRegistrarEdificio(json) {
     var XMLWriter = require('xml-writer');
