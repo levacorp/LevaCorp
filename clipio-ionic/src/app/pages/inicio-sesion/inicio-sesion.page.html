@@ -24,7 +24,7 @@
             [class.invalid]="!myform.controls.email.valid && myform.controls.email.dirty"></ion-input>
         </ion-item>
         <ion-item class="error-message" *ngIf="!myform.controls.email.valid && myform.controls.email.dirty">
-          <ion-text color="danger"><small> *Estructura correo example@hotmail.com</small>
+          <ion-text color="danger"><small> *Correo incorrecto. Ej: example@dominio.com</small>
           </ion-text>
         </ion-item>
 
@@ -33,7 +33,7 @@
             [class.invalid]="!myform.controls.contrasena.valid && myform.controls.contrasena.dirty"></ion-input>
         </ion-item>
         <ion-item class="error-message" *ngIf="!myform.controls.contrasena.valid && myform.controls.contrasena.dirty">
-          <ion-text color="danger"><small> *Debe tener por lo menos 8 caracteres</small>
+          <ion-text color="danger"><small> *Se requieren por lo menos 8 caracteres</small>
           </ion-text>
         </ion-item>
 

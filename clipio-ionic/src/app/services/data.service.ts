@@ -12,16 +12,24 @@ import { RaspberryService } from './raspberry.service';
   providedIn: 'root'
 })
 export class DataService {
+
   datosPost: Observable<any>;
+
+  /* Email y mac estaticos para todas las peticiones */
+  email = 'c@gmail.com';
+  mac = '02:00:00:00:00:00';
+  urlServidor = 'http://192.168.0.11:8080';
+
   constructor(private https: HTTP,
     private http: HttpClient,
     private httpNative: HTTP,
     private dataUserService: DataUserService,
     private requestRaspberryService: RaspberryService,
-  ) { 
+  ) {
   }
 
-  getXMLInicioSesion() {
+  /* Obtiene el XML de un usuario consultando al servidor PU*/
+  getXMLInicioSesion(email: string, pass: string) {
     let json;
     // tslint:disable-next-line: max-line-length
     const xml = '<?xml version="1.0" encoding="UTF-8"?><Objects><Object><InfoItem name="application"><InfoItem name="name_app"><value type="string">Clipio</value></InfoItem><InfoItem name="user_app"><value type="string">julian@gmail.com</value></InfoItem><InfoItem name="password_app"><value type="string">7TRVtu3p9mXTwnEzGdYeIw==</value></InfoItem></InfoItem></Object></Objects>';
@@ -37,10 +45,10 @@ export class DataService {
     return json;
   }
 
-  /* Obtiene los datos de inicio de sesion. Retorna un arreglo con [{email:email,contraseña:contraseña}] */
-  getDatosInicioSesion() {
+  /* Obtiene los datos de inicio de sesion. Retorna un arreglo con [{email:email,password:contraseña}] */
+  getDatosInicioSesion(email: string, pass: string) {
     const datosInicioSesion = [];
-    const infoInicioSesion = this.getXMLInicioSesion().Objects.Object[0].InfoItem[0].InfoItem;
+    const infoInicioSesion = this.getXMLInicioSesion(email, pass).Objects.Object[0].InfoItem[0].InfoItem;
     // tslint:disable-next-line: prefer-for-of
     if (infoInicioSesion.length >= 3) {
       datosInicioSesion.push({ email: infoInicioSesion[1].value[0]._ });
@@ -320,62 +328,104 @@ export class DataService {
   });
   }
 
-  crearECA(xml: string) {
+  async crearECA(xml: string) {
     // ToDo: Mirar que retorna el Servidor PU
-    // const url =  this.urlServidor + "RegistrarPreferencia?email=" + email + "&mac=" + mac + "&data=" + xml;
+    xml = encodeURIComponent(xml);
+    console.log(xml);
+    const url = this.urlServidor + '/RegistrarPreferencia?email=' + this.email + '&mac=' + this.mac + '&data=' + xml;
+    await this.http.get(url, {responseType: 'text'})
+    .subscribe(data => {
+      alert(data);
+    }, error => {
+      alert(error);
+    });
+
+    console.log('Registrada preferencia');
+    // Actualizar lista de Preferencias
+    this.listarECAs();
+  }
+
+  async modificarECA(xml: string) {
+    xml = encodeURIComponent(xml);
+    // ToDo: Mirar que retorna el Servidor PU
+    // const url =  this.urlServidor + "ModificarPreferencia?email=" + email + "&mac=" + mac + "&data=" + xml;
+    const url = this.urlServidor + '/ModificarPreferencia?email=' + this.email + '&mac=' + this.mac + '&data=' + xml;
+    await this.http.get(url, {responseType: 'text'})
+    .subscribe(data => {
+      alert(data);
+    }, error => {
+      alert(error);
+    });
+
+    // Actualizar lista de Preferencias
     this.listarECAs();
   }
 
 
-  listarECAs() {
+  async listarECAs() {
     // ToDo: Traer xml del servidor
-    // const url = this.urlServidor + "ConsultarPreferencias?email=" + email + "&mac=" + mac ;
-    const xml = '<?xml version=\'1.0\' encoding=\'utf-8\'?> <Objects> <Object> <InfoItem name="Preferencias"> <InfoItem name="preferencia"> <InfoItem name="name_preference"> <value type="string">apagarriego</value> </InfoItem> <InfoItem name="state_preference"> <value type="string">on</value> </InfoItem> <InfoItem name="osid_object_event"> <value type="string">708637323</value> </InfoItem> <InfoItem name="ip_event_object"> <value type="string">192.168.123.100</value> </InfoItem> <InfoItem name="name_event_object"> <value type="string">Regulador de Temperatura</value> </InfoItem> <InfoItem name="id_event_resource"> <value type="string">temperatura</value> </InfoItem> <InfoItem name="name_event_resource"> <value type="string" /> </InfoItem> <InfoItem name="comparator_condition"> <value type="string">menor</value> </InfoItem> <InfoItem name="variable_condition"> <value type="string">29</value> </InfoItem> <InfoItem name="type_variable_condition"> <value type="string">float</value> </InfoItem> <InfoItem name="unit_condition"> <value type="string">None</value> </InfoItem> <InfoItem name="meaning_condition"> <value type="string">hace frio</value> </InfoItem> <InfoItem name="osid_object_action"> <value type="string">1931642039</value> </InfoItem> <InfoItem name="ip_action_object"> <value type="string">192.168.123.101</value> </InfoItem> <InfoItem name="name_action_object"> <value type="string">Regulador de Humedad en Planta</value> </InfoItem> <InfoItem name="id_action_resource"> <value type="string">riego</value> </InfoItem> <InfoItem name="name_action_resource"> <value type="string">riego</value> </InfoItem> <InfoItem name="comparator_action"> <value type="string">igual</value> </InfoItem> <InfoItem name="variable_action"> <value type="string">0</value> </InfoItem> <InfoItem name="type_variable_action"> <value type="string">bool</value> </InfoItem> <InfoItem name="unit_action"> <value type="string">None</value> </InfoItem> <InfoItem name="meaning_action"> <value type="string">apagar riego</value> </InfoItem> </InfoItem> <InfoItem name="preferencia"> <InfoItem name="name_preference"> <value type="string">encenderriego</value> </InfoItem> <InfoItem name="state_preference"> <value type="string">on</value> </InfoItem> <InfoItem name="osid_object_event"> <value type="string">708637323</value> </InfoItem> <InfoItem name="ip_event_object"> <value type="string">192.168.123.100</value> </InfoItem> <InfoItem name="name_event_object"> <value type="string">Regulador de Temperatura</value> </InfoItem> <InfoItem name="id_event_resource"> <value type="string">temperatura</value> </InfoItem> <InfoItem name="name_event_resource"> <value type="string" /> </InfoItem> <InfoItem name="comparator_condition"> <value type="string">mayor</value> </InfoItem> <InfoItem name="variable_condition"> <value type="string">29</value> </InfoItem> <InfoItem name="type_variable_condition"> <value type="string">float</value> </InfoItem> <InfoItem name="unit_condition"> <value type="string">None</value> </InfoItem> <InfoItem name="meaning_condition"> <value type="string">hace calor</value> </InfoItem> <InfoItem name="osid_object_action"> <value type="string">1931642039</value> </InfoItem> <InfoItem name="ip_action_object"> <value type="string">192.168.123.101</value> </InfoItem> <InfoItem name="name_action_object"> <value type="string">Regulador de Humedad en Planta</value> </InfoItem> <InfoItem name="id_action_resource"> <value type="string">riego</value> </InfoItem> <InfoItem name="name_action_resource"> <value type="string">riego</value> </InfoItem> <InfoItem name="comparator_action"> <value type="string">igual</value> </InfoItem> <InfoItem name="variable_action"> <value type="string">1</value> </InfoItem> <InfoItem name="type_variable_action"> <value type="string">bool</value> </InfoItem> <InfoItem name="unit_action"> <value type="string">None</value> </InfoItem> <InfoItem name="meaning_action"> <value type="string">encender riego</value> </InfoItem> </InfoItem> </InfoItem> </Object> </Objects>';
 
     const lista = [];
 
-    let js;
-    const parseString = require('xml2js').parseString;
-    parseString(xml, function (err, result) {
-      js = result;
-    });
+    const url = this.urlServidor + '/ConsultarPreferencias?email=' + this.email + '&mac=' + this.mac;
+    await this.http.get(url, {responseType: 'text'})
+    .subscribe(data => {
+      alert(data);
 
-    // json.Objects.Object[0].InfoItem--->Preferencias
-    let jsObject = js.Objects.Object[0].InfoItem[0].InfoItem;
-    for (let i = 0; i < jsObject.length; i++) {
-      let jsonAux = {};
-      console.log(jsObject[i]);
-      jsonAux['nombreECA'] = jsObject[i].InfoItem[0].value[0]._;
-      jsonAux['estadoECA'] = jsObject[i].InfoItem[1].value[0]._;
+      console.log(data);
+      // const xml = '<?xml version=\'1.0\' encoding=\'utf-8\'?> <Objects> <Object> <InfoItem name="Preferencias"> <InfoItem name="preferencia"> <InfoItem name="name_preference"> <value type="string">apagarriego</value> </InfoItem> <InfoItem name="state_preference"> <value type="string">on</value> </InfoItem> <InfoItem name="osid_object_event"> <value type="string">708637323</value> </InfoItem> <InfoItem name="ip_event_object"> <value type="string">192.168.123.100</value> </InfoItem> <InfoItem name="name_event_object"> <value type="string">Regulador de Temperatura</value> </InfoItem> <InfoItem name="id_event_resource"> <value type="string">temperatura</value> </InfoItem> <InfoItem name="name_event_resource"> <value type="string" /> </InfoItem> <InfoItem name="comparator_condition"> <value type="string">menor</value> </InfoItem> <InfoItem name="variable_condition"> <value type="string">29</value> </InfoItem> <InfoItem name="type_variable_condition"> <value type="string">float</value> </InfoItem> <InfoItem name="unit_condition"> <value type="string">None</value> </InfoItem> <InfoItem name="meaning_condition"> <value type="string">hace frio</value> </InfoItem> <InfoItem name="osid_object_action"> <value type="string">1931642039</value> </InfoItem> <InfoItem name="ip_action_object"> <value type="string">192.168.123.101</value> </InfoItem> <InfoItem name="name_action_object"> <value type="string">Regulador de Humedad en Planta</value> </InfoItem> <InfoItem name="id_action_resource"> <value type="string">riego</value> </InfoItem> <InfoItem name="name_action_resource"> <value type="string">riego</value> </InfoItem> <InfoItem name="comparator_action"> <value type="string">igual</value> </InfoItem> <InfoItem name="variable_action"> <value type="string">0</value> </InfoItem> <InfoItem name="type_variable_action"> <value type="string">bool</value> </InfoItem> <InfoItem name="unit_action"> <value type="string">None</value> </InfoItem> <InfoItem name="meaning_action"> <value type="string">apagar riego</value> </InfoItem> </InfoItem> <InfoItem name="preferencia"> <InfoItem name="name_preference"> <value type="string">encenderriego</value> </InfoItem> <InfoItem name="state_preference"> <value type="string">on</value> </InfoItem> <InfoItem name="osid_object_event"> <value type="string">708637323</value> </InfoItem> <InfoItem name="ip_event_object"> <value type="string">192.168.123.100</value> </InfoItem> <InfoItem name="name_event_object"> <value type="string">Regulador de Temperatura</value> </InfoItem> <InfoItem name="id_event_resource"> <value type="string">temperatura</value> </InfoItem> <InfoItem name="name_event_resource"> <value type="string" /> </InfoItem> <InfoItem name="comparator_condition"> <value type="string">mayor</value> </InfoItem> <InfoItem name="variable_condition"> <value type="string">29</value> </InfoItem> <InfoItem name="type_variable_condition"> <value type="string">float</value> </InfoItem> <InfoItem name="unit_condition"> <value type="string">None</value> </InfoItem> <InfoItem name="meaning_condition"> <value type="string">hace calor</value> </InfoItem> <InfoItem name="osid_object_action"> <value type="string">1931642039</value> </InfoItem> <InfoItem name="ip_action_object"> <value type="string">192.168.123.101</value> </InfoItem> <InfoItem name="name_action_object"> <value type="string">Regulador de Humedad en Planta</value> </InfoItem> <InfoItem name="id_action_resource"> <value type="string">riego</value> </InfoItem> <InfoItem name="name_action_resource"> <value type="string">riego</value> </InfoItem> <InfoItem name="comparator_action"> <value type="string">igual</value> </InfoItem> <InfoItem name="variable_action"> <value type="string">1</value> </InfoItem> <InfoItem name="type_variable_action"> <value type="string">bool</value> </InfoItem> <InfoItem name="unit_action"> <value type="string">None</value> </InfoItem> <InfoItem name="meaning_action"> <value type="string">encender riego</value> </InfoItem> </InfoItem> </InfoItem> </Object> </Objects>';
 
-      jsonAux['idEventECA'] = jsObject[i].InfoItem[2].value[0]._;
-      jsonAux['ipEventECA'] = jsObject[i].InfoItem[3].value[0]._;
-      jsonAux['nombreEventObjeto'] = jsObject[i].InfoItem[4].value[0]._;
-      jsonAux['datastreamEvent'] = jsObject[i].InfoItem[5].value[0]._;
-      jsonAux['nombreEventoRecurso'] = jsObject[i].InfoItem[6].value[0]._;
-      jsonAux['comparadorEvento'] = jsObject[i].InfoItem[7].value[0]._;
-      jsonAux['valorEvento'] = jsObject[i].InfoItem[8].value[0]._;
-      jsonAux['dsFormatEvento'] = jsObject[i].InfoItem[9].value[0]._;
-      jsonAux['unitCondition'] = jsObject[i].InfoItem[10].value[0]._;
-      jsonAux['significadoEvento'] = jsObject[i].InfoItem[11].value[0]._;
+      let js;
+      const parseString = require('xml2js').parseString;
+      parseString(data, function (err, result) {
+        js = result;
+      });
 
-      jsonAux['idActionECA'] = jsObject[i].InfoItem[12].value[0]._;
-      jsonAux['ipActionECA'] = jsObject[i].InfoItem[13].value[0]._;
-      jsonAux['nombreActionObjeto'] = jsObject[i].InfoItem[14].value[0]._;
-      jsonAux['datastreamAction'] = jsObject[i].InfoItem[15].value[0]._;
-      jsonAux['nombreActionRecurso'] = jsObject[i].InfoItem[16].value[0]._;
-      jsonAux['comparadorAction'] = jsObject[i].InfoItem[17].value[0]._;
-      jsonAux['valorAccion'] = jsObject[i].InfoItem[18].value[0]._;
-      jsonAux['dsFormatAccion'] = jsObject[i].InfoItem[19].value[0]._;
-      jsonAux['unitAction'] = jsObject[i].InfoItem[20].value[0]._;
-      jsonAux['significadoAccion'] = jsObject[i].InfoItem[21].value[0]._;
+      console.log(js);
+      if (js.Objects.Object[0].InfoItem[0].$.name !== 'Exito') {
+        // json.Objects.Object[0].InfoItem--->Preferencias
+        let jsObject = js.Objects.Object[0].InfoItem[0].InfoItem;
+        for (let i = 0; i < jsObject.length; i++) {
+          let jsonAux = {};
+          console.log(jsObject[i]);
+          jsonAux['nombreECA'] = jsObject[i].InfoItem[0].value[0]._;
+          jsonAux['estadoECA'] = jsObject[i].InfoItem[1].value[0]._;
 
-      lista.push(jsonAux);
+          jsonAux['idEventECA'] = jsObject[i].InfoItem[2].value[0]._;
+          jsonAux['ipEventECA'] = jsObject[i].InfoItem[3].value[0]._;
+          jsonAux['nombreEventObjeto'] = jsObject[i].InfoItem[4].value[0]._;
+          jsonAux['datastreamEvent'] = jsObject[i].InfoItem[5].value[0]._;
+          jsonAux['nombreEventoRecurso'] = jsObject[i].InfoItem[6].value[0]._;
+          jsonAux['comparadorEvento'] = jsObject[i].InfoItem[7].value[0]._;
+          jsonAux['valorEvento'] = jsObject[i].InfoItem[8].value[0]._;
+          jsonAux['dsFormatEvento'] = jsObject[i].InfoItem[9].value[0]._;
+          jsonAux['unitCondition'] = jsObject[i].InfoItem[10].value[0]._;
+          jsonAux['significadoEvento'] = jsObject[i].InfoItem[11].value[0]._;
+
+          jsonAux['idActionECA'] = jsObject[i].InfoItem[12].value[0]._;
+          jsonAux['ipActionECA'] = jsObject[i].InfoItem[13].value[0]._;
+          jsonAux['nombreActionObjeto'] = jsObject[i].InfoItem[14].value[0]._;
+          jsonAux['datastreamAction'] = jsObject[i].InfoItem[15].value[0]._;
+          jsonAux['nombreActionRecurso'] = jsObject[i].InfoItem[16].value[0]._;
+          jsonAux['comparadorAction'] = jsObject[i].InfoItem[17].value[0]._;
+          jsonAux['valorAccion'] = jsObject[i].InfoItem[18].value[0]._;
+          jsonAux['dsFormatAccion'] = jsObject[i].InfoItem[19].value[0]._;
+          jsonAux['unitAction'] = jsObject[i].InfoItem[20].value[0]._;
+          jsonAux['significadoAccion'] = jsObject[i].InfoItem[21].value[0]._;
+
+          lista.push(jsonAux);
+        }
+      } else {
+        console.log('No hay ECAs');
+      }
+      
+      console.log('Actualizando Lista ECAS...');
+      console.log(lista);
+
+      this.dataUserService.setListaECA(lista);
+    }, error => {
+      alert(error);
     }
-    this.dataUserService.setListaECA(lista);
+    );
   }
-
-
-
-
 }

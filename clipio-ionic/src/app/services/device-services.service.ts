@@ -26,7 +26,6 @@ export class DeviceServicesService {
       this.androidPermissions.PERMISSION.READ_PHONE_STATE
     ).then(res => {
       if (res.hasPermission) {
-        alert('entro true');
       } else {
         this.androidPermissions.requestPermission(this.androidPermissions.PERMISSION.READ_PHONE_STATE).then(res => {
           alert('Permisos concedidos');

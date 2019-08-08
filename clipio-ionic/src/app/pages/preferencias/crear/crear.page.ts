@@ -162,53 +162,66 @@ export class CrearPage implements OnInit {
 
   capturarDatos() {
     /* Se capturan los datos guardados y formulario y se envian los necesarios para crear el xml */
-    const xmlCreacion = this.xmlService.crearECA(this.crearECAForm,
-      // Datos de Accion
-      { datastream: this.datastreamAccion,
-        dsFormat: this.dsFormatAccion,
-        nombreDispositivo: this.nombreDispAccion,
-        idDispositivo: this.idDispAccion,
-        ipDispositivo: this.ipDispAccion
-      },
-      // Datos de Evento
-      { datastream: this.datastreamEvento,
-        dsFormat: this.dsFormatEvento,
-        nombreDispositivo: this.nombreDispEvento,
-        idDispositivo: this.idDispEvento,
-        ipDispositivo: this.ipDispEvento
-      }
-      );
+    const xmlCreacion = this.xmlService.crearECA({
+      /* Informacion General del ECA */
+      nombreECA: this.crearECAForm.get('nombre').value,
+      estadoECA: 'on'
+    }, {
+      /* Informacion evento del ECA */
+      idDisp: this.idDispEvento,
+      ipDisp: this.ipDispEvento,
+      nombreDispositivo: this.nombreDispEvento,
+      datastream: this.datastreamEvento,
+    }, {
+      /* Informacion condicion del ECA */
+      comparador: this.crearECAForm.get('evento').get('comparador').value,
+      valor: this.crearECAForm.get('evento').get('valor').value,
+      dsFormat: this.dsFormatEvento,
+      significado: this.crearECAForm.get('evento').get('significado').value,
+    }, {
+      /* Informacion accion del ECA */
+      idDisp: this.idDispAccion,
+      ipDisp: this.ipDispAccion,
+      nombreDispositivo: this.nombreDispAccion,
+      datastream: this.datastreamAccion,
+      comparador: this.crearECAForm.get('accion').get('comparador').value,
+      valor: this.crearECAForm.get('accion').get('valor').value,
+      dsFormat: this.dsFormatAccion,
+      significado: this.crearECAForm.get('accion').get('significado').value,
+    });
+
+    /* Se envía el XML para realizar la consulta */
     this.dataService.crearECA(xmlCreacion);
   }
-  /*
+
   pruebaDatosXML() {
-    this.xmlService.crearECA({
-        nombre: 'MI ECA example',
-        evento: {
-          comparador: 'igual',
-          valor: '1',
-          significado: 'Hace calors',
-        },
-        accion: {
-          comparador: 'igual',
-          valor: '1',
-          significado: 'Prendete sesamo',
-        }
-      },
+    const xmlCreacion = this.xmlService.crearECA(
       {
+        nombreECA: 'MI ECA example',
+        estadoECA: 'on'
+      }, {
+        idDisp: '708637323',
+        ipDisp: '192.168.0.23',
+        nombreDispositivo: 'Regulador de tempartura',
         datastream: 'temperatura',
-        dsFormat: 'string',
+      }, {
+        comparador: 'mayor',
+        valor: '30',
+        dsFormat: 'float',
+        significado: 'hace calors'
+      }, {
+        idDisp: '708637323',
+        ipDisp: '192.168.0.23',
         nombreDispositivo: 'Regulador de tempartura',
-        idDispositivo: '708637323',
-        ipDispositivo: '192.168.0.23'
-      },
-      {
         datastream: 'ventilador',
-        dsFormat: 'bool',
-        nombreDispositivo: 'Regulador de tempartura',
-        idDispositivo: '708637323',
-        ipDispositivo: '192.168.0.23'
+        comparador: 'igual',
+        valor: '1',
+        dsFormat: 'boolean',
+        significado: 'prende esa monda',
       }
-      );
-  }*/
+    );
+    
+    /* Se envía el XML para realizar la consulta */
+    this.dataService.crearECA(xmlCreacion);
+  }
 }
