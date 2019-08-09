@@ -314,6 +314,9 @@ export class DataService {
       || usuario.Objects.Object[0].InfoItem[0].InfoItem[i].value[0]._ === ''
       || usuario.Objects.Object[0].InfoItem[0].InfoItem[i].value[0]._ === 'None') {
       datos.push('');
+      if(usuario.Objects.Object[0].InfoItem[0].InfoItem[i].value[0]._ === 'None'){
+        datos.push('');
+      }
     } else {
       console.log('datos: ', usuario.Objects.Object[0].InfoItem[0].InfoItem[i].value[0]._);
       datos.push(usuario.Objects.Object[0].InfoItem[0].InfoItem[i].value[0]._);
