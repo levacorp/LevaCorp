@@ -68,7 +68,6 @@ export class DataService {
     let resultado = false;
     let json;
     let url = this.getURLInicioSesion(email, pass);
-    url = encodeURIComponent(url);
     console.log(url);
     let result = await this.http.get(url, { responseType: 'text' }).toPromise();
     const parseString = require('xml2js').parseString;
@@ -87,6 +86,7 @@ export class DataService {
   }
 
   getURLInicioSesion(email: string, pass: string) {
+    pass = btoa(pass);
     const url = this.urlServidor + "/ValidarUsuarioApp?email=" + email
       + "&user_name=" + email + "&mac=" + this.mac +
       "&name_app=Clipio&password=" + pass;

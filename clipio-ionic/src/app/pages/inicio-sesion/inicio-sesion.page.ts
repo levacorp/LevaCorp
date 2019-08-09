@@ -36,8 +36,8 @@ export class InicioSesionPage implements OnInit {
   }
 
   async login() {
-    this.myform.value.contrasena = this.encryptService.encrypt(this.myform.value.contrasena);
-    console.log('pass:', this.myform.value.contrasena);
+    //this.myform.value.contrasena = this.encryptService.encrypt(this.myform.value.contrasena);
+    //console.log('pass:', this.myform.value.contrasena);
     // Carga los datos a la clase que contiene los datos del entorno
     //this.dataService.getDatosInicioSesion(this.myform.value.email, this.myform.value.contrasena);
     await this.dataService.getXMLInicioSesion3(this.myform.value.email,this.myform.value.contrasena)
