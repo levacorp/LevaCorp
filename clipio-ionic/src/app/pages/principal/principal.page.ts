@@ -30,7 +30,6 @@ export class PrincipalPage implements OnInit {
     private router: Router,
     private activatedRoute: ActivatedRoute,
     private dataUserService: DataUserService,
-    private httpClient: HttpClient,
     ) { }
 
   /* Inicializa los atributos a utilizar */
@@ -102,5 +101,4 @@ export class PrincipalPage implements OnInit {
       }
     }
   }
-
 }

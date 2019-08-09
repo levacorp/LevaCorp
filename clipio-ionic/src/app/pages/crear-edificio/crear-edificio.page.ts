@@ -3,6 +3,7 @@ import { DataService } from 'src/app/services/data.service';
 import { FormBuilder, Validators, FormGroup } from '@angular/forms';
 import { NavController, AlertController } from '@ionic/angular';
 import { GenerateXMLService } from 'src/app/services/generate-xml.service';
+import { UtilitiesService } from 'src/app/services/utilities.service';
 
 @Component({
   selector: 'app-crear-edificio',
@@ -10,8 +11,9 @@ import { GenerateXMLService } from 'src/app/services/generate-xml.service';
   styleUrls: ['./crear-edificio.page.scss'],
 })
 export class CrearEdificioPage implements OnInit {
-  nombre: null;
-  piso: null;
+  nombre = null;
+  piso = null;
+  xmlRegistrarEdificio = null;
 
   myform: FormGroup;
   constructor(
@@ -19,7 +21,8 @@ export class CrearEdificioPage implements OnInit {
     public formBuilder: FormBuilder,
     public navCtrl: NavController,
     private generarXML: GenerateXMLService,
-    public alertController: AlertController
+    public alertController: AlertController, 
+    private utilidades : UtilitiesService
   ) {
     this.myform = this.formBuilder.group({
       nombre: ['', Validators.compose([Validators.required])],
@@ -30,28 +33,23 @@ export class CrearEdificioPage implements OnInit {
 
   ngOnInit() {
   }
-  //metodo que guarda y envia el formulario para crear el xml para registrar un nuevo edificio
-  saveData() {
+  // metodo que guarda y envia el formulario para crear el xml para registrar un nuevo edificio
+
+  async saveData() {
+
+    let codigo;
+    this.xmlRegistrarEdificio = this.generarXML.setXMLRegistrarEdificio(this.myform);
     if (this.myform.valid) {
-      const xml=this.generarXML.setXMLRegistrarEdificio(this.myform);
+        await this.dataservice.registrarEdificio(this.xmlRegistrarEdificio)
+        .then(async data => {
+          alert(data);
+          codigo = await this.utilidades.alertEspecifica( "Registro Edificio ", data);
+          console.log(codigo);
+          
+          if (codigo === '1028') {
+            this.myform.reset();
+          }
+        });
     }
   }
-  async exitosoAlert() {
-    const alert = await this.alertController.create({
-      header: 'Informacion',
-      message: 'Se ha creado correctamente.',
-      buttons: ['OK']
-    });
-    await alert.present();
-  }
-
-  async fracasoAlert() {
-    const alert = await this.alertController.create({
-      header: 'Informacion',
-      message: 'No se ha podido crear el nuevo edificio.',
-      buttons: ['OK']
-    });
-    await alert.present();
-  }
-
 }

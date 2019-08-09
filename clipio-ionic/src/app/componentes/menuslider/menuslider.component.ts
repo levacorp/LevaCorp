@@ -32,8 +32,8 @@ export class MenusliderComponent implements OnInit {
     private authService: AuthenticationService,
     private dataservice: DataService
   ) { }
-  ngOnInit() {
-    this.perfil = this.dataservice.getPerfilUsuario();
+  async ngOnInit() {
+    this.perfil = await this.dataservice.getPerfilUsuario();
   }
 
   pushPerfil() {
