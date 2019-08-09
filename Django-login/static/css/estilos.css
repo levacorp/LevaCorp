@@ -10,7 +10,9 @@
     background-position: center bottom, center calc(100% - 1px);
     background-attachment: fixed;
 }
-
+.logoCorp{
+    margin-left: 0;
+}
 /* Estilo para el ancho y alto de todas las pantallas principales */
 #wrapper {
     padding-left: 70px;
