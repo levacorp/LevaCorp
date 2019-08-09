@@ -16,7 +16,7 @@ export class DataService implements OnInit {
   /* Email y mac estaticos para todas las peticiones */
   email = 'daniel@gmail.com';
   mac = '02:00:00:00:00:00';
-  urlServidor = 'http://192.168.0.28:8080';
+  urlServidor = 'http://192.168.0.7:8080';
 
   constructor(
     private https: HTTP,
@@ -177,7 +177,8 @@ export class DataService implements OnInit {
     return habitaciones;
   }
 
-  /*Obtiene la informacion de un solo edificio. Params: xml con la info de todos los edificios, nombre del edificio a buscar*/
+  /*Obtiene la informacion de un solo edificio. Params: xml con la info de todos los edificios,
+   nombre del edificio a buscar*/
   getEdificio(infoEdificios, nombreEdificio: string) {
     let infoEdificioBuscado = [];
     /* Se recorren todos los edificios */
@@ -546,11 +547,14 @@ export class DataService implements OnInit {
     let datos = null;
     let respuesta;
     console.log(xml);
-
     const url = this.urlServidor + '/RegistrarBuilding?email=' + this.email + '&mac=' + this.mac + '&data=' + xml;
+<<<<<<< HEAD
 
     datos = await this.http.get(url, { responseType: 'text' }).toPromise();
 
+=======
+    datos = await this.http.get(url, { responseType: 'text' }).toPromise();
+>>>>>>> c7ffc453d0c9eaf59045c3c819af20ce1cf93990
     let js = null;
     const parseString = require('xml2js').parseString;
     parseString(datos, function (err, result) {
@@ -560,11 +564,6 @@ export class DataService implements OnInit {
         js = result;
       }
     });
-    console.log(js);
-    console.log(js.Objects.Object[0].InfoItem[0].$.name);
-    console.log(js.Objects.Object[0].InfoItem[0].value[0]._);
-
-    console.log('Registrado Edificio');
 
     return js;
 

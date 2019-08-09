@@ -19,46 +19,86 @@
             <ion-item text-center>
               <img slot="start" src="/assets/icon/UserLogo.png" />
               <ion-input type="text" placeholder="Nombres" value='{{perfil[0]}}' formControlName="nombre"
-                ></ion-input>
+                [class.invalid]="!myform.controls.nombre.valid && myform.controls.nombre.dirty"></ion-input>
+            </ion-item>
+            <ion-item class="error-message" *ngIf="!myform.controls.nombre.valid && myform.controls.nombre.dirty">
+              <ion-text color="danger"><small> *Campo requerido</small>
+              </ion-text>
             </ion-item>
 
             <ion-item text-center>
               <img slot="start" src="/assets/icon/name.png" />
               <ion-input type="text" placeholder="Apellidos" value='{{perfil[1]}}' formControlName="apellido"
-                >
+                [class.invalid]="!myform.controls.apellido.valid && myform.controls.apellido.dirty">
               </ion-input>
             </ion-item>
+            <ion-item class="error-message" *ngIf="!myform.controls.apellido.valid && myform.controls.apellido.dirty">
+              <ion-text color="danger"><small> *Campo requerido</small>
+              </ion-text>
+            </ion-item>
+
             <ion-item text-center>
               <img slot="start" src="/assets/icon/smartphone.png" />
               <ion-input type="text" placeholder="Celular" value='{{perfil[2]}}' formControlName="celular"
-              > </ion-input>
+                [class.invalid]="!myform.controls.celular.valid && myform.controls.celular.dirty"> </ion-input>
             </ion-item>
-            
+            <ion-item class="error-message" *ngIf="!myform.controls.celular.valid && myform.controls.celular.dirty">
+              <ion-text color="danger"><small> *solo numeros 8-10</small>
+              </ion-text>
+            </ion-item>
+
             <ion-item text-center>
               <img slot="start" src="/assets/icon/male-and-female.png" />
-              <ion-input type="text" placeholder="Genero" value='{{perfil[3]}}' formControlName="genero"></ion-input>
+              <ion-input type="text" placeholder="Genero" value='{{perfil[3]}}' formControlName="genero"
+                [class.invalid]="!myform.controls.genero.valid && myform.controls.genero.dirty"></ion-input>
             </ion-item>
+            <ion-item class="error-message" *ngIf="!myform.controls.genero.valid && myform.controls.genero.dirty">
+              <ion-text color="danger"><small> *Femenino - Masculino - Otro </small>
+              </ion-text>
+            </ion-item>
+
             <ion-item text-center>
               <img slot="start" src="/assets/icon/email.png" />
-              <ion-input type="text" disabled placeholder="E-mail" value='{{perfil[7]}}' formControlName="email">
-              </ion-input>
-
+              <ion-input type="text" disabled placeholder="E-mail" value='{{perfil[7]}}' formControlName="email"
+                [class.invalid]="!myform.controls.email.valid && myform.controls.email.dirty"></ion-input>
+            </ion-item>
+            <ion-item class="error-message" *ngIf="!myform.controls.email.valid && myform.controls.email.dirty">
+              <ion-text color="danger"><small> *Exameple@gmail.com</small>
+              </ion-text>
             </ion-item>
             <ion-item text-center>
               <img slot="start" src="/assets/icon/4th-of-july.png" />
               <ion-input type="text" placeholder="Fecha de Nacimiento" value='{{perfil[4]}}'
-                formControlName="fechaNacimiento"></ion-input>
+                formControlName="fechaNacimiento"
+                [class.invalid]="!myform.controls.fechaNacimiento.valid && myform.controls.fechaNacimiento.dirty">
+              </ion-input>
+            </ion-item>
+            <ion-item class="error-message"
+              *ngIf="!myform.controls.fechaNacimiento.valid && myform.controls.fechaNacimiento.dirty">
+              <ion-text color="danger"><small> *dd/mm/aa</small>
+              </ion-text>
             </ion-item>
 
             <ion-item text-center>
               <img slot="start" src="/assets/icon/place.png" />
               <ion-input type="text" placeholder="Lugar de nacimiento" value='{{perfil[6]}}'
-                formControlName="lugarNacimiento"></ion-input>
+                formControlName="lugarNacimiento"
+                [class.invalid]="!myform.controls.lugarNacimiento.valid && myform.controls.lugarNacimiento.dirty">
+              </ion-input>
+            </ion-item>
+            <ion-item class="error-message"
+              *ngIf="!myform.controls.lugarNacimiento.valid && myform.controls.lugarNacimiento.dirty">
+              <ion-text color="danger"><small> *nombre del lugar en que nacio</small>
+              </ion-text>
             </ion-item>
             <ion-item text-center>
               <img slot="start" src="/assets/icon/facebook.png" />
-              <ion-input type="text" placeholder="Facebook" value='{{perfil[5]}}' formControlName="facebook">
-              </ion-input>
+              <ion-input type="text" placeholder="Facebook" value='{{perfil[5]}}' formControlName="facebook"
+                [class.invalid]="!myform.controls.facebook.valid && myform.controls.facebook.dirty"></ion-input>
+            </ion-item>
+            <ion-item class="error-message" *ngIf="!myform.controls.facebook.valid && myform.controls.facebook.dirty">
+              <ion-text color="danger"><small> *fecebook completo</small>
+              </ion-text>
             </ion-item>
 
           </ion-list>
@@ -69,7 +109,7 @@
       <ion-toolbar>
         <ion-row>
           <ion-col col-6 offset-3 text-center>
-            <ion-button color="danger" type="submit" mat-raised-button [disabled]="!myform.valid">Listo</ion-button>
+            <ion-button color="danger" type="submit" [disabled]="!myform.valid">Listo</ion-button>
           </ion-col>
         </ion-row>
       </ion-toolbar>

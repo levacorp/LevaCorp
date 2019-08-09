@@ -56,14 +56,12 @@ export class PerfilPage implements OnInit {
   //metodo que guarda y envia el formulario para crear el xml del perfil usuario
   async saveData() {
     let codigo;
-
     this.xmlRegistrarUsuario = this.generarXML.setXMLPerfil(this.myform);
     // if (this.myform.valid) {
     await this.dataservice.modificarPerfil(this.xmlRegistrarUsuario, this.myform.value.email)
       .then(async data => {
-        codigo = await this.utilidades.alertEspecifica('Perfil Actualizado ', data);
+        codigo = await this.utilidades.alertEspecifica('Perfil', data);
         console.log(codigo);
-
         if (codigo === '1028' || codigo === '1044') {
         }
       });
