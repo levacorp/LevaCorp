@@ -14,17 +14,17 @@ import { AuthenticationService } from 'src/app/services/authentication.service';
 export class PerfilPage implements OnInit {
   perfil: any[];
   myform: FormGroup;
-  xmlRegistrarUsuario=null;
+  xmlRegistrarUsuario = null;
   constructor(
     private dataservice: DataService,
     public formBuilder: FormBuilder,
     public navCtrl: NavController,
     private generarXML: GenerateXMLService,
-    public alertController: AlertController,    
-    private utilidades : UtilitiesService,
+    public alertController: AlertController,
+    private utilidades: UtilitiesService,
     private authservice: AuthenticationService
   ) {
-    //componentes del formulario myform
+    // componentes del formulario myform
     this.myform = this.formBuilder.group({
       nombre: ['', Validators.compose([Validators.required, Validators.maxLength(20)])],
       apellido: ['', Validators.compose([Validators.required, Validators.maxLength(20)])],
@@ -40,8 +40,11 @@ export class PerfilPage implements OnInit {
   }
 
   async ngOnInit() {
-    this.perfil = await this.dataservice.getPerfilUsuario();
-    console.log(this.perfil);
+    await this.dataservice.getPerfilUsuario().then( res => {
+      this.perfil = res;
+      console.log(this.perfil);
+    });
+    /*console.log(this.perfil);
     this.myform.get('nombre').setValue(this.perfil[0]);
     this.myform.get('apellido').setValue(this.perfil[1]);
     this.myform.get('celular').setValue(this.perfil[2]);
@@ -50,7 +53,7 @@ export class PerfilPage implements OnInit {
     this.myform.get('fechaNacimiento').setValue(this.perfil[4]);
     this.myform.get('lugarNacimiento').setValue(this.perfil[6]);
     this.myform.get('facebook').setValue(this.perfil[5]);
-    console.log(this.perfil);
+    console.log(this.perfil);*/
 
   }
   //metodo que guarda y envia el formulario para crear el xml del perfil usuario
@@ -59,16 +62,17 @@ export class PerfilPage implements OnInit {
 
     this.xmlRegistrarUsuario = this.generarXML.setXMLPerfil(this.myform);
     // if (this.myform.valid) {
-       await this.dataservice.modificarPerfil(this.xmlRegistrarUsuario, this.myform.get('email').value)
-       .then(async data => {
-          codigo = await this.utilidades.alertEspecifica( "Perfil Actualizado ", data);
-          console.log(codigo);
+    await this.dataservice.modificarPerfil(this.xmlRegistrarUsuario, this.myform.value.email)
+      .then(async data => {
+        codigo = await this.utilidades.alertEspecifica('Perfil Actualizado ', data);
+        console.log(codigo);
 
-          if (codigo === '1028' || codigo === '1044') {
-          }
-       });
+        if (codigo === '1028' || codigo === '1044') {
+        }
+      });
 
     //}
 
   }
+
 }
