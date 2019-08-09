@@ -16,15 +16,14 @@ export class DataService {
   datosPost: Observable<any>;
 
   /* Email y mac estaticos para todas las peticiones */
-  email = 'c@gmail.com';
+  email = 'camilo@gmail.com';
   mac = '02:00:00:00:00:00';
   urlServidor = 'http://10.130.2.148:8080';
 
   constructor(private https: HTTP,
     private http: HttpClient,
-    private httpNative: HTTP,
     private dataUserService: DataUserService,
-    private requestRaspberryService: RaspberryService,
+    private requestRaspberryService: RaspberryService
   ) {
   }
 
@@ -323,6 +322,7 @@ export class DataService {
     return xml.Objects.Object[0].send_state[0].InfoItem;
   }
   getXMLPerfilUsuario() {
+
     const xml = '<?xml version="1.0" encoding="UTF-8"?><Objects><Object><InfoItem name="Person"><InfoItem name="name_person"><value type="string">Andrea</value></InfoItem><InfoItem name="surname"><value type="string">Pabon</value></InfoItem><InfoItem name="celullar"><value type="string">None</value></InfoItem><InfoItem name="gender"><value type="string">Hombre</value></InfoItem><InfoItem name="date_of_birth"><value type="string">2017-9-18</value></InfoItem><InfoItem name="facebook"><value type="string">None</value></InfoItem><InfoItem name="place_of_birth"><value type="string">Popayan</value></InfoItem><InfoItem name="email"><value type="string">andrea@unicauca.edu.co</value></InfoItem></InfoItem></Object></Objects>';
     // Se parsea el xml a un objeto javascript para poder manejarlo más facil
     let json;
@@ -333,18 +333,35 @@ export class DataService {
     return json;
 
   }
-  getPerfilUsuario() {
-    const usuario = this.getXMLPerfilUsuario().Objects.Object[0].InfoItem[0];
-    let datos = [];
-    for (let i = 0; i < usuario.InfoItem.length; i++) {
-      if (usuario.InfoItem[i].value[0]._ === 'None') {
-        datos.push('');
-      }
-      else {
-        datos.push(usuario.InfoItem[i].value[0]._);
-      }
+  parsear(xml) {
+
+  //  const xml = '<?xml version="1.0" encoding="UTF-8"?><Objects><Object><InfoItem name="Person"><InfoItem name="name_person"><value type="string">Andrea</value></InfoItem><InfoItem name="surname"><value type="string">Pabon</value></InfoItem><InfoItem name="celullar"><value type="string">None</value></InfoItem><InfoItem name="gender"><value type="string">Hombre</value></InfoItem><InfoItem name="date_of_birth"><value type="string">2017-9-18</value></InfoItem><InfoItem name="facebook"><value type="string">None</value></InfoItem><InfoItem name="place_of_birth"><value type="string">Popayan</value></InfoItem><InfoItem name="email"><value type="string">andrea@unicauca.edu.co</value></InfoItem></InfoItem></Object></Objects>';
+    // Se parsea el xml a un objeto javascript para poder manejarlo más facil
+    let json;
+    const parseString = require('xml2js').parseString;
+    parseString(xml, function (err, result) {
+      json = result;
+    });
+    return json;
+
+  }
+ async getPerfilUsuario() {
+  // const usuario = this.getXMLPerfilUsuario().Objects.Object[0].InfoItem[0];
+  const url = this.urlServidor + '/ConsultarDatosPersonales?email=' + this.email + '&mac=' + this.mac;
+  const data = await this.http.get(url, {responseType: 'text'}).toPromise();
+  const usuario = this.parsear(data);
+     
+  alert(data);
+  const datos = [];
+  for (let i = 0; i < usuario.InfoItem.length; i++) {
+    if (usuario.Objects.Object[0].InfoItem[0].InfoItem[i].value[0]._ === 'None') {
+      datos.push('');
+    } else {
+      datos.push(usuario.InfoItem[i].value[0]._);
     }
-    return datos;
+  }
+
+  return datos;
   }
 
   getInfoBasicaDispositivo(xml) {
@@ -495,5 +512,109 @@ export class DataService {
         alert(error);
       }
       );
+  }
+  async registrarUsuario(xml: string, email) {
+    // ToDo: Mirar que retorna el Servidor PU
+    xml = encodeURIComponent(xml);
+    let respuesta;
+    let datos = null;
+    console.log(xml);
+    const url = this.urlServidor + '/RegistroUsuario?email=' + email + '&mac=' + this.mac + '&data=' + xml;
+    datos = await this.http.get(url, {responseType: 'text'}).toPromise();
+    
+     
+    let js = null;
+    const parseString = require('xml2js').parseString;
+    parseString(datos, function (err, result) {
+      if (err) {
+        alert('error');
+      } else {
+        js = result;
+      }
+    });
+    console.log('Registrado Usuario');
+
+    return js;
+  }
+
+
+  async modificarPerfil(xml: string, email) {
+    // ToDo: Mirar que retorna el Servidor PU
+    xml = encodeURIComponent(xml);
+    let respuesta;
+    let datos = null;
+    console.log(xml);
+    const url = this.urlServidor + '/ModificarDatosPersonales?email=' + email + '&mac=' + this.mac + '&data=' + xml;
+    datos = await this.http.get(url, {responseType: 'text'}).toPromise();
+    
+     
+    let js = null;
+    const parseString = require('xml2js').parseString;
+    parseString(datos, function (err, result) {
+      if (err) {
+        alert('error');
+      } else {
+        js = result;
+      }
+    });
+    console.log('Modificado Usuario');
+
+    return js;
+  }
+
+
+
+  async registrarEdificio(xml: string) {
+    // ToDo: Mirar que retorna el Servidor PU
+    xml = encodeURIComponent(xml);
+    let datos = null;
+    let respuesta;
+    console.log(xml);
+
+    const url = this.urlServidor + '/RegistrarBuilding?email=' + this.email + '&mac=' + this.mac + '&data=' + xml;
+
+    datos = await this.http.get(url, {responseType: 'text'}).toPromise();
+
+    let js = null;
+    const parseString = require('xml2js').parseString;
+    parseString(datos, function (err, result) {
+      if (err) {
+        alert('error');
+      } else {
+        js = result;
+      }
+    });
+    console.log(js);
+    console.log(js.Objects.Object[0].InfoItem[0].$.name);
+    console.log(js.Objects.Object[0].InfoItem[0].value[0]._);
+
+    console.log('Registrado Edificio');
+
+    return js;
+    /*
+    let promise = new Promise((resolve, reject) => {
+      const url = this.urlServidor + '/RegistrarBuilding?email=' + this.email + '&mac=' + this.mac + '&data=' + xml;
+      this.http.get(url).toPromise()
+        .then(data => {
+          // Success
+          let js = null;
+          const parseString = require('xml2js').parseString;
+          parseString(data, function (err, result) {
+            if (err) {
+              alert('error');
+            } else {
+              js = result;
+              respuesta = js;
+            }
+          });
+          console.log(js);
+          console.log(js.Objects.Object[0].InfoItem[0].$.name);
+          console.log(js.Objects.Object[0].InfoItem[0].value[0]._);
+
+          console.log('Registrado Edificio');
+          resolve();
+        });
+    });
+    return promise;*/
   }
 }

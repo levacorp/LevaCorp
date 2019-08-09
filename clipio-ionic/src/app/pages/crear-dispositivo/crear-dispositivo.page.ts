@@ -51,7 +51,9 @@ export class CrearDispositivoPage implements OnInit {
       const xmlDataStreams = await this.raspService.requestRaspberry('http://' + this.ipDispositivo + '/SendState?osid=' + this.idDispositivo);
       // Obtiene los datatreams
       this.dataStreams = this.dataService.getEstadoDataStreams(xmlDataStreams);
-      this.nombreDispositivo= 'prueba';
+      this.nombreDispositivo = 'prueba';
+      alert(this.dataStreams[0].value[0].$.type);
+      alert(this.dataStreams[0].value[0]._);
     }
     // si la cantidad de parametros que le llegan es igual a tres significa que se agregara un dispositivo a una habitacion
     if (this.activatedRoute.snapshot.paramMap.keys.length === 3) {

@@ -439,8 +439,8 @@ export class GenerateXMLService {
     xw.text(nombre).endElement('/InfoItem').endElement('/InfoItem');
 
     xw.endDocument();
-    console.log("xmlRegistrar");
-    console.log(xw.toString());
+    return(xw.toString());
+
   }
   //crea el XML para el registrar el usuario en la aplicacion
   setXMLRegistrar(json) {
@@ -467,9 +467,8 @@ export class GenerateXMLService {
     xw.text(contraseña).endElement('/InfoItem').endElement('/InfoItem');
 
     xw.endDocument();    
-    console.log(xw.toString());
-    
-   this.enviarXML.registrarUsuario(email, xw.toString());
+    console.log(xw.toString());    
+    return(xw.toString());
   }
   //crea el XML para el perfil del usuario
   setXMLPerfil(json) {
@@ -516,6 +515,7 @@ export class GenerateXMLService {
     xw.text(email);
 
     xw.endDocument();
-   // console.log(xw.toString());
+    return(xw.toString());
+
   }
 }
