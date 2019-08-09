@@ -7,11 +7,8 @@ import { Observable } from 'rxjs';
 import { HTTP } from '@ionic-native/http/ngx';
 import { RaspberryService } from './raspberry.service';
 import { map } from 'rxjs/operators';
+import { encodeUriFragment } from '@angular/router/src/url_tree';
 
-<<<<<<< HEAD
-
-=======
->>>>>>> 02fac2f9dcbfe05a07c88b259e59650adb3b4b55
 @Injectable({
   providedIn: 'root'
 })
@@ -22,72 +19,21 @@ export class DataService {
   /* Email y mac estaticos para todas las peticiones */
   email = 'camilo@gmail.com';
   mac = '02:00:00:00:00:00';
-  urlServidor = 'http://10.130.2.148:8080';
+  urlServidor = 'http://192.168.0.28:8080';
 
-  constructor(private https: HTTP,
+  constructor(
+    private https: HTTP,
     private http: HttpClient,
     private dataUserService: DataUserService,
     private requestRaspberryService: RaspberryService
   ) {
   }
 
-
-  /* Obtiene el XML de un usuario consultando al servidor PU*/
-  async getValidarUsuario(email: string, pass: string) {
-    let resultado = false;
-    await this.http.get(this.getURLValidarUsuario(email, pass), { responseType: 'text' })
-      .subscribe(data => {
-        let codigo;
-        let json = null;
-        const parseString = require('xml2js').parseString;
-        parseString(data, function (err, result) {
-          if (err) {
-            alert('error');
-          } else {
-            json = result;
-          }
-        });
-        codigo = json.Objects.Object[0].InfoItem[0].value[0]._;
-        if(/*codigo === '1028'*/ codigo === '1042') {
-          resultado = true;
-        }
-        return resultado;
-      });
-    return resultado;
-  }
-
-<<<<<<< HEAD
-  getURLValidarUsuario(email: string, pass: string) {
-    const url = 'http://192.168.137.140/' + 'ValidarUsuarioApp?email=' + email
-      + '&user_name=' + email + '&mac=' + '02:00:00:00:00:00' +
-      '&name_app=Clipio&password=' + pass;
-    return url;
-=======
-  getXMLInicioSesion2(email: string, pass: string) {
-    let json;
-    // tslint:disable-next-line: max-line-length
-    const url = this.getURLInicioSesion(email, pass);
-    const xml = this.http.get(url, { responseType: 'text' });
-    const parseString = require('xml2js').parseString;
-    parseString(xml, function (err, result) {
-      if (err) {
-        alert('error');
-      } else {
-        json = result;
-      }
-    });
-    if (json.Objects.Object[0].InfoItem[0].value[0]._ === '1043') {
-      console.log('sirvio');
-    }
-    return json;
-  }
-
   async getXMLInicioSesion3(email: string, pass: string) {
     let resultado = false;
     let json;
-    let url = this.getURLInicioSesion(email, pass);
-    console.log(url);
-    let result = await this.http.get(url, { responseType: 'text' }).toPromise();
+    const url = this.getURLInicioSesion(email, pass);
+    const result = await this.http.get(url, { responseType: 'text' }).toPromise();
     const parseString = require('xml2js').parseString;
     parseString(result, function (err, result) {
       if (err) {
@@ -96,7 +42,6 @@ export class DataService {
         json = result;
       }
     });
-    console.log('cod:', json.Objects.Object[0].InfoItem[0].value[0]._);
     if (json.Objects.Object[0].InfoItem[0].value[0]._ === '1028') {
       resultado = true;
     }
@@ -104,25 +49,11 @@ export class DataService {
   }
 
   getURLInicioSesion(email: string, pass: string) {
-    pass = btoa(pass);
-    const url = this.urlServidor + "/ValidarUsuarioApp?email=" + email
-      + "&user_name=" + email + "&mac=" + this.mac +
-      "&name_app=Clipio&password=" + pass;
+    pass = encodeURIComponent(pass);
+    const url = this.urlServidor + '/ValidarUsuarioApp?email=' + email
+      + '&user_name=' + email + '&mac=' + this.mac +
+      '&name_app=Clipio&password=' + pass;
     return url;
-  }
-
-  /* Obtiene los datos de inicio de sesion. Retorna un arreglo con [{email:email,password:contraseña}] */
-  getDatosInicioSesion(email: string, pass: string) {
-    const datosInicioSesion = [];
-    const infoInicioSesion = this.getXMLInicioSesion(email, pass).Objects.Object[0].InfoItem[0].InfoItem;
-    // tslint:disable-next-line: prefer-for-of
-    if (infoInicioSesion.length >= 3) {
-      datosInicioSesion.push({ email: infoInicioSesion[1].value[0]._ });
-      datosInicioSesion.push({ password: infoInicioSesion[2].value[0]._ });
-    }
-    this.dataUserService.setDatosUsuario(datosInicioSesion);
-    // return datosInicioSesion;
->>>>>>> 02fac2f9dcbfe05a07c88b259e59650adb3b4b55
   }
 
   /* Obtiene los nombres de los elementos de una habitacion. Retorna: [nombreHabitacion1, nombreHabitacion2,...] */
@@ -338,11 +269,7 @@ export class DataService {
   }
 
   getEstadoDataStreams(xml) {
-<<<<<<< HEAD
-
-=======
     //retorna los estados del datastream
->>>>>>> 02fac2f9dcbfe05a07c88b259e59650adb3b4b55
     return xml.Objects.Object[0].send_state[0].InfoItem;
   }
   getXMLPerfilUsuario() {
@@ -374,7 +301,7 @@ export class DataService {
   const url = this.urlServidor + '/ConsultarDatosPersonales?email=' + this.email + '&mac=' + this.mac;
   const data = await this.http.get(url, {responseType: 'text'}).toPromise();
   const usuario = this.parsear(data);
-     
+
   alert(data);
   const datos = [];
   for (let i = 0; i < usuario.InfoItem.length; i++) {
@@ -545,8 +472,6 @@ export class DataService {
     console.log(xml);
     const url = this.urlServidor + '/RegistroUsuario?email=' + email + '&mac=' + this.mac + '&data=' + xml;
     datos = await this.http.get(url, {responseType: 'text'}).toPromise();
-    
-     
     let js = null;
     const parseString = require('xml2js').parseString;
     parseString(datos, function (err, result) {
