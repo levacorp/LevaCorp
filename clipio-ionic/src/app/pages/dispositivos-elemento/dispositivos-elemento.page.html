@@ -1,4 +1,5 @@
-  <ion-header>
+ <!--Header pagina-->
+ <ion-header>
   <ion-toolbar color="danger">
       <ion-buttons slot="start">
           <ion-back-button></ion-back-button>
@@ -6,14 +7,15 @@
     <ion-title>{{elemento}}</ion-title>
   </ion-toolbar>
 </ion-header>
+<!--Fin header-->
 
 <ion-content>
     <ion-grid class="contenidoSegmento">
       <ion-row>
         <!--Acomoda el numero de tarjetas de acuerdo al tamaño de pantalla-->
         <ion-col size="6" size-sm="4" size-md="3" size-lg="2"
-        *ngFor="let dispositivo of (dispositivos | async) | filtroElementos: '8':'userId'">
-        <!--Carga de los elementos filtrados por la habitacion escogida-->
+        *ngFor="let dispositivo of dispositivos">
+        <!--Carga de los dispostivos del elementos escogidos-->
           
           <ion-card  id="dispositivo.userId" (click)="routeDispositivo(dispositivo.userId)" >
             <img src="/assets/icon/camara1.png"/>
@@ -34,3 +36,4 @@
         <ion-icon name="add"></ion-icon>
       </ion-fab-button>
     </ion-fab>
+    

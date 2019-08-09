@@ -17,12 +17,12 @@ export class CrearDispositivoPage implements OnInit {
   dataStreams: Observable<any>;
   InformacionBasica: Observable<any>;
   tipoAsociacion = null;
-  habitacion;
-  edificio;
-  ipDispositivo;
-  idDispositivo;
-  nombreDispositivo;
-  nombreThing;
+  habitacion = null;
+  edificio = null;
+  ipDispositivo = null;
+  idDispositivo = null;
+  nombreDispositivo = null;
+  nombreThing = null;
   datos: any = null;
 
 
@@ -31,60 +31,76 @@ export class CrearDispositivoPage implements OnInit {
   slideOpts = {
     speed: 200
   };
-  constructor(private activatedRoute: ActivatedRoute, public router: Router, 
-    private raspService : RaspberryService, private dataService: DataService
-    ,private generateXml: GenerateXMLService) { }
+  constructor(private activatedRoute: ActivatedRoute, public router: Router,
+              private raspService: RaspberryService, private dataService: DataService,
+              private generateXml: GenerateXMLService) { }
 
   async ngOnInit() {
-    let dir = this.activatedRoute.snapshot.paramMap.get('dir');
+    const dir = this.activatedRoute.snapshot.paramMap.get('dir');
+    this.edificio = this.activatedRoute.snapshot.paramMap.get('edificio');
+    this.habitacion = this.activatedRoute.snapshot.paramMap.get('habitacion');
+    // Hace una peticion a la informacion de la raspberry
     const xmlDatos = await this.raspService.requestRaspberry(dir);
-    
     if (xmlDatos === null) {
     } else {
       this.ipDispositivo = dir.substring(7, dir.indexOf('/Identificator?osid='));
+      // Obtiene la informacion basica del dispositivo
       this.InformacionBasica = this.dataService.getInfoBasicaDispositivo(xmlDatos);
       this.idDispositivo = this.InformacionBasica[0].value[0]._;
-      alert("IP: "+ this.ipDispositivo);
-      alert("ID: "+ this.idDispositivo);
+      // Hace una peticion de los estados de los datastreams a la raspberry
       const xmlDataStreams = await this.raspService.requestRaspberry('http://' + this.ipDispositivo + '/SendState?osid=' + this.idDispositivo);
+      // Obtiene los datatreams
       this.dataStreams = this.dataService.getEstadoDataStreams(xmlDataStreams);
+      this.nombreDispositivo = 'prueba';
       alert(this.dataStreams[0].value[0].$.type);
+      alert(this.dataStreams[0].value[0]._);
     }
+    // si la cantidad de parametros que le llegan es igual a tres significa que se agregara un dispositivo a una habitacion
     if (this.activatedRoute.snapshot.paramMap.keys.length === 3) {
-      this.edificio = this.activatedRoute.snapshot.paramMap.get('edificio');
-      this.habitacion = this.activatedRoute.snapshot.paramMap.get('habitacion');
       this.tipoAsociacion = 'dispositivoHabitacion';
     } else {
+      // se agregara un dispositivo a un elemento
       this.nombreThing = this.activatedRoute.snapshot.paramMap.get('nameThing');
       this.tipoAsociacion = 'dispositivoElemento';
     }
   }
-
-  segmentButtonClicked(event) {
-    const segEscogido = event.detail.value;
-    if (segEscogido === 'Recursos') {
-      this.slides.slideTo(0);
-    } else {
-           this.slides.slideTo(1);
-    }
+ // Evento cuando se da click en un segmento
+ segmentButtonClicked(event) {
+  // Se obtiene el valor del segmento clickeado
+  const segEscogido = event.detail.value;
+  // Se decide que slide mostrar
+  if (segEscogido === 'Recursos') {
+    this.slides.slideTo(0);
+  } else {
+         this.slides.slideTo(1);
   }
-  slideChanged() {
-    this.slides.getActiveIndex().then(data => {
-      if ( data === 1) {
-        this.segment = 'Informacion';
-      } else {
-         this.segment = 'Recursos';
-      }
-      });
+}
+ // Evento cuando se desplaza un slide
+ slideChanged() {
+  this.slides.getActiveIndex().then(data => {
+    // Se cambia la opcion del segmento dependiento de la pagina a la que se deslizo
+    if ( data === 1) {
+      this.segment = 'Informacion';
+    } else {
+       this.segment = 'Recursos';
     }
-  pushCrearDispositivo() {
+    });
+  }
+ // Añade un nuevo dispositivo
+ pushCrearDispositivo() {
+        let xml;
+        // Se decide que tipo de asociacion se va a hacer
         if (this.tipoAsociacion === 'dispositivoHabitacion' ) {
-          //this.generateXml.crearAsociacionDispositivosHabitacion(this.edificio, this.habitacion,
-           // this.nombreDispositivo, this.idDispositivo , this.ipDispositivo);
+          // Si la asociacion es con una habitacion se genera el xml y redirige a la habitacion
+          xml = this.generateXml.crearAsociacionDispositivosHabitacion(this.edificio, this.habitacion,
+          this.nombreDispositivo, this.idDispositivo , this.ipDispositivo);
           this.router.navigate(['elementos-por-habitacion', this.edificio , this.habitacion]);
         } else {
-          this.generateXml.crearAsociacionDispositivosElemento(this.nombreThing, this.nombreDispositivo,
+            // Si la asociacion es con una dispositivo se genera el xml y redirige a la habitacion
+             xml = this.generateXml.crearAsociacionDispositivosElemento(this.nombreThing, this.nombreDispositivo,
              this.idDispositivo , this.ipDispositivo);
-        }
+             this.router.navigate(['dispositivos-elemento', this.nombreThing, this.edificio, this.habitacion]);
+          }
+          this.dataService.asociarDispositivo(xml);
     }
 }

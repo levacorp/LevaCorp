@@ -3,6 +3,7 @@ import { Observable } from 'rxjs';
 import { DataService } from 'src/app/services/data.service';
 import { Router, ActivatedRoute } from '@angular/router';
 import { DataUserService } from '../../services/data-user.service';
+import { GenerateXMLService } from 'src/app/services/generate-xml.service';
 
 
 @Component({
@@ -20,7 +21,7 @@ export class InformacionEdificioPage implements OnInit {
     private dataservice: DataService,
     private router: Router,
     private activatedRoute: ActivatedRoute,
-    private dataUserService: DataUserService) { }
+    private dataUserService: DataUserService, private generateXml: GenerateXMLService) { }
 
   ngOnInit() {
     this.nombreEdificio = this.activatedRoute.snapshot.paramMap.get('argumento');
@@ -30,5 +31,9 @@ export class InformacionEdificioPage implements OnInit {
 
   pushElementoHabitacion(argumento) {
     this.router.navigate(['elementos-por-habitacion', this.nombreEdificio, argumento]);
+  }
+  pushCrearHabitacion()
+  {
+    this.generateXml.crearHabitacion(this.nombreEdificio,'1','da');
   }
 }

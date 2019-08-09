@@ -6,19 +6,28 @@ import { EnviarXMLService } from './enviar-xml.service';
 import { Observable } from 'rxjs';
 import { HTTP } from '@ionic-native/http/ngx';
 import { RaspberryService } from './raspberry.service';
+import { map } from 'rxjs/operators';
 
+<<<<<<< HEAD
 
+=======
+>>>>>>> 02fac2f9dcbfe05a07c88b259e59650adb3b4b55
 @Injectable({
   providedIn: 'root'
 })
 export class DataService {
+
   datosPost: Observable<any>;
-  constructor(
-    private https: HTTP,
+
+  /* Email y mac estaticos para todas las peticiones */
+  email = 'camilo@gmail.com';
+  mac = '02:00:00:00:00:00';
+  urlServidor = 'http://10.130.2.148:8080';
+
+  constructor(private https: HTTP,
     private http: HttpClient,
-    private httpNative: HTTP,
     private dataUserService: DataUserService,
-    private requestRaspberryService: RaspberryService,
+    private requestRaspberryService: RaspberryService
   ) {
   }
 
@@ -47,11 +56,73 @@ export class DataService {
     return resultado;
   }
 
+<<<<<<< HEAD
   getURLValidarUsuario(email: string, pass: string) {
     const url = 'http://192.168.137.140/' + 'ValidarUsuarioApp?email=' + email
       + '&user_name=' + email + '&mac=' + '02:00:00:00:00:00' +
       '&name_app=Clipio&password=' + pass;
     return url;
+=======
+  getXMLInicioSesion2(email: string, pass: string) {
+    let json;
+    // tslint:disable-next-line: max-line-length
+    const url = this.getURLInicioSesion(email, pass);
+    const xml = this.http.get(url, { responseType: 'text' });
+    const parseString = require('xml2js').parseString;
+    parseString(xml, function (err, result) {
+      if (err) {
+        alert('error');
+      } else {
+        json = result;
+      }
+    });
+    if (json.Objects.Object[0].InfoItem[0].value[0]._ === '1043') {
+      console.log('sirvio');
+    }
+    return json;
+  }
+
+  async getXMLInicioSesion3(email: string, pass: string) {
+    let resultado = false;
+    let json;
+    let url = this.getURLInicioSesion(email, pass);
+    console.log(url);
+    let result = await this.http.get(url, { responseType: 'text' }).toPromise();
+    const parseString = require('xml2js').parseString;
+    parseString(result, function (err, result) {
+      if (err) {
+        alert('error');
+      } else {
+        json = result;
+      }
+    });
+    console.log('cod:', json.Objects.Object[0].InfoItem[0].value[0]._);
+    if (json.Objects.Object[0].InfoItem[0].value[0]._ === '1028') {
+      resultado = true;
+    }
+    return resultado;
+  }
+
+  getURLInicioSesion(email: string, pass: string) {
+    pass = btoa(pass);
+    const url = this.urlServidor + "/ValidarUsuarioApp?email=" + email
+      + "&user_name=" + email + "&mac=" + this.mac +
+      "&name_app=Clipio&password=" + pass;
+    return url;
+  }
+
+  /* Obtiene los datos de inicio de sesion. Retorna un arreglo con [{email:email,password:contraseña}] */
+  getDatosInicioSesion(email: string, pass: string) {
+    const datosInicioSesion = [];
+    const infoInicioSesion = this.getXMLInicioSesion(email, pass).Objects.Object[0].InfoItem[0].InfoItem;
+    // tslint:disable-next-line: prefer-for-of
+    if (infoInicioSesion.length >= 3) {
+      datosInicioSesion.push({ email: infoInicioSesion[1].value[0]._ });
+      datosInicioSesion.push({ password: infoInicioSesion[2].value[0]._ });
+    }
+    this.dataUserService.setDatosUsuario(datosInicioSesion);
+    // return datosInicioSesion;
+>>>>>>> 02fac2f9dcbfe05a07c88b259e59650adb3b4b55
   }
 
   /* Obtiene los nombres de los elementos de una habitacion. Retorna: [nombreHabitacion1, nombreHabitacion2,...] */
@@ -267,10 +338,15 @@ export class DataService {
   }
 
   getEstadoDataStreams(xml) {
+<<<<<<< HEAD
 
+=======
+    //retorna los estados del datastream
+>>>>>>> 02fac2f9dcbfe05a07c88b259e59650adb3b4b55
     return xml.Objects.Object[0].send_state[0].InfoItem;
   }
   getXMLPerfilUsuario() {
+
     const xml = '<?xml version="1.0" encoding="UTF-8"?><Objects><Object><InfoItem name="Person"><InfoItem name="name_person"><value type="string">Andrea</value></InfoItem><InfoItem name="surname"><value type="string">Pabon</value></InfoItem><InfoItem name="celullar"><value type="string">None</value></InfoItem><InfoItem name="gender"><value type="string">Hombre</value></InfoItem><InfoItem name="date_of_birth"><value type="string">2017-9-18</value></InfoItem><InfoItem name="facebook"><value type="string">None</value></InfoItem><InfoItem name="place_of_birth"><value type="string">Popayan</value></InfoItem><InfoItem name="email"><value type="string">andrea@unicauca.edu.co</value></InfoItem></InfoItem></Object></Objects>';
     // Se parsea el xml a un objeto javascript para poder manejarlo más facil
     let json;
@@ -281,48 +357,57 @@ export class DataService {
     return json;
 
   }
-  getPerfilUsuario() {
-    const usuario = this.getXMLPerfilUsuario().Objects.Object[0].InfoItem[0];
-    let datos = [];
-    for (let i = 0; i < usuario.InfoItem.length; i++) {
-      if (usuario.InfoItem[i].value[0]._ === 'None') {
-        datos.push('');
-      }
-      else {
-        datos.push(usuario.InfoItem[i].value[0]._);
-      }
+  parsear(xml) {
+
+  //  const xml = '<?xml version="1.0" encoding="UTF-8"?><Objects><Object><InfoItem name="Person"><InfoItem name="name_person"><value type="string">Andrea</value></InfoItem><InfoItem name="surname"><value type="string">Pabon</value></InfoItem><InfoItem name="celullar"><value type="string">None</value></InfoItem><InfoItem name="gender"><value type="string">Hombre</value></InfoItem><InfoItem name="date_of_birth"><value type="string">2017-9-18</value></InfoItem><InfoItem name="facebook"><value type="string">None</value></InfoItem><InfoItem name="place_of_birth"><value type="string">Popayan</value></InfoItem><InfoItem name="email"><value type="string">andrea@unicauca.edu.co</value></InfoItem></InfoItem></Object></Objects>';
+    // Se parsea el xml a un objeto javascript para poder manejarlo más facil
+    let json;
+    const parseString = require('xml2js').parseString;
+    parseString(xml, function (err, result) {
+      json = result;
+    });
+    return json;
+
+  }
+ async getPerfilUsuario() {
+  // const usuario = this.getXMLPerfilUsuario().Objects.Object[0].InfoItem[0];
+  const url = this.urlServidor + '/ConsultarDatosPersonales?email=' + this.email + '&mac=' + this.mac;
+  const data = await this.http.get(url, {responseType: 'text'}).toPromise();
+  const usuario = this.parsear(data);
+     
+  alert(data);
+  const datos = [];
+  for (let i = 0; i < usuario.InfoItem.length; i++) {
+    if (usuario.Objects.Object[0].InfoItem[0].InfoItem[i].value[0]._ === 'None') {
+      datos.push('');
+    } else {
+      datos.push(usuario.InfoItem[i].value[0]._);
     }
-    return datos;
+  }
+
+  return datos;
   }
 
   getInfoBasicaDispositivo(xml) {
-    // Se parsea el xml a un objeto javascript para poder manejarlo más facil
-    // json.Objects.Object[0].InfoItem--->Informacion general del dispositivo + informacion de datastreams
+    // Se pobtiene la infromacion basica de la raspberry
     return xml.Objects.Object[0].InfoItem[0].MetaData[0].InfoItem;
   }
-  crearElemento(elemento) {
-    console.log(elemento);
-    var headers = new HttpHeaders();
-    headers = headers.append('Content-Type', 'text/xml');
-    headers = headers.append('Accept', 'text/xml');
-    let body = '<request>'
-    '<username>Username</username>'
-    '<password>Password</password>'
-    '</request>';
+  async crearElemento(xml) {
+    // ToDo: Mirar que retorna el Servidor PU
+    console.log(xml);
+    const url = this.urlServidor + '/RegistrarThing?email=' + this.email + '&mac=' + this.mac + '&data=' + xml;
+    await this.http.get(url, { responseType: 'text' })
+      .subscribe(data => {
+        alert(data);
+      }, error => {
+        alert(error);
+      });
 
-    return this.http.post('https://66.128.132.126:8002/?event=account_login', body, { headers: headers, responseType: 'text' });
   }
-  a(elemento) {
-    console.log(elemento);
-    var headers = new HttpHeaders();
-    headers = headers.append('Content-Type', 'text/xml');
-    headers = headers.append('Accept', 'text/xml');
-    let body = '<request>'
-    '<username>Username</username>'
-    '<password>Password</password>'
-    '</request>';
+  asociarDispositivo(xml) {
+  }
+  crearHabitacion(xml) {
 
-    return this.http.post('https://66.128.132.126:8002/?event=account_login', body, { headers: headers, responseType: 'text' });
   }
   perfil() {
     alert('entra');
@@ -342,62 +427,218 @@ export class DataService {
       });
   }
 
-  crearECA(xml: string) {
+  async crearECA(xml: string) {
     // ToDo: Mirar que retorna el Servidor PU
-    // const url =  this.urlServidor + "RegistrarPreferencia?email=" + email + "&mac=" + mac + "&data=" + xml;
+    xml = encodeURIComponent(xml);
+    console.log(xml);
+    const url = this.urlServidor + '/RegistrarPreferencia?email=' + this.email + '&mac=' + this.mac + '&data=' + xml;
+    await this.http.get(url, { responseType: 'text' })
+      .subscribe(data => {
+        //alert(data);
+      }, error => {
+        alert(error);
+      });
+
+    console.log('Registrada preferencia');
+    // Actualizar lista de Preferencias
+    this.listarECAs();
+  }
+  async consultarObjetosRelacionados() {
+    // ToDo: Mirar que retorna el Servidor PU
+    const url = this.urlServidor + '/ConsultarObjetosRelated?email=' + this.email + '&mac=' + this.mac;
+    await this.http.get(url, { responseType: 'text' })
+      .subscribe(data => {
+        //alert(data);
+      }, error => {
+        alert(error);
+      });
+  }
+
+  async modificarECA(xml: string) {
+    xml = encodeURIComponent(xml);
+    // ToDo: Mirar que retorna el Servidor PU
+    // const url =  this.urlServidor + "ModificarPreferencia?email=" + email + "&mac=" + mac + "&data=" + xml;
+    const url = this.urlServidor + '/ModificarPreferencia?email=' + this.email + '&mac=' + this.mac + '&data=' + xml;
+    await this.http.get(url, { responseType: 'text' })
+      .subscribe(data => {
+        alert(data);
+      }, error => {
+        alert(error);
+      });
+
+    // Actualizar lista de Preferencias
     this.listarECAs();
   }
 
 
-  listarECAs() {
+  async listarECAs() {
     // ToDo: Traer xml del servidor
-    // const url = this.urlServidor + "ConsultarPreferencias?email=" + email + "&mac=" + mac ;
-    const xml = '<?xml version=\'1.0\' encoding=\'utf-8\'?> <Objects> <Object> <InfoItem name="Preferencias"> <InfoItem name="preferencia"> <InfoItem name="name_preference"> <value type="string">apagarriego</value> </InfoItem> <InfoItem name="state_preference"> <value type="string">on</value> </InfoItem> <InfoItem name="osid_object_event"> <value type="string">708637323</value> </InfoItem> <InfoItem name="ip_event_object"> <value type="string">192.168.123.100</value> </InfoItem> <InfoItem name="name_event_object"> <value type="string">Regulador de Temperatura</value> </InfoItem> <InfoItem name="id_event_resource"> <value type="string">temperatura</value> </InfoItem> <InfoItem name="name_event_resource"> <value type="string" /> </InfoItem> <InfoItem name="comparator_condition"> <value type="string">menor</value> </InfoItem> <InfoItem name="variable_condition"> <value type="string">29</value> </InfoItem> <InfoItem name="type_variable_condition"> <value type="string">float</value> </InfoItem> <InfoItem name="unit_condition"> <value type="string">None</value> </InfoItem> <InfoItem name="meaning_condition"> <value type="string">hace frio</value> </InfoItem> <InfoItem name="osid_object_action"> <value type="string">1931642039</value> </InfoItem> <InfoItem name="ip_action_object"> <value type="string">192.168.123.101</value> </InfoItem> <InfoItem name="name_action_object"> <value type="string">Regulador de Humedad en Planta</value> </InfoItem> <InfoItem name="id_action_resource"> <value type="string">riego</value> </InfoItem> <InfoItem name="name_action_resource"> <value type="string">riego</value> </InfoItem> <InfoItem name="comparator_action"> <value type="string">igual</value> </InfoItem> <InfoItem name="variable_action"> <value type="string">0</value> </InfoItem> <InfoItem name="type_variable_action"> <value type="string">bool</value> </InfoItem> <InfoItem name="unit_action"> <value type="string">None</value> </InfoItem> <InfoItem name="meaning_action"> <value type="string">apagar riego</value> </InfoItem> </InfoItem> <InfoItem name="preferencia"> <InfoItem name="name_preference"> <value type="string">encenderriego</value> </InfoItem> <InfoItem name="state_preference"> <value type="string">on</value> </InfoItem> <InfoItem name="osid_object_event"> <value type="string">708637323</value> </InfoItem> <InfoItem name="ip_event_object"> <value type="string">192.168.123.100</value> </InfoItem> <InfoItem name="name_event_object"> <value type="string">Regulador de Temperatura</value> </InfoItem> <InfoItem name="id_event_resource"> <value type="string">temperatura</value> </InfoItem> <InfoItem name="name_event_resource"> <value type="string" /> </InfoItem> <InfoItem name="comparator_condition"> <value type="string">mayor</value> </InfoItem> <InfoItem name="variable_condition"> <value type="string">29</value> </InfoItem> <InfoItem name="type_variable_condition"> <value type="string">float</value> </InfoItem> <InfoItem name="unit_condition"> <value type="string">None</value> </InfoItem> <InfoItem name="meaning_condition"> <value type="string">hace calor</value> </InfoItem> <InfoItem name="osid_object_action"> <value type="string">1931642039</value> </InfoItem> <InfoItem name="ip_action_object"> <value type="string">192.168.123.101</value> </InfoItem> <InfoItem name="name_action_object"> <value type="string">Regulador de Humedad en Planta</value> </InfoItem> <InfoItem name="id_action_resource"> <value type="string">riego</value> </InfoItem> <InfoItem name="name_action_resource"> <value type="string">riego</value> </InfoItem> <InfoItem name="comparator_action"> <value type="string">igual</value> </InfoItem> <InfoItem name="variable_action"> <value type="string">1</value> </InfoItem> <InfoItem name="type_variable_action"> <value type="string">bool</value> </InfoItem> <InfoItem name="unit_action"> <value type="string">None</value> </InfoItem> <InfoItem name="meaning_action"> <value type="string">encender riego</value> </InfoItem> </InfoItem> </InfoItem> </Object> </Objects>';
 
     const lista = [];
 
-    let js;
+    const url = this.urlServidor + '/ConsultarPreferencias?email=' + this.email + '&mac=' + this.mac;
+    await this.http.get(url, { responseType: 'text' })
+      .subscribe(data => {
+        //alert(data);
+
+        //console.log(data);
+        // const xml = '<?xml version=\'1.0\' encoding=\'utf-8\'?> <Objects> <Object> <InfoItem name="Preferencias"> <InfoItem name="preferencia"> <InfoItem name="name_preference"> <value type="string">apagarriego</value> </InfoItem> <InfoItem name="state_preference"> <value type="string">on</value> </InfoItem> <InfoItem name="osid_object_event"> <value type="string">708637323</value> </InfoItem> <InfoItem name="ip_event_object"> <value type="string">192.168.123.100</value> </InfoItem> <InfoItem name="name_event_object"> <value type="string">Regulador de Temperatura</value> </InfoItem> <InfoItem name="id_event_resource"> <value type="string">temperatura</value> </InfoItem> <InfoItem name="name_event_resource"> <value type="string" /> </InfoItem> <InfoItem name="comparator_condition"> <value type="string">menor</value> </InfoItem> <InfoItem name="variable_condition"> <value type="string">29</value> </InfoItem> <InfoItem name="type_variable_condition"> <value type="string">float</value> </InfoItem> <InfoItem name="unit_condition"> <value type="string">None</value> </InfoItem> <InfoItem name="meaning_condition"> <value type="string">hace frio</value> </InfoItem> <InfoItem name="osid_object_action"> <value type="string">1931642039</value> </InfoItem> <InfoItem name="ip_action_object"> <value type="string">192.168.123.101</value> </InfoItem> <InfoItem name="name_action_object"> <value type="string">Regulador de Humedad en Planta</value> </InfoItem> <InfoItem name="id_action_resource"> <value type="string">riego</value> </InfoItem> <InfoItem name="name_action_resource"> <value type="string">riego</value> </InfoItem> <InfoItem name="comparator_action"> <value type="string">igual</value> </InfoItem> <InfoItem name="variable_action"> <value type="string">0</value> </InfoItem> <InfoItem name="type_variable_action"> <value type="string">bool</value> </InfoItem> <InfoItem name="unit_action"> <value type="string">None</value> </InfoItem> <InfoItem name="meaning_action"> <value type="string">apagar riego</value> </InfoItem> </InfoItem> <InfoItem name="preferencia"> <InfoItem name="name_preference"> <value type="string">encenderriego</value> </InfoItem> <InfoItem name="state_preference"> <value type="string">on</value> </InfoItem> <InfoItem name="osid_object_event"> <value type="string">708637323</value> </InfoItem> <InfoItem name="ip_event_object"> <value type="string">192.168.123.100</value> </InfoItem> <InfoItem name="name_event_object"> <value type="string">Regulador de Temperatura</value> </InfoItem> <InfoItem name="id_event_resource"> <value type="string">temperatura</value> </InfoItem> <InfoItem name="name_event_resource"> <value type="string" /> </InfoItem> <InfoItem name="comparator_condition"> <value type="string">mayor</value> </InfoItem> <InfoItem name="variable_condition"> <value type="string">29</value> </InfoItem> <InfoItem name="type_variable_condition"> <value type="string">float</value> </InfoItem> <InfoItem name="unit_condition"> <value type="string">None</value> </InfoItem> <InfoItem name="meaning_condition"> <value type="string">hace calor</value> </InfoItem> <InfoItem name="osid_object_action"> <value type="string">1931642039</value> </InfoItem> <InfoItem name="ip_action_object"> <value type="string">192.168.123.101</value> </InfoItem> <InfoItem name="name_action_object"> <value type="string">Regulador de Humedad en Planta</value> </InfoItem> <InfoItem name="id_action_resource"> <value type="string">riego</value> </InfoItem> <InfoItem name="name_action_resource"> <value type="string">riego</value> </InfoItem> <InfoItem name="comparator_action"> <value type="string">igual</value> </InfoItem> <InfoItem name="variable_action"> <value type="string">1</value> </InfoItem> <InfoItem name="type_variable_action"> <value type="string">bool</value> </InfoItem> <InfoItem name="unit_action"> <value type="string">None</value> </InfoItem> <InfoItem name="meaning_action"> <value type="string">encender riego</value> </InfoItem> </InfoItem> </InfoItem> </Object> </Objects>';
+
+        let js;
+        const parseString = require('xml2js').parseString;
+        parseString(data, function (err, result) {
+          js = result;
+        });
+
+        console.log(js);
+        if (js.Objects.Object[0].InfoItem[0].$.name !== 'Exito') {
+          // json.Objects.Object[0].InfoItem--->Preferencias
+          let jsObject = js.Objects.Object[0].InfoItem[0].InfoItem;
+          for (let i = 0; i < jsObject.length; i++) {
+            let jsonAux = {};
+            console.log(jsObject[i]);
+            jsonAux['nombreECA'] = jsObject[i].InfoItem[0].value[0]._;
+            jsonAux['estadoECA'] = jsObject[i].InfoItem[1].value[0]._;
+
+            jsonAux['idEventECA'] = jsObject[i].InfoItem[2].value[0]._;
+            jsonAux['ipEventECA'] = jsObject[i].InfoItem[3].value[0]._;
+            jsonAux['nombreEventObjeto'] = jsObject[i].InfoItem[4].value[0]._;
+            jsonAux['datastreamEvent'] = jsObject[i].InfoItem[5].value[0]._;
+            jsonAux['nombreEventoRecurso'] = jsObject[i].InfoItem[6].value[0]._;
+            jsonAux['comparadorEvento'] = jsObject[i].InfoItem[7].value[0]._;
+            jsonAux['valorEvento'] = jsObject[i].InfoItem[8].value[0]._;
+            jsonAux['dsFormatEvento'] = jsObject[i].InfoItem[9].value[0]._;
+            jsonAux['unitCondition'] = jsObject[i].InfoItem[10].value[0]._;
+            jsonAux['significadoEvento'] = jsObject[i].InfoItem[11].value[0]._;
+
+            jsonAux['idActionECA'] = jsObject[i].InfoItem[12].value[0]._;
+            jsonAux['ipActionECA'] = jsObject[i].InfoItem[13].value[0]._;
+            jsonAux['nombreActionObjeto'] = jsObject[i].InfoItem[14].value[0]._;
+            jsonAux['datastreamAction'] = jsObject[i].InfoItem[15].value[0]._;
+            jsonAux['nombreActionRecurso'] = jsObject[i].InfoItem[16].value[0]._;
+            jsonAux['comparadorAction'] = jsObject[i].InfoItem[17].value[0]._;
+            jsonAux['valorAccion'] = jsObject[i].InfoItem[18].value[0]._;
+            jsonAux['dsFormatAccion'] = jsObject[i].InfoItem[19].value[0]._;
+            jsonAux['unitAction'] = jsObject[i].InfoItem[20].value[0]._;
+            jsonAux['significadoAccion'] = jsObject[i].InfoItem[21].value[0]._;
+
+            lista.push(jsonAux);
+          }
+        } else {
+          console.log('No hay ECAs');
+        }
+
+        console.log('Actualizando Lista ECAS...');
+        console.log(lista);
+
+        this.dataUserService.setListaECA(lista);
+      }, error => {
+        alert(error);
+      }
+      );
+  }
+  async registrarUsuario(xml: string, email) {
+    // ToDo: Mirar que retorna el Servidor PU
+    xml = encodeURIComponent(xml);
+    let respuesta;
+    let datos = null;
+    console.log(xml);
+    const url = this.urlServidor + '/RegistroUsuario?email=' + email + '&mac=' + this.mac + '&data=' + xml;
+    datos = await this.http.get(url, {responseType: 'text'}).toPromise();
+    
+     
+    let js = null;
     const parseString = require('xml2js').parseString;
-    parseString(xml, function (err, result) {
-      js = result;
+    parseString(datos, function (err, result) {
+      if (err) {
+        alert('error');
+      } else {
+        js = result;
+      }
     });
+    console.log('Registrado Usuario');
 
-    // json.Objects.Object[0].InfoItem--->Preferencias
-    let jsObject = js.Objects.Object[0].InfoItem[0].InfoItem;
-    for (let i = 0; i < jsObject.length; i++) {
-      let jsonAux = {};
-      console.log(jsObject[i]);
-      jsonAux['nombreECA'] = jsObject[i].InfoItem[0].value[0]._;
-      jsonAux['estadoECA'] = jsObject[i].InfoItem[1].value[0]._;
+    return js;
+  }
 
-      jsonAux['idEventECA'] = jsObject[i].InfoItem[2].value[0]._;
-      jsonAux['ipEventECA'] = jsObject[i].InfoItem[3].value[0]._;
-      jsonAux['nombreEventObjeto'] = jsObject[i].InfoItem[4].value[0]._;
-      jsonAux['datastreamEvent'] = jsObject[i].InfoItem[5].value[0]._;
-      jsonAux['nombreEventoRecurso'] = jsObject[i].InfoItem[6].value[0]._;
-      jsonAux['comparadorEvento'] = jsObject[i].InfoItem[7].value[0]._;
-      jsonAux['valorEvento'] = jsObject[i].InfoItem[8].value[0]._;
-      jsonAux['dsFormatEvento'] = jsObject[i].InfoItem[9].value[0]._;
-      jsonAux['unitCondition'] = jsObject[i].InfoItem[10].value[0]._;
-      jsonAux['significadoEvento'] = jsObject[i].InfoItem[11].value[0]._;
 
-      jsonAux['idActionECA'] = jsObject[i].InfoItem[12].value[0]._;
-      jsonAux['ipActionECA'] = jsObject[i].InfoItem[13].value[0]._;
-      jsonAux['nombreActionObjeto'] = jsObject[i].InfoItem[14].value[0]._;
-      jsonAux['datastreamAction'] = jsObject[i].InfoItem[15].value[0]._;
-      jsonAux['nombreActionRecurso'] = jsObject[i].InfoItem[16].value[0]._;
-      jsonAux['comparadorAction'] = jsObject[i].InfoItem[17].value[0]._;
-      jsonAux['valorAccion'] = jsObject[i].InfoItem[18].value[0]._;
-      jsonAux['dsFormatAccion'] = jsObject[i].InfoItem[19].value[0]._;
-      jsonAux['unitAction'] = jsObject[i].InfoItem[20].value[0]._;
-      jsonAux['significadoAccion'] = jsObject[i].InfoItem[21].value[0]._;
+  async modificarPerfil(xml: string, email) {
+    // ToDo: Mirar que retorna el Servidor PU
+    xml = encodeURIComponent(xml);
+    let respuesta;
+    let datos = null;
+    console.log(xml);
+    const url = this.urlServidor + '/ModificarDatosPersonales?email=' + email + '&mac=' + this.mac + '&data=' + xml;
+    datos = await this.http.get(url, {responseType: 'text'}).toPromise();
+    
+     
+    let js = null;
+    const parseString = require('xml2js').parseString;
+    parseString(datos, function (err, result) {
+      if (err) {
+        alert('error');
+      } else {
+        js = result;
+      }
+    });
+    console.log('Modificado Usuario');
 
-      lista.push(jsonAux);
-    }
-    this.dataUserService.setListaECA(lista);
+    return js;
   }
 
 
 
+  async registrarEdificio(xml: string) {
+    // ToDo: Mirar que retorna el Servidor PU
+    xml = encodeURIComponent(xml);
+    let datos = null;
+    let respuesta;
+    console.log(xml);
 
+    const url = this.urlServidor + '/RegistrarBuilding?email=' + this.email + '&mac=' + this.mac + '&data=' + xml;
+
+    datos = await this.http.get(url, {responseType: 'text'}).toPromise();
+
+    let js = null;
+    const parseString = require('xml2js').parseString;
+    parseString(datos, function (err, result) {
+      if (err) {
+        alert('error');
+      } else {
+        js = result;
+      }
+    });
+    console.log(js);
+    console.log(js.Objects.Object[0].InfoItem[0].$.name);
+    console.log(js.Objects.Object[0].InfoItem[0].value[0]._);
+
+    console.log('Registrado Edificio');
+
+    return js;
+    /*
+    let promise = new Promise((resolve, reject) => {
+      const url = this.urlServidor + '/RegistrarBuilding?email=' + this.email + '&mac=' + this.mac + '&data=' + xml;
+      this.http.get(url).toPromise()
+        .then(data => {
+          // Success
+          let js = null;
+          const parseString = require('xml2js').parseString;
+          parseString(data, function (err, result) {
+            if (err) {
+              alert('error');
+            } else {
+              js = result;
+              respuesta = js;
+            }
+          });
+          console.log(js);
+          console.log(js.Objects.Object[0].InfoItem[0].$.name);
+          console.log(js.Objects.Object[0].InfoItem[0].value[0]._);
+
+          console.log('Registrado Edificio');
+          resolve();
+        });
+    });
+    return promise;*/
+  }
 }

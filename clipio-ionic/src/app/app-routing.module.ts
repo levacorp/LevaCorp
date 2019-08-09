@@ -11,8 +11,6 @@ const routes: Routes = [
   { path: 'crear-edificio', loadChildren: './pages/crear-edificio/crear-edificio.module#CrearEdificioPageModule', canActivate: [AuthGuardService] },
   { path: 'informacion-edificio/:argumento', loadChildren: './pages/informacion-edificio/informacion-edificio.module#InformacionEdificioPageModule', canActivate: [AuthGuardService] },
   { path: 'perfil', loadChildren: './pages/perfil/perfil.module#PerfilPageModule', canActivate: [AuthGuardService] },
-  { path: 'dispositivos-elemento/:id',
-   loadChildren: './pages/dispositivos-elemento/dispositivos-elemento.module#DispositivosElementoPageModule' },
   { path: 'dispositivo/:ip/:id', loadChildren: './pages/dispositivo/dispositivo.module#DispositivoPageModule' },
   { path: 'crear-elemento/:edificio/:habitacion', loadChildren: './pages/crear-elemento/crear-elemento.module#CrearElementoPageModule' },
   { path: 'registrar', loadChildren: './pages/registrar/registrar.module#RegistrarPageModule' },
@@ -23,14 +21,15 @@ const routes: Routes = [
   { path: 'elementos-por-habitacion/:edificio/:habitacion',
     loadChildren: './pages/elementos-por-habitacion/elementos-por-habitacion.module#ElementosPorHabitacionPageModule',
      canActivate: [AuthGuardService]},
-  { path: 'dispositivos-elemento/:habitacion/:elemento',
+  { path: 'dispositivos-elemento/:elemento/:edificio/:habitacion',
    loadChildren: './pages/dispositivos-elemento/dispositivos-elemento.module#DispositivosElementoPageModule' },
-  { path: 'crear-dispositivo/:nameThing/:dir',
+  { path: 'crear-dispositivo/:nameThing/:edificio/:habitacion/:dir',
    loadChildren: './pages/crear-dispositivo/crear-dispositivo.module#CrearDispositivoPageModule' },
    { path: 'crear-dispositivo/:edificio/:habitacion/:dir',
    loadChildren: './pages/crear-dispositivo/crear-dispositivo.module#CrearDispositivoPageModule' },
    { path: 'inicio-sesion', loadChildren: './pages/inicio-sesion/inicio-sesion.module#InicioSesionPageModule' },
-  { path: 'registro', loadChildren: './pages/registro/registro.module#RegistroPageModule' }
+  { path: 'registro', loadChildren: './pages/registro/registro.module#RegistroPageModule' },  { path: 'crear-habitacion', loadChildren: './pages/crear-habitacion/crear-habitacion.module#CrearHabitacionPageModule' }
+
 
 
 ];

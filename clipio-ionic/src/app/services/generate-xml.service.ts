@@ -14,7 +14,7 @@ export class GenerateXMLService {
 
     const XMLWriter = require('xml-writer');
     const xw = new XMLWriter();
-    xw.startDocument();
+    xw.startDocument('1.0', 'UTF-8');
     xw.startElement('Objects');
     xw.startElement('Object');
     xw.startElement('InfoItem');
@@ -49,84 +49,169 @@ export class GenerateXMLService {
     //console.log(xw.toString());
   }
 
-  crearECA(json, infoAccion, infoEvento) {
+  /* Creacion XML para crear ECA */
+  crearECA(infoGeneral, infoEvento, infoCondicion, infoAccion) {
     // console.log(json.value);
-    json = json.value;
-    console.log(json.nombre);
-    console.log(infoEvento);
-    console.log(infoAccion);
+    // json = json.value;
     const XMLWriter = require('xml-writer');
     const xw = new XMLWriter;
-    xw.startDocument();
+    xw.startDocument('1.0', 'UTF-8');
     let root = xw.startElement('Objects');
     root.startElement('Object');
     root.startElement('InfoItem').writeAttribute('name', 'preferencia');
-    root.startElement('InfoItem').writeAttribute('name', 'name_preference');
-    root.startElement('value').writeAttribute('type', 'string').text(json.nombre);  
-    root.endElement();
-    root.endElement();
-    root.startElement('InfoItem').writeAttribute('name', 'state_preference');
-    root.startElement('value').writeAttribute('type', 'string').text('on');  root.endElement();
-    root.endElement();
-    root.startElement('InfoItem').writeAttribute('name', 'osid_object_event');
-    root.startElement('value').writeAttribute('type', 'string').text(infoEvento.idDispositivo);  root.endElement();
-    root.endElement();
-    root.startElement('InfoItem').writeAttribute('name', 'ip_event_object');
-    root.startElement('value').writeAttribute('type', 'string').text(infoEvento.ipDispositivo);  root.endElement();
-    root.endElement();
-    root.startElement('InfoItem').writeAttribute('name', 'name_event_object');
-    root.startElement('value').writeAttribute('type', 'string').text(infoEvento.nombreDispositivo);  root.endElement();
-    root.endElement();
-    root.startElement('InfoItem').writeAttribute('name', 'id_event_resource');
-    root.startElement('value').writeAttribute('type', 'string').text(infoEvento.datastream);  root.endElement();
-    root.endElement();
-    root.startElement('InfoItem').writeAttribute('name', 'name_event_resource');
-    root.startElement('value').writeAttribute('type', 'string');  root.endElement();
-    root.endElement();
-    root.startElement('InfoItem').writeAttribute('name', 'comparator_condition');
-    root.startElement('value').writeAttribute('type', 'string').text(json.evento.comparador);  root.endElement();
-    root.endElement();
-    root.startElement('InfoItem').writeAttribute('name', 'variable_condition');
-    root.startElement('value').writeAttribute('type', 'string').text(json.evento.valor);  root.endElement();
-    root.endElement();
-    root.startElement('InfoItem').writeAttribute('name', 'type_variable_condition');
-    root.startElement('value').writeAttribute('type', 'string').text(infoEvento.dsFormat);  root.endElement();
-    root.endElement();
-    root.startElement('InfoItem').writeAttribute('name', 'unit_condition');
-    root.startElement('value').writeAttribute('type', 'string').text('None');  root.endElement();
-    root.endElement();
-    root.startElement('InfoItem').writeAttribute('name', 'meaning_condition');
-    root.startElement('value').writeAttribute('type', 'string').text(json.evento.significado);  root.endElement();
+
+      root.startElement('InfoItem').writeAttribute('name', 'name_preference');
+        root.startElement('value').writeAttribute('type', 'string').text(infoGeneral.nombreECA);  root.endElement();
       root.endElement();
-      root.startElement('InfoItem').writeAttribute('name', 'osid_object_action');
-        root.startElement('value').writeAttribute('type', 'string').text(infoAccion.idDispositivo);  root.endElement();
+      root.startElement('InfoItem').writeAttribute('name', 'state_preference');
+        root.startElement('value').writeAttribute('type', 'string').text(infoGeneral.estadoECA);  root.endElement();
       root.endElement();
-      root.startElement('InfoItem').writeAttribute('name', 'ip_action_object');
-        root.startElement('value').writeAttribute('type', 'string').text(infoAccion.ipDispositivo);  root.endElement();
+
+      root.startElement('InfoItem').writeAttribute('name', 'event');
+        root.startElement('InfoItem').writeAttribute('name', 'id_event_object');
+          root.startElement('value').writeAttribute('type', 'string').text(infoEvento.idDisp);  root.endElement();
+        root.endElement();
+        root.startElement('InfoItem').writeAttribute('name', 'ip_event_object');
+          root.startElement('value').writeAttribute('type', 'string').text(infoEvento.ipDisp);  root.endElement();
+        root.endElement();
+        root.startElement('InfoItem').writeAttribute('name', 'name_event_object');
+          root.startElement('value').writeAttribute('type', 'string').text(infoEvento.nombreDispositivo);  root.endElement();
+        root.endElement();
+        root.startElement('InfoItem').writeAttribute('name', 'id_event_resource');
+          root.startElement('value').writeAttribute('type', 'string').text(infoEvento.datastream);  root.endElement();
+        root.endElement();
+        root.startElement('InfoItem').writeAttribute('name', 'name_event_resource');
+          root.startElement('value').writeAttribute('type', 'string').text(infoEvento.datastream);  root.endElement();
+        root.endElement();
       root.endElement();
-      root.startElement('InfoItem').writeAttribute('name', 'name_action_object');
-        root.startElement('value').writeAttribute('type', 'string').text(infoAccion.nombreDispositivo);  root.endElement();
+
+      root.startElement('InfoItem').writeAttribute('name', 'condition');
+        root.startElement('InfoItem').writeAttribute('name', 'comparator_condition');
+          root.startElement('value').writeAttribute('type', 'string').text(infoCondicion.comparador);  root.endElement();
+        root.endElement();
+        root.startElement('InfoItem').writeAttribute('name', 'variable_condition');
+          root.startElement('value').writeAttribute('type', infoCondicion.dsFormat).text(infoCondicion.valor);  root.endElement();
+        root.endElement();
+        root.startElement('InfoItem').writeAttribute('name', 'unit_condition');
+          root.startElement('value').writeAttribute('type', 'string');  root.endElement();
+        root.endElement();
+        root.startElement('InfoItem').writeAttribute('name', 'meaning_condition');
+          root.startElement('value').writeAttribute('type', 'string').text(infoCondicion.significado);  root.endElement();
+        root.endElement();
       root.endElement();
-      root.startElement('InfoItem').writeAttribute('name', 'id_action_resource');
-        root.startElement('value').writeAttribute('type', 'string').text(infoAccion.datastream);  root.endElement();
+
+      root.startElement('InfoItem').writeAttribute('name', 'action');
+        root.startElement('InfoItem').writeAttribute('name', 'id_action_object');
+          root.startElement('value').writeAttribute('type', 'string').text(infoAccion.idDisp);  root.endElement();
+        root.endElement();
+        root.startElement('InfoItem').writeAttribute('name', 'ip_action_object');
+          root.startElement('value').writeAttribute('type', 'string').text(infoAccion.ipDisp);  root.endElement();
+        root.endElement();
+        root.startElement('InfoItem').writeAttribute('name', 'name_action_object');
+          root.startElement('value').writeAttribute('type', 'string').text(infoAccion.nombreDispositivo);  root.endElement();
+        root.endElement();
+        root.startElement('InfoItem').writeAttribute('name', 'id_action_resource');
+          root.startElement('value').writeAttribute('type', 'string').text(infoAccion.datastream);  root.endElement();
+        root.endElement();
+        root.startElement('InfoItem').writeAttribute('name', 'name_action_resource');
+          root.startElement('value').writeAttribute('type', 'string').text(infoAccion.datastream);  root.endElement();
+        root.endElement();
+        root.startElement('InfoItem').writeAttribute('name', 'comparator_action');
+          root.startElement('value').writeAttribute('type', 'string').text(infoAccion.comparador);  root.endElement();
+        root.endElement();
+        root.startElement('InfoItem').writeAttribute('name', 'variable_action');
+          root.startElement('value').writeAttribute('type', infoAccion.dsFormat).text(infoAccion.valor);  root.endElement();
+        root.endElement();
+        root.startElement('InfoItem').writeAttribute('name', 'unit_action');
+          root.startElement('value').writeAttribute('type', 'string');  root.endElement();
+        root.endElement();
+        root.startElement('InfoItem').writeAttribute('name', 'meaning_action');
+          root.startElement('value').writeAttribute('type', 'string').text(infoAccion.significado);  root.endElement();
+        root.endElement();
       root.endElement();
-      root.startElement('InfoItem').writeAttribute('name', 'name_action_resource');
-        root.startElement('value').writeAttribute('type', 'string');  root.endElement();
+    root.endDocument();
+
+    console.log(xw.toString());
+    return(xw.toString());
+  }
+
+  /* Creacion XML para modificar ECA */
+  modificarECA(json, infoGeneral, infoAccion, infoEvento) {
+    const XMLWriter = require('xml-writer');
+    const xw = new XMLWriter;
+    xw.startDocument('1.0', 'UTF-8');
+    let root = xw.startElement('Objects');
+    root.startElement('Object');
+    root.startElement('InfoItem').writeAttribute('name', 'preferencia');
+
+      root.startElement('InfoItem').writeAttribute('name', 'name_preference');
+        root.startElement('value').writeAttribute('type', 'string').text(json.nombre);  root.endElement();
       root.endElement();
-      root.startElement('InfoItem').writeAttribute('name', 'comparator_action');
-        root.startElement('value').writeAttribute('type', 'string').text(json.accion.comparador);  root.endElement();
+      root.startElement('InfoItem').writeAttribute('name', 'state_preference');
+        root.startElement('value').writeAttribute('type', 'string').text('on');  root.endElement();
       root.endElement();
-      root.startElement('InfoItem').writeAttribute('name', 'variable_action');
-        root.startElement('value').writeAttribute('type', 'string').text(json.accion.valor);  root.endElement();
+
+      root.startElement('InfoItem').writeAttribute('name', 'event');
+        root.startElement('InfoItem').writeAttribute('name', 'id_event_object');
+          root.startElement('value').writeAttribute('type', 'string').text(infoEvento.idDispositivo);  root.endElement();
+        root.endElement();
+        root.startElement('InfoItem').writeAttribute('name', 'ip_event_object');
+          root.startElement('value').writeAttribute('type', 'string').text(infoEvento.ipDispositivo);  root.endElement();
+        root.endElement();
+        root.startElement('InfoItem').writeAttribute('name', 'name_event_object');
+          root.startElement('value').writeAttribute('type', 'string').text(infoEvento.nombreDispositivo);  root.endElement();
+        root.endElement();
+        root.startElement('InfoItem').writeAttribute('name', 'id_event_resource');
+          root.startElement('value').writeAttribute('type', 'string').text(infoEvento.datastream);  root.endElement();
+        root.endElement();
+        root.startElement('InfoItem').writeAttribute('name', 'name_event_resource');
+          root.startElement('value').writeAttribute('type', 'string').text(infoEvento.datastream);  root.endElement();
+        root.endElement();
       root.endElement();
-      root.startElement('InfoItem').writeAttribute('name', 'type_variable_action');
-        root.startElement('value').writeAttribute('type', 'string').text(infoAccion.dsFormat);  root.endElement();
+
+      root.startElement('InfoItem').writeAttribute('name', 'condition');
+        root.startElement('InfoItem').writeAttribute('name', 'comparator_condition');
+          root.startElement('value').writeAttribute('type', 'string').text(json.evento.comparador);  root.endElement();
+        root.endElement();
+        root.startElement('InfoItem').writeAttribute('name', 'variable_condition');
+          root.startElement('value').writeAttribute('type', infoEvento.dsFormat).text(json.evento.valor);  root.endElement();
+        root.endElement();
+        root.startElement('InfoItem').writeAttribute('name', 'unit_condition');
+          root.startElement('value').writeAttribute('type', 'string');  root.endElement();
+        root.endElement();
+        root.startElement('InfoItem').writeAttribute('name', 'meaning_condition');
+          root.startElement('value').writeAttribute('type', 'string').text(json.evento.significado);  root.endElement();
+        root.endElement();
       root.endElement();
-      root.startElement('InfoItem').writeAttribute('name', 'unit_action');
-        root.startElement('value').writeAttribute('type', 'string').text('None');  root.endElement();
-      root.endElement();
-      root.startElement('InfoItem').writeAttribute('name', 'meaning_action');
-        root.startElement('value').writeAttribute('type', 'string').text(json.accion.significado);  root.endElement();
+
+      root.startElement('InfoItem').writeAttribute('name', 'action');
+        root.startElement('InfoItem').writeAttribute('name', 'id_action_object');
+          root.startElement('value').writeAttribute('type', 'string').text(infoAccion.idDispositivo);  root.endElement();
+        root.endElement();
+        root.startElement('InfoItem').writeAttribute('name', 'ip_action_object');
+          root.startElement('value').writeAttribute('type', 'string').text(infoAccion.ipDispositivo);  root.endElement();
+        root.endElement();
+        root.startElement('InfoItem').writeAttribute('name', 'name_action_object');
+          root.startElement('value').writeAttribute('type', 'string').text(infoAccion.nombreDispositivo);  root.endElement();
+        root.endElement();
+        root.startElement('InfoItem').writeAttribute('name', 'id_action_resource');
+          root.startElement('value').writeAttribute('type', 'string').text(infoAccion.datastream);  root.endElement();
+        root.endElement();
+        root.startElement('InfoItem').writeAttribute('name', 'name_action_resource');
+          root.startElement('value').writeAttribute('type', 'string').text(infoAccion.datastream);  root.endElement();
+        root.endElement();
+        root.startElement('InfoItem').writeAttribute('name', 'comparator_action');
+          root.startElement('value').writeAttribute('type', 'string').text(json.accion.comparador);  root.endElement();
+        root.endElement();
+        root.startElement('InfoItem').writeAttribute('name', 'variable_action');
+          root.startElement('value').writeAttribute('type', infoAccion.dsFormat).text(json.accion.valor);  root.endElement();
+        root.endElement();
+        root.startElement('InfoItem').writeAttribute('name', 'unit_action');
+          root.startElement('value').writeAttribute('type', 'string');  root.endElement();
+        root.endElement();
+        root.startElement('InfoItem').writeAttribute('name', 'meaning_action');
+          root.startElement('value').writeAttribute('type', 'string').text(json.accion.significado);  root.endElement();
+        root.endElement();
       root.endElement();
     root.endDocument();
 
@@ -137,7 +222,7 @@ export class GenerateXMLService {
     console.log(livingThing);
     const XMLWriter = require('xml-writer');
     const xw = new XMLWriter();
-    xw.startDocument();
+    xw.startDocument('1.0', 'UTF-8');
     xw.startElement('Objects');
       xw.startElement('Object');
         xw.startElement('InfoItem').writeAttribute('name', 'Things');
@@ -175,7 +260,7 @@ export class GenerateXMLService {
               xw.endElement();
             xw.endElement();
             xw.startElement('InfoItem').writeAttribute('name', 'name_building_environment');
-              xw.startElement('value').writeAttribute('type', 'string').text("");
+              xw.startElement('value').writeAttribute('type', 'string').text(habitacion);
               xw.endElement();
             xw.endElement();
           xw.endElement();
@@ -188,7 +273,7 @@ export class GenerateXMLService {
     console.log(NotlivingThing);
     const XMLWriter = require('xml-writer');
     const xw = new XMLWriter();
-    xw.startDocument();
+    xw.startDocument('1.0', 'UTF-8');
     xw.startElement('Objects');
       xw.startElement('Object');
         xw.startElement('InfoItem').writeAttribute('name', 'Things');
@@ -214,7 +299,7 @@ export class GenerateXMLService {
               xw.endElement();
             xw.endElement();
             xw.startElement('InfoItem').writeAttribute('name', 'name_building_environment');
-              xw.startElement('value').writeAttribute('type', 'string').text("");
+              xw.startElement('value').writeAttribute('type', 'string').text(habitacion);
               xw.endElement();
             xw.endElement();
           xw.endElement();
@@ -223,11 +308,12 @@ export class GenerateXMLService {
     xw.endElement();
     console.log(xw.toString());
   }
+  //crea xml de asocion de un dispostivo con una habitacion
   crearAsociacionDispositivosHabitacion(edificio, habitacion , nombreDispositivo, idDispositivo, ipDispositivo)
   {
     const XMLWriter = require('xml-writer');
     const xw = new XMLWriter();
-    xw.startDocument();
+    xw.startDocument('1.0', 'UTF-8');
     xw.startElement('Objects');
       xw.startElement('Object');
         xw.startElement('InfoItem').writeAttribute('name', 'OOS');
@@ -245,7 +331,7 @@ export class GenerateXMLService {
               xw.endElement();
             xw.endElement();
             xw.startElement('InfoItem').writeAttribute('name', 'name_house_part');
-              xw.startElement('value').writeAttribute('type', 'string').text("");
+              xw.startElement('value').writeAttribute('type', 'string').text(habitacion);
               xw.endElement();
             xw.endElement();
             xw.startElement('InfoItem').writeAttribute('name', 'name_building');
@@ -262,11 +348,12 @@ export class GenerateXMLService {
     xw.endElement();
     console.log(xw.toString());
   }
+  // crea xml del dispositivo con un elemento
   crearAsociacionDispositivosElemento(nombreThing, nombreDispositivo, idDispositivo, ipDispositivo)
   {
     const XMLWriter = require('xml-writer');
     const xw = new XMLWriter();
-    xw.startDocument();
+    xw.startDocument('1.0', 'UTF-8');
     xw.startElement('Objects');
       xw.startElement('Object');
         xw.startElement('InfoItem').writeAttribute('name', 'OOS');
@@ -293,15 +380,42 @@ export class GenerateXMLService {
     xw.endElement();
     console.log(xw.toString());
   }
+  crearHabitacion(edificio, piso, habitacion)
+  {
+    var XMLWriter = require('xml-writer');
+    let xw = new XMLWriter;
+    xw.startDocument();
+    xw.startElement('Objects');
+    xw.startElement('Object');
+    xw.startElement('InfoItem').writeAttribute('name', 'BuildingEnvironment');
+    xw.startElement('InfoItem').writeAttribute('name', habitacion);
+    xw.startElement('InfoItem').writeAttribute('name', 'name_thing');
+    xw.startElement('value').writeAttribute('type', 'string');
+    xw.text(habitacion).endElement('/InfoItem').endElement('InfoItem');
 
-    
+    xw.startElement('InfoItem').writeAttribute('name', 'name_building');
+    xw.startElement('value').writeAttribute('type', 'string');
+    xw.text(edificio).endElement('/InfoItem').endElement('InfoItem');
+
+    xw.startElement('InfoItem').writeAttribute('name', 'name_part');
+    xw.startElement('value').writeAttribute('type', 'string');
+    xw.text(habitacion).endElement('/InfoItem').endElement('InfoItem');
+
+    xw.startElement('InfoItem').writeAttribute('name', 'name_flat');
+    xw.startElement('value').writeAttribute('type', 'string');
+    xw.text(piso).endElement('/InfoItem').endElement('/InfoItem').endElement('/InfoItem');
+    xw.endElement('/Object').endElement('/Objects');
+    xw.endDocument();
+    console.log(xw.toString());
+  }
+
   //crea el XML para registrar un nuevo edificio
   setXMLRegistrarEdificio(json) {
     var XMLWriter = require('xml-writer');
     let xw = new XMLWriter;
     json = json.value;
     var nombre= json.nombre, piso = json.piso,  email = json.email;
-    xw.startDocument();
+    xw.startDocument('1.0', 'UTF-8');
     xw.startElement('Objects');
     xw.startElement('Object');
 
@@ -325,8 +439,8 @@ export class GenerateXMLService {
     xw.text(nombre).endElement('/InfoItem').endElement('/InfoItem');
 
     xw.endDocument();
-    console.log("xmlRegistrar");
-    console.log(xw.toString());
+    return(xw.toString());
+
   }
   //crea el XML para el registrar el usuario en la aplicacion
   setXMLRegistrar(json) {
@@ -334,7 +448,7 @@ export class GenerateXMLService {
     let xw = new XMLWriter;
     json = json.value;
     var nombreApp = json.nombreApp, contraseña = json.contrasena,  email = json.email;
-    xw.startDocument();
+    xw.startDocument('1.0', 'UTF-8');
    // xw.Encoding= Encoding.UTF8;
     xw.startElement('Objects');
     xw.startElement('Object');
@@ -353,9 +467,8 @@ export class GenerateXMLService {
     xw.text(contraseña).endElement('/InfoItem').endElement('/InfoItem');
 
     xw.endDocument();    
-    console.log(xw.toString());
-    
-   this.enviarXML.registrarUsuario(email, xw.toString());
+    console.log(xw.toString());    
+    return(xw.toString());
   }
   //crea el XML para el perfil del usuario
   setXMLPerfil(json) {
@@ -364,7 +477,7 @@ export class GenerateXMLService {
     json = json.value;
     var nombre = json.nombre, apellido = json.apellido, celular = json.celular, genero = json.genero, fechaNacimiento = json.fechaNacimiento;
     var facebook = json.facebook, lugarNacimiento = json.lugarNacimiento, email = json.email;
-    xw.startDocument();
+    xw.startDocument('1.0', 'UTF-8');
     xw.startElement('Objects');
     xw.startElement('Object');
 
@@ -402,6 +515,7 @@ export class GenerateXMLService {
     xw.text(email);
 
     xw.endDocument();
-   // console.log(xw.toString());
+    return(xw.toString());
+
   }
 }

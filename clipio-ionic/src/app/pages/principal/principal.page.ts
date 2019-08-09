@@ -6,6 +6,7 @@ import { Router, ActivatedRoute } from '@angular/router';
 import { DataUserService } from '../../services/data-user.service';
 import { HttpClient } from '@angular/common/http';
 import { HTTP } from '@ionic-native/http/ngx';
+import { tap } from 'rxjs/operators';
 
 @Component({
   selector: 'app-principal',
@@ -29,16 +30,10 @@ export class PrincipalPage implements OnInit {
     private router: Router,
     private activatedRoute: ActivatedRoute,
     private dataUserService: DataUserService,
-    private httpClient: HttpClient,
-    private nativeHttp: HTTP,
     ) { }
 
   /* Inicializa los atributos a utilizar */
-  async ngOnInit()  {
-   
-    /*await this.nativeHttp.get('http://10.0.0.20:8080/RegistroUsuario?email=c@gmail.com&mac=02:00:00:00:00:00&data=%3C?xml%20version=%221.0%22?%3E%20%3CObjects%3E%3CObject%3E%3CInfoItem%20name=%22application%22%3E%3CInfoItem%20name=%22name_app%22%3E%3Cvalue%20type=%22string%22%3EClipio%3C/value%3E%3C/InfoItem%3E%3CInfoItem%20name=%22user_app%22%3E%3Cvalue%20type=%22string%22%3Ec@gmail.com%3C/value%3E%3C/InfoItem%3E%3CInfoItem%20name=%22password_app%22%3E%3Cvalue%20type=%22string%22%3Esle+3kqQVG+N/aEpSZJkIw==%3C/value%3E%3C/InfoItem%3E%3C/InfoItem%3E%3C/Object%3E%3C/Objects%3E',{}, {}).then(res =>{
-      alert(res.data);
-      });*/
+  ngOnInit()  {
 
 
     console.log('MAC: ', this.dataUserService.getMAC());
@@ -52,6 +47,7 @@ export class PrincipalPage implements OnInit {
     this.habitaciones = this.dataUserService.getListaHabitaciones();
     console.log(this.habitaciones);
     this.cargarElementosPorHabitacion();
+    this.dataService.consultarObjetosRelacionados();
   }
   /* Cuando se requiere traer los elementos filtrados o sin filtrar iguala el atributo filtro
     al filtro escogido y carga los elementos para el filtro*/
@@ -105,5 +101,4 @@ export class PrincipalPage implements OnInit {
       }
     }
   }
-
 }
