@@ -4,6 +4,7 @@ import { FormGroup, FormBuilder, FormControl, Validators, FormArray } from '@ang
 import { GenerateXMLService } from 'src/app/services/generate-xml.service';
 import { DataService } from 'src/app/services/data.service';
 import { AlertController } from '@ionic/angular';
+import { UtilitiesService } from 'src/app/services/utilities.service';
 
 @Component({
   selector: 'app-crear',
@@ -36,8 +37,12 @@ export class CrearPage implements OnInit {
   ipDispAccion = null;
 
 
-  constructor(private router: Router, public formBuilder: FormBuilder,
-              public alertController: AlertController, private xmlService: GenerateXMLService, private dataService: DataService) {
+  constructor(private router: Router,
+              public formBuilder: FormBuilder,
+              public alertController: AlertController,
+              private xmlService: GenerateXMLService,
+              private dataService: DataService,
+              private utilidades: UtilitiesService) {
 
     /*Creacion Formulario para Captura de ECA */
     const dataStreamEvento = this.formBuilder.group({
@@ -160,7 +165,7 @@ export class CrearPage implements OnInit {
     }
   }
 
-  capturarDatos() {
+  async capturarDatos() {
     /* Se capturan los datos guardados y formulario y se envian los necesarios para crear el xml */
     const xmlCreacion = this.xmlService.crearECA({
       /* Informacion General del ECA */
@@ -191,7 +196,16 @@ export class CrearPage implements OnInit {
     });
 
     /* Se envía el XML para realizar la consulta */
-    this.dataService.crearECA(xmlCreacion);
+    let codigo;
+    await this.dataService.crearECA(xmlCreacion)
+    .then(async data => {
+        alert(data);
+        codigo = await this.utilidades.alertEspecifica( "Registro Preferencia: ", data);
+        console.log("Código" + codigo);
+        if (codigo === '1028') {
+          this.router.navigate(['/login']);
+        }
+    });
   }
 
   pruebaDatosXML() {
