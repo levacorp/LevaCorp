@@ -61,7 +61,7 @@ export class PerfilPage implements OnInit {
     // if (this.myform.valid) {
        await this.dataservice.modificarPerfil(this.xmlRegistrarUsuario, this.myform.get('email').value)
        .then(async data => {
-          codigo = await this.utilidades.alertEspecifica( "Perfil Actualizado ", data);
+          codigo = await this.utilidades.alertEspecifica( "Perfil ", data);
           console.log(codigo);
 
           if (codigo === '1028' || codigo === '1044') {
