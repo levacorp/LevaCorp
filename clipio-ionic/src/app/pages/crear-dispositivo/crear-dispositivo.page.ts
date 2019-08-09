@@ -49,10 +49,6 @@ export class CrearDispositivoPage implements OnInit {
       // Obtiene la informacion basica del dispositivo
       this.InformacionBasica = this.dataService.getInfoBasicaDispositivo(xmlDatos);
       this.idDispositivo = this.InformacionBasica[0].value[0]._;
-      // Hace una peticion de los estados de los datastreams a la raspberry
-      const xmlDataStreams = await this.raspService.requestRaspberry('http://' + this.ipDispositivo + '/SendState?osid=' + this.idDispositivo);
-      // Obtiene los datatreams
-      this.dataStreams = this.dataService.getEstadoDataStreams(xmlDataStreams);
       this.nombreDispositivo = this.InformacionBasica[1].value[0]._;
     }
     // si la cantidad de parametros que le llegan es igual a tres significa que se agregara un dispositivo a una habitacion

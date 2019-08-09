@@ -20,7 +20,6 @@ export class CrearHabitacionPage implements OnInit {
   constructor(private activatedRoute: ActivatedRoute, public router: Router, public formBuilder: FormBuilder,
               private generarXML: GenerateXMLService, private dataService: DataService , private utilidades : UtilitiesService
     ) {
-
   }
 
   ngOnInit() {
