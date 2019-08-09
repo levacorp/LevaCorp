@@ -16,7 +16,7 @@ export class DataService implements OnInit {
   /* Email y mac estaticos para todas las peticiones */
   email = 'daniel@gmail.com';
   mac = '02:00:00:00:00:00';
-  urlServidor = 'http://192.168.0.7:8080';
+  urlServidor = 'http://192.168.0.28:8080';
 
   constructor(
     private https: HTTP,
@@ -29,9 +29,10 @@ export class DataService implements OnInit {
   ngOnInit() {
     this.email = this.dataUserService.getEmail();
     this.urlServidor = 'http://' + this.dataUserService.getIP() + ':8080';
+    this.mac = this.dataUserService.getMAC();
   }
 
-  async getXMLInicioSesion3(email: string, pass: string) {
+  async getVerificarUsuario(email: string, pass: string) {
     let resultado = false;
     let json;
     const url = this.getURLInicioSesion(email, pass);
@@ -548,13 +549,7 @@ export class DataService implements OnInit {
     let respuesta;
     console.log(xml);
     const url = this.urlServidor + '/RegistrarBuilding?email=' + this.email + '&mac=' + this.mac + '&data=' + xml;
-<<<<<<< HEAD
-
     datos = await this.http.get(url, { responseType: 'text' }).toPromise();
-
-=======
-    datos = await this.http.get(url, { responseType: 'text' }).toPromise();
->>>>>>> c7ffc453d0c9eaf59045c3c819af20ce1cf93990
     let js = null;
     const parseString = require('xml2js').parseString;
     parseString(datos, function (err, result) {
