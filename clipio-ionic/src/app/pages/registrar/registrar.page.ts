@@ -40,24 +40,26 @@ export class RegistrarPage implements OnInit {
   ngOnInit() {
   }
 
-  saveData() {  
+  async saveData() {
+      let codigo;
+
       this.myform.value.contrasena = this.encrypt.encrypt(this.myform.value.contrasena);
       this.myform.value.confirmacionContrasena = this.encrypt.encrypt(this.myform.value.confirmacionContrasena);
-     
       this.xmlRegistrarUsuario = this.generarXML.setXMLRegistrar(this.myform);
       if (this.myform.valid) {
-        if (this.dataservice.registrarUsuario(this.xmlRegistrarUsuario, this.myform.get('email').value)){
-          this.utilidades.alert("Registro exito");
-          this.authservice.login();
-  
-        } else {
-          this.utilidades.alert("Registro fallido");
-        }
-        console.log(this.myform.value);
-       // this.exitosoAlert();
+         await this.dataservice.registrarUsuario(this.xmlRegistrarUsuario, this.myform.get('email').value)
+         .then(async data => {
+            codigo = await this.utilidades.alertEspecifica( "Registro Usuario ", data);
+            console.log(codigo);
+
+            if (codigo === '1028' || codigo === '1044') {
+              this.authservice.login();
+            }
+         });
+
       }
-    
-  }
+
+    }
 
   checkPass() {
     // Store the password field objects into variables ...

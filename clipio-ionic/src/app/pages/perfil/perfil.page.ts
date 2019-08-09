@@ -39,8 +39,8 @@ export class PerfilPage implements OnInit {
 
   }
 
-  ngOnInit() {
-    this.perfil = this.dataservice.getPerfilUsuario();
+  async ngOnInit() {
+    this.perfil = await this.dataservice.getPerfilUsuario();
     console.log(this.perfil);
     this.myform.get('nombre').setValue(this.perfil[0]);
     this.myform.get('apellido').setValue(this.perfil[1]);
@@ -54,8 +54,21 @@ export class PerfilPage implements OnInit {
 
   }
   //metodo que guarda y envia el formulario para crear el xml del perfil usuario
-  saveData() {
-    
-   
-  } 
+  async saveData() {
+    let codigo;
+
+    this.xmlRegistrarUsuario = this.generarXML.setXMLPerfil(this.myform);
+    // if (this.myform.valid) {
+       await this.dataservice.modificarPerfil(this.xmlRegistrarUsuario, this.myform.get('email').value)
+       .then(async data => {
+          codigo = await this.utilidades.alertEspecifica( "Perfil Actualizado ", data);
+          console.log(codigo);
+
+          if (codigo === '1028' || codigo === '1044') {
+          }
+       });
+
+    //}
+
+  }
 }

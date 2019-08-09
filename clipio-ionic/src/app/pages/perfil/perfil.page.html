@@ -19,33 +19,21 @@
             <ion-item text-center>
               <img slot="start" src="/assets/icon/UserLogo.png" />
               <ion-input type="text" placeholder="Nombres" value='{{perfil[0]}}' formControlName="nombre"
-                [class.invalid]="!myform.controls.nombre.valid && myform.controls.nombre.dirty"></ion-input>
-
-            </ion-item>
-            <ion-item class="error-message" *ngIf="!myform.controls.nombre.valid && myform.controls.nombre.dirty">
-              <ion-text color="danger"><small> *Campo requerido</small>
-              </ion-text>
+                ></ion-input>
             </ion-item>
 
             <ion-item text-center>
               <img slot="start" src="/assets/icon/name.png" />
               <ion-input type="text" placeholder="Apellidos" value='{{perfil[1]}}' formControlName="apellido"
-                [class.invalid]="!myform.controls.apellido.valid && myform.controls.apellido.dirty">
+                >
               </ion-input>
-            </ion-item>
-            <ion-item class="error-message" *ngIf="!myform.controls.apellido.valid && myform.controls.apellido.dirty">
-              <ion-text color="danger"><small> *Campo requerido</small>
-              </ion-text>
             </ion-item>
             <ion-item text-center>
               <img slot="start" src="/assets/icon/smartphone.png" />
               <ion-input type="text" placeholder="Celular" value='{{perfil[2]}}' formControlName="celular"
-              [class.invalid]="!myform.controls.celular.valid && myform.controls.celular.dirty"> </ion-input>
+              > </ion-input>
             </ion-item>
-            <ion-item class="error-message" *ngIf="!myform.controls.celular.valid && myform.controls.celular.dirty">
-                <ion-text color="danger"><small> *Solo numeros(8-10) </small>
-                </ion-text>
-              </ion-item>
+            
             <ion-item text-center>
               <img slot="start" src="/assets/icon/male-and-female.png" />
               <ion-input type="text" placeholder="Genero" value='{{perfil[3]}}' formControlName="genero"></ion-input>

@@ -439,8 +439,8 @@ export class GenerateXMLService {
     xw.text(nombre).endElement('/InfoItem').endElement('/InfoItem');
 
     xw.endDocument();
-    console.log("xmlRegistrar");
-    console.log(xw.toString());
+    return(xw.toString());
+
   }
   //crea el XML para el registrar el usuario en la aplicacion
   setXMLRegistrar(json) {
