@@ -2,6 +2,7 @@
 
 {% block content %}
 {% load navBarTags %}
+{% load staticfiles %}
 <!--Contenedor principal para que la pagina, permite visualizar todo al 100% de la pantalla-->
 <div id="wrapper" class="active">
     <!-- NavBar -->
@@ -49,17 +50,50 @@
             <div class="cont-principal p-5">
                 <!--Footer, aplicar fondo con la propiedad text-(colorNuevo)-50 -->
                 <footer id="sticky-footer" class="py-4 text-dark-50 rounded">
-                    <div class="form-row justify-content-end">
-                        <small>Contacto </small>
-                    </div>
-                    <div class="form-row justify-content-end">
-                        <small>manzamb@unicauca.edu.co</small>
-                    </div>
-                    <div class="form-row justify-content-end">
-                        <small>jlr@unicauca.edu.co</small>
-                    </div>
-                    <div class="form-row justify-content-end">
-                        <small>andreapabon@unicauca.edu.co</small>
+                    <div class="row" >
+                        <div class="col-md">
+                            <div class="row" >
+                                <div class="col-md-auto">
+                                    <div class="form-row">
+                                        <img src="{% static 'img/logoLevacorp.png' %}" class="logoCorp"/>
+                                    </div>
+                                </div>
+                                <div class="col-md p-1">
+                                    <div class="form-row justify-content-start">
+                                        <small>bdaniel@unicauca.edu.co</small>
+                                    </div>
+                                    <div class="form-row justify-content-start">
+                                        <small>juancamiforero@unicauca.edu.co</small>
+                                    </div>
+                                    <div class="form-row justify-content-start">
+                                        <small>levafernandez@unicauca.edu.co</small>
+                                    </div>
+                                    <div class="form-row justify-content-start">
+                                        <small>danielfer@unicauca.edu.co</small>
+                                    </div>
+                                </div>
+                            </div>
+                        </div>
+                        <div class="col-md">
+                            <div class="row" >
+                                <div class="col-md">
+                                    <div class="form-row justify-content-end">
+                                        <small>manzamb@unicauca.edu.co</small>
+                                    </div>
+                                    <div class="form-row justify-content-end">
+                                        <small>jlr@unicauca.edu.co</small>
+                                    </div>
+                                    <div class="form-row justify-content-end">
+                                        <small>andreapabon@unicauca.edu.co</small>
+                                    </div>
+                                </div>
+                                <div class="col-md-auto">
+                                    <div class="form-row">
+                                        <img src="{% static 'img/logoUnicauca.png' %}" class="logoCorp"/>
+                                    </div>
+                                </div>
+                            </div>
+                        </div>
                     </div>
                 </footer>
             </div>
