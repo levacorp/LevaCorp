@@ -16,7 +16,7 @@ export class DataService {
   /* Email y mac estaticos para todas las peticiones */
   email = 'daniel@gmail.com';
   mac = '02:00:00:00:00:00';
-  urlServidor = 'http://192.168.0.11:8080';
+  urlServidor = 'http://192.168.0.28:8080';
 
   constructor(
     private https: HTTP,
@@ -310,7 +310,8 @@ export class DataService {
   // tslint:disable-next-line: prefer-for-of
   for (let i = 0; i < usuario.Objects.Object[0].InfoItem[0].InfoItem.length; i++) {
     if (usuario.Objects.Object[0].InfoItem[0].InfoItem[i].value[0]._ === undefined
-      || usuario.Objects.Object[0].InfoItem[0].InfoItem[i].value[0]._ === '') {
+      || usuario.Objects.Object[0].InfoItem[0].InfoItem[i].value[0]._ === ''
+      || usuario.Objects.Object[0].InfoItem[0].InfoItem[i].value[0]._ === 'None') {
       datos.push('');
     } else {
       console.log('datos: ', usuario.Objects.Object[0].InfoItem[0].InfoItem[i].value[0]._);
