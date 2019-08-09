@@ -55,10 +55,10 @@
         <ion-row *ngIf="!direccionEvento">
           <ion-col>
               <ion-thumbnail>
-                <!--<app-escaner (onReadDevice)="guardarDireccionEvento($event)" #childComponentEvent></app-escaner>
-                <!-- Imagen QR como botón
-                <ion-img src="/assets/img/qr-code-scan.png" (click)="childComponentEvent.leerCodigo()" style="width:150px;height:150px;"></ion-img>-->
-                <ion-button (click)="pruebaDatosXML()">Crear preferencia Quemada</ion-button>
+                <app-escaner (onReadDevice)="guardarDireccionEvento($event)" #childComponentEvent></app-escaner>
+                <!-- Imagen QR como botón-->
+                <ion-img src="/assets/img/qr-code-scan.png" (click)="childComponentEvent.leerCodigo()" style="width:150px;height:150px;"></ion-img>
+                <!--<ion-button (click)="pruebaDatosXML()">Crear preferencia Quemada</ion-button>-->
               </ion-thumbnail>
             <!--ion-button (click)="guardarDireccionEvento('http://10.0.0.16/Identificator?osid=708637323')">Boton Evento</ion-button>-->
           </ion-col>

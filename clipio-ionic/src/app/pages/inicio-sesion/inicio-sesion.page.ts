@@ -40,6 +40,9 @@ export class InicioSesionPage implements OnInit {
     await this.dataService.getXMLInicioSesion3(this.myform.value.email, this.myform.value.contrasena)
     .then(res => {
       if (res) {
+        console.log('email', this.myform.value.email);
+        this.dataUserService.setIP(this.myform.value.dirIp);
+        this.dataUserService.setEmail(this.myform.value.email);
         this.authServices.login();
       } else {
         alert('E-mail o contraseña incorrecta');

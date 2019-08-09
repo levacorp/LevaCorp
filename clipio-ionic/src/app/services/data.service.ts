@@ -311,7 +311,8 @@ export class DataService {
   // tslint:disable-next-line: prefer-for-of
   for (let i = 0; i < usuario.Objects.Object[0].InfoItem[0].InfoItem.length; i++) {
     if (usuario.Objects.Object[0].InfoItem[0].InfoItem[i].value[0]._ === undefined
-      || usuario.Objects.Object[0].InfoItem[0].InfoItem[i].value[0]._ === '') {
+      || usuario.Objects.Object[0].InfoItem[0].InfoItem[i].value[0]._ === ''
+      || usuario.Objects.Object[0].InfoItem[0].InfoItem[i].value[0]._ === 'None') {
       datos.push('');
     } else {
       console.log('datos: ', usuario.Objects.Object[0].InfoItem[0].InfoItem[i].value[0]._);
@@ -371,20 +372,30 @@ export class DataService {
 
   async crearECA(xml: string) {
     // ToDo: Mirar que retorna el Servidor PU
+    const eca = xml;
+    let datos = null;
     xml = encodeURIComponent(xml);
     console.log(xml);
     const url = this.urlServidor + '/RegistrarPreferencia?email=' + this.email + '&mac=' + this.mac + '&data=' + xml;
-    await this.http.get(url, { responseType: 'text' })
-      .subscribe(data => {
-        //alert(data);
-      }, error => {
-        alert(error);
-      });
+    datos = await this.http.get(url, { responseType: 'text' }).toPromise();
 
-    console.log('Registrada preferencia');
-    // Actualizar lista de Preferencias
+      
+    let js = null;
+    const parseString = require('xml2js').parseString;
+    parseString(datos, function (err, result) {
+      if (err) {
+        alert('error');
+      } else {
+        console.log('Registrada preferencia');
+        js = result;
+        // Actualizar lista de Preferencias
+      }
+    });
     this.listarECAs();
+    
+    return js;
   }
+
   async consultarObjetosRelacionados() {
     // ToDo: Mirar que retorna el Servidor PU
     const url = this.urlServidor + '/ConsultarObjetosRelated?email=' + this.email + '&mac=' + this.mac;
@@ -471,13 +482,12 @@ export class DataService {
         }
 
         console.log('Actualizando Lista ECAS...');
-        console.log(lista);
 
         this.dataUserService.setListaECA(lista);
       }, error => {
         alert(error);
       }
-      );
+    );
   }
   async registrarUsuario(xml: string, email) {
     // ToDo: Mirar que retorna el Servidor PU
@@ -524,29 +534,6 @@ export class DataService {
     console.log('Modificado Usuario');
     return js;
   }
-  async registrarPerfil(xml: string, email) {
-    // ToDo: Mirar que retorna el Servidor PU
-    xml = encodeURIComponent(xml);
-    let datos = null;
-    console.log(xml);
-
-    const url = this.urlServidor + '/RegistroDatosPersonales?email=' + email + '&mac=' + this.mac + '&data=' + xml;
-
-    datos = await this.http.get(url, { responseType: 'text' }).toPromise();
-
-    let js = null;
-    const parseString = require('xml2js').parseString;
-    parseString(datos, function (err, result) {
-      if (err) {
-        alert('error');
-      } else {
-        js = result;
-      }
-    });
-    console.log('Registrado Edificio');
-    return js;
-
-  }
 
 
 
@@ -569,30 +556,6 @@ export class DataService {
     });
 
     return js;
-    /*
-    let promise = new Promise((resolve, reject) => {
-      const url = this.urlServidor + '/RegistrarBuilding?email=' + this.email + '&mac=' + this.mac + '&data=' + xml;
-      this.http.get(url).toPromise()
-        .then(data => {
-          // Success
-          let js = null;
-          const parseString = require('xml2js').parseString;
-          parseString(data, function (err, result) {
-            if (err) {
-              alert('error');
-            } else {
-              js = result;
-              respuesta = js;
-            }
-          });
-          console.log(js);
-          console.log(js.Objects.Object[0].InfoItem[0].$.name);
-          console.log(js.Objects.Object[0].InfoItem[0].value[0]._);
 
-          console.log('Registrado Edificio');
-          resolve();
-        });
-    });
-    return promise;*/
   }
 }

@@ -16,8 +16,8 @@ import { AuthenticationService } from 'src/app/services/authentication.service';
 export class RegistrarPage implements OnInit {
 
   myform: FormGroup;
-  matching_passwords_group: FormGroup;  
-  xmlRegistrarUsuario = null; 
+  matching_passwords_group: FormGroup;
+  xmlRegistrarUsuario = null;
 
   constructor(
     private dataservice: DataService,
@@ -26,8 +26,8 @@ export class RegistrarPage implements OnInit {
     private generarXML: GenerateXMLService,
     private encrypt: EncryptService,
     public alertController: AlertController,
-    private utilidades : UtilitiesService, 
-    private authservice : AuthenticationService
+    private utilidades: UtilitiesService,
+    private authservice: AuthenticationService
   ) {
     this.myform = this.formBuilder.group({
       nombreApp: ['Clipio', Validators.required],
