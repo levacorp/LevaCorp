@@ -14,7 +14,7 @@ export class DataService {
   datosPost: Observable<any>;
 
   /* Email y mac estaticos para todas las peticiones */
-  email = 'camilo@gmail.com';
+  email = 'daniel@gmail.com';
   mac = '02:00:00:00:00:00';
   urlServidor = 'http://192.168.0.11:8080';
 
@@ -306,16 +306,17 @@ export class DataService {
   const data = await this.http.get(url, {responseType: 'text'}).toPromise();
   const usuario = this.parsear(data);
 
-  alert(data);
   const datos = [];
-  for (let i = 0; i < usuario.InfoItem.length; i++) {
-    if (usuario.Objects.Object[0].InfoItem[0].InfoItem[i].value[0]._ === 'None') {
+  // tslint:disable-next-line: prefer-for-of
+  for (let i = 0; i < usuario.Objects.Object[0].InfoItem[0].InfoItem.length; i++) {
+    if (usuario.Objects.Object[0].InfoItem[0].InfoItem[i].value[0]._ === undefined
+      || usuario.Objects.Object[0].InfoItem[0].InfoItem[i].value[0]._ === '') {
       datos.push('');
     } else {
-      datos.push(usuario.InfoItem[i].value[0]._);
+      console.log('datos: ', usuario.Objects.Object[0].InfoItem[0].InfoItem[i].value[0]._);
+      datos.push(usuario.Objects.Object[0].InfoItem[0].InfoItem[i].value[0]._);
     }
   }
-
   return datos;
   }
 
@@ -509,16 +510,16 @@ export class DataService {
   }
 
 
-  async modificarPerfil(xml: string, email) {
+  async modificarPerfil(xml: string, email: string) {
     // ToDo: Mirar que retorna el Servidor PU
     xml = encodeURIComponent(xml);
     let respuesta;
     let datos = null;
     console.log(xml);
     const url = this.urlServidor + '/ModificarDatosPersonales?email=' + email + '&mac=' + this.mac + '&data=' + xml;
+    console.log('url', url);
     datos = await this.http.get(url, {responseType: 'text'}).toPromise();
-    
-     
+
     let js = null;
     const parseString = require('xml2js').parseString;
     parseString(datos, function (err, result) {

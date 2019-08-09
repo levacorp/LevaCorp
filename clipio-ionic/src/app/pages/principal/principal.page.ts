@@ -21,7 +21,7 @@ export class PrincipalPage implements OnInit {
   elementos: any[];
   habitaciones: any[];
   notificaciones: any[];
-  filtro = 'cocina';
+  filtro = 'cocina'; // Carga los elementos de la cocina por defecto
   argumento = null;
 
   constructor(
@@ -34,8 +34,6 @@ export class PrincipalPage implements OnInit {
 
   /* Inicializa los atributos a utilizar */
   ngOnInit()  {
-
-
     console.log('MAC: ', this.dataUserService.getMAC());
     this.notificaciones = ['Daniel ha llegado a casa', 'Forero salio de casa', 'Daniel Gomez ha llegado a casa', 'Vanesa salió de casa'];
     this.argumento = this.activatedRoute.snapshot.paramMap.get('edificio');
