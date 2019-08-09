@@ -9,16 +9,13 @@
 
         <ion-label position="floating">Ingresa tus datos:</ion-label>
         <ion-item text-center>
-            <ion-input type="text" placeholder="Ip del Hogar" formControlName="dirIp"
+            <ion-input type="text" placeholder="Ip de servidor" formControlName="dirIp"
               [class.invalid]="!myform.controls.dirIp.valid && myform.controls.dirIp.dirty"></ion-input>
           </ion-item>
           <ion-item class="error-message" *ngIf="!myform.controls.dirIp.valid && myform.controls.dirIp.dirty">
             <ion-text color="danger"><small> *Campo requerido</small>
             </ion-text>
-          </ion-item>
-
-      <ion-label position="floating">Ingresa tus datos:</ion-label>
-      
+          </ion-item>      
         <ion-item text-center>
           <ion-input type="text" placeholder="E-mail" formControlName="email"
             [class.invalid]="!myform.controls.email.valid && myform.controls.email.dirty"></ion-input>

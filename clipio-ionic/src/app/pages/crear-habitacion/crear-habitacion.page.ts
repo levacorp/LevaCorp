@@ -3,6 +3,7 @@ import { FormGroup, FormBuilder, Validators } from '@angular/forms';
 import { GenerateXMLService } from 'src/app/services/generate-xml.service';
 import { ActivatedRoute, Router } from '@angular/router';
 import { DataService } from 'src/app/services/data.service';
+import { UtilitiesService } from '../../services/utilities.service';
 
 @Component({
   selector: 'app-crear-habitacion',
@@ -18,7 +19,7 @@ export class CrearHabitacionPage implements OnInit {
   xmlRegistrarHabitacion = null;
 
   constructor(private activatedRoute: ActivatedRoute, public router: Router, public formBuilder: FormBuilder,
-              private generarXML: GenerateXMLService, private dataService: DataService , private utilidades : UtilitiesService
+              private generarXML: GenerateXMLService, private dataService: DataService , private utilidades: UtilitiesService
     ) {
   }
 
@@ -39,7 +40,6 @@ export class CrearHabitacionPage implements OnInit {
       this.dataService.crearHabitacion(this.xmlRegistrarHabitacion);
       await this.dataService.registrarEdificio(this.xmlRegistrarHabitacion)
         .then(async data => {
-          alert(data);
           codigo = await this.utilidades.alertEspecifica( 'Creando habitacion ', data);
           console.log(codigo);
           if (codigo === '1028') {

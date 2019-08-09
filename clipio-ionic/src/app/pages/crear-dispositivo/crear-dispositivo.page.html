@@ -39,10 +39,10 @@
                           <!--En caso del que dataStream sea un actuador se mostraran unos switch-->
                             <div *ngIf= "datastream.value[0].$.type  == 'bool' || datastream.value[0].$.type  == 'boolean';else sensor"> 
                                     <div *ngIf= "datastream.value[0]._  == '0';else encendido"> 
-                                    <ion-toggle id="{{datastream.$.name}}" color="danger"  [disabled]="isDisabled" on> </ion-toggle>
+                                    <ion-toggle id="{{datastream.$.name}}" color="danger"   on> </ion-toggle>
                                 </div>
                                 <ng-template #encendido>
-                                    <ion-toggle  id="{{datastream.$.name}}" color="danger" [disabled]="isDisabled" checked> </ion-toggle>
+                                    <ion-toggle  id="{{datastream.$.name}}" color="danger" checked> </ion-toggle>
                                 </ng-template>  
                             </div>
                           <!--En caso de que el dataStream sea un sensor-->

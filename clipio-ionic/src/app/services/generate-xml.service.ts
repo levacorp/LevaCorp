@@ -506,7 +506,7 @@ export class GenerateXMLService {
     xw.startElement('value').writeAttribute('type', 'string');
     xw.text(facebook).endElement('/InfoItem').endElement('/InfoItem');
 
-    xw.startElement('InfoItem').writeAttribute('name', 'place:of_birth');
+    xw.startElement('InfoItem').writeAttribute('name', 'place_of_birth');
     xw.startElement('value').writeAttribute('type', 'string');
     xw.text(lugarNacimiento).endElement('/InfoItem').endElement('/InfoItem');
 

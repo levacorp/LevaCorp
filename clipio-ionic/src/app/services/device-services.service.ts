@@ -28,7 +28,7 @@ export class DeviceServicesService {
       if (res.hasPermission) {
       } else {
         this.androidPermissions.requestPermission(this.androidPermissions.PERMISSION.READ_PHONE_STATE).then(res => {
-          alert('Permisos concedidos');
+          
         }).catch(error => {
           alert('Error al obtener la MAC! ' + error);
         });
