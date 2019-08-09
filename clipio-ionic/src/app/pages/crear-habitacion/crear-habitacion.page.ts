@@ -15,8 +15,10 @@ export class CrearHabitacionPage implements OnInit {
   edificio = null;
   ambiente = null;
   piso = null;
+  xmlRegistrarHabitacion = null;
+
   constructor(private activatedRoute: ActivatedRoute, public router: Router, public formBuilder: FormBuilder,
-              private generarXML: GenerateXMLService, private dataService: DataService
+              private generarXML: GenerateXMLService, private dataService: DataService , private utilidades : UtilitiesService
     ) {
 
   }
@@ -30,10 +32,21 @@ export class CrearHabitacionPage implements OnInit {
   }
 
   //metodo que guarda y envia el formulario para crear el xml para registrar un nuevo edificio
-  saveData() {
+ async saveData() {
+    this.xmlRegistrarHabitacion = this.generarXML.crearHabitacion(this.edificio,this.ambiente, this.myform.get('piso').value ,
+                this.myform.get('nombre').value);
+    let codigo;
     if (this.myform.valid) {
-      const xml = this.generarXML.crearHabitacion(this.edificio,this.ambiente, this.myform.get('piso').value , this.myform.get('nombre').value);
-      this.dataService.crearHabitacion(xml);
+      this.dataService.crearHabitacion(this.xmlRegistrarHabitacion);
+      await this.dataService.registrarEdificio(this.xmlRegistrarHabitacion)
+        .then(async data => {
+          alert(data);
+          codigo = await this.utilidades.alertEspecifica( 'Creando habitacion ', data);
+          console.log(codigo);
+          if (codigo === '1028') {
+            this.myform.reset();
+          }
+        });
       this.router.navigate(['informacion-edificio', this.edificio]);
     }
   }

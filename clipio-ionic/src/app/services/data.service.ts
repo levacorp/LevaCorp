@@ -1,12 +1,10 @@
 import { Injectable } from '@angular/core';
-import { HttpClient, HttpHeaders } from '@angular/common/http';
+import { HttpClient } from '@angular/common/http';
 import * as xml2js from 'xml2js';
 import { DataUserService } from 'src/app/services/data-user.service';
-import { EnviarXMLService } from './enviar-xml.service';
 import { Observable } from 'rxjs';
 import { HTTP } from '@ionic-native/http/ngx';
 import { RaspberryService } from './raspberry.service';
-import { map } from 'rxjs/operators';
 
 @Injectable({
   providedIn: 'root'
@@ -387,7 +385,16 @@ export class DataService {
       });
 
   }
-  asociarDispositivo(xml) {
+ async asociarDispositivo(xml) {
+    // ToDo: Mirar que retorna el Servidor PU
+    console.log(xml);
+    const url = this.urlServidor + "/RegistrarObject?email=" + this.email + "&mac=" + this.mac + "&data=" + xml;
+    await this.http.get(url, { responseType: 'text' })
+      .subscribe(data => {
+        alert(data);
+      }, error => {
+        alert(error);
+      });
   }
   crearHabitacion(xml) {
 
