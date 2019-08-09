@@ -1,0 +1,35 @@
+<!--Header de la pag-->
+<ion-header>
+  <ion-toolbar color="danger">
+    <ion-buttons slot="start">
+      <ion-back-button ></ion-back-button>
+    </ion-buttons>
+  </ion-toolbar>
+</ion-header>
+<!--Fin header de la pag-->
+
+<!--Se encargara de mostrar todos los elementos de la habitacion-->
+<ion-content>
+  <ion-grid>
+    <ion-row>
+        <!--Acomoda el numero de tarjetas de acuerdo al tamaño de pantalla-->
+       <ion-col size="6" size-sm="4" size-md="3" size-lg="2" *ngFor="let ambiente of ambientes">
+         <!--Carga de los elementos filtrados por la habitacion escogida el id de cada card sera igual al nombre que tenga-->
+         <ion-card  id="{{ambiente}" (click)="routeCrearHabitacion(ambiente)" >
+            <!--Header de la card cargara el nombre del elemento y una imagen preestalecida--> 
+           <ion-card-header >
+             </ion-card-header>
+             <img src="/assets/icon/camara1.png"/>
+             <!--Mostrara la informacion del elemento-->
+             <ion-card-content>
+                 <ion-item  class="ion-text-center">
+                     <strong>{{ ambiente}}</strong>
+                 </ion-item>
+           </ion-card-content>
+           </ion-card>
+           <!--Fin Carga de los elementos filtrados por la habitacion escogido-->          
+       </ion-col>
+    </ion-row>
+  </ion-grid>
+</ion-content>
+<!--Fin muestra de elementos de la habitacion-->

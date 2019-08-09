@@ -18,6 +18,8 @@ export class DispositivoPage implements OnInit {
   argumento = null;
   dataStreams: Observable<any>;
   InformacionBasica: Observable<any>;
+  nombreDispositivo = null;
+  isDisabled = false;
 
   @ViewChild(IonSlides) slides: IonSlides;
   segment = 'Recursos';
@@ -35,11 +37,12 @@ export class DispositivoPage implements OnInit {
     if (xmlDatos === null) {
     } else {
       // obtiene la infromacion basica
-      this.InformacionBasica = this.dataService.getInfoBasicaDispositivo(xmlDatos);
+       this.InformacionBasica = this.dataService.getInfoBasicaDispositivo(xmlDatos);
       // hace una peticion a las raspberry piedno sus estados
       const xmlDataStreams = this.raspService.requestRaspberry('http://' + ipDispositivo + '/SendState?osid=' + idDispositivo);
       //obtiene sus estados
-      this.dataStreams = this.dataService.getEstadoDataStreams(xmlDataStreams);
+      this.dataStreams = this.dataService.getEstadoDataStreams(xmlDatos);
+      this.nombreDispositivo = this.InformacionBasica[1].value[0]._;
     }
     }
  // Evento cuando se da click en un segmento
@@ -74,10 +77,8 @@ export class DispositivoPage implements OnInit {
     await loading.present();
     loading.lastElementChild.insertAdjacentHTML( 'afterbegin', '<ion-spinner name="circles" color="danger" ></ion-spinner> ');
     if (event.detail.checked) {
-      alert('1');
 
     } else {
-      alert('0');
     }
     this.loadingController.dismiss();
   }
