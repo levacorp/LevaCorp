@@ -1,4 +1,4 @@
-import { Injectable } from '@angular/core';
+import { Injectable, OnInit } from '@angular/core';
 import { HttpClient } from '@angular/common/http';
 import * as xml2js from 'xml2js';
 import { DataUserService } from 'src/app/services/data-user.service';
@@ -9,7 +9,7 @@ import { RaspberryService } from './raspberry.service';
 @Injectable({
   providedIn: 'root'
 })
-export class DataService {
+export class DataService implements OnInit {
 
   datosPost: Observable<any>;
 
@@ -24,6 +24,11 @@ export class DataService {
     private dataUserService: DataUserService,
     private requestRaspberryService: RaspberryService
   ) {
+  }
+
+  ngOnInit() {
+    this.email = this.dataUserService.getEmail();
+    this.urlServidor = 'http://' + this.dataUserService.getIP() + ':8080';
   }
 
   async getXMLInicioSesion3(email: string, pass: string) {
@@ -119,12 +124,11 @@ export class DataService {
     }
     return elementosHabitacion;
   }
-  async getData(data)
-  {
+  async getData(data) {
     const url = this.urlServidor + "/RegistrarBuilding?email=" + this.email + "&mac=" + this.mac + "&data=" + data;
-   let result = await this.http.get(url)  
-       .toPromise();
-     return result
+    let result = await this.http.get(url)
+      .toPromise();
+    return result
   }
   /* Retorna los dispositivos de una habitacion */
   getDispositivosPorHabitacion(nombreEdificio: string, nombreHabitacion: string) {
@@ -290,7 +294,7 @@ export class DataService {
   }
   parsear(xml) {
 
-  //  const xml = '<?xml version="1.0" encoding="UTF-8"?><Objects><Object><InfoItem name="Person"><InfoItem name="name_person"><value type="string">Andrea</value></InfoItem><InfoItem name="surname"><value type="string">Pabon</value></InfoItem><InfoItem name="celullar"><value type="string">None</value></InfoItem><InfoItem name="gender"><value type="string">Hombre</value></InfoItem><InfoItem name="date_of_birth"><value type="string">2017-9-18</value></InfoItem><InfoItem name="facebook"><value type="string">None</value></InfoItem><InfoItem name="place_of_birth"><value type="string">Popayan</value></InfoItem><InfoItem name="email"><value type="string">andrea@unicauca.edu.co</value></InfoItem></InfoItem></Object></Objects>';
+    //  const xml = '<?xml version="1.0" encoding="UTF-8"?><Objects><Object><InfoItem name="Person"><InfoItem name="name_person"><value type="string">Andrea</value></InfoItem><InfoItem name="surname"><value type="string">Pabon</value></InfoItem><InfoItem name="celullar"><value type="string">None</value></InfoItem><InfoItem name="gender"><value type="string">Hombre</value></InfoItem><InfoItem name="date_of_birth"><value type="string">2017-9-18</value></InfoItem><InfoItem name="facebook"><value type="string">None</value></InfoItem><InfoItem name="place_of_birth"><value type="string">Popayan</value></InfoItem><InfoItem name="email"><value type="string">andrea@unicauca.edu.co</value></InfoItem></InfoItem></Object></Objects>';
     // Se parsea el xml a un objeto javascript para poder manejarlo más facil
     let json;
     const parseString = require('xml2js').parseString;
@@ -300,25 +304,25 @@ export class DataService {
     return json;
 
   }
- async getPerfilUsuario() {
-  // const usuario = this.getXMLPerfilUsuario().Objects.Object[0].InfoItem[0];
-  const url = this.urlServidor + '/ConsultarDatosPersonales?email=' + this.email + '&mac=' + this.mac;
-  const data = await this.http.get(url, {responseType: 'text'}).toPromise();
-  const usuario = this.parsear(data);
+  async getPerfilUsuario() {
+    // const usuario = this.getXMLPerfilUsuario().Objects.Object[0].InfoItem[0];
+    const url = this.urlServidor + '/ConsultarDatosPersonales?email=' + this.email + '&mac=' + this.mac;
+    const data = await this.http.get(url, { responseType: 'text' }).toPromise();
+    const usuario = this.parsear(data);
 
-  const datos = [];
-  // tslint:disable-next-line: prefer-for-of
-  for (let i = 0; i < usuario.Objects.Object[0].InfoItem[0].InfoItem.length; i++) {
-    if (usuario.Objects.Object[0].InfoItem[0].InfoItem[i].value[0]._ === undefined
-      || usuario.Objects.Object[0].InfoItem[0].InfoItem[i].value[0]._ === ''
-      || usuario.Objects.Object[0].InfoItem[0].InfoItem[i].value[0]._ === 'None') {
-      datos.push('');
-    } else {
-      console.log('datos: ', usuario.Objects.Object[0].InfoItem[0].InfoItem[i].value[0]._);
-      datos.push(usuario.Objects.Object[0].InfoItem[0].InfoItem[i].value[0]._);
+    const datos = [];
+    // tslint:disable-next-line: prefer-for-of
+    for (let i = 0; i < usuario.Objects.Object[0].InfoItem[0].InfoItem.length; i++) {
+      if (usuario.Objects.Object[0].InfoItem[0].InfoItem[i].value[0]._ === undefined
+        || usuario.Objects.Object[0].InfoItem[0].InfoItem[i].value[0]._ === ''
+        || usuario.Objects.Object[0].InfoItem[0].InfoItem[i].value[0]._ === 'None') {
+        datos.push('');
+      } else {
+        console.log('datos: ', usuario.Objects.Object[0].InfoItem[0].InfoItem[i].value[0]._);
+        datos.push(usuario.Objects.Object[0].InfoItem[0].InfoItem[i].value[0]._);
+      }
     }
-  }
-  return datos;
+    return datos;
   }
 
   getInfoBasicaDispositivo(xml) {
@@ -337,7 +341,7 @@ export class DataService {
       });
 
   }
- async asociarDispositivo(xml) {
+  async asociarDispositivo(xml) {
     // ToDo: Mirar que retorna el Servidor PU
     console.log(xml);
     const url = this.urlServidor + "/RegistrarObject?email=" + this.email + "&mac=" + this.mac + "&data=" + xml;
@@ -378,7 +382,7 @@ export class DataService {
     const url = this.urlServidor + '/RegistrarPreferencia?email=' + this.email + '&mac=' + this.mac + '&data=' + xml;
     datos = await this.http.get(url, { responseType: 'text' }).toPromise();
 
-      
+
     let js = null;
     const parseString = require('xml2js').parseString;
     parseString(datos, function (err, result) {
@@ -391,7 +395,7 @@ export class DataService {
       }
     });
     this.listarECAs();
-    
+
     return js;
   }
 
@@ -486,7 +490,7 @@ export class DataService {
       }, error => {
         alert(error);
       }
-    );
+      );
   }
   async registrarUsuario(xml: string, email) {
     // ToDo: Mirar que retorna el Servidor PU
@@ -495,7 +499,7 @@ export class DataService {
     let datos = null;
     console.log(xml);
     const url = this.urlServidor + '/RegistroUsuario?email=' + email + '&mac=' + this.mac + '&data=' + xml;
-    datos = await this.http.get(url, {responseType: 'text'}).toPromise();
+    datos = await this.http.get(url, { responseType: 'text' }).toPromise();
     let js = null;
     const parseString = require('xml2js').parseString;
     parseString(datos, function (err, result) {
@@ -519,7 +523,7 @@ export class DataService {
     console.log(xml);
     const url = this.urlServidor + '/ModificarDatosPersonales?email=' + email + '&mac=' + this.mac + '&data=' + xml;
     console.log('url', url);
-    datos = await this.http.get(url, {responseType: 'text'}).toPromise();
+    datos = await this.http.get(url, { responseType: 'text' }).toPromise();
 
     let js = null;
     const parseString = require('xml2js').parseString;
@@ -545,7 +549,7 @@ export class DataService {
 
     const url = this.urlServidor + '/RegistrarBuilding?email=' + this.email + '&mac=' + this.mac + '&data=' + xml;
 
-    datos = await this.http.get(url, {responseType: 'text'}).toPromise();
+    datos = await this.http.get(url, { responseType: 'text' }).toPromise();
 
     let js = null;
     const parseString = require('xml2js').parseString;

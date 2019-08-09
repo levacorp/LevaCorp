@@ -36,6 +36,8 @@ export class InicioSesionPage implements OnInit {
   }
 
   async login() {
+    this.dataUserService.setIP(this.myform.value.dirIp);
+    this.dataUserService.setEmail(this.myform.value.email);
     this.myform.value.contrasena = btoa(this.encryptService.encrypt(this.myform.value.contrasena));
     await this.dataService.getXMLInicioSesion3(this.myform.value.email, this.myform.value.contrasena)
     .then(res => {
@@ -48,15 +50,6 @@ export class InicioSesionPage implements OnInit {
         alert('E-mail o contraseña incorrecta');
       }
     });
-  }
-
-  verificarUsuario() {
-    let usuarioExistente = false;
-    if (this.dataUserService.datosUsuario["email"] === this.myform.value.email
-        && this.dataUserService.datosUsuario['password'] === this.myform.value.contrasena) {
-      usuarioExistente = true;
-    }
-    return usuarioExistente;
   }
 
   pushRegistro() {
