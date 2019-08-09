@@ -40,21 +40,18 @@ export class PerfilPage implements OnInit {
   }
 
   async ngOnInit() {
-    await this.dataservice.getPerfilUsuario().then( res => {
+    await this.dataservice.getPerfilUsuario().then(res => {
       this.perfil = res;
       console.log(this.perfil);
+      this.myform.get('nombre').setValue(this.perfil[0]);
+      this.myform.get('apellido').setValue(this.perfil[1]);
+      this.myform.get('celular').setValue(this.perfil[2]);
+      this.myform.get('genero').setValue(this.perfil[3]);
+      this.myform.get('email').setValue(this.perfil[7]);
+      this.myform.get('fechaNacimiento').setValue(this.perfil[4]);
+      this.myform.get('lugarNacimiento').setValue(this.perfil[6]);
+      this.myform.get('facebook').setValue(this.perfil[5]);
     });
-    /*console.log(this.perfil);
-    this.myform.get('nombre').setValue(this.perfil[0]);
-    this.myform.get('apellido').setValue(this.perfil[1]);
-    this.myform.get('celular').setValue(this.perfil[2]);
-    this.myform.get('genero').setValue(this.perfil[3]);
-    this.myform.get('email').setValue(this.perfil[7]);
-    this.myform.get('fechaNacimiento').setValue(this.perfil[4]);
-    this.myform.get('lugarNacimiento').setValue(this.perfil[6]);
-    this.myform.get('facebook').setValue(this.perfil[5]);
-    console.log(this.perfil);*/
-
   }
   //metodo que guarda y envia el formulario para crear el xml del perfil usuario
   async saveData() {

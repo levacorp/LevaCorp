@@ -521,7 +521,6 @@ export class DataService {
       }
     });
     console.log('Modificado Usuario');
-
     return js;
   }
 
