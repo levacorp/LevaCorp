@@ -38,15 +38,14 @@ export class PrincipalPage implements OnInit {
     this.notificaciones = ['Daniel ha llegado a casa', 'Forero salio de casa', 'Daniel Gomez ha llegado a casa', 'Vanesa salió de casa'];
     this.argumento = this.activatedRoute.snapshot.paramMap.get('edificio');
     this.dataService.getListaEdificios();
-    this.dataService.getListaHabitaciones(this.argumento);
+    /*this.dataService.getListaHabitaciones(this.argumento);
     this.dataUserService.getListaHabitaciones();
     this.dataService.getListaElementosPorHabitacion(this.argumento, this.filtro);
     this.dataService.listarECAs();
     this.habitaciones = this.dataUserService.getListaHabitaciones();
     console.log(this.habitaciones);
-    this.cargarElementosPorHabitacion();
-    this.dataService.consultarObjetosRelacionados();
-  }
+    this.cargarElementosPorHabitacion();*/
+    }
   /* Cuando se requiere traer los elementos filtrados o sin filtrar iguala el atributo filtro
     al filtro escogido y carga los elementos para el filtro*/
   segmentButtonClicked(event) {
