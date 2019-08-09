@@ -6,6 +6,7 @@ import { EncryptService } from 'src/app/services/encrypt.service';
 import { GenerateXMLService } from 'src/app/services/generate-xml.service';
 import { UtilitiesService } from 'src/app/services/utilities.service';
 import { AuthenticationService } from 'src/app/services/authentication.service';
+import { DataUserService } from 'src/app/services/data-user.service';
 
 
 @Component({
@@ -27,9 +28,11 @@ export class RegistrarPage implements OnInit {
     private encrypt: EncryptService,
     public alertController: AlertController,
     private utilidades: UtilitiesService,
-    private authservice: AuthenticationService
+    private authservice: AuthenticationService,
+    private dataUserService: DataUserService,
   ) {
     this.myform = this.formBuilder.group({
+      dirIp: ['', Validators.compose([Validators.required])],
       nombreApp: ['Clipio', Validators.required],
       email: ['', Validators.compose([Validators.required, Validators.email])],
       contrasena: ['', Validators.compose([Validators.required, Validators.minLength(8)])],
@@ -42,15 +45,18 @@ export class RegistrarPage implements OnInit {
 
   async saveData() {
       let codigo;
-
+      this.dataUserService.setIP(this.myform.value.dirIp);
+      this.dataUserService.setEmail(this.myform.value.email);
       this.myform.value.contrasena = btoa(this.encrypt.encrypt(this.myform.value.contrasena));
       this.myform.value.confirmacionContrasena = btoa(this.encrypt.encrypt(this.myform.value.confirmacionContrasena));
       this.xmlRegistrarUsuario = this.generarXML.setXMLRegistrar(this.myform);
+      this.dataservice.capturarDatosUsuario();
       if (this.myform.valid) {
          await this.dataservice.registrarUsuario(this.xmlRegistrarUsuario, this.myform.get('email').value)
          .then(async data => {
             codigo = await this.utilidades.alertEspecifica( "Registro Usuario ", data);
             console.log(codigo);
+            this.dataservice.capturarDatosUsuario();
 
             if (codigo === '1028' || codigo === '1044') {
               this.authservice.login();

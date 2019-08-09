@@ -41,7 +41,6 @@ export class CrearHabitacionPage implements OnInit {
       this.dataService.crearHabitacion(this.xmlRegistrarHabitacion);
       await this.dataService.registrarEdificio(this.xmlRegistrarHabitacion)
         .then(async data => {
-          alert(data);
           codigo = await this.utilidades.alertEspecifica( 'Creando habitacion ', data);
           console.log(codigo);
           if (codigo === '1028') {
