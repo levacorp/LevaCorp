@@ -49,12 +49,11 @@
 
             <ion-item text-center>
               <img slot="start" src="/assets/icon/male-and-female.png" />
-              <ion-input type="text" placeholder="Genero" value='{{perfil[3]}}' formControlName="genero"
-                [class.invalid]="!myform.controls.genero.valid && myform.controls.genero.dirty"></ion-input>
-            </ion-item>
-            <ion-item class="error-message" *ngIf="!myform.controls.genero.valid && myform.controls.genero.dirty">
-              <ion-text color="danger"><small> *Femenino - Masculino - Otro </small>
-              </ion-text>
+              <ion-select placeholder="Genero" value='{{perfil[3]}}' formControlName="genero">
+                <ion-select-option value="Femenino">Femenino</ion-select-option>
+                <ion-select-option value="Masculino">Masculino</ion-select-option>
+                <ion-select-option value="Otro">Otro</ion-select-option>
+              </ion-select>
             </ion-item>
 
             <ion-item text-center>
@@ -66,17 +65,12 @@
               <ion-text color="danger"><small> *Exameple@gmail.com</small>
               </ion-text>
             </ion-item>
+
+
             <ion-item text-center>
               <img slot="start" src="/assets/icon/4th-of-july.png" />
-              <ion-input type="text" placeholder="Fecha de Nacimiento" value='{{perfil[4]}}'
-                formControlName="fechaNacimiento"
-                [class.invalid]="!myform.controls.fechaNacimiento.valid && myform.controls.fechaNacimiento.dirty">
-              </ion-input>
-            </ion-item>
-            <ion-item class="error-message"
-              *ngIf="!myform.controls.fechaNacimiento.valid && myform.controls.fechaNacimiento.dirty">
-              <ion-text color="danger"><small> *dd/mm/aa</small>
-              </ion-text>
+              <ion-datetime displayFormat="MM DD YY" placeholder="Fecha de Nacimiento" value='{{perfil[4]}}'
+                formControlName='fechaNacimiento'></ion-datetime>
             </ion-item>
 
             <ion-item text-center>

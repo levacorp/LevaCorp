@@ -1,4 +1,4 @@
-import { Injectable } from '@angular/core';
+import { Injectable, OnInit } from '@angular/core';
 import { HttpClient } from '@angular/common/http';
 import * as xml2js from 'xml2js';
 import { DataUserService } from 'src/app/services/data-user.service';
@@ -9,14 +9,17 @@ import { RaspberryService } from './raspberry.service';
 @Injectable({
   providedIn: 'root'
 })
-export class DataService {
+export class DataService implements OnInit {
 
   datosPost: Observable<any>;
 
   /* Email y mac estaticos para todas las peticiones */
-  email = 'daniel@gmail.com';
-  mac = '02:00:00:00:00:00';
-  urlServidor = 'http://192.168.0.7:8080';
+  // email = 'camilo@gmail.com';
+  // mac = '02:00:00:00:00:00';
+  // urlServidor = 'http://192.168.0.11:8080';
+  email = null;
+  mac = null;
+  urlServidor = null;
 
   constructor(
     private https: HTTP,
@@ -26,7 +29,19 @@ export class DataService {
   ) {
   }
 
-  async getXMLInicioSesion3(email: string, pass: string) {
+  ngOnInit() {
+    /*this.email = this.dataUserService.getEmail();
+    this.urlServidor = 'http://' + this.dataUserService.getIP() + ':8080';
+    this.mac = this.dataUserService.getMAC();*/
+  }
+
+  capturarDatosUsuario() {
+    this.email = this.dataUserService.getEmail();
+    this.urlServidor = 'http://' + this.dataUserService.getIP() + ':8080';
+    this.mac = this.dataUserService.getMAC();
+  }
+
+  async getVerificarUsuario(email: string, pass: string) {
     let resultado = false;
     let json;
     const url = this.getURLInicioSesion(email, pass);
@@ -73,7 +88,7 @@ export class DataService {
     const listaEdificios = [];    /* Se crea una lista que solamente contendra los nombres de los edificios */
     const infoEdificios = this.getEdificios();
     // tslint:disable-next-line: prefer-for-of
-    for (let i = 0; i < infoEdificios.length; i++) {
+    for (let i = 0; i < 5; i++) {
       listaEdificios.push(infoEdificios[i].InfoItem[0].value[0]._);   /* Se agrega el nombre de cada edificio a la lista */
     }
     this.dataUserService.setListaEdificios(listaEdificios);
@@ -119,12 +134,10 @@ export class DataService {
     }
     return elementosHabitacion;
   }
-  async getData(data)
-  {
+  async getData(data) {
     const url = this.urlServidor + "/RegistrarBuilding?email=" + this.email + "&mac=" + this.mac + "&data=" + data;
-   let result = await this.http.get(url)  
-       .toPromise();
-     return result
+    let result = await this.http.get(url).toPromise();
+    return result
   }
   /* Retorna los dispositivos de una habitacion */
   getDispositivosPorHabitacion(nombreEdificio: string, nombreHabitacion: string) {
@@ -197,16 +210,26 @@ export class DataService {
 
   /*Obtiene la informacion de todos los edificios*/
   getEdificios() {
-    let json = this.getXMLBuildingEnviroment();   /*Se obtiene el xml del entorno*/
-    const infoEdificios = json.Objects.Object[0].InfoItem[0].InfoItem;    /*Se obtiene solamente la lista de edificios*/
-    return infoEdificios;
+    /*let json = this.getXMLBuildingEnviroment();   // Se obtiene el xml del entorno
+    const infoEdificios = json.Objects.Object[0].InfoItem[0].InfoItem;    // Se obtiene solamente la lista de edificios
+    return infoEdificios;*/
+    this.getXMLBuildingEnviroment().then( res => {
+      const infoEdificios = res.Objects.Object[0].InfoItem[0].InfoItem;    // Se obtiene solamente la lista de edificios
+      return infoEdificios;
+    });   // Se obtiene el xml del entorno
   }
 
+  getURLBuildingEnviroment() {
+    const url = this.urlServidor + '/ConsultarObjetosRelated?email=' + this.email + '&mac=' + this.mac;
+    return url;
+  }
   /* Obtiene el XML BuildingEnviroment y lo retorna como objeto */
-  getXMLBuildingEnviroment() {
+  async getXMLBuildingEnviroment() {
     let json;
     // tslint:disable-next-line: max-line-length
-    const xml = '<?xml version="1.0" encoding="UTF-8"?><Objects><Object><InfoItem name="BuildingEnvironment"><InfoItem name="Building"><InfoItem name="name_building"><value type="string">casa</value></InfoItem><InfoItem name="flats_building"><value type="int">1</value></InfoItem><InfoItem name="Objetos"><InfoItem name="oos"><InfoItem name="ip_object"><value type="string">10.0.0.16</value></InfoItem><InfoItem name="id_object"><value type="string">708637323</value></InfoItem><InfoItem name="name_object"><value type="string">NodoCoordinador</value></InfoItem></InfoItem></InfoItem><InfoItem name="house_parts"><InfoItem name="part"><InfoItem name="name_part"><value type="string">cocina</value></InfoItem><InfoItem name="type_part"><value type="string">Kitchen</value></InfoItem><InfoItem name="flat_number"><value type="string">Piso No. 1</value></InfoItem><InfoItem name="Objetos"><InfoItem name="oos"><InfoItem name="ip_object"><value type="string">10.0.0.16/</value></InfoItem><InfoItem name="id_object"><value type="string">708637323</value></InfoItem><InfoItem name="name_object"><value type="string">Regulador de Humedad en Planta</value></InfoItem></InfoItem></InfoItem><InfoItem name="Things"><InfoItem name="Thing"><InfoItem name="Living_Thing"><InfoItem name="name_thing"><value type="string">Planta</value></InfoItem><InfoItem name="type_thing"><value type="string">living_thing</value></InfoItem><InfoItem name="score_thing"><value type="string">98.0</value></InfoItem><InfoItem name="type_living_thing"><value type="string">Planta</value></InfoItem><InfoItem name="specie_living_thing"><value type="string">Flor</value></InfoItem><InfoItem name="food_living_thing"><value type="string">agua</value></InfoItem></InfoItem></InfoItem><InfoItem name="Thing"><InfoItem name="Non_Living_Thing"><InfoItem name="name_thing"><value type="string">Carro</value></InfoItem><InfoItem name="type_thing"><value type="string">non_living_thing</value></InfoItem><InfoItem name="score_thing"><value type="string">98.0</value></InfoItem></InfoItem></InfoItem></InfoItem></InfoItem><InfoItem name="part"><InfoItem name="name_part"><value type="string">cuarto Santiago</value></InfoItem><InfoItem name="type_part"><value type="string">Bedroom</value></InfoItem><InfoItem name="flat_number"><value type="string">Piso No. 1</value></InfoItem><InfoItem name="Objetos"><InfoItem name="oos"><InfoItem name="ip_object"><value type="string">192.168.123.105</value></InfoItem><InfoItem name="id_object"><value type="string">78091938</value></InfoItem><InfoItem name="name_object"><value type="string">Regulador de Luz</value></InfoItem></InfoItem></InfoItem><InfoItem name="Things"><InfoItem name="Thing"><InfoItem name="Living_Thing"><InfoItem name="name_thing"><value type="string">Gato</value></InfoItem><InfoItem name="type_thing"><value type="string">living_thing</value></InfoItem><InfoItem name="score_thing"><value type="string">100.0</value></InfoItem><InfoItem name="type_living_thing"><value type="string">Planta</value></InfoItem><InfoItem name="specie_living_thing"><value type="string">Flor</value></InfoItem><InfoItem name="food_living_thing"><value type="string">agua</value></InfoItem></InfoItem></InfoItem><InfoItem name="Thing"><InfoItem name="Non_Living_Thing"><InfoItem name="name_thing"><value type="string">Moto</value></InfoItem><InfoItem name="type_thing"><value type="string">non_living_thing</value></InfoItem><InfoItem name="score_thing"><value type="string">100.0</value></InfoItem></InfoItem></InfoItem></InfoItem></InfoItem><InfoItem name="part"><InfoItem name="name_part"><value type="string">sala</value></InfoItem><InfoItem name="type_part"><value type="string">LivingRoom</value></InfoItem><InfoItem name="flat_number"><value type="string">Piso No. 1</value></InfoItem><InfoItem name="Objetos"><InfoItem name="oos"><InfoItem name="ip_object"><value type="string">192.168.123.106</value></InfoItem><InfoItem name="id_object"><value type="string">708637323</value></InfoItem><InfoItem name="name_object"><value type="string">Regulador de Temperatura</value></InfoItem></InfoItem></InfoItem></InfoItem></InfoItem></InfoItem></InfoItem></Object></Objects>';
+    //const xml = '<?xml version="1.0" encoding="UTF-8"?><Objects><Object><InfoItem name="BuildingEnvironment"><InfoItem name="Building"><InfoItem name="name_building"><value type="string">casa</value></InfoItem><InfoItem name="flats_building"><value type="int">1</value></InfoItem><InfoItem name="Objetos"><InfoItem name="oos"><InfoItem name="ip_object"><value type="string">10.0.0.16</value></InfoItem><InfoItem name="id_object"><value type="string">708637323</value></InfoItem><InfoItem name="name_object"><value type="string">NodoCoordinador</value></InfoItem></InfoItem></InfoItem><InfoItem name="house_parts"><InfoItem name="part"><InfoItem name="name_part"><value type="string">cocina</value></InfoItem><InfoItem name="type_part"><value type="string">Kitchen</value></InfoItem><InfoItem name="flat_number"><value type="string">Piso No. 1</value></InfoItem><InfoItem name="Objetos"><InfoItem name="oos"><InfoItem name="ip_object"><value type="string">10.0.0.16/</value></InfoItem><InfoItem name="id_object"><value type="string">708637323</value></InfoItem><InfoItem name="name_object"><value type="string">Regulador de Humedad en Planta</value></InfoItem></InfoItem></InfoItem><InfoItem name="Things"><InfoItem name="Thing"><InfoItem name="Living_Thing"><InfoItem name="name_thing"><value type="string">Planta</value></InfoItem><InfoItem name="type_thing"><value type="string">living_thing</value></InfoItem><InfoItem name="score_thing"><value type="string">98.0</value></InfoItem><InfoItem name="type_living_thing"><value type="string">Planta</value></InfoItem><InfoItem name="specie_living_thing"><value type="string">Flor</value></InfoItem><InfoItem name="food_living_thing"><value type="string">agua</value></InfoItem></InfoItem></InfoItem><InfoItem name="Thing"><InfoItem name="Non_Living_Thing"><InfoItem name="name_thing"><value type="string">Carro</value></InfoItem><InfoItem name="type_thing"><value type="string">non_living_thing</value></InfoItem><InfoItem name="score_thing"><value type="string">98.0</value></InfoItem></InfoItem></InfoItem></InfoItem></InfoItem><InfoItem name="part"><InfoItem name="name_part"><value type="string">cuarto Santiago</value></InfoItem><InfoItem name="type_part"><value type="string">Bedroom</value></InfoItem><InfoItem name="flat_number"><value type="string">Piso No. 1</value></InfoItem><InfoItem name="Objetos"><InfoItem name="oos"><InfoItem name="ip_object"><value type="string">192.168.123.105</value></InfoItem><InfoItem name="id_object"><value type="string">78091938</value></InfoItem><InfoItem name="name_object"><value type="string">Regulador de Luz</value></InfoItem></InfoItem></InfoItem><InfoItem name="Things"><InfoItem name="Thing"><InfoItem name="Living_Thing"><InfoItem name="name_thing"><value type="string">Gato</value></InfoItem><InfoItem name="type_thing"><value type="string">living_thing</value></InfoItem><InfoItem name="score_thing"><value type="string">100.0</value></InfoItem><InfoItem name="type_living_thing"><value type="string">Planta</value></InfoItem><InfoItem name="specie_living_thing"><value type="string">Flor</value></InfoItem><InfoItem name="food_living_thing"><value type="string">agua</value></InfoItem></InfoItem></InfoItem><InfoItem name="Thing"><InfoItem name="Non_Living_Thing"><InfoItem name="name_thing"><value type="string">Moto</value></InfoItem><InfoItem name="type_thing"><value type="string">non_living_thing</value></InfoItem><InfoItem name="score_thing"><value type="string">100.0</value></InfoItem></InfoItem></InfoItem></InfoItem></InfoItem><InfoItem name="part"><InfoItem name="name_part"><value type="string">sala</value></InfoItem><InfoItem name="type_part"><value type="string">LivingRoom</value></InfoItem><InfoItem name="flat_number"><value type="string">Piso No. 1</value></InfoItem><InfoItem name="Objetos"><InfoItem name="oos"><InfoItem name="ip_object"><value type="string">192.168.123.106</value></InfoItem><InfoItem name="id_object"><value type="string">708637323</value></InfoItem><InfoItem name="name_object"><value type="string">Regulador de Temperatura</value></InfoItem></InfoItem></InfoItem></InfoItem></InfoItem></InfoItem></InfoItem></Object></Objects>';
+    const url = this.getURLBuildingEnviroment();
+    const xml = await this.http.get(url, {responseType: 'text'}).toPromise();
     const parseString = require('xml2js').parseString;
 
     parseString(xml, function (err, result) {
@@ -217,6 +240,7 @@ export class DataService {
       }
 
     });
+    console.log('json:', json);
     return json;
   }
 
@@ -258,7 +282,7 @@ export class DataService {
     if (datos === null) {
       alert("Error en la consulta: null");
     } else {
-      alert(datos);
+      
     }
     /*await this.httpNative.get(url, {}, {})
       .then(data => {
@@ -301,28 +325,25 @@ export class DataService {
     return json;
 
   }
- async getPerfilUsuario() {
-  // const usuario = this.getXMLPerfilUsuario().Objects.Object[0].InfoItem[0];
-  const url = this.urlServidor + '/ConsultarDatosPersonales?email=' + this.email + '&mac=' + this.mac;
-  const data = await this.http.get(url, {responseType: 'text'}).toPromise();
-  const usuario = this.parsear(data);
+  async getPerfilUsuario() {
+    // const usuario = this.getXMLPerfilUsuario().Objects.Object[0].InfoItem[0];
+    const url = this.urlServidor + '/ConsultarDatosPersonales?email=' + this.email + '&mac=' + this.mac;
+    const data = await this.http.get(url, { responseType: 'text' }).toPromise();
+    const usuario = this.parsear(data);
 
-  const datos = [];
-  // tslint:disable-next-line: prefer-for-of
-  for (let i = 0; i < usuario.Objects.Object[0].InfoItem[0].InfoItem.length; i++) {
-    if (usuario.Objects.Object[0].InfoItem[0].InfoItem[i].value[0]._ === undefined
-      || usuario.Objects.Object[0].InfoItem[0].InfoItem[i].value[0]._ === ''
-      || usuario.Objects.Object[0].InfoItem[0].InfoItem[i].value[0]._ === 'None') {
-      datos.push('');
-      if(usuario.Objects.Object[0].InfoItem[0].InfoItem[i].value[0]._ === 'None'){
+    const datos = [];
+    // tslint:disable-next-line: prefer-for-of
+    for (let i = 0; i < usuario.Objects.Object[0].InfoItem[0].InfoItem.length; i++) {
+      if (usuario.Objects.Object[0].InfoItem[0].InfoItem[i].value[0]._ === undefined
+        || usuario.Objects.Object[0].InfoItem[0].InfoItem[i].value[0]._ === ''
+        || usuario.Objects.Object[0].InfoItem[0].InfoItem[i].value[0]._ === 'None') {
         datos.push('');
+      } else {
+        console.log('datos: ', usuario.Objects.Object[0].InfoItem[0].InfoItem[i].value[0]._);
+        datos.push(usuario.Objects.Object[0].InfoItem[0].InfoItem[i].value[0]._);
       }
-    } else {
-      console.log('datos: ', usuario.Objects.Object[0].InfoItem[0].InfoItem[i].value[0]._);
-      datos.push(usuario.Objects.Object[0].InfoItem[0].InfoItem[i].value[0]._);
     }
-  }
-  return datos;
+    return datos;
   }
 
   getInfoBasicaDispositivo(xml) {
@@ -335,19 +356,19 @@ export class DataService {
     const url = this.urlServidor + '/RegistrarThing?email=' + this.email + '&mac=' + this.mac + '&data=' + xml;
     await this.http.get(url, { responseType: 'text' })
       .subscribe(data => {
-        alert(data);
+        
       }, error => {
         alert(error);
       });
 
   }
- async asociarDispositivo(xml) {
+  async asociarDispositivo(xml) {
     // ToDo: Mirar que retorna el Servidor PU
     console.log(xml);
     const url = this.urlServidor + "/RegistrarObject?email=" + this.email + "&mac=" + this.mac + "&data=" + xml;
     await this.http.get(url, { responseType: 'text' })
       .subscribe(data => {
-        alert(data);
+        
       }, error => {
         alert(error);
       });
@@ -356,7 +377,7 @@ export class DataService {
 
   }
   perfil() {
-    alert('entra');
+    
     this.https.get('http://10.0.0.17/RegistroUsuario?email?=andrea@unicauca.edu.co&mac=02:00:00:00:00:00&data', {}, {})
       .then(data => {
 
@@ -382,7 +403,7 @@ export class DataService {
     const url = this.urlServidor + '/RegistrarPreferencia?email=' + this.email + '&mac=' + this.mac + '&data=' + xml;
     datos = await this.http.get(url, { responseType: 'text' }).toPromise();
 
-      
+
     let js = null;
     const parseString = require('xml2js').parseString;
     parseString(datos, function (err, result) {
@@ -395,7 +416,7 @@ export class DataService {
       }
     });
     this.listarECAs();
-    
+
     return js;
   }
 
@@ -417,7 +438,7 @@ export class DataService {
     const url = this.urlServidor + '/ModificarPreferencia?email=' + this.email + '&mac=' + this.mac + '&data=' + xml;
     await this.http.get(url, { responseType: 'text' })
       .subscribe(data => {
-        alert(data);
+        
       }, error => {
         alert(error);
       });
@@ -435,9 +456,8 @@ export class DataService {
     const url = this.urlServidor + '/ConsultarPreferencias?email=' + this.email + '&mac=' + this.mac;
     await this.http.get(url, { responseType: 'text' })
       .subscribe(data => {
-        //alert(data);
-
-        //console.log(data);
+        
+        // console.log(data);
         // const xml = '<?xml version=\'1.0\' encoding=\'utf-8\'?> <Objects> <Object> <InfoItem name="Preferencias"> <InfoItem name="preferencia"> <InfoItem name="name_preference"> <value type="string">apagarriego</value> </InfoItem> <InfoItem name="state_preference"> <value type="string">on</value> </InfoItem> <InfoItem name="osid_object_event"> <value type="string">708637323</value> </InfoItem> <InfoItem name="ip_event_object"> <value type="string">192.168.123.100</value> </InfoItem> <InfoItem name="name_event_object"> <value type="string">Regulador de Temperatura</value> </InfoItem> <InfoItem name="id_event_resource"> <value type="string">temperatura</value> </InfoItem> <InfoItem name="name_event_resource"> <value type="string" /> </InfoItem> <InfoItem name="comparator_condition"> <value type="string">menor</value> </InfoItem> <InfoItem name="variable_condition"> <value type="string">29</value> </InfoItem> <InfoItem name="type_variable_condition"> <value type="string">float</value> </InfoItem> <InfoItem name="unit_condition"> <value type="string">None</value> </InfoItem> <InfoItem name="meaning_condition"> <value type="string">hace frio</value> </InfoItem> <InfoItem name="osid_object_action"> <value type="string">1931642039</value> </InfoItem> <InfoItem name="ip_action_object"> <value type="string">192.168.123.101</value> </InfoItem> <InfoItem name="name_action_object"> <value type="string">Regulador de Humedad en Planta</value> </InfoItem> <InfoItem name="id_action_resource"> <value type="string">riego</value> </InfoItem> <InfoItem name="name_action_resource"> <value type="string">riego</value> </InfoItem> <InfoItem name="comparator_action"> <value type="string">igual</value> </InfoItem> <InfoItem name="variable_action"> <value type="string">0</value> </InfoItem> <InfoItem name="type_variable_action"> <value type="string">bool</value> </InfoItem> <InfoItem name="unit_action"> <value type="string">None</value> </InfoItem> <InfoItem name="meaning_action"> <value type="string">apagar riego</value> </InfoItem> </InfoItem> <InfoItem name="preferencia"> <InfoItem name="name_preference"> <value type="string">encenderriego</value> </InfoItem> <InfoItem name="state_preference"> <value type="string">on</value> </InfoItem> <InfoItem name="osid_object_event"> <value type="string">708637323</value> </InfoItem> <InfoItem name="ip_event_object"> <value type="string">192.168.123.100</value> </InfoItem> <InfoItem name="name_event_object"> <value type="string">Regulador de Temperatura</value> </InfoItem> <InfoItem name="id_event_resource"> <value type="string">temperatura</value> </InfoItem> <InfoItem name="name_event_resource"> <value type="string" /> </InfoItem> <InfoItem name="comparator_condition"> <value type="string">mayor</value> </InfoItem> <InfoItem name="variable_condition"> <value type="string">29</value> </InfoItem> <InfoItem name="type_variable_condition"> <value type="string">float</value> </InfoItem> <InfoItem name="unit_condition"> <value type="string">None</value> </InfoItem> <InfoItem name="meaning_condition"> <value type="string">hace calor</value> </InfoItem> <InfoItem name="osid_object_action"> <value type="string">1931642039</value> </InfoItem> <InfoItem name="ip_action_object"> <value type="string">192.168.123.101</value> </InfoItem> <InfoItem name="name_action_object"> <value type="string">Regulador de Humedad en Planta</value> </InfoItem> <InfoItem name="id_action_resource"> <value type="string">riego</value> </InfoItem> <InfoItem name="name_action_resource"> <value type="string">riego</value> </InfoItem> <InfoItem name="comparator_action"> <value type="string">igual</value> </InfoItem> <InfoItem name="variable_action"> <value type="string">1</value> </InfoItem> <InfoItem name="type_variable_action"> <value type="string">bool</value> </InfoItem> <InfoItem name="unit_action"> <value type="string">None</value> </InfoItem> <InfoItem name="meaning_action"> <value type="string">encender riego</value> </InfoItem> </InfoItem> </InfoItem> </Object> </Objects>';
 
         let js;
@@ -447,7 +467,7 @@ export class DataService {
         });
 
         console.log(js);
-        if (js.Objects.Object[0].InfoItem[0].$.name !== 'Exito') {
+        if (js.Objects.Object[0].InfoItem[0].$.name === 'Preferencias') {
           // json.Objects.Object[0].InfoItem--->Preferencias
           let jsObject = js.Objects.Object[0].InfoItem[0].InfoItem;
           for (let i = 0; i < jsObject.length; i++) {
@@ -490,7 +510,7 @@ export class DataService {
       }, error => {
         alert(error);
       }
-    );
+      );
   }
   async registrarUsuario(xml: string, email) {
     // ToDo: Mirar que retorna el Servidor PU
@@ -499,7 +519,7 @@ export class DataService {
     let datos = null;
     console.log(xml);
     const url = this.urlServidor + '/RegistroUsuario?email=' + email + '&mac=' + this.mac + '&data=' + xml;
-    datos = await this.http.get(url, {responseType: 'text'}).toPromise();
+    datos = await this.http.get(url, { responseType: 'text' }).toPromise();
     let js = null;
     const parseString = require('xml2js').parseString;
     parseString(datos, function (err, result) {
@@ -523,7 +543,7 @@ export class DataService {
     console.log(xml);
     const url = this.urlServidor + '/ModificarDatosPersonales?email=' + email + '&mac=' + this.mac + '&data=' + xml;
     console.log('url', url);
-    datos = await this.http.get(url, {responseType: 'text'}).toPromise();
+    datos = await this.http.get(url, { responseType: 'text' }).toPromise();
 
     let js = null;
     const parseString = require('xml2js').parseString;
@@ -544,7 +564,6 @@ export class DataService {
     // ToDo: Mirar que retorna el Servidor PU
     xml = encodeURIComponent(xml);
     let datos = null;
-    let respuesta;
     console.log(xml);
     const url = this.urlServidor + '/RegistrarBuilding?email=' + this.email + '&mac=' + this.mac + '&data=' + xml;
     datos = await this.http.get(url, { responseType: 'text' }).toPromise();

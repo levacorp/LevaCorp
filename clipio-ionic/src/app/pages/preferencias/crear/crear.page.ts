@@ -199,7 +199,6 @@ export class CrearPage implements OnInit {
     let codigo;
     await this.dataService.crearECA(xmlCreacion)
     .then(async data => {
-        alert(data);
         codigo = await this.utilidades.alertEspecifica( "Registro Preferencia: ", data);
         console.log("Código" + codigo);
         if (codigo === '1028') {

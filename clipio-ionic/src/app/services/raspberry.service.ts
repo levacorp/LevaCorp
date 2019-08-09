@@ -55,26 +55,6 @@ export class RaspberryService {
       console.log('JS Call error', error);
       return {error: error.error};
     });
-
-    /*from(nativeCall).pipe(
-      finalize(() => loading.dismiss())
-    )
-    .subscribe(data => {
-        // Se parsea el xml a un objeto javascript para poder manejarlo más facil
-        let js;
-        const parseString = require('xml2js').parseString;
-        parseString(data.data, function(err, result) {
-          js = result;
-        });
-        return js;
-
-        // json.Objects.Object[0].InfoItem--->Informacion general del dispositivo + informacion de datastreams
-        // return js.Objects.Object[0].InfoItem; 
-        // this.datos = js;
-      }, err => {
-        console.log('JS Call error', err);
-        return {error: err.error};
-      });*/
   }
 
   // Método para decidir si se hace la peticion http desde navegador o desde celular

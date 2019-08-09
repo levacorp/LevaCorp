@@ -4,6 +4,7 @@ import { FormBuilder, Validators, FormGroup } from '@angular/forms';
 import { NavController, AlertController } from '@ionic/angular';
 import { GenerateXMLService } from 'src/app/services/generate-xml.service';
 import { UtilitiesService } from 'src/app/services/utilities.service';
+import { Router } from '@angular/router';
 
 @Component({
   selector: 'app-crear-edificio',
@@ -22,7 +23,7 @@ export class CrearEdificioPage implements OnInit {
     public navCtrl: NavController,
     private generarXML: GenerateXMLService,
     public alertController: AlertController, 
-    private utilidades : UtilitiesService
+    private utilidades : UtilitiesService, private route :Router
   ) {
     this.myform = this.formBuilder.group({
       nombre: ['', Validators.compose([Validators.required])],
@@ -42,12 +43,12 @@ export class CrearEdificioPage implements OnInit {
     if (this.myform.valid) {
         await this.dataservice.registrarEdificio(this.xmlRegistrarEdificio)
         .then(async data => {
-          alert(data);
           codigo = await this.utilidades.alertEspecifica( "Registro Edificio ", data);
           console.log(codigo);
           
           if (codigo === '1028') {
             this.myform.reset();
+            this.route.navigate(['/edificio']);
           }
         });
     }

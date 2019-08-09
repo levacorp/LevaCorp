@@ -1,14 +1,12 @@
-import { Component, OnInit } from '@angular/core';
-import { MenuController } from '@ionic/angular';
-import { BarcodeScannerOptions, BarcodeScanner } from '@ionic-native/barcode-scanner/ngx';
+import { Component, OnInit, Input } from '@angular/core';
 import { NgModule } from '@angular/core';
 import { CommonModule } from '@angular/common';
 import { FormsModule } from '@angular/forms';
-import { IonicModule } from '@ionic/angular'
+import { IonicModule } from '@ionic/angular';
 import { Router } from '@angular/router';
-import { EscanerComponent } from '../escaner/escaner.component';
 import { AuthenticationService } from '../../services/authentication.service';
 import { DataService } from 'src/app/services/data.service';
+import { DataUserService } from '../../services/data-user.service';
 
 @NgModule({
   imports: [
@@ -24,21 +22,15 @@ export class AppRoutingModule { }
   styleUrls: ['./menuslider.component.scss'],
 })
 export class MenusliderComponent implements OnInit {
-  perfil: any[];
+  perfil: string;
+  
   constructor(
-    private menu: MenuController,
-    private barcodeScanner: BarcodeScanner,
     private router: Router,
     private authService: AuthenticationService,
-    private dataservice: DataService
+    private dataUserService: DataUserService,
   ) { }
   async ngOnInit() {
-    await this.dataservice.getPerfilUsuario().then(res => {
-      this.perfil = res;
-      console.log(this.perfil);
-      console.log(this.perfil);
-     // this.myform.get('email').setValue(this.perfil[7]);
-    });
+    this.perfil = this.dataUserService.getEmail();
   }
 
   pushPerfil() {

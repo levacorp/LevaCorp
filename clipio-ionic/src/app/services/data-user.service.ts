@@ -7,7 +7,7 @@ import { DataService } from './data.service';
 })
 export class DataUserService {
   private IP: string;
-  private MAC: string = '02:00:00:00:00:00';
+  private MAC = '02:00:00:00:00:00';
   private Email: string;
   nombreEdificioActual: string;
   nombreHabitacionActual: string;

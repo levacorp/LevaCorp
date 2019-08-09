@@ -23,7 +23,6 @@ export class InicioSesionPage implements OnInit {
     public formBuilder: FormBuilder,
     private router: Router,
     private encryptService: EncryptService,
-    private generateXMLService: GenerateXMLService,
   ) {
     this.myform = this.formBuilder.group({
       dirIp: ['', Validators.compose([Validators.required])],
@@ -36,27 +35,21 @@ export class InicioSesionPage implements OnInit {
   }
 
   async login() {
+    this.dataUserService.setIP(this.myform.value.dirIp);
+    this.dataUserService.setEmail(this.myform.value.email);
+    this.dataService.capturarDatosUsuario();
     this.myform.value.contrasena = btoa(this.encryptService.encrypt(this.myform.value.contrasena));
-    await this.dataService.getXMLInicioSesion3(this.myform.value.email, this.myform.value.contrasena)
+    await this.dataService.getVerificarUsuario(this.myform.value.email, this.myform.value.contrasena)
     .then(res => {
       if (res) {
-        console.log('email', this.myform.value.email);
         this.dataUserService.setIP(this.myform.value.dirIp);
         this.dataUserService.setEmail(this.myform.value.email);
+        this.dataService.capturarDatosUsuario();
         this.authServices.login();
       } else {
         alert('E-mail o contraseña incorrecta');
       }
     });
-  }
-
-  verificarUsuario() {
-    let usuarioExistente = false;
-    if (this.dataUserService.datosUsuario["email"] === this.myform.value.email
-        && this.dataUserService.datosUsuario['password'] === this.myform.value.contrasena) {
-      usuarioExistente = true;
-    }
-    return usuarioExistente;
   }
 
   pushRegistro() {
