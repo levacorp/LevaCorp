@@ -218,7 +218,7 @@ export class GenerateXMLService {
     console.log(xw.toString());
     return(xw.toString());
   }
-  crearLivingThing(edificio, habitacion, livingThing) {
+  crearLivingThing(edificio, ambiente, habitacion, livingThing) {
     console.log(livingThing);
     const XMLWriter = require('xml-writer');
     const xw = new XMLWriter();
@@ -256,7 +256,7 @@ export class GenerateXMLService {
               xw.endElement();
             xw.endElement();
             xw.startElement('InfoItem').writeAttribute('name', 'name_part');
-              xw.startElement('value').writeAttribute('type', 'string').text(habitacion);
+              xw.startElement('value').writeAttribute('type', 'string').text(ambiente);
               xw.endElement();
             xw.endElement();
             xw.startElement('InfoItem').writeAttribute('name', 'name_building_environment');
@@ -269,7 +269,7 @@ export class GenerateXMLService {
     xw.endElement();
     console.log(xw.toString());
   }
-  crearNotLivingThing(edificio, habitacion, NotlivingThing) {
+  crearNotLivingThing(edificio,ambiente, habitacion, NotlivingThing) {
     console.log(NotlivingThing);
     const XMLWriter = require('xml-writer');
     const xw = new XMLWriter();
@@ -295,7 +295,7 @@ export class GenerateXMLService {
               xw.endElement();
             xw.endElement();
             xw.startElement('InfoItem').writeAttribute('name', 'name_part');
-              xw.startElement('value').writeAttribute('type', 'string').text(habitacion);
+              xw.startElement('value').writeAttribute('type', 'string').text(ambiente);
               xw.endElement();
             xw.endElement();
             xw.startElement('InfoItem').writeAttribute('name', 'name_building_environment');
@@ -309,7 +309,7 @@ export class GenerateXMLService {
     console.log(xw.toString());
   }
   //crea xml de asocion de un dispostivo con una habitacion
-  crearAsociacionDispositivosHabitacion(edificio, habitacion , nombreDispositivo, idDispositivo, ipDispositivo)
+  crearAsociacionDispositivosHabitacion(edificio, ambiente, habitacion , nombreDispositivo, idDispositivo, ipDispositivo)
   {
     const XMLWriter = require('xml-writer');
     const xw = new XMLWriter();
@@ -339,7 +339,7 @@ export class GenerateXMLService {
               xw.endElement();
             xw.endElement();
             xw.startElement('InfoItem').writeAttribute('name', 'name_part');
-              xw.startElement('value').writeAttribute('type', 'string').text(habitacion);
+              xw.startElement('value').writeAttribute('type', 'string').text(ambiente);
               xw.endElement();
             xw.endElement();
           xw.endElement();
@@ -380,7 +380,7 @@ export class GenerateXMLService {
     xw.endElement();
     console.log(xw.toString());
   }
-  crearHabitacion(edificio, piso, habitacion)
+  crearHabitacion(edificio, ambiente, piso, habitacion)
   {
     var XMLWriter = require('xml-writer');
     let xw = new XMLWriter;
@@ -388,18 +388,18 @@ export class GenerateXMLService {
     xw.startElement('Objects');
     xw.startElement('Object');
     xw.startElement('InfoItem').writeAttribute('name', 'BuildingEnvironment');
-    xw.startElement('InfoItem').writeAttribute('name', habitacion);
+    xw.startElement('InfoItem').writeAttribute('name', ambiente);
     xw.startElement('InfoItem').writeAttribute('name', 'name_thing');
     xw.startElement('value').writeAttribute('type', 'string');
-    xw.text(habitacion).endElement('/InfoItem').endElement('InfoItem');
+    xw.text(habitacion).endElement('/InfoItem').endElement('/InfoItem');
 
     xw.startElement('InfoItem').writeAttribute('name', 'name_building');
     xw.startElement('value').writeAttribute('type', 'string');
-    xw.text(edificio).endElement('/InfoItem').endElement('InfoItem');
+    xw.text(edificio).endElement('/InfoItem').endElement('/InfoItem');
 
     xw.startElement('InfoItem').writeAttribute('name', 'name_part');
     xw.startElement('value').writeAttribute('type', 'string');
-    xw.text(habitacion).endElement('/InfoItem').endElement('InfoItem');
+    xw.text(ambiente).endElement('/InfoItem').endElement('/InfoItem');
 
     xw.startElement('InfoItem').writeAttribute('name', 'name_flat');
     xw.startElement('value').writeAttribute('type', 'string');
@@ -440,7 +440,7 @@ export class GenerateXMLService {
 
     xw.endDocument();
     console.log("xmlRegistrar");
-    console.log(xw.toString());
+    return xw.toString();
   }
   //crea el XML para el registrar el usuario en la aplicacion
   setXMLRegistrar(json) {

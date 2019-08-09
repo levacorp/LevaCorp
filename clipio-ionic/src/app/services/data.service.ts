@@ -124,6 +124,13 @@ export class DataService {
     }
     return elementosHabitacion;
   }
+  async getData(data)
+  {
+    const url = this.urlServidor + "/RegistrarBuilding?email=" + this.email + "&mac=" + this.mac + "&data=" + data;
+   let result = await this.http.get(url)  
+       .toPromise();
+     return result
+  }
   /* Retorna los dispositivos de una habitacion */
   getDispositivosPorHabitacion(nombreEdificio: string, nombreHabitacion: string) {
     let dispositivosHabitacion = [];

@@ -13,6 +13,7 @@ export class CrearElementoPage implements OnInit {
   formElemento: FormGroup;
   valorInialScore = 0;
   edificio = null;
+  ambiente = null;
   habitacion = null;
 
   constructor(private activatedRoute: ActivatedRoute, public router: Router, public formBuilder: FormBuilder,
@@ -20,6 +21,7 @@ export class CrearElementoPage implements OnInit {
 
   ngOnInit() {
     this.edificio = this.activatedRoute.snapshot.paramMap.get('edificio');
+    this.ambiente =  this.activatedRoute.snapshot.paramMap.get('ambiente');
     this.habitacion = this.activatedRoute.snapshot.paramMap.get('habitacion');
     this.formElemento = this.formBuilder.group({
     nombre: ['', Validators.required],
@@ -64,14 +66,14 @@ export class CrearElementoPage implements OnInit {
     let xml;
     // si el tipo de elemento es vivo crea un xml tipo vivo
     if (this.formElemento.get('tipo').value === 'vivo') {
-      xml = this.generateXml.crearLivingThing(this.edificio, this.habitacion , this.formElemento.value);
+      xml = this.generateXml.crearLivingThing(this.edificio, this.ambiente, this.habitacion , this.formElemento.value);
     } else {
       // crea un xml no vivo
-      xml = this.generateXml.crearNotLivingThing(this.edificio, this.habitacion , this.formElemento.value);
+      xml = this.generateXml.crearNotLivingThing(this.edificio, this.ambiente, this.habitacion , this.formElemento.value);
     }
     this.dataService.crearElemento(xml);
     // devueve a la habitacion
-    this.router.navigate(['elementos-por-habitacion', this.edificio , this.habitacion]);
+    this.router.navigate(['elementos-por-habitacion', this.edificio , this.ambiente, this.habitacion]);
   }
 
 }

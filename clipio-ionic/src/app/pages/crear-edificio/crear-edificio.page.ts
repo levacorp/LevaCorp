@@ -33,9 +33,7 @@ export class CrearEdificioPage implements OnInit {
   //metodo que guarda y envia el formulario para crear el xml para registrar un nuevo edificio
   saveData() {
     if (this.myform.valid) {
-      this.generarXML.setXMLRegistrarEdificio(this.myform);
-      console.log(this.myform.value);
-      this.exitosoAlert();
+      const xml=this.generarXML.setXMLRegistrarEdificio(this.myform);
     }
   }
   async exitosoAlert() {

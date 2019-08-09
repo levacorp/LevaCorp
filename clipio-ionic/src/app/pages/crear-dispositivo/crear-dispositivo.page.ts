@@ -13,12 +13,13 @@ import { RaspberryService } from 'src/app/services/raspberry.service';
   styleUrls: ['./crear-dispositivo.page.scss'],
 })
 export class CrearDispositivoPage implements OnInit {
-
+  isDisabled  = false;
   dataStreams: Observable<any>;
   InformacionBasica: Observable<any>;
   tipoAsociacion = null;
   habitacion = null;
   edificio = null;
+  ambiente = null;
   ipDispositivo = null;
   idDispositivo = null;
   nombreDispositivo = null;
@@ -39,6 +40,7 @@ export class CrearDispositivoPage implements OnInit {
     const dir = this.activatedRoute.snapshot.paramMap.get('dir');
     this.edificio = this.activatedRoute.snapshot.paramMap.get('edificio');
     this.habitacion = this.activatedRoute.snapshot.paramMap.get('habitacion');
+    this.ambiente = this.activatedRoute.snapshot.paramMap.get('ambiente');
     // Hace una peticion a la informacion de la raspberry
     const xmlDatos = await this.raspService.requestRaspberry(dir);
     if (xmlDatos === null) {
@@ -51,10 +53,10 @@ export class CrearDispositivoPage implements OnInit {
       const xmlDataStreams = await this.raspService.requestRaspberry('http://' + this.ipDispositivo + '/SendState?osid=' + this.idDispositivo);
       // Obtiene los datatreams
       this.dataStreams = this.dataService.getEstadoDataStreams(xmlDataStreams);
-      this.nombreDispositivo= 'prueba';
+      this.nombreDispositivo = this.InformacionBasica[1].value[0]._;
     }
     // si la cantidad de parametros que le llegan es igual a tres significa que se agregara un dispositivo a una habitacion
-    if (this.activatedRoute.snapshot.paramMap.keys.length === 3) {
+    if (this.activatedRoute.snapshot.paramMap.keys.length === 4) {
       this.tipoAsociacion = 'dispositivoHabitacion';
     } else {
       // se agregara un dispositivo a un elemento
@@ -90,15 +92,15 @@ export class CrearDispositivoPage implements OnInit {
         // Se decide que tipo de asociacion se va a hacer
         if (this.tipoAsociacion === 'dispositivoHabitacion' ) {
           // Si la asociacion es con una habitacion se genera el xml y redirige a la habitacion
-          xml = this.generateXml.crearAsociacionDispositivosHabitacion(this.edificio, this.habitacion,
+          xml = this.generateXml.crearAsociacionDispositivosHabitacion(this.edificio, this.ambiente, this.habitacion,
           this.nombreDispositivo, this.idDispositivo , this.ipDispositivo);
-          this.router.navigate(['elementos-por-habitacion', this.edificio , this.habitacion]);
+          this.router.navigate(['elementos-por-habitacion', this.edificio , this.ambiente, this.habitacion]);
         } else {
             // Si la asociacion es con una dispositivo se genera el xml y redirige a la habitacion
              xml = this.generateXml.crearAsociacionDispositivosElemento(this.nombreThing, this.nombreDispositivo,
              this.idDispositivo , this.ipDispositivo);
-             this.router.navigate(['dispositivos-elemento', this.nombreThing, this.edificio, this.habitacion]);
+             this.router.navigate(['dispositivos-elemento', this.nombreThing, this.edificio, this.ambiente, this.habitacion]);
           }
-          this.dataService.asociarDispositivo(xml);
+        this.dataService.asociarDispositivo(xml);
     }
 }
