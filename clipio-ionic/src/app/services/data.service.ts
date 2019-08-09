@@ -88,7 +88,7 @@ export class DataService implements OnInit {
     const listaEdificios = [];    /* Se crea una lista que solamente contendra los nombres de los edificios */
     const infoEdificios = this.getEdificios();
     // tslint:disable-next-line: prefer-for-of
-    for (let i = 0; i < infoEdificios.length; i++) {
+    for (let i = 0; i < 5; i++) {
       listaEdificios.push(infoEdificios[i].InfoItem[0].value[0]._);   /* Se agrega el nombre de cada edificio a la lista */
     }
     this.dataUserService.setListaEdificios(listaEdificios);
