@@ -35,28 +35,16 @@ export class InicioSesionPage implements OnInit {
   ngOnInit() {
   }
 
-  login() {
-
+  async login() {
     this.myform.value.contrasena = this.encryptService.encrypt(this.myform.value.contrasena);
-    // Carga los datos a la clase que contiene los datos del entorno
-    this.dataService.getDatosInicioSesion(this.myform.value.email, this.myform.value.contrasena);
-
-    // Descomentar las lineas de abajo cuando se hagan las peticiones XML al servidor PU
-
-    //if (this.verificarUsuario) {
-    this.authServices.login();
-    //} else {
-    //  alert('Usuario o contraseña incorrectos');
-    //}
-  }
-
-  verificarUsuario() {
-    let usuarioExistente = false;
-    if (this.dataUserService.datosUsuario["email"] === this.myform.value.email
-        && this.dataUserService.datosUsuario['password'] === this.myform.value.contrasena) {
-      usuarioExistente = true;
-    }
-    return usuarioExistente;
+    await this.dataService.getValidarUsuario(this.myform.value.email, this.myform.value.contrasena).then(datos => {
+      console.log('datos:', datos);
+      //if (usuarioExiste) {
+      this.authServices.login();
+      //} else {
+      //alert('Usuario o contraseña incorrectos');
+      //}
+    });
   }
 
   pushRegistro() {

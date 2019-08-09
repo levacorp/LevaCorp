@@ -1,5 +1,5 @@
 import { Injectable } from '@angular/core';
-import { HttpClient, HttpHeaders} from '@angular/common/http';
+import { HttpClient, HttpHeaders } from '@angular/common/http';
 import * as xml2js from 'xml2js';
 import { DataUserService } from 'src/app/services/data-user.service';
 import { EnviarXMLService } from './enviar-xml.service';
@@ -7,7 +7,7 @@ import { Observable } from 'rxjs';
 import { HTTP } from '@ionic-native/http/ngx';
 import { RaspberryService } from './raspberry.service';
 
- 
+
 @Injectable({
   providedIn: 'root'
 })
@@ -22,34 +22,36 @@ export class DataService {
   ) {
   }
 
-  /* Obtiene el XML de un usuario consultando al servidor PU*/
-  getXMLInicioSesion(email: string, pass: string) {
-    let json;
-    // tslint:disable-next-line: max-line-length
-    const xml = '<?xml version="1.0" encoding="UTF-8"?><Objects><Object><InfoItem name="application"><InfoItem name="name_app"><value type="string">Clipio</value></InfoItem><InfoItem name="user_app"><value type="string">julian@gmail.com</value></InfoItem><InfoItem name="password_app"><value type="string">7TRVtu3p9mXTwnEzGdYeIw==</value></InfoItem></InfoItem></Object></Objects>';
-    const parseString = require('xml2js').parseString;
 
-    parseString(xml, function (err, result) {
-      if (err) {
-        alert('error');
-      } else {
-        json = result;
-      }
-    });
-    return json;
+  /* Obtiene el XML de un usuario consultando al servidor PU*/
+  async getValidarUsuario(email: string, pass: string) {
+    let resultado = false;
+    await this.http.get(this.getURLValidarUsuario(email, pass), { responseType: 'text' })
+      .subscribe(data => {
+        let codigo;
+        let json = null;
+        const parseString = require('xml2js').parseString;
+        parseString(data, function (err, result) {
+          if (err) {
+            alert('error');
+          } else {
+            json = result;
+          }
+        });
+        codigo = json.Objects.Object[0].InfoItem[0].value[0]._;
+        if(/*codigo === '1028'*/ codigo === '1042') {
+          resultado = true;
+        }
+        return resultado;
+      });
+    return resultado;
   }
 
-  /* Obtiene los datos de inicio de sesion. Retorna un arreglo con [{email:email,password:contraseña}] */
-  getDatosInicioSesion(email: string, pass: string) {
-    const datosInicioSesion = [];
-    const infoInicioSesion = this.getXMLInicioSesion(email, pass).Objects.Object[0].InfoItem[0].InfoItem;
-    // tslint:disable-next-line: prefer-for-of
-    if (infoInicioSesion.length >= 3) {
-      datosInicioSesion.push({ email: infoInicioSesion[1].value[0]._ });
-      datosInicioSesion.push({ password: infoInicioSesion[2].value[0]._ });
-    }
-    this.dataUserService.setDatosUsuario(datosInicioSesion);
-    // return datosInicioSesion;
+  getURLValidarUsuario(email: string, pass: string) {
+    const url = 'http://192.168.137.140/' + 'ValidarUsuarioApp?email=' + email
+      + '&user_name=' + email + '&mac=' + '02:00:00:00:00:00' +
+      '&name_app=Clipio&password=' + pass;
+    return url;
   }
 
   /* Obtiene los nombres de los elementos de una habitacion. Retorna: [nombreHabitacion1, nombreHabitacion2,...] */
@@ -235,15 +237,15 @@ export class DataService {
   }
   async postRegistrarUsuario(url) {
     console.log("consulta");
-   // console.log(this.http.get());
+    // console.log(this.http.get());
 
-  /*   new Promise((resolve, reject) => {
-      console.log( this.http.get(url).subscribe(res => {
-         resolve(res); //devolvemos la respuesta de la llamada http
-      }, (err) => {
-         reject(err); //devolvemos el error si se diera
-      }));
-    })*/  
+    /*   new Promise((resolve, reject) => {
+        console.log( this.http.get(url).subscribe(res => {
+           resolve(res); //devolvemos la respuesta de la llamada http
+        }, (err) => {
+           reject(err); //devolvemos el error si se diera
+        }));
+      })*/
     let datos = await this.requestRaspberryService.requestRaspberry(url);
 
     if (datos === null) {
@@ -261,11 +263,11 @@ export class DataService {
       /*let datosPost= this.http.get(url).subscribe(data => {   // data is already a JSON object
         alert(data['Objects']);
       });*/
-      // alert(datosPost);
+    // alert(datosPost);
   }
 
   getEstadoDataStreams(xml) {
-    
+
     return xml.Objects.Object[0].send_state[0].InfoItem;
   }
   getXMLPerfilUsuario() {
@@ -325,19 +327,19 @@ export class DataService {
   perfil() {
     alert('entra');
     this.https.get('http://10.0.0.17/RegistroUsuario?email?=andrea@unicauca.edu.co&mac=02:00:00:00:00:00&data', {}, {})
-  .then(data => {
+      .then(data => {
 
-    console.log(data.status);
-    console.log(data.data); // data received by server
-    console.log(data.headers);
-  })
-  .catch(error => {
+        console.log(data.status);
+        console.log(data.data); // data received by server
+        console.log(data.headers);
+      })
+      .catch(error => {
 
-    console.log(error.status);
-    console.log(error.error); // error message as string
-    console.log(error.headers);
+        console.log(error.status);
+        console.log(error.error); // error message as string
+        console.log(error.headers);
 
-  });
+      });
   }
 
   crearECA(xml: string) {
