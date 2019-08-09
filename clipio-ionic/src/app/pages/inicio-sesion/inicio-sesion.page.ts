@@ -37,12 +37,14 @@ export class InicioSesionPage implements OnInit {
   async login() {
     this.dataUserService.setIP(this.myform.value.dirIp);
     this.dataUserService.setEmail(this.myform.value.email);
+    this.dataService.capturarDatosUsuario();
     this.myform.value.contrasena = btoa(this.encryptService.encrypt(this.myform.value.contrasena));
     await this.dataService.getVerificarUsuario(this.myform.value.email, this.myform.value.contrasena)
     .then(res => {
       if (res) {
         this.dataUserService.setIP(this.myform.value.dirIp);
         this.dataUserService.setEmail(this.myform.value.email);
+        this.dataService.capturarDatosUsuario();
         this.authServices.login();
       } else {
         alert('E-mail o contraseña incorrecta');

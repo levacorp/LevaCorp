@@ -14,9 +14,12 @@ export class DataService implements OnInit {
   datosPost: Observable<any>;
 
   /* Email y mac estaticos para todas las peticiones */
-  email = 'daniel@gmail.com';
-  mac = '02:00:00:00:00:00';
-  urlServidor = 'http://192.168.0.28:8080';
+  // email = 'camilo@gmail.com';
+  // mac = '02:00:00:00:00:00';
+  // urlServidor = 'http://192.168.0.11:8080';
+  email = null;
+  mac = null;
+  urlServidor = null;
 
   constructor(
     private https: HTTP,
@@ -27,6 +30,12 @@ export class DataService implements OnInit {
   }
 
   ngOnInit() {
+    /*this.email = this.dataUserService.getEmail();
+    this.urlServidor = 'http://' + this.dataUserService.getIP() + ':8080';
+    this.mac = this.dataUserService.getMAC();*/
+  }
+
+  capturarDatosUsuario() {
     this.email = this.dataUserService.getEmail();
     this.urlServidor = 'http://' + this.dataUserService.getIP() + ':8080';
     this.mac = this.dataUserService.getMAC();
@@ -127,8 +136,7 @@ export class DataService implements OnInit {
   }
   async getData(data) {
     const url = this.urlServidor + "/RegistrarBuilding?email=" + this.email + "&mac=" + this.mac + "&data=" + data;
-    let result = await this.http.get(url)
-      .toPromise();
+    let result = await this.http.get(url).toPromise();
     return result
   }
   /* Retorna los dispositivos de una habitacion */
@@ -437,9 +445,8 @@ export class DataService implements OnInit {
     const url = this.urlServidor + '/ConsultarPreferencias?email=' + this.email + '&mac=' + this.mac;
     await this.http.get(url, { responseType: 'text' })
       .subscribe(data => {
-        //alert(data);
-
-        //console.log(data);
+        
+        // console.log(data);
         // const xml = '<?xml version=\'1.0\' encoding=\'utf-8\'?> <Objects> <Object> <InfoItem name="Preferencias"> <InfoItem name="preferencia"> <InfoItem name="name_preference"> <value type="string">apagarriego</value> </InfoItem> <InfoItem name="state_preference"> <value type="string">on</value> </InfoItem> <InfoItem name="osid_object_event"> <value type="string">708637323</value> </InfoItem> <InfoItem name="ip_event_object"> <value type="string">192.168.123.100</value> </InfoItem> <InfoItem name="name_event_object"> <value type="string">Regulador de Temperatura</value> </InfoItem> <InfoItem name="id_event_resource"> <value type="string">temperatura</value> </InfoItem> <InfoItem name="name_event_resource"> <value type="string" /> </InfoItem> <InfoItem name="comparator_condition"> <value type="string">menor</value> </InfoItem> <InfoItem name="variable_condition"> <value type="string">29</value> </InfoItem> <InfoItem name="type_variable_condition"> <value type="string">float</value> </InfoItem> <InfoItem name="unit_condition"> <value type="string">None</value> </InfoItem> <InfoItem name="meaning_condition"> <value type="string">hace frio</value> </InfoItem> <InfoItem name="osid_object_action"> <value type="string">1931642039</value> </InfoItem> <InfoItem name="ip_action_object"> <value type="string">192.168.123.101</value> </InfoItem> <InfoItem name="name_action_object"> <value type="string">Regulador de Humedad en Planta</value> </InfoItem> <InfoItem name="id_action_resource"> <value type="string">riego</value> </InfoItem> <InfoItem name="name_action_resource"> <value type="string">riego</value> </InfoItem> <InfoItem name="comparator_action"> <value type="string">igual</value> </InfoItem> <InfoItem name="variable_action"> <value type="string">0</value> </InfoItem> <InfoItem name="type_variable_action"> <value type="string">bool</value> </InfoItem> <InfoItem name="unit_action"> <value type="string">None</value> </InfoItem> <InfoItem name="meaning_action"> <value type="string">apagar riego</value> </InfoItem> </InfoItem> <InfoItem name="preferencia"> <InfoItem name="name_preference"> <value type="string">encenderriego</value> </InfoItem> <InfoItem name="state_preference"> <value type="string">on</value> </InfoItem> <InfoItem name="osid_object_event"> <value type="string">708637323</value> </InfoItem> <InfoItem name="ip_event_object"> <value type="string">192.168.123.100</value> </InfoItem> <InfoItem name="name_event_object"> <value type="string">Regulador de Temperatura</value> </InfoItem> <InfoItem name="id_event_resource"> <value type="string">temperatura</value> </InfoItem> <InfoItem name="name_event_resource"> <value type="string" /> </InfoItem> <InfoItem name="comparator_condition"> <value type="string">mayor</value> </InfoItem> <InfoItem name="variable_condition"> <value type="string">29</value> </InfoItem> <InfoItem name="type_variable_condition"> <value type="string">float</value> </InfoItem> <InfoItem name="unit_condition"> <value type="string">None</value> </InfoItem> <InfoItem name="meaning_condition"> <value type="string">hace calor</value> </InfoItem> <InfoItem name="osid_object_action"> <value type="string">1931642039</value> </InfoItem> <InfoItem name="ip_action_object"> <value type="string">192.168.123.101</value> </InfoItem> <InfoItem name="name_action_object"> <value type="string">Regulador de Humedad en Planta</value> </InfoItem> <InfoItem name="id_action_resource"> <value type="string">riego</value> </InfoItem> <InfoItem name="name_action_resource"> <value type="string">riego</value> </InfoItem> <InfoItem name="comparator_action"> <value type="string">igual</value> </InfoItem> <InfoItem name="variable_action"> <value type="string">1</value> </InfoItem> <InfoItem name="type_variable_action"> <value type="string">bool</value> </InfoItem> <InfoItem name="unit_action"> <value type="string">None</value> </InfoItem> <InfoItem name="meaning_action"> <value type="string">encender riego</value> </InfoItem> </InfoItem> </InfoItem> </Object> </Objects>';
 
         let js;
@@ -449,7 +456,7 @@ export class DataService implements OnInit {
         });
 
         console.log(js);
-        if (js.Objects.Object[0].InfoItem[0].$.name !== 'Exito') {
+        if (js.Objects.Object[0].InfoItem[0].$.name === 'Preferencias') {
           // json.Objects.Object[0].InfoItem--->Preferencias
           let jsObject = js.Objects.Object[0].InfoItem[0].InfoItem;
           for (let i = 0; i < jsObject.length; i++) {
