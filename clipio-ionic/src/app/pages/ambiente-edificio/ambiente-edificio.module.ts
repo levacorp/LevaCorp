@@ -1,26 +1,26 @@
 import { NgModule } from '@angular/core';
 import { CommonModule } from '@angular/common';
-import { FormsModule, ReactiveFormsModule } from '@angular/forms';
+import { FormsModule } from '@angular/forms';
 import { Routes, RouterModule } from '@angular/router';
 
 import { IonicModule } from '@ionic/angular';
 
-import { CrearHabitacionPage } from './crear-habitacion.page';
+import { AmbienteEdificioPage } from './ambiente-edificio.page';
 
 const routes: Routes = [
   {
     path: '',
-    component: CrearHabitacionPage
+    component: AmbienteEdificioPage
   }
 ];
 
 @NgModule({
   imports: [
     CommonModule,
-    ReactiveFormsModule,
+    FormsModule,
     IonicModule,
     RouterModule.forChild(routes)
   ],
-  declarations: [CrearHabitacionPage]
+  declarations: [AmbienteEdificioPage]
 })
-export class CrearHabitacionPageModule {}
+export class AmbienteEdificioPageModule {}

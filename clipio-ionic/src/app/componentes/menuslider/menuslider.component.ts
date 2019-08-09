@@ -33,7 +33,12 @@ export class MenusliderComponent implements OnInit {
     private dataservice: DataService
   ) { }
   async ngOnInit() {
-    this.perfil = await this.dataservice.getPerfilUsuario();
+    await this.dataservice.getPerfilUsuario().then(res => {
+      this.perfil = res;
+      console.log(this.perfil);
+      console.log(this.perfil);
+     // this.myform.get('email').setValue(this.perfil[7]);
+    });
   }
 
   pushPerfil() {

@@ -13,6 +13,7 @@ export class ElementosPorHabitacionPage implements OnInit {
   elementos: any[];
   dispositivos: any[];
   edificio: string;
+  ambiente: string;
   habitacion: string;
   segment;
   @ViewChild(IonSlides) slides: IonSlides;
@@ -28,6 +29,7 @@ export class ElementosPorHabitacionPage implements OnInit {
   ngOnInit() {
     this.segment = 'elementos'; // Inicializa la pestaña en la opcion elemento;
     this.edificio = this.activatedRoute.snapshot.paramMap.get('edificio'); // obtiene el parametro edifcio enviado por la ruta
+    this.ambiente = this.activatedRoute.snapshot.paramMap.get('ambiente'); // obtiene el parametro ambiente enviado por la ruta
     this.habitacion = this.activatedRoute.snapshot.paramMap.get('habitacion'); // obtiene el parametro habitacion enviado por la ruta
     this.elementos = this.dataService.getElementosPorHabitacion(this.edificio, this.habitacion); // Carga todos los elementos de la habitacion
     this.dispositivos = this.dataService.getDispositivosPorHabitacion(this.edificio, this.habitacion); // carga todos los dispositivos de la habitacion
@@ -37,15 +39,15 @@ export class ElementosPorHabitacionPage implements OnInit {
     if (this.segment === 'dispositivos') {
       // si esta en dispositivos se abre el scanner y redirige a la pagina crearDispositio
       const dir = await this.scanner.leerCodigo();
-      this.router.navigate(['crear-dispositivo', this.edificio, this.habitacion , dir]);
+      this.router.navigate(['crear-dispositivo', this.edificio, this.ambiente, this.habitacion , dir]);
     } else {
       // si esta en elementos redirige a la pagina crearElemento
-      this.router.navigate(['crear-elemento', this.edificio, this.habitacion]);
+      this.router.navigate(['crear-elemento', this.edificio, this.ambiente , this.habitacion]);
     }
   }
   /*Se encarga de redirigir el elemento seleccionado a la pagina donde se muestras sus dispositivos asociados*/
   routeDispositivosElemento(elemento: string )  {
-    this.router.navigate(['dispositivos-elemento', elemento, this.edificio, this.habitacion]);
+    this.router.navigate(['dispositivos-elemento', elemento, this.edificio, this.ambiente, this.habitacion]);
   }
   /*Se encarga de redirigir el dispositivo seleccionado a la pagina dispositivo donde muestra toda su informacion*/
   routeDispositivo(ip, id) {

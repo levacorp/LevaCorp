@@ -16,7 +16,6 @@ export class InformacionEdificioPage implements OnInit {
   informacionEdificio: any[];
   nombreEdificio = null;
   argumento = null;
-  
   constructor(
     private dataservice: DataService,
     private router: Router,
@@ -30,10 +29,9 @@ export class InformacionEdificioPage implements OnInit {
   }
 
   pushElementoHabitacion(argumento) {
-    this.router.navigate(['elementos-por-habitacion', this.nombreEdificio, argumento]);
+    this.router.navigate(['elementos-por-habitacion', this.nombreEdificio, 'diningroom', argumento]);
   }
-  pushCrearHabitacion()
-  {
-    this.generateXml.crearHabitacion(this.nombreEdificio,'1','da');
+  pushCrearHabitacion()  {
+    this.router.navigate(['ambiente-edificio', this.nombreEdificio]);
   }
 }

@@ -37,14 +37,14 @@
                     </ion-card-header>
                         <ion-card-content>
                           <!--En caso del que dataStream sea un actuador se mostraran unos switch-->
-                            <ng-container *ngIf= "datastream.value[0].$.type  === 'bool' || datastream.value[0].$.type  === 'boolean';else sensor">
-                                <ng-container *ngIf= "datastream.value[0]._ === '0';else encendido"> 
-                                    <ion-toggle id="{{datastream.$.name}}" color="danger" disabled="true"></ion-toggle>
-                                </ng-container>
+                            <div *ngIf= "datastream.value[0].$.type  == 'bool' || datastream.value[0].$.type  == 'boolean';else sensor"> 
+                                    <div *ngIf= "datastream.value[0]._  == '0';else encendido"> 
+                                    <ion-toggle id="{{datastream.$.name}}" color="danger"  [disabled]="isDisabled" on> </ion-toggle>
+                                </div>
                                 <ng-template #encendido>
-                                    <ion-toggle  id="{{datastream.$.name}}" color="danger" checked disabled="true"> </ion-toggle>
+                                    <ion-toggle  id="{{datastream.$.name}}" color="danger" [disabled]="isDisabled" checked> </ion-toggle>
                                 </ng-template>  
-                            </ng-container>
+                            </div>
                           <!--En caso de que el dataStream sea un sensor-->
                             <ng-template #sensor>
                                 <h2><b>{{ datastream.value[0]._}}</b></h2>

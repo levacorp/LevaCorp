@@ -43,8 +43,8 @@ export class RegistrarPage implements OnInit {
   async saveData() {
       let codigo;
 
-      this.myform.value.contrasena = this.encrypt.encrypt(this.myform.value.contrasena);
-      this.myform.value.confirmacionContrasena = this.encrypt.encrypt(this.myform.value.confirmacionContrasena);
+      this.myform.value.contrasena = btoa(this.encrypt.encrypt(this.myform.value.contrasena));
+      this.myform.value.confirmacionContrasena = btoa(this.encrypt.encrypt(this.myform.value.confirmacionContrasena));
       this.xmlRegistrarUsuario = this.generarXML.setXMLRegistrar(this.myform);
       if (this.myform.valid) {
          await this.dataservice.registrarUsuario(this.xmlRegistrarUsuario, this.myform.get('email').value)
