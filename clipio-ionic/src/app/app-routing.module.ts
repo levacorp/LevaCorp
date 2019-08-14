@@ -5,6 +5,7 @@ import { AuthGuardService } from './services/auth-guard.service';
 const routes: Routes = [
 
   { path: '', redirectTo: 'inicio-sesion', pathMatch: 'full' },
+  { path: 'principal', loadChildren: './pages/principal/principal.module#PrincipalPageModule', canActivate: [AuthGuardService]},
   { path: 'principal/:edificio', loadChildren: './pages/principal/principal.module#PrincipalPageModule', canActivate: [AuthGuardService]},
   { path: 'preferencias', loadChildren: './pages/preferencias/preferencias.module#PreferenciasPageModule', canActivate: [AuthGuardService] },
   { path: 'edificio', loadChildren: './pages/edificio/edificio.module#EdificioPageModule', canActivate: [AuthGuardService] },

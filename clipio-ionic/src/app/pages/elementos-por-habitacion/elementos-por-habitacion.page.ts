@@ -26,13 +26,13 @@ export class ElementosPorHabitacionPage implements OnInit {
   }
 
   /* Inicializa los atributos a utilizar */
-  ngOnInit() {
+  async ngOnInit() {
     this.segment = 'elementos'; // Inicializa la pestaña en la opcion elemento;
     this.edificio = this.activatedRoute.snapshot.paramMap.get('edificio'); // obtiene el parametro edifcio enviado por la ruta
     this.ambiente = this.activatedRoute.snapshot.paramMap.get('ambiente'); // obtiene el parametro ambiente enviado por la ruta
     this.habitacion = this.activatedRoute.snapshot.paramMap.get('habitacion'); // obtiene el parametro habitacion enviado por la ruta
-    this.elementos = this.dataService.getElementosPorHabitacion(this.edificio, this.habitacion); // Carga todos los elementos de la habitacion
-    this.dispositivos = this.dataService.getDispositivosPorHabitacion(this.edificio, this.habitacion); // carga todos los dispositivos de la habitacion
+    this.elementos = await this.dataService.getElementosPorHabitacion(this.edificio, this.habitacion); // Carga todos los elementos de la habitacion
+    this.dispositivos = await this.dataService.getDispositivosPorHabitacion(this.edificio, this.habitacion); // carga todos los dispositivos de la habitacion
   }
   async crearElementoOAsociarDispositivo(){
     // se averigua en que segment se encuenra actualmente

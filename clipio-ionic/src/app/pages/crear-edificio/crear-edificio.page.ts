@@ -22,8 +22,8 @@ export class CrearEdificioPage implements OnInit {
     public formBuilder: FormBuilder,
     public navCtrl: NavController,
     private generarXML: GenerateXMLService,
-    public alertController: AlertController, 
-    private utilidades : UtilitiesService, private route :Router
+    public alertController: AlertController,
+    private utilidades: UtilitiesService, private route: Router
   ) {
     this.myform = this.formBuilder.group({
       nombre: ['', Validators.compose([Validators.required])],
@@ -41,16 +41,26 @@ export class CrearEdificioPage implements OnInit {
     let codigo;
     this.xmlRegistrarEdificio = this.generarXML.setXMLRegistrarEdificio(this.myform);
     if (this.myform.valid) {
-        await this.dataservice.registrarEdificio(this.xmlRegistrarEdificio)
-        .then(async data => {
-          codigo = await this.utilidades.alertEspecifica( "Registro Edificio ", data);
-          console.log(codigo);
-          
-          if (codigo === '1028') {
-            this.myform.reset();
-            this.route.navigate(['/edificio']);
-          }
-        });
+      const data = await this.dataservice.registrarEdificio(this.xmlRegistrarEdificio);
+      codigo = await this.utilidades.alertEspecifica('Registro Edificio ', data);
+      console.log(codigo);
+
+      if (codigo === '1028') {
+        this.myform.reset();
+        await this.dataservice.getListaEdificios();
+        this.route.navigate(['/edificio']);
+      }
+      /*await this.dataservice.registrarEdificio(this.xmlRegistrarEdificio)
+      .then(async data => {
+        codigo = await this.utilidades.alertEspecifica( "Registro Edificio ", data);
+        console.log(codigo);
+
+        if (codigo === '1028') {
+          this.myform.reset();
+          await this.dataservice.getListaEdificios();
+          this.route.navigate(['/edificio']);
+        }
+      });*/
     }
   }
 }
