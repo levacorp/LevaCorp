@@ -1,9 +1,23 @@
-<ion-item color="danger" class="centrarTexto" lines="full">
-  <ion-label>¿Cambiar de edificio? Escoge uno:</ion-label>
-</ion-item>
-
-<ion-list lines="none" class="tamanoLista">
-  <ion-item color="light" *ngFor="let edificio of listaEdificios" detail (click)="onClick( edificio )">
-    <ion-label>{{ edificio }}</ion-label>
+<div *ngIf="listaEdificios.length !== 0; else elsetag">
+  <ion-item color="danger" class="centrarTexto" lines="full">
+    <ion-label>¿Cambiar de edificio? Escoge uno:</ion-label>
   </ion-item>
-</ion-list>
+
+  <ion-list lines="none" class="tamanoLista">
+    <ion-item color="light" *ngFor="let edificio of listaEdificios" detail (click)="onClick( edificio )">
+      <ion-label>{{ edificio }}</ion-label>
+    </ion-item>
+  </ion-list>
+</div>
+<ng-template #elsetag>
+  <ion-item color="danger" class="centrarTexto" lines="full">
+    <ion-label>No has creado edificios</ion-label>
+  </ion-item>
+
+  <ion-list lines="none" class="tamanoLista">
+    <ion-item lines="none" (click)="pushCrearEdificio()">
+      <ion-icon name="add-circle-outline" slot="start"></ion-icon>
+      <ion-label>Crear nuevo</ion-label>
+    </ion-item>
+  </ion-list>
+  <ng-template>

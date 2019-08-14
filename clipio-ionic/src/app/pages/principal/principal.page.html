@@ -13,16 +13,19 @@
 </ion-header>
 
 <ion-content id="principal">
-  <!--Carta para las notificaciones-->
+
   <div>
     <ion-item expand="full" color="danger" class="cartaEdificio">
       <ion-label><b>Bienvenido a {{argumento}}</b></ion-label>
     </ion-item>
   </div>
 
+  <!--Carta para las notificaciones-->
   <ion-card id="cartaNotificaciones" class="tamanoCarta setScroll">
     <ion-card-header>
-      <ion-card-title>¡Tienes notificaciones!</ion-card-title>
+      <ion-card-title>
+        <h2 class="centrarTexto">¡Tienes notificaciones!</h2>
+      </ion-card-title>
     </ion-card-header>
 
     <ion-card-content>
@@ -49,31 +52,78 @@
   <!--Fin Carta para las notificaciones-->
 
   <!--Pestañas de las habitaciones-->
-  <div class="barraSegmento">
-    <!--Carga todas las haticaciones, ionsegment en modo ios-->
-    <ion-segment color="danger" mode="ios" (ionChange)="segmentButtonClicked($event)" scrollable>
-      <ion-segment-button value="{{ habitacion }}" *ngFor="let habitacion of habitaciones">
-        <ion-label>{{ habitacion }}</ion-label>
-      </ion-segment-button>
-    </ion-segment>
+  <!--Si no existen habitaciones y no existen edificios-->
+  <div *ngIf="(habitaciones.length === 0) && (edificios.length === 0 );">
+    <ion-card class="cartaCrear">
+      <ion-card-header>
+        <ion-card-subtitle>Aun no tienes edificios</ion-card-subtitle>
+      </ion-card-header>
+      <ion-card-content>
+        <ion-item lines="none">
+          <ion-icon name="arrow-round-down" slot="start"></ion-icon>
+          <p>Para empezar crea un nuevo edificio</p>
+        </ion-item>
+        <ion-item lines="none" (click)="pushCrearEdificio()">
+          <ion-icon name="add-circle-outline" slot="start"></ion-icon>
+          <ion-label>Crear nuevo</ion-label>
+        </ion-item>
+      </ion-card-content>
+    </ion-card>
   </div>
-  <!--Fin Pestañas de las habitaciones-->
+  <!--Si no existen habitaciones y existen edificios-->
+  <div *ngIf="(habitaciones.length === 0) && (edificios.length !== 0 )">
+    <ion-card class="cartaCrear">
+      <ion-card-header>
+        <ion-icon name="checkmark" slot="start"></ion-icon>
+        <ion-card-subtitle>Tus edificios se han creado</ion-card-subtitle>
+      </ion-card-header>
+      <ion-card-content>
+        <ion-item lines="none">
+          <ion-icon name="arrow-round-down" slot="start"></ion-icon>
+          <p>Ahora puedes asociar tus habitaciones</p>
+        </ion-item>
+        <ion-item lines="none" (click)="pushCrearHabitacion()">
+          <ion-icon name="add-circle-outline" slot="start"></ion-icon>
+          <ion-label>Crear nueva</ion-label>
+        </ion-item>
+      </ion-card-content>
+    </ion-card>
+  </div>
+  <!--En caso de que existan habitaciones y edificios-->
+  <div *ngIf="(habitaciones.length !== 0) && (edificios.length !== 0 )">
+    <div class="barraSegmento">
+      <!--Carga todas las haticaciones, ionsegment en modo ios-->
+      <ion-segment color="danger" mode="ios" (ionChange)="segmentButtonClicked($event)" scrollable>
+        <ion-segment-button value="{{ i }}" *ngFor="let habitacion of habitaciones; let i= index">
+          <ion-label>{{ habitacion[0] }}</ion-label>
+        </ion-segment-button>
+      </ion-segment>
+    </div>
+    <!--Fin Pestañas de las habitaciones-->
 
-  <!--Carga de los elementos filtrados por segmento escogido-->
-  <ion-grid class="contenidoSegmento">
-    <ion-row>
-      <!--Acomoda el numero de tarjetas de acuerdo al tamaño de pantalla-->
-      <ion-col size="6" size-sm="4" size-md="3" size-lg="2" *ngFor="let elemento of elementos">
-        <ion-card button="true" (click)="pushElemento(elemento)">
-          <img src="/assets/icon/camara1.png" />
-          <ion-card-header>
-            <ion-card-title>{{ elemento }}</ion-card-title>
-          </ion-card-header>
-          <ion-card-content>
-          </ion-card-content>
-        </ion-card>
-      </ion-col>
-    </ion-row>
-  </ion-grid>
-  <!--Fin Carga de los elementos filtrados por segmento escogido-->
+    <!--Carga de los elementos filtrados por segmento escogido-->
+    <ion-grid class="contenidoSegmento">
+      <ion-row class="contenidoElementos">
+        <div *ngIf="elementos.length === 0; else elseElementos" class="p-2">
+          <ion-button (click)="pushCrearElementoHabitacion()" color="light">
+            <ion-icon name="add"></ion-icon>
+          </ion-button>
+        </div>
+        <ng-template #elseElementos>
+          <!--Acomoda el numero de tarjetas de acuerdo al tamaño de pantalla-->
+          <ion-col size="6" size-sm="4" size-md="3" size-lg="2" *ngFor="let elemento of elementos">
+            <ion-card button="true" (click)="pushElemento(elemento)">
+              <img src="/assets/icon/camara1.png" />
+              <ion-card-header>
+                <ion-card-title>{{ elemento }}</ion-card-title>
+              </ion-card-header>
+              <ion-card-content>
+              </ion-card-content>
+            </ion-card>
+          </ion-col>
+        </ng-template>
+      </ion-row>
+    </ion-grid>
+    <!--Fin Carga de los elementos filtrados por segmento escogido-->
+  </div>
 </ion-content>
