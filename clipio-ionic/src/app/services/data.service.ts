@@ -14,21 +14,12 @@ export class DataService implements OnInit {
   datosPost: Observable<any>;
 
   /* Email y mac estaticos para todas las peticiones */
-<<<<<<< HEAD
   email = 'daniel@gmail.com';
   mac = '02:00:00:00:00:00';
   urlServidor = 'http://192.168.0.15:8080';
   //email = null;
   //mac = null;
   //urlServidor = null;
-=======
-   email = 'and@hotmail.com';
-   mac = '02:00:00:00:00:00';
-   urlServidor = 'http://10.130.1.83:8080';
-  // email = null;
-  // mac = null;
-  // urlServidor = null;
->>>>>>> 35bca0b7378b32bd882abb1bfbb924aafe49ae43
 
   constructor(
     private https: HTTP,
