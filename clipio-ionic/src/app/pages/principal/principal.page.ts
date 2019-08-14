@@ -34,10 +34,24 @@ export class PrincipalPage implements OnInit {
   /* Inicializa los atributos a utilizar */
   async ngOnInit() {
     console.log('MAC: ', this.dataUserService.getMAC());
+<<<<<<< HEAD
     await this.inicializarAtributos();
     // this.dataService.listarECAs();
     this.dataService.consultarObjetosRelacionados();
   }
+=======
+    this.notificaciones = ['Daniel ha llegado a casa', 'Forero salio de casa', 'Daniel Gomez ha llegado a casa', 'Vanesa salió de casa'];
+    this.argumento = this.activatedRoute.snapshot.paramMap.get('edificio');
+    this.dataService.getListaEdificios();
+    /*this.dataService.getListaHabitaciones(this.argumento);
+    this.dataUserService.getListaHabitaciones();
+    this.dataService.getListaElementosPorHabitacion(this.argumento, this.filtro);
+    this.dataService.listarECAs();
+    this.habitaciones = this.dataUserService.getListaHabitaciones();
+    console.log(this.habitaciones);
+    this.cargarElementosPorHabitacion();*/
+    }
+>>>>>>> 35bca0b7378b32bd882abb1bfbb924aafe49ae43
   /* Cuando se requiere traer los elementos filtrados o sin filtrar iguala el atributo filtro
     al filtro escogido y carga los elementos para el filtro*/
   segmentButtonClicked(event) {
