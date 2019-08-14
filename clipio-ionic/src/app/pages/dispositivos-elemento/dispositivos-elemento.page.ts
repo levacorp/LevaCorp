@@ -1,7 +1,6 @@
 import { Component, OnInit } from '@angular/core';
 import {ActivatedRoute, Router} from '@angular/router';
 import { DataService } from 'src/app/services/data.service';
-import { Observable } from 'rxjs';
 
 
 @Component({
@@ -11,9 +10,10 @@ import { Observable } from 'rxjs';
 })
 export class DispositivosElementoPage implements OnInit {
   habitacion = null;
+  ambiente = null;
   edificio = null;
   elemento = null;
-  dispositivos: Observable<any>;
+  dispositivos: any[];
 
 
 
@@ -23,16 +23,18 @@ export class DispositivosElementoPage implements OnInit {
     this.edificio = this.activatedRoute.snapshot.paramMap.get('edificio');
     this.habitacion = this.activatedRoute.snapshot.paramMap.get('habitacion');
     this.elemento = this.activatedRoute.snapshot.paramMap.get('elemento');
-    this.dispositivos = this.dataService.getElementos(); // Carga todos los elementos
+    this.ambiente = this.activatedRoute.snapshot.paramMap.get('ambiente');
+    // Carga todos los elementos
+    this.dispositivos = this.dataService.getDispositivosElemento(this.edificio, this.habitacion , this.elemento);
   }
 
 
-   /*Se encarga de redirigir el elemento seleccionado a la pagina donde se muestras sus dispositivos asociados*/
-   routeDispositivo(id: string )   {
-     this.router.navigate(['dispositivo', id]);
+   /*Se encarga de redirigir el dispositivo seleccionado a la pagina donde se muestras su informacion*/
+   routeDispositivo(ip: string , id: string)   {
+     this.router.navigate(['dispositivo', ip, id]);
    }
 
    pushCrearDispositivo(dir: string) {
-    this.router.navigate(['crear-dispositivo', this.elemento, this.edificio, this.habitacion , dir]);
+    this.router.navigate(['crear-dispositivo', this.elemento, this.edificio, this.ambiente, this.habitacion , dir]);
   }
 }

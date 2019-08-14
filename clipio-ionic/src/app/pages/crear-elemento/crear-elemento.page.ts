@@ -3,6 +3,7 @@ import { FormBuilder, FormGroup, Validators, FormArray } from '@angular/forms';
 import { Router, ActivatedRoute } from '@angular/router';
 import { GenerateXMLService } from 'src/app/services/generate-xml.service';
 import { DataService } from 'src/app/services/data.service';
+import { UtilitiesService } from 'src/app/services/utilities.service';
 
 @Component({
   selector: 'app-crear-elemento',
@@ -17,7 +18,7 @@ export class CrearElementoPage implements OnInit {
   habitacion = null;
 
   constructor(private activatedRoute: ActivatedRoute, public router: Router, public formBuilder: FormBuilder,
-              private generateXml: GenerateXMLService, private dataService: DataService) {}
+              private generateXml: GenerateXMLService, private dataService: DataService, private utilidades: UtilitiesService) {}
 
   ngOnInit() {
     this.edificio = this.activatedRoute.snapshot.paramMap.get('edificio');
@@ -62,7 +63,7 @@ export class CrearElementoPage implements OnInit {
     }
   }
   // crea un nuevo elemento
-  crearElemento() {
+  async crearElemento() {
     let xml;
     // si el tipo de elemento es vivo crea un xml tipo vivo
     if (this.formElemento.get('tipo').value === 'vivo') {
@@ -71,7 +72,14 @@ export class CrearElementoPage implements OnInit {
       // crea un xml no vivo
       xml = this.generateXml.crearNotLivingThing(this.edificio, this.ambiente, this.habitacion , this.formElemento.value);
     }
-    this.dataService.crearElemento(xml);
+    await this.dataService.crearElemento(xml)
+    .then(async data => {
+      const codigo = await this.utilidades.alertEspecifica( 'Registro elemento', data);
+      console.log(codigo);
+      if (codigo === '1028') {
+
+      }
+    });
     // devueve a la habitacion
     this.router.navigate(['elementos-por-habitacion', this.edificio , this.ambiente, this.habitacion]);
   }

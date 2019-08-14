@@ -75,9 +75,10 @@ export class DataService implements OnInit {
     /* Obtiene la informacion de toda la habitacion */
     const elementosHabitacion = this.getElementosPorHabitacion(nombreEdificio, nombreHabitacion);
     // tslint:disable-next-line: prefer-for-of
+    console.log(elementosHabitacion);
     for (let i = 0; i < elementosHabitacion.length; i++) {
       /* Obtiene el nombre del elemento */
-      nombreElemento = elementosHabitacion[i].InfoItem[0].InfoItem[0].value[0]._;
+      nombreElemento = elementosHabitacion[i].InfoItem[0].value[0]._;
       listaElementos.push(nombreElemento);
     }
     this.dataUserService.setListaElementosPorHabitacion(listaElementos);
@@ -133,6 +134,20 @@ export class DataService implements OnInit {
       }
     }
     return elementosHabitacion;
+  }
+  getDispositivosElemento(nombreEdificio: string, nombreHabitacion: string , nombreElemento){
+    let dispositivosElemento = [];
+    const elementos = this.getElementosPorHabitacion(nombreEdificio, nombreHabitacion);
+    for (let i = 0; i < elementos.length; i++) {
+      if (elementos[i].InfoItem[0].value[0]._ === nombreElemento) {
+        for (let j = 0; j < elementos[i].InfoItem.length; j++ ) {
+          if (elementos[i].InfoItem[j].$.name === 'Objetos') {
+            dispositivosElemento = elementos[i].InfoItem[j].InfoItem;
+          }
+        }
+      }
+    }
+    return dispositivosElemento;
   }
   async getData(data) {
     const url = this.urlServidor + "/RegistrarBuilding?email=" + this.email + "&mac=" + this.mac + "&data=" + data;
@@ -233,7 +248,7 @@ export class DataService implements OnInit {
     return url;
   }
   /* Obtiene el XML BuildingEnviroment y lo retorna como objeto */
-  async getXMLBuildingEnviroment() {
+   async getXMLBuildingEnviroment() {
     let json = null;
     // tslint:disable-next-line: max-line-length
     //const xml = '<?xml version="1.0" encoding="UTF-8"?><Objects><Object><InfoItem name="BuildingEnvironment"><InfoItem name="Building"><InfoItem name="name_building"><value type="string">casa</value></InfoItem><InfoItem name="flats_building"><value type="int">1</value></InfoItem><InfoItem name="Objetos"><InfoItem name="oos"><InfoItem name="ip_object"><value type="string">10.0.0.16</value></InfoItem><InfoItem name="id_object"><value type="string">708637323</value></InfoItem><InfoItem name="name_object"><value type="string">NodoCoordinador</value></InfoItem></InfoItem></InfoItem><InfoItem name="house_parts"><InfoItem name="part"><InfoItem name="name_part"><value type="string">cocina</value></InfoItem><InfoItem name="type_part"><value type="string">Kitchen</value></InfoItem><InfoItem name="flat_number"><value type="string">Piso No. 1</value></InfoItem><InfoItem name="Objetos"><InfoItem name="oos"><InfoItem name="ip_object"><value type="string">10.0.0.16/</value></InfoItem><InfoItem name="id_object"><value type="string">708637323</value></InfoItem><InfoItem name="name_object"><value type="string">Regulador de Humedad en Planta</value></InfoItem></InfoItem></InfoItem><InfoItem name="Things"><InfoItem name="Thing"><InfoItem name="Living_Thing"><InfoItem name="name_thing"><value type="string">Planta</value></InfoItem><InfoItem name="type_thing"><value type="string">living_thing</value></InfoItem><InfoItem name="score_thing"><value type="string">98.0</value></InfoItem><InfoItem name="type_living_thing"><value type="string">Planta</value></InfoItem><InfoItem name="specie_living_thing"><value type="string">Flor</value></InfoItem><InfoItem name="food_living_thing"><value type="string">agua</value></InfoItem></InfoItem></InfoItem><InfoItem name="Thing"><InfoItem name="Non_Living_Thing"><InfoItem name="name_thing"><value type="string">Carro</value></InfoItem><InfoItem name="type_thing"><value type="string">non_living_thing</value></InfoItem><InfoItem name="score_thing"><value type="string">98.0</value></InfoItem></InfoItem></InfoItem></InfoItem></InfoItem><InfoItem name="part"><InfoItem name="name_part"><value type="string">cuarto Santiago</value></InfoItem><InfoItem name="type_part"><value type="string">Bedroom</value></InfoItem><InfoItem name="flat_number"><value type="string">Piso No. 1</value></InfoItem><InfoItem name="Objetos"><InfoItem name="oos"><InfoItem name="ip_object"><value type="string">192.168.123.105</value></InfoItem><InfoItem name="id_object"><value type="string">78091938</value></InfoItem><InfoItem name="name_object"><value type="string">Regulador de Luz</value></InfoItem></InfoItem></InfoItem><InfoItem name="Things"><InfoItem name="Thing"><InfoItem name="Living_Thing"><InfoItem name="name_thing"><value type="string">Gato</value></InfoItem><InfoItem name="type_thing"><value type="string">living_thing</value></InfoItem><InfoItem name="score_thing"><value type="string">100.0</value></InfoItem><InfoItem name="type_living_thing"><value type="string">Planta</value></InfoItem><InfoItem name="specie_living_thing"><value type="string">Flor</value></InfoItem><InfoItem name="food_living_thing"><value type="string">agua</value></InfoItem></InfoItem></InfoItem><InfoItem name="Thing"><InfoItem name="Non_Living_Thing"><InfoItem name="name_thing"><value type="string">Moto</value></InfoItem><InfoItem name="type_thing"><value type="string">non_living_thing</value></InfoItem><InfoItem name="score_thing"><value type="string">100.0</value></InfoItem></InfoItem></InfoItem></InfoItem></InfoItem><InfoItem name="part"><InfoItem name="name_part"><value type="string">sala</value></InfoItem><InfoItem name="type_part"><value type="string">LivingRoom</value></InfoItem><InfoItem name="flat_number"><value type="string">Piso No. 1</value></InfoItem><InfoItem name="Objetos"><InfoItem name="oos"><InfoItem name="ip_object"><value type="string">192.168.123.106</value></InfoItem><InfoItem name="id_object"><value type="string">708637323</value></InfoItem><InfoItem name="name_object"><value type="string">Regulador de Temperatura</value></InfoItem></InfoItem></InfoItem></InfoItem></InfoItem></InfoItem></InfoItem></Object></Objects>';
@@ -310,6 +325,14 @@ export class DataService implements OnInit {
     //retorna los estados del datastream
     return xml.Objects.Object[0].send_state[0].InfoItem;
   }
+  getDataStreams(xml) {
+    // retorna los estados del datastream
+    let dataStreams: [];
+    dataStreams = xml.Objects.Object[0].InfoItem;
+    console.log(dataStreams);
+    dataStreams.shift();
+    return  dataStreams;
+  }
   getXMLPerfilUsuario() {
 
     const xml = '<?xml version="1.0" encoding="UTF-8"?><Objects><Object><InfoItem name="Person"><InfoItem name="name_person"><value type="string">Andrea</value></InfoItem><InfoItem name="surname"><value type="string">Pabon</value></InfoItem><InfoItem name="celullar"><value type="string">None</value></InfoItem><InfoItem name="gender"><value type="string">Hombre</value></InfoItem><InfoItem name="date_of_birth"><value type="string">2017-9-18</value></InfoItem><InfoItem name="facebook"><value type="string">None</value></InfoItem><InfoItem name="place_of_birth"><value type="string">Popayan</value></InfoItem><InfoItem name="email"><value type="string">andrea@unicauca.edu.co</value></InfoItem></InfoItem></Object></Objects>';
@@ -365,7 +388,6 @@ export class DataService implements OnInit {
     const url = this.urlServidor + '/RegistrarThing?email=' + this.email + '&mac=' + this.mac + '&data=' + xml;
     await this.http.get(url, { responseType: 'text' })
       .subscribe(data => {
-        
       }, error => {
         alert(error);
       });
@@ -377,13 +399,9 @@ export class DataService implements OnInit {
     const url = this.urlServidor + "/RegistrarObject?email=" + this.email + "&mac=" + this.mac + "&data=" + xml;
     await this.http.get(url, { responseType: 'text' })
       .subscribe(data => {
-        
       }, error => {
         alert(error);
       });
-  }
-  crearHabitacion(xml) {
-
   }
   perfil() {
     
@@ -455,7 +473,6 @@ export class DataService implements OnInit {
     // Actualizar lista de Preferencias
     this.listarECAs();
   }
-
 
   async listarECAs() {
     // ToDo: Traer xml del servidor
@@ -543,7 +560,6 @@ export class DataService implements OnInit {
     return js;
   }
 
-
   async modificarPerfil(xml: string, email: string) {
     // ToDo: Mirar que retorna el Servidor PU
     xml = encodeURIComponent(xml);
@@ -566,8 +582,6 @@ export class DataService implements OnInit {
     console.log('Modificado Usuario');
     return js;
   }
-
-
 
   async registrarEdificio(xml: string) {
     // ToDo: Mirar que retorna el Servidor PU

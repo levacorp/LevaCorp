@@ -4,6 +4,7 @@
     <ion-buttons slot="start">
       <ion-back-button ></ion-back-button>
     </ion-buttons>
+    <ion-title>Ambientes</ion-title>
   </ion-toolbar>
 </ion-header>
 <!--Fin header de la pag-->
@@ -21,10 +22,8 @@
              </ion-card-header>
              <img src="/assets/icon/camara1.png"/>
              <!--Mostrara la informacion del elemento-->
-             <ion-card-content>
-                 <ion-item  class="ion-text-center">
-                     <strong>{{ ambiente}}</strong>
-                 </ion-item>
+             <ion-card-content text-center>
+                     <strong>{{ambiente}}</strong>
            </ion-card-content>
            </ion-card>
            <!--Fin Carga de los elementos filtrados por la habitacion escogido-->          

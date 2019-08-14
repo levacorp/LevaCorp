@@ -18,8 +18,11 @@ export class DispositivoPage implements OnInit {
   argumento = null;
   dataStreams: Observable<any>;
   InformacionBasica: Observable<any>;
+  ipDispositivo = null;
+  idDispositivo = null;
+  descripcion = null;
   nombreDispositivo = null;
-  isDisabled = false;
+  tags = [];
 
   @ViewChild(IonSlides) slides: IonSlides;
   segment = 'Recursos';
@@ -29,22 +32,26 @@ export class DispositivoPage implements OnInit {
   constructor(public loadingController: LoadingController, private raspService : RaspberryService , private activatedRoute: ActivatedRoute , private dataService: DataService ) { }
 
   async ngOnInit() {
-    const ipDispositivo = this.activatedRoute.snapshot.paramMap.get('ip');
-    const idDispositivo = this.activatedRoute.snapshot.paramMap.get('id');
-    const peticionDispositivo = 'http://' + ipDispositivo + '/Identificator?osid=' + idDispositivo;
+    this.ipDispositivo = this.activatedRoute.snapshot.paramMap.get('ip');
+    this.idDispositivo = this.activatedRoute.snapshot.paramMap.get('id');
+    const peticionDispositivo = 'http://' + this.ipDispositivo + '/Identificator?osid=' + this.idDispositivo;
     // hace una peticion a la raspberry pidiendo  la informacion
     const xmlDatos = await this.raspService.requestRaspberry(peticionDispositivo);
     if (xmlDatos === null) {
     } else {
       // obtiene la infromacion basica
-       this.InformacionBasica = this.dataService.getInfoBasicaDispositivo(xmlDatos);
-      // hace una peticion a las raspberry piedno sus estados
-      const xmlDataStreams = this.raspService.requestRaspberry('http://' + ipDispositivo + '/SendState?osid=' + idDispositivo);
-      //obtiene sus estados
-      this.dataStreams = this.dataService.getEstadoDataStreams(xmlDatos);
+      this.InformacionBasica = this.dataService.getInfoBasicaDispositivo(xmlDatos);
+
       this.nombreDispositivo = this.InformacionBasica[1].value[0]._;
+      this.descripcion = this.InformacionBasica[2].value[0]._;
+      this.tags = this.InformacionBasica[17].value;
+      // hace una peticion a las raspberry pidiedod sus estados
+      const xmlDataStreams = this.raspService.requestRaspberry('http://' + this.ipDispositivo + '/SendState?osid=' + this.idDispositivo);
+      // obtiene sus estados
+      this.dataStreams = this.dataService.getEstadoDataStreams(xmlDataStreams);
+      console.log(this.dataStreams);
     }
-    }
+  }
  // Evento cuando se da click en un segmento
  segmentButtonClicked(event) {
   // Se obtiene el valor del segmento clickeado
@@ -69,6 +76,15 @@ export class DispositivoPage implements OnInit {
   }
   // Hace la peticion de cambio de estado del actuador
   async estadoActuador(event) {
+    let option;
+    if(event.target.checked) {
+    
+      event.target.checked = false;
+         option= "off";
+  }else if(!event.target.checked) {
+      event.target.checked = true;
+         option= "on";
+  }
     const loading = await this.loadingController.create({
       spinner: null,
       message: 'Espere por favor...',
@@ -76,9 +92,18 @@ export class DispositivoPage implements OnInit {
     });
     await loading.present();
     loading.lastElementChild.insertAdjacentHTML( 'afterbegin', '<ion-spinner name="circles" color="danger" ></ion-spinner> ');
-    if (event.detail.checked) {
-
-    } else {
+    const url = 'http://'+this.ipDispositivo +'/SetDatastream?osid='+this.idDispositivo+'&idDataStream='+event.target.id+'&comando='+option;
+    const datos = await this.raspService.requestRaspberry(url);
+    console.log(url);
+    console.log(datos);
+    if(datos === null){}
+    else{
+      if(option === 'on'){
+        event.target.checked = true;
+      }
+      else{
+        event.target.checked = false;
+      }
     }
     this.loadingController.dismiss();
   }

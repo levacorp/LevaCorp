@@ -31,13 +31,12 @@ export class CrearHabitacionPage implements OnInit {
       piso: ['', Validators.required] });
   }
 
-  //metodo que guarda y envia el formulario para crear el xml para registrar un nuevo edificio
+  // metodo que guarda y envia el formulario para crear el xml para registrar un nueva habitacion
  async saveData() {
-    this.xmlRegistrarHabitacion = this.generarXML.crearHabitacion(this.edificio,this.ambiente, this.myform.get('piso').value ,
+    this.xmlRegistrarHabitacion = this.generarXML.crearHabitacion(this.edificio, this.ambiente, this.myform.get('piso').value ,
                 this.myform.get('nombre').value);
     let codigo;
     if (this.myform.valid) {
-      this.dataService.crearHabitacion(this.xmlRegistrarHabitacion);
       await this.dataService.registrarEdificio(this.xmlRegistrarHabitacion)
         .then(async data => {
           codigo = await this.utilidades.alertEspecifica( 'Creando habitacion ', data);
