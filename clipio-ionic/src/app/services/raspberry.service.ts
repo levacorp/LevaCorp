@@ -14,7 +14,7 @@ export class RaspberryService {
 
   constructor(private http: HttpClient, private nativeHttp: HTTP,
     private plt: Platform, private loadingCtrl: LoadingController) {
-      this.nativeHttp.setRequestTimeout(15);      // Tiempo máximo de espera 15 segundos
+      this.nativeHttp.setRequestTimeout(10);      // Tiempo máximo de espera 10 segundos
     }
 
   async getPC(dir) {
@@ -53,7 +53,7 @@ export class RaspberryService {
     .catch(error => {
       loading.dismiss();
       console.log('JS Call error', error);
-      return {error: error.error};
+      return { error: error.error };
     });
   }
 

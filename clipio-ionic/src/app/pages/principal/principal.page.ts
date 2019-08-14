@@ -5,7 +5,6 @@ import { PopoverEdificiosInicioComponent } from '../../componentes/popover-edifi
 import { Router, ActivatedRoute } from '@angular/router';
 import { DataUserService } from '../../services/data-user.service';
 import { HttpClient } from '@angular/common/http';
-import { HTTP } from '@ionic-native/http/ngx';
 import { tap } from 'rxjs/operators';
 
 @Component({

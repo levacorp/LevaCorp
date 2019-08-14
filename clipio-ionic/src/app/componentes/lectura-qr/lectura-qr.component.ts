@@ -1,5 +1,4 @@
 import { Component, Input, Output, OnInit, EventEmitter } from '@angular/core';
-import { HTTP } from '@ionic-native/http/ngx';
 import { HttpClient } from '@angular/common/http';
 import { ActivatedRoute } from '@angular/router';
 import { LoadingController, Platform } from '@ionic/angular';
@@ -37,7 +36,7 @@ export class LecturaQrComponent implements OnInit {
   data: string[][] = [];
   datos: any = null;
 
-  constructor(private route: ActivatedRoute, private http: HttpClient, private nativeHttp: HTTP,
+  constructor(private route: ActivatedRoute, private http: HttpClient,
     private plt: Platform, private loadingCtrl: LoadingController, private raspService: RaspberryService) { }
 
   async ngOnInit() {

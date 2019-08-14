@@ -3,7 +3,6 @@ import { HttpClient } from '@angular/common/http';
 import * as xml2js from 'xml2js';
 import { DataUserService } from 'src/app/services/data-user.service';
 import { Observable } from 'rxjs';
-import { HTTP } from '@ionic-native/http/ngx';
 import { RaspberryService } from './raspberry.service';
 
 @Injectable({
@@ -22,7 +21,6 @@ export class DataService implements OnInit {
   // urlServidor = null;
 
   constructor(
-    private https: HTTP,
     private http: HttpClient,
     private dataUserService: DataUserService,
     private requestRaspberryService: RaspberryService
@@ -387,20 +385,11 @@ export class DataService implements OnInit {
   }
   perfil() {
     
-    this.https.get('http://10.0.0.17/RegistroUsuario?email?=andrea@unicauca.edu.co&mac=02:00:00:00:00:00&data', {}, {})
-      .then(data => {
+    this.http.get('http://10.0.0.17/RegistroUsuario?email?=andrea@unicauca.edu.co&mac=02:00:00:00:00:00&data', { responseType: 'text'})
+      .subscribe(data => {
 
-        console.log(data.status);
-        console.log(data.data); // data received by server
-        console.log(data.headers);
+        console.log(data);
       })
-      .catch(error => {
-
-        console.log(error.status);
-        console.log(error.error); // error message as string
-        console.log(error.headers);
-
-      });
   }
 
   async crearECA(xml: string) {
