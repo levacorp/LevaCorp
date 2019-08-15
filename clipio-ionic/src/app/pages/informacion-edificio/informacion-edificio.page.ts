@@ -13,6 +13,7 @@ import { GenerateXMLService } from 'src/app/services/generate-xml.service';
 })
 export class InformacionEdificioPage implements OnInit {
 
+  ambiente = null;
   informacionEdificio: any[];
   nombreEdificio = null;
   argumento = null;
@@ -28,10 +29,13 @@ export class InformacionEdificioPage implements OnInit {
     this.argumento = this.activatedRoute.snapshot.paramMap.get('nombre');
   }
 
-  pushElementoHabitacion(argumento) {
-    this.router.navigate(['elementos-por-habitacion', this.nombreEdificio, 'diningroom', argumento]);
+  pushElementoHabitacion(argumento, i) {
+    this.ambiente = this.informacionEdificio[i][1];
+    console.log(this.ambiente);
+    this.router.navigate(['elementos-por-habitacion', this.nombreEdificio, this.ambiente , argumento]);
   }
-  pushCrearHabitacion()  {
+  pushCrearHabitacion() {
     this.router.navigate(['ambiente-edificio', this.nombreEdificio]);
   }
+  
 }

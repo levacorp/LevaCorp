@@ -92,7 +92,7 @@
     <div class="barraSegmento">
       <!--Carga todas las haticaciones, ionsegment en modo ios-->
       <ion-segment color="danger" mode="ios" (ionChange)="segmentButtonClicked($event)" scrollable>
-        <ion-segment-button value="{{ i }}" *ngFor="let habitacion of habitaciones; let i= index">
+        <ion-segment-button value="{{ habitacion[0] }}" *ngFor="let habitacion of habitaciones">
           <ion-label>{{ habitacion[0] }}</ion-label>
         </ion-segment-button>
       </ion-segment>
@@ -109,8 +109,8 @@
         </div>
         <ng-template #elseElementos>
           <!--Acomoda el numero de tarjetas de acuerdo al tamaño de pantalla-->
-          <ion-col size="6" size-sm="4" size-md="3" size-lg="2" *ngFor="let elemento of elementos">
-            <ion-card button="true" (click)="pushElemento(elemento)">
+          <ion-col size="6" size-sm="4" size-md="3" size-lg="2" *ngFor="let elemento of elementos; let i= index">
+            <ion-card button="true" (click)="pushElemento(elemento, i)">
               <img src="/assets/icon/camara1.png" />
               <ion-card-header>
                 <ion-card-title>{{ elemento }}</ion-card-title>

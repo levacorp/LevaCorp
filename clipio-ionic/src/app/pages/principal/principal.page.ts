@@ -153,7 +153,8 @@ export class PrincipalPage implements OnInit {
     }
   }
 
-  pushElemento(elemento) {
+  pushElemento(elemento, i) {
+    this.ambiente = this.habitaciones[i][1];
     this.router.navigate(['dispositivos-elemento/', elemento, this.argumento, this.ambiente, this.filtro]);
   }
 

@@ -14,9 +14,9 @@ export class DataService implements OnInit {
   datosPost: Observable<any>;
 
   /* Email y mac estaticos para todas las peticiones */
-  email = 'and@hotmail.com';
+  email = 'pruebadefuego@gmail.com';
   mac = '02:00:00:00:00:00';
-  urlServidor = 'http://192.168.127.15:8080';
+  urlServidor = 'http://192.168.43.204:8080';
   //email = null;
   //mac = null;
   //urlServidor = null;
@@ -154,6 +154,20 @@ export class DataService implements OnInit {
       }
     }
     return elementosHabitacion;
+  }
+  async getDispositivosElemento(nombreEdificio: string, nombreHabitacion: string , nombreElemento) {
+    let dispositivosElemento = [];
+    const elementos = await this.getElementosPorHabitacion(nombreEdificio, nombreHabitacion);
+    for (let i = 0; i < elementos.length; i++) {
+      if (elementos[i].InfoItem[0].value[0]._ === nombreElemento) {
+        for (let j = 0; j < elementos[i].InfoItem.length; j++ ) {
+          if (elementos[i].InfoItem[j].$.name === 'Objetos') {
+            dispositivosElemento = elementos[i].InfoItem[j].InfoItem;
+          }
+        }
+      }
+    }
+    return dispositivosElemento;
   }
   async getData(data) {
     const url = this.urlServidor + "/RegistrarBuilding?email=" + this.email + "&mac=" + this.mac + "&data=" + data;
@@ -332,6 +346,14 @@ export class DataService implements OnInit {
     //retorna los estados del datastream
     return xml.Objects.Object[0].send_state[0].InfoItem;
   }
+  getDataStreams(xml) {
+    // retorna los estados del datastream
+    let dataStreams: [];
+    dataStreams = xml.Objects.Object[0].InfoItem;
+    console.log(dataStreams);
+    dataStreams.shift();
+    return  dataStreams;
+  }
   getXMLPerfilUsuario() {
 
     const xml = '<?xml version="1.0" encoding="UTF-8"?><Objects><Object><InfoItem name="Person"><InfoItem name="name_person"><value type="string">Andrea</value></InfoItem><InfoItem name="surname"><value type="string">Pabon</value></InfoItem><InfoItem name="celullar"><value type="string">None</value></InfoItem><InfoItem name="gender"><value type="string">Hombre</value></InfoItem><InfoItem name="date_of_birth"><value type="string">2017-9-18</value></InfoItem><InfoItem name="facebook"><value type="string">None</value></InfoItem><InfoItem name="place_of_birth"><value type="string">Popayan</value></InfoItem><InfoItem name="email"><value type="string">andrea@unicauca.edu.co</value></InfoItem></InfoItem></Object></Objects>';
@@ -387,11 +409,11 @@ export class DataService implements OnInit {
     const url = this.urlServidor + '/RegistrarThing?email=' + this.email + '&mac=' + this.mac + '&data=' + xml;
     await this.http.get(url, { responseType: 'text' })
       .subscribe(data => {
-
+        return data;
       }, error => {
         alert(error);
       });
-
+    
   }
   async asociarDispositivo(xml) {
     // ToDo: Mirar que retorna el Servidor PU
@@ -399,13 +421,9 @@ export class DataService implements OnInit {
     const url = this.urlServidor + "/RegistrarObject?email=" + this.email + "&mac=" + this.mac + "&data=" + xml;
     await this.http.get(url, { responseType: 'text' })
       .subscribe(data => {
-
       }, error => {
         alert(error);
       });
-  }
-  crearHabitacion(xml) {
-
   }
   perfil() {
 
@@ -477,7 +495,6 @@ export class DataService implements OnInit {
     // Actualizar lista de Preferencias
     this.listarECAs();
   }
-
 
   async listarECAs() {
     // ToDo: Traer xml del servidor
@@ -565,7 +582,6 @@ export class DataService implements OnInit {
     return js;
   }
 
-
   async modificarPerfil(xml: string, email: string) {
     // ToDo: Mirar que retorna el Servidor PU
     xml = encodeURIComponent(xml);
@@ -588,8 +604,6 @@ export class DataService implements OnInit {
     console.log('Modificado Usuario');
     return js;
   }
-
-
 
   async registrarEdificio(xml: string) {
     // ToDo: Mirar que retorna el Servidor PU

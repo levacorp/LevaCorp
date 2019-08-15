@@ -28,27 +28,22 @@
           <ion-grid>
               <ion-row>
                 <!--Acomoda el numero de tarjetas de acuerdo al tamaño de pantalla-->
-                <ion-col size-xs="6" size-sm="6" size-md="6" size-lg="6"
+                <ion-col size-xs="12" size-sm="12" size-md="12" size-lg="12"
                   *ngFor="let datastream of dataStreams">
                   <!--Carga de los datastreams--> 
                   <ion-card>
                     <ion-card-header  >
                       <ion-card-title><b>{{ datastream.$.name }}</b></ion-card-title>
                     </ion-card-header>
-                        <ion-card-content>
-                          <!--En caso del que dataStream sea un actuador se mostraran unos switch-->
-                            <div *ngIf= "datastream.value[0].$.type  == 'bool' || datastream.value[0].$.type  == 'boolean';else sensor"> 
-                                    <div *ngIf= "datastream.value[0]._  == '0';else encendido"> 
-                                    <ion-toggle id="{{datastream.$.name}}" color="danger"   on> </ion-toggle>
-                                </div>
-                                <ng-template #encendido>
-                                    <ion-toggle  id="{{datastream.$.name}}" color="danger" checked> </ion-toggle>
-                                </ng-template>  
-                            </div>
-                          <!--En caso de que el dataStream sea un sensor-->
-                            <ng-template #sensor>
-                                <h2><b>{{ datastream.value[0]._}}</b></h2>
-                            </ng-template>
+                        <ion-card-content>     
+                          <ion-item>
+                              <ion-icon name="document"></ion-icon>
+                              {{ datastream.MetaData[0].InfoItem[3].value[0]._}}
+                          </ion-item> 
+                          <ion-item>
+                              <ion-icon name="information-circle-outline" ></ion-icon>
+                              {{ datastream.MetaData[0].InfoItem[7].value[0]._}}
+                          </ion-item>                        
                         </ion-card-content>
                   </ion-card>
                   <!--Fin Carga de los DataSream-->
@@ -67,29 +62,27 @@
                             <h2>Identificador</h2>
                           </ion-col>
                           <ion-col size="12">
-                            {{InformacionBasica[0].value[0]._}}
+                            {{idDispositivo}}
                           </ion-col>
                     </ion-row>
                   </ion-item>
-                  
                   <ion-item>
                       <ion-row>
                           <ion-col size="12" >
                               <h2>Descripcion</h2>
                             </ion-col>
-                            <ion-col size="12">
-                              {{InformacionBasica[2].value[0]._}}
+                          <ion-col size="12">
+                              {{descripcion}}
                             </ion-col>
                       </ion-row>
                     </ion-item>
-                  
                     <ion-item>
                         <ion-row>
                             <ion-col size="12" >
                                 <h2>Ip</h2>
                               </ion-col>
                               <ion-col size="12">
-                                {{InformacionBasica[18].value[0]._}}
+                                {{ipDispositivo}}
                               </ion-col>
                         </ion-row>
                     </ion-item>
@@ -99,9 +92,9 @@
                                 <h2>Tags</h2>
                               </ion-col>
                               <ion-list>
-                                <ion-item *ngFor="let tags of InformacionBasica[17].value"> 
+                                <ion-item *ngFor="let tag of tags"> 
                                     <ion-col size="12">
-                                        {{tags._}}
+                                        {{tag._}}
                                       </ion-col>
                                 </ion-item>
                               </ion-list>                                

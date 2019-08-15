@@ -10,24 +10,23 @@
 <!--Fin header-->
 
 <ion-content>
-    <ion-grid class="contenidoSegmento">
-      <ion-row>
+  <ion-grid>
+    <ion-row>
         <!--Acomoda el numero de tarjetas de acuerdo al tamaño de pantalla-->
-        <ion-col size="6" size-sm="4" size-md="3" size-lg="2"
-        *ngFor="let dispositivo of dispositivos">
-        <!--Carga de los dispostivos del elementos escogidos-->
-          
-          <ion-card  id="dispositivo.userId" (click)="routeDispositivo(dispositivo.userId)" >
+       <ion-col size="6" size-sm="4" size-md="3" size-lg="2" *ngFor="let dispositivo of dispositivos">
+         <!--Carga de los dispositivos filtrados por la habitacion escogida donde el id sera dado por la ip-->
+         <ion-card class="card"  id="{{dispositivo.InfoItem[0].value[0]._}}" (click)="routeDispositivo(dispositivo.InfoItem[0].value[0]._,dispositivo.InfoItem[1].value[0]._)" >
+            <ion-card-title text-center>{{ dispositivo.InfoItem[1].value[0]._ }}</ion-card-title> 
             <img src="/assets/icon/camara1.png"/>
-            <ion-card-header  >
-              <ion-card-title>{{ dispositivo.userId }}</ion-card-title>
-            </ion-card-header>
-          </ion-card>
-          <!--Fin Carga de los elementos filtrados por la habitacion escogido-->
-        </ion-col>
-      </ion-row>
-    </ion-grid>
-  </ion-content>
+             <ion-card-content text-center>
+                  <b>{{ dispositivo.InfoItem[2].value[0]._ }}</b>
+             </ion-card-content>
+           </ion-card>
+           <!--Fin Carga de los elementos filtrados por la habitacion escogido-->          
+       </ion-col>
+    </ion-row>
+  </ion-grid>    
+</ion-content>
   
   <!-- fab placed to the top end -->
   <ion-fab vertical="bottom" horizontal="end" slot="fixed" >
@@ -35,5 +34,10 @@
       <ion-fab-button color="danger" (click)="childComponentAction.leerCodigo()">
         <ion-icon name="add"></ion-icon>
       </ion-fab-button>
-    </ion-fab>
-    
+  </ion-fab>
+
+<!--<ion-fab vertical="bottom" horizontal="end" slot="fixed" >
+  <ion-fab-button color="danger" (click)="pushCrearDispositivo('aasa')">
+    <ion-icon name="add"></ion-icon>
+  </ion-fab-button>
+</ion-fab>-->
