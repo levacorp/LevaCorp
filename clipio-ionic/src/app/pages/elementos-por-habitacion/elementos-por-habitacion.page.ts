@@ -32,13 +32,15 @@ export class ElementosPorHabitacionPage implements OnInit {
     this.ambiente = this.activatedRoute.snapshot.paramMap.get('ambiente'); // obtiene el parametro ambiente enviado por la ruta
     this.habitacion = this.activatedRoute.snapshot.paramMap.get('habitacion'); // obtiene el parametro habitacion enviado por la ruta
     this.elementos = await this.dataService.getElementosPorHabitacion(this.edificio, this.habitacion); // Carga todos los elementos de la habitacion
+    console.log(this.elementos);
     this.dispositivos = await this.dataService.getDispositivosPorHabitacion(this.edificio, this.habitacion); // carga todos los dispositivos de la habitacion
   }
   async crearElementoOAsociarDispositivo(){
     // se averigua en que segment se encuenra actualmente
     if (this.segment === 'dispositivos') {
       // si esta en dispositivos se abre el scanner y redirige a la pagina crearDispositio
-      const dir = await this.scanner.leerCodigo();
+      //const dir = await this.scanner.leerCodigo();
+      const dir = 'http://10.0.0.20/Identificator?osid=708637323';
       this.router.navigate(['crear-dispositivo', this.edificio, this.ambiente, this.habitacion , dir]);
     } else {
       // si esta en elementos redirige a la pagina crearElemento

@@ -74,7 +74,7 @@ export class CrearElementoPage implements OnInit {
     }
     await this.dataService.crearElemento(xml)
     .then(async data => {
-      const codigo = await this.utilidades.alertEspecifica( 'Registro elemento', '1028');
+      const codigo = await this.utilidades.alertEspecifica( 'Registro elemento', data);
       console.log(codigo);
       if (codigo === '1028') {
 

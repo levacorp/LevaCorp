@@ -29,15 +29,15 @@
 </ion-content>
   
   <!-- fab placed to the top end -->
-  <ion-fab vertical="bottom" horizontal="end" slot="fixed" >
+ <!-- <ion-fab vertical="bottom" horizontal="end" slot="fixed" >
       <app-escaner (onReadDevice)="pushCrearDispositivo($event)" #childComponentAction></app-escaner>
       <ion-fab-button color="danger" (click)="childComponentAction.leerCodigo()">
         <ion-icon name="add"></ion-icon>
       </ion-fab-button>
-  </ion-fab>
+  </ion-fab>-->
 
-<!--<ion-fab vertical="bottom" horizontal="end" slot="fixed" >
-  <ion-fab-button color="danger" (click)="pushCrearDispositivo('aasa')">
+<ion-fab vertical="bottom" horizontal="end" slot="fixed" >
+  <ion-fab-button color="danger" (click)="pushCrearDispositivo('http://10.0.0.20/Identificator?osid=708637323')">
     <ion-icon name="add"></ion-icon>
   </ion-fab-button>
-</ion-fab>-->
+</ion-fab>

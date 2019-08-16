@@ -14,9 +14,9 @@ export class DataService implements OnInit {
   datosPost: Observable<any>;
 
   /* Email y mac estaticos para todas las peticiones */
-  email = 'pruebadefuego@gmail.com';
+  email = 'prueba@gmail.com';
   mac = '02:00:00:00:00:00';
-  urlServidor = 'http://192.168.43.204:8080';
+  urlServidor = 'http://10.0.0.20:8080';
   //email = null;
   //mac = null;
   //urlServidor = null;
@@ -405,25 +405,39 @@ export class DataService implements OnInit {
   }
   async crearElemento(xml) {
     // ToDo: Mirar que retorna el Servidor PU
+    xml = encodeURIComponent(xml);
+    let datos = null;
     console.log(xml);
     const url = this.urlServidor + '/RegistrarThing?email=' + this.email + '&mac=' + this.mac + '&data=' + xml;
-    await this.http.get(url, { responseType: 'text' })
-      .subscribe(data => {
-        return data;
-      }, error => {
-        alert(error);
-      });
-    
+    datos = await this.http.get(url, { responseType: 'text' }).toPromise();
+    let js = null;
+    const parseString = require('xml2js').parseString;
+    parseString(datos, function (err, result) {
+      if (err) {
+        alert('error');
+      } else {
+        js = result;
+      }
+    });
+    return js;
   }
   async asociarDispositivo(xml) {
     // ToDo: Mirar que retorna el Servidor PU
+    xml = encodeURIComponent(xml);
+    let datos = null;
     console.log(xml);
     const url = this.urlServidor + "/RegistrarObject?email=" + this.email + "&mac=" + this.mac + "&data=" + xml;
-    await this.http.get(url, { responseType: 'text' })
-      .subscribe(data => {
-      }, error => {
-        alert(error);
-      });
+    datos = await this.http.get(url, { responseType: 'text' }).toPromise();
+    let js = null;
+    const parseString = require('xml2js').parseString;
+    parseString(datos, function (err, result) {
+      if (err) {
+        alert('error');
+      } else {
+        js = result;
+      }
+    });
+    return js;
   }
   perfil() {
 

@@ -41,19 +41,16 @@
                             <ion-item  class="ion-text-center">
                                 <strong>{{ elemento.InfoItem[0].value[0]._ }}</strong>
                             </ion-item>
-                            <ion-item>
-                                <strong>Score:</strong><p>{{ elemento.InfoItem[2].value[0]._ }}</p>
-                            </ion-item>
                               <!--Si el elemento es vivo se mostraran los campos extras Tipo vivo,especie y comida-->
-                        <div *ngIf="elemento.InfoItem[1].value[0]._ == 'living_thing'">
+                        <div *ngIf="elemento.InfoItem[1].value[0]._ === 'Living_Thing'">
                             <ion-item>
-                                <strong>Tipo:</strong><p>{{ elemento.InfoItem[3].value[0]._ }}</p>
+                                <strong>Tipo:</strong><p>{{ elemento.InfoItem[2].value[0]._ }}</p>
                             </ion-item>
                             <ion-item>
                                 <strong>Especie:</strong><p>{{ elemento.InfoItem[4].value[0]._ }}</p>
                             </ion-item>
                             <ion-item>
-                                <strong>Comida:</strong><p>{{ elemento.InfoItem[5].value[0]._ }}</p>
+                                <strong>Comida:</strong><p>{{ elemento.InfoItem[3].value[0]._ }}</p>
                             </ion-item>
                           </div>  
                       </ion-card-content>

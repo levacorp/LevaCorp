@@ -232,11 +232,7 @@ export class GenerateXMLService {
               xw.endElement();
             xw.endElement();
             xw.startElement('InfoItem').writeAttribute('name', 'type_thing');
-              xw.startElement('value').writeAttribute('type', 'string').text(livingThing.tipo);
-              xw.endElement();
-            xw.endElement();
-            xw.startElement('InfoItem').writeAttribute('name', 'score_thing');
-              xw.startElement('value').writeAttribute('type', 'string').text(livingThing.score);
+              xw.startElement('value').writeAttribute('type', 'string').text('living_thing');
               xw.endElement();
             xw.endElement();
             xw.startElement('InfoItem').writeAttribute('name', 'type_living_thing');
@@ -284,11 +280,7 @@ export class GenerateXMLService {
               xw.endElement();
             xw.endElement();
             xw.startElement('InfoItem').writeAttribute('name', 'type_thing');
-              xw.startElement('value').writeAttribute('type', 'string').text(NotlivingThing.tipo);
-              xw.endElement();
-            xw.endElement();
-            xw.startElement('InfoItem').writeAttribute('name', 'score_thing');
-              xw.startElement('value').writeAttribute('type', 'string').text(NotlivingThing.score);
+              xw.startElement('value').writeAttribute('type', 'string').text('non_living_thing');
               xw.endElement();
             xw.endElement();
             xw.startElement('InfoItem').writeAttribute('name', 'name_building');

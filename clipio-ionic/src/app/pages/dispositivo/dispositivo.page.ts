@@ -38,18 +38,22 @@ export class DispositivoPage implements OnInit {
     // hace una peticion a la raspberry pidiendo  la informacion
     const xmlDatos = await this.raspService.requestRaspberry(peticionDispositivo);
     if (xmlDatos === null) {
+      alert('error');
     } else {
       // obtiene la infromacion basica
       this.InformacionBasica = this.dataService.getInfoBasicaDispositivo(xmlDatos);
-
       this.nombreDispositivo = this.InformacionBasica[1].value[0]._;
       this.descripcion = this.InformacionBasica[2].value[0]._;
       this.tags = this.InformacionBasica[17].value;
       // hace una peticion a las raspberry pidiedod sus estados
-      const xmlDataStreams = this.raspService.requestRaspberry('http://' + this.ipDispositivo + '/SendState?osid=' + this.idDispositivo);
-      // obtiene sus estados
+      const xmlDataStreams = await this.raspService.requestRaspberry('http://' + this.ipDispositivo + '/SendState?osid=' + this.idDispositivo);
+      console.log(this.dataStreams);
+      if(xmlDataStreams === null) {}
+      else{
+          // obtiene sus estados
       this.dataStreams = this.dataService.getEstadoDataStreams(xmlDataStreams);
       console.log(this.dataStreams);
+      }
     }
   }
  // Evento cuando se da click en un segmento
