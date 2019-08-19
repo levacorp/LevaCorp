@@ -4,8 +4,6 @@ import { IonSegment, PopoverController, IonList } from '@ionic/angular';
 import { PopoverEdificiosInicioComponent } from '../../componentes/popover-edificios-inicio/popover-edificios-inicio.component';
 import { Router, ActivatedRoute } from '@angular/router';
 import { DataUserService } from '../../services/data-user.service';
-import { HttpClient } from '@angular/common/http';
-import { tap } from 'rxjs/operators';
 
 @Component({
   selector: 'app-principal',
@@ -69,18 +67,18 @@ export class PrincipalPage implements OnInit {
    inicializarAtributos() {
     this.notificaciones = ['Daniel ha llegado a casa', 'Forero salio de casa', 'Daniel Gomez ha llegado a casa', 'Vanesa salió de casa'];
 
-     this.dataService.getListaEdificios();
-     this.cargarListaEdificios();
+    this.dataService.getListaEdificios();
+    this.cargarListaEdificios();
     this.cargarEdificio();
 
-     this.dataService.getListaHabitaciones(this.argumento);
-     this.cargarListaHabitaciones();
+    this.dataService.getListaHabitaciones(this.argumento);
+    this.cargarListaHabitaciones();
 
     this.cargarFiltro();
     this.cargarAmbiente();
 
-     this.dataService.getListaElementosPorHabitacion(this.argumento, this.filtro);
-     this.cargarListaElementosPorHabitacion();
+    this.dataService.getListaElementosPorHabitacion(this.argumento, this.filtro);
+    this.cargarListaElementosPorHabitacion();
   }
 
   cargarEdificio() {

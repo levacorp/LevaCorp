@@ -1,5 +1,4 @@
 import { Injectable } from '@angular/core';
-import { EnviarXMLService } from './enviar-xml.service';
 
 @Injectable({
   providedIn: 'root'
@@ -7,7 +6,6 @@ import { EnviarXMLService } from './enviar-xml.service';
 export class GenerateXMLService {
 
   constructor(
-    private enviarXML : EnviarXMLService
   ) { }
 
   crearXMLInicioSesion(email: string, password: string) {
@@ -46,7 +44,6 @@ export class GenerateXMLService {
 
     xw.endDocument();
     return xw;
-    //console.log(xw.toString());
   }
 
   /* Creacion XML para crear ECA */
