@@ -72,12 +72,13 @@ export class CrearElementoPage implements OnInit {
       // crea un xml no vivo
       xml = this.generateXml.crearNotLivingThing(this.edificio, this.ambiente, this.habitacion , this.formElemento.value);
     }
+    // hace la peticion de creacion de un elemento
     await this.dataService.crearElemento(xml)
     .then(async data => {
       const codigo = await this.utilidades.alertEspecifica( 'Registro elemento', data);
-      console.log(codigo);
       if (codigo === '1028') {
-
+        // se resetea el formulario
+        this.formElemento.reset();
       }
     });
     // devueve a la habitacion

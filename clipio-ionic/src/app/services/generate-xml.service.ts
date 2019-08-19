@@ -219,7 +219,6 @@ export class GenerateXMLService {
     return(xw.toString());
   }
   crearLivingThing(edificio, ambiente, habitacion, livingThing) {
-    console.log(livingThing);
     const XMLWriter = require('xml-writer');
     const xw = new XMLWriter();
     xw.startDocument('1.0', 'UTF-8');
@@ -263,11 +262,9 @@ export class GenerateXMLService {
         xw.endElement();
       xw.endElement();
     xw.endElement();
-    console.log(xw.toString());
     return (xw.toString());
   }
   crearNotLivingThing(edificio,ambiente, habitacion, NotlivingThing) {
-    console.log(NotlivingThing);
     const XMLWriter = require('xml-writer');
     const xw = new XMLWriter();
     xw.startDocument('1.0', 'UTF-8');
@@ -299,7 +296,6 @@ export class GenerateXMLService {
         xw.endElement();
       xw.endElement();
     xw.endElement();
-    console.log(xw.toString());
     return (xw.toString());
   }
   //crea xml de asocion de un dispostivo con una habitacion
@@ -340,7 +336,6 @@ export class GenerateXMLService {
         xw.endElement();
       xw.endElement();
     xw.endElement();
-    console.log(xw.toString());
     return (xw.toString());
   }
   // crea xml del dispositivo con un elemento
@@ -373,7 +368,6 @@ export class GenerateXMLService {
         xw.endElement();
       xw.endElement();
     xw.endElement();
-    console.log(xw.toString());
     return (xw.toString());
   }
   crearHabitacion(edificio, ambiente, piso, habitacion)
@@ -402,7 +396,6 @@ export class GenerateXMLService {
     xw.text(piso).endElement('/InfoItem').endElement('/InfoItem').endElement('/InfoItem');
     xw.endElement('/Object').endElement('/Objects');
     xw.endDocument();
-    console.log(xw.toString());
     return (xw.toString());
   }
 

@@ -1,6 +1,5 @@
 /* GUARDA TODA LA INFORMACION DEL ENTORNO */
 import { Injectable } from '@angular/core';
-import { DataService } from './data.service';
 
 @Injectable({
   providedIn: 'root'

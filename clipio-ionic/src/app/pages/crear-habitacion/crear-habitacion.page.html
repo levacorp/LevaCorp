@@ -1,3 +1,4 @@
+<!-- Header de la pagina
 <ion-header>
   <ion-toolbar color="danger">
     <ion-buttons slot="start">
@@ -6,9 +7,10 @@
     <ion-title>Nueva Habitacion</ion-title>
   </ion-toolbar>
 </ion-header>
-<!--Pagina en la que se pide los atributos del edificio como nombre y piso para poder ser creado posteriormente-->
+-->
+<!--Pagina en la que se pide los atributos de la  habitacion como nombre y piso para poder ser creado posteriormente-->
 <ion-content>
-  <form [formGroup]="myform" (ngSubmit)="saveData()">
+  <form [formGroup]="formHabitacion" (ngSubmit)="saveData()">
     <div class="principal">
       <ion-toolbar>
         <ion-row>
@@ -37,7 +39,7 @@
       <ion-toolbar>
         <ion-row>
           <ion-col col-6 offset-3 text-center>
-            <ion-button color="danger"  type="submit" mat-raised-button [disabled]="!myform.valid" >Listo</ion-button>
+            <ion-button color="danger"  type="submit" mat-raised-button [disabled]="!formHabitacion.valid" >Listo</ion-button>
           </ion-col>
         </ion-row>
       </ion-toolbar>

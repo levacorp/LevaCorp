@@ -42,11 +42,26 @@ export class CrearDispositivoPage implements OnInit {
     this.edificio = this.activatedRoute.snapshot.paramMap.get('edificio');
     this.habitacion = this.activatedRoute.snapshot.paramMap.get('habitacion');
     this.ambiente = this.activatedRoute.snapshot.paramMap.get('ambiente');
+    // si la cantidad de parametros que le llegan es igual a tres significa que se agregara un dispositivo a una habitacion
+    if (this.activatedRoute.snapshot.paramMap.keys.length === 4) {
+      this.tipoAsociacion = 'dispositivoHabitacion';
+    } else {
+      // se agregara un dispositivo a un elemento
+      this.nombreThing = this.activatedRoute.snapshot.paramMap.get('nameThing');
+      this.tipoAsociacion = 'dispositivoElemento';
+    }
     // Hace una peticion a la informacion de la raspberry
     const xmlDatos = await this.raspService.requestRaspberry(dir);
-    console.log(xmlDatos);
     if (xmlDatos === null) {
+      // Si no se encuentra activa la rasperry retornar a la pagina anterior
+      alert('Error,No se encuentra la raspberry');
+      if (this.tipoAsociacion === 'dispositivoHabitacion' ) {
+        this.router.navigate(['elementos-por-habitacion', this.edificio , this.ambiente, this.habitacion]);
+      } else {
+        this.router.navigate(['dispositivos-elemento', this.nombreThing, this.edificio, this.ambiente, this.habitacion]);
+      }
     } else {
+      // Si se encuentra obtiene la ip del dispositivo
       this.ipDispositivo = dir.substring(7, dir.indexOf('/Identificator?osid='));
       // Obtiene la informacion basica del dispositivo
       this.InformacionBasica = this.dataService.getInfoBasicaDispositivo(xmlDatos);
@@ -55,15 +70,6 @@ export class CrearDispositivoPage implements OnInit {
       this.nombreDispositivo = this.InformacionBasica[1].value[0]._;
       this.descripcion = this.InformacionBasica[2].value[0]._;
       this.tags = this.InformacionBasica[17].value;
-      console.log(this.InformacionBasica);
-      // si la cantidad de parametros que le llegan es igual a tres significa que se agregara un dispositivo a una habitacion
-      if (this.activatedRoute.snapshot.paramMap.keys.length === 4) {
-        this.tipoAsociacion = 'dispositivoHabitacion';
-      } else {
-        // se agregara un dispositivo a un elemento
-        this.nombreThing = this.activatedRoute.snapshot.paramMap.get('nameThing');
-        this.tipoAsociacion = 'dispositivoElemento';
-      }
     }
   }
  // Evento cuando se da click en un segmento
@@ -101,13 +107,12 @@ export class CrearDispositivoPage implements OnInit {
              xml = this.generateXml.crearAsociacionDispositivosElemento(this.nombreThing, this.nombreDispositivo,
              this.idDispositivo , this.ipDispositivo);
           }
+        // se hace la peticion al servidor de añadir dispositivo
         await this.dataService.asociarDispositivo(xml)
           .then(async data => {
             const codigo = await this.utilidades.alertEspecifica( 'Registro Dispositivo', data);
-            console.log(codigo);
-            if (codigo === '1028') {
-            }
           });
+        // retorna a la pagina anterior
         if (this.tipoAsociacion === 'dispositivoHabitacion' ) {
                 this.router.navigate(['elementos-por-habitacion', this.edificio , this.ambiente, this.habitacion]);
               } else {

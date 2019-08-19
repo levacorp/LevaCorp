@@ -13,6 +13,7 @@ export class AmbienteEdificioPage implements OnInit {
 
   ngOnInit() {
     this.edificio = this.activatedRoute.snapshot.paramMap.get('edificio');
+    // Carga todos los ambientes existentes de la aplicacion
     this.ambientes.push('Room');
     this.ambientes.push('Flat');
     this.ambientes.push('Storey');
@@ -25,8 +26,8 @@ export class AmbienteEdificioPage implements OnInit {
     this.ambientes.push('liviningRoom');
     this.ambientes.push('bedRoom');
     this.ambientes.push('Kitchen');
-    console.log(this.ambientes[0]);
   }
+  // redirige a la creacion de una habitacion en el ambiente seleccionado
   routeCrearHabitacion(ambiente) {
     this.router.navigate(['crear-habitacion', this.edificio, ambiente]);
   }

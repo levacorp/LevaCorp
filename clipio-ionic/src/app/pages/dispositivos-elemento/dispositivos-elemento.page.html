@@ -15,7 +15,7 @@
         <!--Acomoda el numero de tarjetas de acuerdo al tamaño de pantalla-->
        <ion-col size="6" size-sm="4" size-md="3" size-lg="2" *ngFor="let dispositivo of dispositivos">
          <!--Carga de los dispositivos filtrados por la habitacion escogida donde el id sera dado por la ip-->
-         <ion-card class="card"  id="{{dispositivo.InfoItem[0].value[0]._}}" (click)="routeDispositivo(dispositivo.InfoItem[0].value[0]._,dispositivo.InfoItem[1].value[0]._)" >
+         <ion-card class="card"  id="{{dispositivo.InfoItem[1].value[0]._}}" (click)="routeDispositivo(dispositivo.InfoItem[1].value[0]._)" >
             <ion-card-title text-center>{{ dispositivo.InfoItem[1].value[0]._ }}</ion-card-title> 
             <img src="/assets/icon/camara1.png"/>
              <ion-card-content text-center>

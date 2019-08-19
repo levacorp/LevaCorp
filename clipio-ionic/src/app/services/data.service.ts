@@ -14,7 +14,7 @@ export class DataService implements OnInit {
   datosPost: Observable<any>;
 
   /* Email y mac estaticos para todas las peticiones */
-  email = 'prueba@gmail.com';
+  email = 'danielfer@unicauca.edu.co';
   mac = '02:00:00:00:00:00';
   urlServidor = 'http://10.0.0.20:8080';
   //email = null;
@@ -341,16 +341,14 @@ export class DataService implements OnInit {
       });*/
     // alert(datosPost);
   }
-
+  // retorna los estados del datastream
   getEstadoDataStreams(xml) {
-    //retorna los estados del datastream
     return xml.Objects.Object[0].send_state[0].InfoItem;
   }
+  // retorna los dataStreams
   getDataStreams(xml) {
-    // retorna los estados del datastream
     let dataStreams: [];
     dataStreams = xml.Objects.Object[0].InfoItem;
-    console.log(dataStreams);
     dataStreams.shift();
     return  dataStreams;
   }
@@ -407,7 +405,6 @@ export class DataService implements OnInit {
     // ToDo: Mirar que retorna el Servidor PU
     xml = encodeURIComponent(xml);
     let datos = null;
-    console.log(xml);
     const url = this.urlServidor + '/RegistrarThing?email=' + this.email + '&mac=' + this.mac + '&data=' + xml;
     datos = await this.http.get(url, { responseType: 'text' }).toPromise();
     let js = null;
@@ -421,11 +418,10 @@ export class DataService implements OnInit {
     });
     return js;
   }
+  // asocia el dispositivo con una habitacion o elemento
   async asociarDispositivo(xml) {
-    // ToDo: Mirar que retorna el Servidor PU
     xml = encodeURIComponent(xml);
     let datos = null;
-    console.log(xml);
     const url = this.urlServidor + "/RegistrarObject?email=" + this.email + "&mac=" + this.mac + "&data=" + xml;
     datos = await this.http.get(url, { responseType: 'text' }).toPromise();
     let js = null;
@@ -623,7 +619,6 @@ export class DataService implements OnInit {
     // ToDo: Mirar que retorna el Servidor PU
     xml = encodeURIComponent(xml);
     let datos = null;
-    console.log(xml);
     const url = this.urlServidor + '/RegistrarBuilding?email=' + this.email + '&mac=' + this.mac + '&data=' + xml;
     datos = await this.http.get(url, { responseType: 'text' }).toPromise();
     let js = null;

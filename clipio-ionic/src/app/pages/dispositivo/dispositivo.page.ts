@@ -5,6 +5,7 @@ import {IonSlides} from '@ionic/angular';
 import { ActivatedRoute } from '@angular/router';
 import { LoadingController } from '@ionic/angular';
 import { RaspberryService } from 'src/app/services/raspberry.service';
+import { Location } from "@angular/common";
 
 
 
@@ -29,7 +30,8 @@ export class DispositivoPage implements OnInit {
   slideOpts = {
     speed: 200
   };
-  constructor(public loadingController: LoadingController, private raspService : RaspberryService , private activatedRoute: ActivatedRoute , private dataService: DataService ) { }
+  constructor(public loadingController: LoadingController, private raspService : RaspberryService ,
+     private activatedRoute: ActivatedRoute , private dataService: DataService, private location: Location ) { }
 
   async ngOnInit() {
     this.ipDispositivo = this.activatedRoute.snapshot.paramMap.get('ip');
@@ -38,21 +40,22 @@ export class DispositivoPage implements OnInit {
     // hace una peticion a la raspberry pidiendo  la informacion
     const xmlDatos = await this.raspService.requestRaspberry(peticionDispositivo);
     if (xmlDatos === null) {
-      alert('error');
-    } else {
+      // si no esta activa la raspberry redirige a la pagina anterior
+      alert('Error,No se encuentra la raspberry');
+      this.location.back();
+        } else {
       // obtiene la infromacion basica
       this.InformacionBasica = this.dataService.getInfoBasicaDispositivo(xmlDatos);
       this.nombreDispositivo = this.InformacionBasica[1].value[0]._;
       this.descripcion = this.InformacionBasica[2].value[0]._;
       this.tags = this.InformacionBasica[17].value;
-      // hace una peticion a las raspberry pidiedod sus estados
+      // hace una peticion a las raspberry pidiendo sus estados
       const xmlDataStreams = await this.raspService.requestRaspberry('http://' + this.ipDispositivo + '/SendState?osid=' + this.idDispositivo);
-      console.log(this.dataStreams);
-      if(xmlDataStreams === null) {}
-      else{
-          // obtiene sus estados
-      this.dataStreams = this.dataService.getEstadoDataStreams(xmlDataStreams);
-      console.log(this.dataStreams);
+      if (xmlDataStreams === null) {
+        alert('Error,No se encuentra los estados de los dataStreams');
+      } else {
+         // obtiene sus estados
+        this.dataStreams = this.dataService.getEstadoDataStreams(xmlDataStreams);
       }
     }
   }
@@ -81,34 +84,36 @@ export class DispositivoPage implements OnInit {
   // Hace la peticion de cambio de estado del actuador
   async estadoActuador(event) {
     let option;
-    if(event.target.checked) {
-    
+    // verifica si se va a apagar o encender un actuador
+    if (event.target.checked) {
       event.target.checked = false;
-         option= "off";
-  }else if(!event.target.checked) {
+      option = 'off';
+   } else if (!event.target.checked) {
       event.target.checked = true;
-         option= "on";
+      option = 'on';
   }
+  // crea un alert de espera
     const loading = await this.loadingController.create({
       spinner: null,
       message: 'Espere por favor...',
       translucent: true,
     });
     await loading.present();
-    loading.lastElementChild.insertAdjacentHTML( 'afterbegin', '<ion-spinner name="circles" color="danger" ></ion-spinner> ');
+    // crea el url
     const url = 'http://'+this.ipDispositivo +'/SetDatastream?osid='+this.idDispositivo+'&idDataStream='+event.target.id+'&comando='+option;
+    // se hace la peticion a la raspberry
     const datos = await this.raspService.requestRaspberry(url);
-    console.log(url);
-    console.log(datos);
-    if(datos === null){}
-    else{
-      if(option === 'on'){
+    if (datos === null){
+      alert('Error, al  cambiar el estado del actuador');
+    } else {
+      // se cambia el estado de los actuadores
+      if ( option === 'on'){
         event.target.checked = true;
-      }
-      else{
+      } else {
         event.target.checked = false;
       }
     }
+    // se cierra el alert
     this.loadingController.dismiss();
   }
 }

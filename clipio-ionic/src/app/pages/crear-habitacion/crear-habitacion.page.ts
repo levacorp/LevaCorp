@@ -12,7 +12,7 @@ import { UtilitiesService } from '../../services/utilities.service';
 })
 export class CrearHabitacionPage implements OnInit {
 
-  myform: FormGroup;
+  formHabitacion: FormGroup;
   edificio = null;
   ambiente = null;
   piso = null;
@@ -26,26 +26,31 @@ export class CrearHabitacionPage implements OnInit {
   ngOnInit() {
     this.edificio = this.activatedRoute.snapshot.paramMap.get('edificio');
     this.ambiente = this.activatedRoute.snapshot.paramMap.get('ambiente');
-    this.myform = this.formBuilder.group({
+    this.formHabitacion = this.formBuilder.group({
       nombre: ['', Validators.required],
       piso: ['', Validators.required] });
   }
 
   // metodo que guarda y envia el formulario para crear el xml para registrar un nueva habitacion
  async saveData() {
-    this.xmlRegistrarHabitacion = this.generarXML.crearHabitacion(this.edificio, this.ambiente, this.myform.get('piso').value ,
-                this.myform.get('nombre').value);
+    // obtiene el xml de la habitacion
+    this.xmlRegistrarHabitacion = this.generarXML.crearHabitacion(this.edificio, this.ambiente, this.formHabitacion.get('piso').value ,
+                this.formHabitacion.get('nombre').value);
     let codigo;
-    if (this.myform.valid) {
+    // cuando el form sea valido
+    if (this.formHabitacion.valid) {
+      // se registra la habitacion
       await this.dataService.registrarEdificio(this.xmlRegistrarHabitacion)
         .then(async data => {
           codigo = await this.utilidades.alertEspecifica( 'Creando habitacion ', data);
-          console.log(codigo);
           if (codigo === '1028') {
-            this.myform.reset();
+            // se resetea el formulario
+            this.formHabitacion.reset();
           }
         });
+      // actualiza las habitaciones
       this.dataService.getListaHabitaciones(this.edificio);
+      // retorna a las habitciones del edificio
       this.router.navigate(['informacion-edificio', this.edificio]);
     }
   }

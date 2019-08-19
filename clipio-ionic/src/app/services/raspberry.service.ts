@@ -2,8 +2,8 @@ import { Injectable } from '@angular/core';
 import { HttpClient } from '@angular/common/http';
 import { LoadingController, Platform } from '@ionic/angular';
 import { HTTP } from '@ionic-native/http/ngx';
-import { from } from 'rxjs';
-import { finalize } from 'rxjs/operators';
+import 'rxjs/add/operator/timeout';
+import {timeout} from 'rxjs/operators';
 
 @Injectable({
   providedIn: 'root'
@@ -18,18 +18,12 @@ export class RaspberryService {
     }
 
   async getPC(dir) {
+    // crea una espera
     let loading = await this.loadingCtrl.create({message: 'Consultando...'});
     await loading.present();
-    /*
-    const data = await this.http.get(dir, { responseType: 'text' }).toPromise();
-    let js;
-    const parseString = require('xml2js').parseString;
-    parseString(data, function(err, result) {
-      js = result;
-      loading.dismiss();
-    });
-    return js;*/
-    await this.http.get(dir, { responseType: 'text' }).toPromise()
+    // hace la peticion a la raspberry
+    await this.http.get(dir, { responseType: 'text' }).timeout(3000)
+    .toPromise()
     .then(data => {
       // Se parsea el xml a un objeto javascript para poder manejarlo más facil
       let js;
@@ -37,7 +31,6 @@ export class RaspberryService {
       parseString(data, function(err, result) {
         js = result;
       });
-      
       this.datos = js;
       loading.dismiss();
       return js;

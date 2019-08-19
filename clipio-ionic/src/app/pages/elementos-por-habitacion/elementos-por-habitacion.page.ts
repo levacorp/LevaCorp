@@ -3,6 +3,7 @@ import { DataService } from 'src/app/services/data.service';
 import { Router, ActivatedRoute } from '@angular/router';
 import { IonSlides } from '@ionic/angular';
 import { EscanerComponent } from 'src/app/componentes/escaner/escaner.component';
+import { DataUserService } from 'src/app/services/data-user.service';
 
 @Component({
   selector: 'app-elementos-por-habitacion',
@@ -22,7 +23,8 @@ export class ElementosPorHabitacionPage implements OnInit {
     speed: 200
   };
 
-  constructor(private activatedRoute: ActivatedRoute , private dataService: DataService , private router: Router) {
+  constructor(private activatedRoute: ActivatedRoute , private dataService: DataService , private router: Router,
+    private dataUser: DataUserService) {
   }
 
   /* Inicializa los atributos a utilizar */
@@ -32,10 +34,10 @@ export class ElementosPorHabitacionPage implements OnInit {
     this.ambiente = this.activatedRoute.snapshot.paramMap.get('ambiente'); // obtiene el parametro ambiente enviado por la ruta
     this.habitacion = this.activatedRoute.snapshot.paramMap.get('habitacion'); // obtiene el parametro habitacion enviado por la ruta
     this.elementos = await this.dataService.getElementosPorHabitacion(this.edificio, this.habitacion); // Carga todos los elementos de la habitacion
-    console.log(this.elementos);
     this.dispositivos = await this.dataService.getDispositivosPorHabitacion(this.edificio, this.habitacion); // carga todos los dispositivos de la habitacion
   }
-  async crearElementoOAsociarDispositivo(){
+  
+  async crearElementoOAsociarDispositivo() {
     // se averigua en que segment se encuenra actualmente
     if (this.segment === 'dispositivos') {
       // si esta en dispositivos se abre el scanner y redirige a la pagina crearDispositio
@@ -52,8 +54,8 @@ export class ElementosPorHabitacionPage implements OnInit {
     this.router.navigate(['dispositivos-elemento', elemento, this.edificio, this.ambiente, this.habitacion]);
   }
   /*Se encarga de redirigir el dispositivo seleccionado a la pagina dispositivo donde muestra toda su informacion*/
-  routeDispositivo(ip, id) {
-    this.router.navigate(['dispositivo', ip, id]);
+  routeDispositivo(id) {
+    this.router.navigate(['dispositivo', this.dataUser.getIP() , id]);
   }
   // Evento cuando se da click en un segmento
   segmentButtonClicked(event) {
