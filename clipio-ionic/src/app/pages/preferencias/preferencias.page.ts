@@ -21,29 +21,6 @@ export class PreferenciasPage implements OnInit {
     console.log(this.listaECAs);
   }
 
-  /*async handlerEliminarECA() {
-    const alert = await this.alertController.create({
-      header: 'Atención',
-      // subHeader: 'Subtitle',
-      message: '¿Está seguro que desea eliminar esta preferencia? Esta acción no se puede deshacer',
-      buttons: [{
-        text: 'Cancelar',
-        role: 'cancel',
-        cssClass: 'secondary',
-        handler: (blah) => {
-          console.log('Confirm Cancel: blah');
-        }
-      }, {
-        text: 'Eliminar',
-        handler: () => {
-          console.log('Eliminado');
-        }
-      }]
-    });
-
-    await alert.present();
-  }*/
-
   pushMostrar(nombre) {
     this.router.navigate(['/preferencias/mostrar/', nombre]);
   }

@@ -207,34 +207,4 @@ export class CrearPage implements OnInit {
     });
   }
 
-  pruebaDatosXML() {
-    const xmlCreacion = this.xmlService.crearECA(
-      {
-        nombreECA: 'MI ECA example',
-        estadoECA: 'on'
-      }, {
-        idDisp: '708637323',
-        ipDisp: '192.168.0.23',
-        nombreDispositivo: 'Regulador de tempartura',
-        datastream: 'temperatura',
-      }, {
-        comparador: 'mayor',
-        valor: '30',
-        dsFormat: 'float',
-        significado: 'hace calors'
-      }, {
-        idDisp: '708637323',
-        ipDisp: '192.168.0.23',
-        nombreDispositivo: 'Regulador de tempartura',
-        datastream: 'ventilador',
-        comparador: 'igual',
-        valor: '1',
-        dsFormat: 'boolean',
-        significado: 'prende esa monda',
-      }
-    );
-    
-    /* Se envía el XML para realizar la consulta */
-    this.dataService.crearECA(xmlCreacion);
-  }
 }

@@ -58,7 +58,7 @@
                 <app-escaner (onReadDevice)="guardarDireccionEvento($event)" #childComponentEvent></app-escaner>
                 <!-- Imagen QR como botón-->
                 <ion-img src="/assets/img/qr-code-scan.png" (click)="childComponentEvent.leerCodigo()" style="width:150px;height:150px;"></ion-img>
-                <!--<ion-button (click)="pruebaDatosXML()">Crear preferencia Quemada</ion-button>-->
+                
               </ion-thumbnail>
           </ion-col>
           <ion-col>
@@ -176,7 +176,7 @@
               <ion-img src="/assets/img/qr-code-scan.png" (click)="childComponentAction.leerCodigo()" style="width:150px;height:150px;"></ion-img>
             </ion-thumbnail>
 
-            <!--ion-button (click)="guardarDireccionAccion('http://192.168.0.23/Identificator?osid=708637323')">Boton Accion</ion-button>-->
+            
           </ion-col>
 
           <ion-col>
