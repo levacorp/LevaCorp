@@ -23,7 +23,7 @@ export class AppRoutingModule { }
 })
 export class MenusliderComponent implements OnInit {
   perfil: string;
-  
+
   constructor(
     private router: Router,
     private authService: AuthenticationService,

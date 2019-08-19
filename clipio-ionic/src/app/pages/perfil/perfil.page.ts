@@ -22,7 +22,6 @@ export class PerfilPage implements OnInit {
     private generarXML: GenerateXMLService,
     public alertController: AlertController,
     private utilidades: UtilitiesService,
-    private authservice: AuthenticationService
   ) {
     // componentes del formulario myform
     this.myform = this.formBuilder.group({

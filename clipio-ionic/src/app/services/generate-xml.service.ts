@@ -268,6 +268,7 @@ export class GenerateXMLService {
       xw.endElement();
     xw.endElement();
     console.log(xw.toString());
+    return (xw.toString());
   }
   crearNotLivingThing(edificio,ambiente, habitacion, NotlivingThing) {
     console.log(NotlivingThing);
@@ -307,6 +308,7 @@ export class GenerateXMLService {
       xw.endElement();
     xw.endElement();
     console.log(xw.toString());
+    return (xw.toString());
   }
   //crea xml de asocion de un dispostivo con una habitacion
   crearAsociacionDispositivosHabitacion(edificio, ambiente, habitacion , nombreDispositivo, idDispositivo, ipDispositivo)
@@ -347,6 +349,7 @@ export class GenerateXMLService {
       xw.endElement();
     xw.endElement();
     console.log(xw.toString());
+    return (xw.toString());
   }
   // crea xml del dispositivo con un elemento
   crearAsociacionDispositivosElemento(nombreThing, nombreDispositivo, idDispositivo, ipDispositivo)
@@ -379,6 +382,7 @@ export class GenerateXMLService {
       xw.endElement();
     xw.endElement();
     console.log(xw.toString());
+    return (xw.toString());
   }
   crearHabitacion(edificio, ambiente, piso, habitacion)
   {
@@ -407,6 +411,7 @@ export class GenerateXMLService {
     xw.endElement('/Object').endElement('/Objects');
     xw.endDocument();
     console.log(xw.toString());
+    return (xw.toString());
   }
 
   //crea el XML para registrar un nuevo edificio
@@ -466,8 +471,8 @@ export class GenerateXMLService {
     xw.startElement('value').writeAttribute('type', 'string');
     xw.text(contraseña).endElement('/InfoItem').endElement('/InfoItem');
 
-    xw.endDocument();    
-    console.log(xw.toString());    
+    xw.endDocument();
+    console.log(xw.toString());
     return(xw.toString());
   }
   //crea el XML para el perfil del usuario

@@ -29,7 +29,7 @@ export class EdificioPage implements OnInit {
 
   }
   pushInformacionEdificio(argumento) {
-    this.router.navigate(['/informacion-edificio/',argumento]);
+    this.router.navigate(['/informacion-edificio/', argumento]);
   }
 
 }

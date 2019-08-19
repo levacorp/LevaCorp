@@ -1,0 +1,73 @@
+<?xml version='1.0' encoding='utf-8'?>
+<Objects>
+  <Object>
+    <InfoItem name="BuildingEnvironment">
+      <InfoItem name="Building">
+        <InfoItem name="name_building">
+          <value type="string">casa</value>
+        </InfoItem>
+        <InfoItem name="flats_building">
+          <value type="int">1</value>
+        </InfoItem>
+        <InfoItem name="house_parts">
+          <InfoItem name="part">
+            <InfoItem name="name_part">
+              <value type="string">com</value>
+            </InfoItem>
+            <InfoItem name="type_part">
+              <value type="string">DiningRoom</value>
+            </InfoItem>
+            <InfoItem name="flat_number">
+              <value type="string">Piso No. 1</value>
+            </InfoItem>
+            <InfoItem name="Objetos">
+              <InfoItem name="oos">
+                <InfoItem name="ip_object">
+                  <value type="string">192.168.0.131</value>
+                </InfoItem>
+                <InfoItem name="id_object">
+                  <value type="string">708637323</value>
+                </InfoItem>
+                <InfoItem name="name_object">
+                  <value type="string">Regulador de Temperatura</value>
+                </InfoItem>
+              </InfoItem>
+            </InfoItem>
+            <InfoItem name="Things">
+              <InfoItem name="thing">
+                <InfoItem name="name_thing">
+                  <value type="string">hhh</value>
+                </InfoItem>
+                <InfoItem name="type_thing">
+                  <value type="string">Living_Thing</value>
+                </InfoItem>
+                <InfoItem name="type_living_thing">
+                  <value type="string">Planta</value>
+                </InfoItem>
+                <InfoItem name="food_living_thing">
+                  <value type="string">Agua</value>
+                </InfoItem>
+                <InfoItem name="specie_living_thing">
+                  <value type="string">Planta</value>
+                </InfoItem>
+                <InfoItem name="Objetos">
+                  <InfoItem name="oos">
+                    <InfoItem name="ip_object">
+                      <value type="string">192.168.0.131</value>
+                    </InfoItem>
+                    <InfoItem name="id_object">
+                      <value type="string">708637323</value>
+                    </InfoItem>
+                    <InfoItem name="name_object">
+                      <value type="string">Regulador de Temperatura</value>
+                    </InfoItem>
+                  </InfoItem>
+                </InfoItem>
+              </InfoItem>
+            </InfoItem>
+          </InfoItem>
+        </InfoItem>
+      </InfoItem>
+    </InfoItem>
+  </Object>
+</Objects>

@@ -30,30 +30,30 @@
                    <!--Acomoda el numero de tarjetas de acuerdo al tamaño de pantalla-->
                   <ion-col size="6" size-sm="4" size-md="3" size-lg="2" *ngFor="let elemento of elementos">
                     <!--Carga de los elementos filtrados por la habitacion escogida el id de cada card sera igual al nombre que tenga-->
-                    <ion-card  id="{{elemento.InfoItem[0].InfoItem[0].value[0]._}}" (click)="routeDispositivosElemento(elemento.InfoItem[0].InfoItem[0].value[0]._)" >
+                    <ion-card  id="{{elemento.InfoItem[0].value[0]._}}" (click)="routeDispositivosElemento(elemento.InfoItem[0].value[0]._)" >
                        <!--Header de la card cargara el nombre del elemento y una imagen preestalecida--> 
                       <ion-card-header >
-                          <ion-card-title>{{ elemento.InfoItem[0].$.name }}</ion-card-title>
+                          <ion-card-title>{{ elemento.InfoItem[1].value[0]._ }}</ion-card-title>
                         </ion-card-header>
                         <img src="/assets/icon/camara1.png"/>
                         <!--Mostrara la informacion del elemento-->
                         <ion-card-content>
                             <ion-item  class="ion-text-center">
-                                <strong>{{ elemento.InfoItem[0].InfoItem[0].value[0]._ }}</strong>
+                                <strong>{{ elemento.InfoItem[0].value[0]._ }}</strong>
                             </ion-item>
                             <ion-item>
-                                <strong>Score:</strong><p>{{ elemento.InfoItem[0].InfoItem[2].value[0]._ }}</p>
+                                <strong>Score:</strong><p>{{ elemento.InfoItem[2].value[0]._ }}</p>
                             </ion-item>
                               <!--Si el elemento es vivo se mostraran los campos extras Tipo vivo,especie y comida-->
-                        <div *ngIf="elemento.InfoItem[0].$.name == 'Living_Thing'">
+                        <div *ngIf="elemento.InfoItem[1].value[0]._ == 'living_thing'">
                             <ion-item>
-                                <strong>Tipo:</strong><p>{{ elemento.InfoItem[0].InfoItem[3].value[0]._ }}</p>
+                                <strong>Tipo:</strong><p>{{ elemento.InfoItem[3].value[0]._ }}</p>
                             </ion-item>
                             <ion-item>
-                                <strong>Especie:</strong><p>{{ elemento.InfoItem[0].InfoItem[4].value[0]._ }}</p>
+                                <strong>Especie:</strong><p>{{ elemento.InfoItem[4].value[0]._ }}</p>
                             </ion-item>
                             <ion-item>
-                                <strong>Comida:</strong><p>{{ elemento.InfoItem[0].InfoItem[5].value[0]._ }}</p>
+                                <strong>Comida:</strong><p>{{ elemento.InfoItem[5].value[0]._ }}</p>
                             </ion-item>
                           </div>  
                       </ion-card-content>
@@ -63,8 +63,8 @@
                </ion-row>
              </ion-grid>
        </ion-slide>
-       <!--Slide fin elementos-->
        <!--Slide  dispositivo-->
+       <!--Slide fin elementos-->
        <ion-slide >
            <ion-grid>
               <ion-row>

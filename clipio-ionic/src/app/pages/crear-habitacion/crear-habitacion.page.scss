@@ -1,10 +1,19 @@
-/* Tamaño para las imagenes del menu */
-ion-img{
-    height: 26px;
-    width: 26px;
-}
-/* Tamaño para la imagen del usuario denominada perfil */
-.img-perfil{ 
-    height: 30px;
-    width: 30px;
-}
+img {
+    height:50% ;
+    width: 50% ;
+    margin: auto;
+    display: block;
+  }
+  
+  ion-card{
+    width: 100% !important; 
+    display: block;
+  }
+  .tamanoCartaPrincipal{
+    width: 100px;
+  }
+  
+  .principal{
+    padding-left: 20%;
+    padding-right: 20%;
+  }
