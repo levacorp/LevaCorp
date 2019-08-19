@@ -48,35 +48,37 @@ export class PrincipalPage implements OnInit {
     this.cargarListaElementosPorHabitacion();
   }
 
-  async cargarListaElementosPorHabitacion() {
-    this.elementos = await this.dataUserService.getListaElementosPorHabitacion();
+   cargarListaElementosPorHabitacion() {
+    this.elementos =  this.dataUserService.getListaElementosPorHabitacion();
+    console.log(this.elementos);
+
   }
 
-  async cargarListaEdificios() {
-    this.edificios = await this.dataUserService.getListaEdificios();
+   cargarListaEdificios() {
+    this.edificios =  this.dataUserService.getListaEdificios();
   }
 
-  async cargarListaHabitaciones() {
-    this.habitaciones = await this.dataUserService.getListaHabitaciones();
+   cargarListaHabitaciones() {
+    this.habitaciones =  this.dataUserService.getListaHabitaciones();
   }
 
   /* Inicializa el argumento, el ambiente, y el filtro */
   /* Importante el orden de los llamados */
-  async inicializarAtributos() {
+   inicializarAtributos() {
     this.notificaciones = ['Daniel ha llegado a casa', 'Forero salio de casa', 'Daniel Gomez ha llegado a casa', 'Vanesa salió de casa'];
 
-    await this.dataService.getListaEdificios();
-    await this.cargarListaEdificios();
+    this.dataService.getListaEdificios();
+    this.cargarListaEdificios();
     this.cargarEdificio();
 
-    await this.dataService.getListaHabitaciones(this.argumento);
-    await this.cargarListaHabitaciones();
+    this.dataService.getListaHabitaciones(this.argumento);
+    this.cargarListaHabitaciones();
 
     this.cargarFiltro();
     this.cargarAmbiente();
 
-    await this.dataService.getListaElementosPorHabitacion(this.argumento, this.filtro);
-    await this.cargarListaElementosPorHabitacion();
+    this.dataService.getListaElementosPorHabitacion(this.argumento, this.filtro);
+    this.cargarListaElementosPorHabitacion();
   }
 
   cargarEdificio() {

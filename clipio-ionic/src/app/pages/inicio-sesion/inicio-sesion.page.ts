@@ -1,7 +1,6 @@
 import { Component, OnInit, ViewChild } from '@angular/core';
 import { AuthenticationService } from '../../services/authentication.service';
 import { FormControl, FormBuilder, FormGroup, Validators } from '@angular/forms';
-import { GenerateXMLService } from '../../services/generate-xml.service';
 import { Router } from '@angular/router';
 import { EncryptService } from '../../services/encrypt.service';
 import { DataService } from '../../services/data.service';
