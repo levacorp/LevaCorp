@@ -19,13 +19,13 @@ export class DispositivosElementoPage implements OnInit {
 
   constructor( private activatedRoute: ActivatedRoute , private dataService: DataService , private router: Router) {   }
   /* Inicializa los atributos a utilizar */
-  ngOnInit() {
+  async ngOnInit() {
     this.edificio = this.activatedRoute.snapshot.paramMap.get('edificio');
     this.habitacion = this.activatedRoute.snapshot.paramMap.get('habitacion');
     this.elemento = this.activatedRoute.snapshot.paramMap.get('elemento');
     this.ambiente = this.activatedRoute.snapshot.paramMap.get('ambiente');
     // Carga todos los elementos
-    this.dispositivos = this.dataService.getDispositivosElemento(this.edificio, this.habitacion , this.elemento);
+    this.dispositivos = await this.dataService.getDispositivosElemento(this.edificio, this.habitacion , this.elemento);
   }
 
 

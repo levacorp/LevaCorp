@@ -428,7 +428,7 @@ export class GenerateXMLService {
     xw.startElement('InfoItem').writeAttribute('name', 'Building');
     xw.startElement('InfoItem').writeAttribute('name', 'name_building');
     xw.startElement('value').writeAttribute('type', 'string');
-    xw.text(nombre).endElement('/InfoItem').endElement('/InfoItem');
+    xw.text(nombre).endElement('/InfoItem').endElement('/InfoItem').endElement('/InfoItem');
 
     xw.startElement('InfoItem').writeAttribute('name', 'Flat');
     xw.startElement('InfoItem').writeAttribute('name', 'name_thing');

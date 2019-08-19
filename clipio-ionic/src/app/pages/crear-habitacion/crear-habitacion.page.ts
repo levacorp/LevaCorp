@@ -45,6 +45,7 @@ export class CrearHabitacionPage implements OnInit {
             this.myform.reset();
           }
         });
+      this.dataService.getListaHabitaciones(this.edificio);
       this.router.navigate(['informacion-edificio', this.edificio]);
     }
   }
