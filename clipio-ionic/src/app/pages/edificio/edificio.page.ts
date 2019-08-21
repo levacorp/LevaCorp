@@ -20,8 +20,9 @@ export class EdificioPage implements OnInit {
     private dataUserservice: DataUserService ) { }
 
   ngOnInit() {
+  }
+  ionViewWillEnter()  {
     this.edificios = this.dataUserservice.getListaEdificios();
-    console.log(this.edificios);
     this.argumento = this.activatedRoute.snapshot.paramMap.get('nombre');
   }
   pushCrearEdificio() {

@@ -42,14 +42,12 @@ export class CrearHabitacionPage implements OnInit {
       // se registra la habitacion
       await this.dataService.registrarEdificio(this.xmlRegistrarHabitacion)
         .then(async data => {
-          codigo = await this.utilidades.alertEspecifica( 'Creando habitacion ', data);
+          codigo = await this.utilidades.alertEspecifica( 'Creacion de habitacion', data);
           if (codigo === '1028') {
             // se resetea el formulario
             this.formHabitacion.reset();
           }
         });
-      // actualiza las habitaciones
-      this.dataService.getListaHabitaciones(this.edificio);
       // retorna a las habitciones del edificio
       this.router.navigate(['informacion-edificio', this.edificio]);
     }

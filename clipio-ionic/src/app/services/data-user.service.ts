@@ -25,7 +25,6 @@ export class DataUserService {
 
   setIP(IP: string) {
     this.IP = IP;
-    console.log(this.IP);
   }
 
   getMAC() {
@@ -40,6 +39,13 @@ export class DataUserService {
     return this.Email;
   }
 
+  setEdificioActual(edificio){
+    this.nombreEdificioActual = edificio;
+  }
+  getEdificioActual()
+  {
+    return this.nombreEdificioActual;
+  }
   setEmail(Email: string) {
     this.Email = Email;
   }

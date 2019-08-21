@@ -5,6 +5,7 @@ import { NavController, AlertController } from '@ionic/angular';
 import { GenerateXMLService } from 'src/app/services/generate-xml.service';
 import { UtilitiesService } from 'src/app/services/utilities.service';
 import { Router } from '@angular/router';
+import { DataUserService } from 'src/app/services/data-user.service';
 
 @Component({
   selector: 'app-crear-edificio',
@@ -19,6 +20,7 @@ export class CrearEdificioPage implements OnInit {
   myform: FormGroup;
   constructor(
     private dataservice: DataService,
+    private dataUser: DataUserService,
     public formBuilder: FormBuilder,
     public navCtrl: NavController,
     private generarXML: GenerateXMLService,
@@ -43,24 +45,17 @@ export class CrearEdificioPage implements OnInit {
     if (this.myform.valid) {
       const data = await this.dataservice.registrarEdificio(this.xmlRegistrarEdificio);
       codigo = await this.utilidades.alertEspecifica('Registro Edificio ', data);
-      console.log(codigo);
-
       if (codigo === '1028') {
         this.myform.reset();
-        await this.dataservice.getListaEdificios();
-        this.route.navigate(['/edificio']);
-      }
-      /*await this.dataservice.registrarEdificio(this.xmlRegistrarEdificio)
-      .then(async data => {
-        codigo = await this.utilidades.alertEspecifica( "Registro Edificio ", data);
-        console.log(codigo);
-
-        if (codigo === '1028') {
-          this.myform.reset();
-          await this.dataservice.getListaEdificios();
+        let listaEdificios: any[];
+        listaEdificios = await this.dataservice.getListaEdificios();
+        if ( listaEdificios.length === 1) {
+            this.dataUser.setEdificioActual(listaEdificios[0]);
+            this.route.navigate(['/principal', listaEdificios[0]]);
+        } else {
           this.route.navigate(['/edificio']);
         }
-      });*/
+      }
     }
   }
 }

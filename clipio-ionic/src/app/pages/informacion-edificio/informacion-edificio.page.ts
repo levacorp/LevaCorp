@@ -1,9 +1,8 @@
-import { Component, OnInit, Input } from '@angular/core';
-import { Observable } from 'rxjs';
+import { Component, OnInit } from '@angular/core';
 import { DataService } from 'src/app/services/data.service';
-import { Router, ActivatedRoute } from '@angular/router';
-import { DataUserService } from '../../services/data-user.service';
-import { GenerateXMLService } from 'src/app/services/generate-xml.service';
+import { Router, ActivatedRoute, RoutesRecognized } from '@angular/router';
+import { UtilitiesService } from 'src/app/services/utilities.service';
+import { pairwise, filter } from 'rxjs/operators';
 
 
 @Component({
@@ -17,25 +16,39 @@ export class InformacionEdificioPage implements OnInit {
   informacionEdificio: any[];
   nombreEdificio = null;
   argumento = null;
+  previusURL = '';
   constructor(
     private dataservice: DataService,
     private router: Router,
     private activatedRoute: ActivatedRoute,
-    private dataUserService: DataUserService, private generateXml: GenerateXMLService) { }
+    private utilidades: UtilitiesService) {
+      this.router.events
+    .pipe(filter((e: any) => e instanceof RoutesRecognized),
+        pairwise()
+    ).subscribe((e: any) => {
+      this.previusURL = (e[0].urlAfterRedirects); // previous url
+    });
+    }
 
-  ngOnInit() {
+  async ngOnInit() {
+    this.utilidades.loading('Cargando habitaciones');
     this.nombreEdificio = this.activatedRoute.snapshot.paramMap.get('argumento');
-    this.informacionEdificio = this.dataUserService.getListaHabitaciones();
+    this.informacionEdificio = await this.dataservice.getListaHabitaciones(this.nombreEdificio);
     this.argumento = this.activatedRoute.snapshot.paramMap.get('nombre');
+    this.utilidades.pararLoading();
   }
-
+  async ionViewWillEnter() {
+    if ( this.previusURL.indexOf('crear-habitacion') !== -1) {
+      this.utilidades.loading('Cargando habitaciones');
+      this.informacionEdificio = await this.dataservice.getListaHabitaciones(this.nombreEdificio);
+      this.utilidades.pararLoading();
+    }
+}
   pushElementoHabitacion(argumento, i) {
     this.ambiente = this.informacionEdificio[i][1];
-    console.log(this.ambiente);
     this.router.navigate(['elementos-por-habitacion', this.nombreEdificio, this.ambiente , argumento]);
   }
   pushCrearHabitacion() {
     this.router.navigate(['ambiente-edificio', this.nombreEdificio]);
   }
-  
 }

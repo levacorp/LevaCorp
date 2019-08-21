@@ -48,8 +48,7 @@ export class GenerateXMLService {
 
   /* Creacion XML para crear ECA */
   crearECA(infoGeneral, infoEvento, infoCondicion, infoAccion) {
-    // console.log(json.value);
-    // json = json.value;
+   
     const XMLWriter = require('xml-writer');
     const xw = new XMLWriter;
     xw.startDocument('1.0', 'UTF-8');
@@ -127,8 +126,6 @@ export class GenerateXMLService {
         root.endElement();
       root.endElement();
     root.endDocument();
-
-    console.log(xw.toString());
     return(xw.toString());
   }
 
@@ -211,8 +208,6 @@ export class GenerateXMLService {
         root.endElement();
       root.endElement();
     root.endDocument();
-
-    console.log(xw.toString());
     return(xw.toString());
   }
   crearLivingThing(edificio, ambiente, habitacion, livingThing) {
@@ -426,7 +421,6 @@ export class GenerateXMLService {
     xw.text(nombre).endElement('/InfoItem').endElement('/InfoItem');
 
     xw.endDocument();
-    console.log("xmlRegistrar");
     return xw.toString();
   }
   //crea el XML para el registrar el usuario en la aplicacion
@@ -436,7 +430,6 @@ export class GenerateXMLService {
     json = json.value;
     var nombreApp = json.nombreApp, contraseña = json.contrasena,  email = json.email;
     xw.startDocument('1.0', 'UTF-8');
-   // xw.Encoding= Encoding.UTF8;
     xw.startElement('Objects');
     xw.startElement('Object');
 
@@ -454,7 +447,6 @@ export class GenerateXMLService {
     xw.text(contraseña).endElement('/InfoItem').endElement('/InfoItem');
 
     xw.endDocument();
-    console.log(xw.toString());
     return(xw.toString());
   }
   //crea el XML para el perfil del usuario

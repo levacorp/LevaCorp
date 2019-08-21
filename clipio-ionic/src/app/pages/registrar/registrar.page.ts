@@ -55,11 +55,8 @@ export class RegistrarPage implements OnInit {
          await this.dataservice.registrarUsuario(this.xmlRegistrarUsuario, this.myform.get('email').value)
          .then(async data => {
             codigo = await this.utilidades.alertEspecifica( "Registro Usuario ", data);
-            console.log(codigo);
-            this.dataservice.capturarDatosUsuario();
-
             if (codigo === '1028' || codigo === '1044') {
-              this.authservice.login();
+              this.authservice.login(this.myform.value.dirIp, this.myform.value.email);
             }
          });
 
@@ -94,8 +91,6 @@ export class RegistrarPage implements OnInit {
       message.style.color = badColor;
       message.innerHTML = "*Las contraseñas son incorrectas";
     }
-    //console.log(pass1,pass2);
-
   }
   async exitosoAlert() {
     const alert = await this.alertController.create({

@@ -4,6 +4,7 @@ import { IonSegment, PopoverController, IonList } from '@ionic/angular';
 import { PopoverEdificiosInicioComponent } from '../../componentes/popover-edificios-inicio/popover-edificios-inicio.component';
 import { Router, ActivatedRoute } from '@angular/router';
 import { DataUserService } from '../../services/data-user.service';
+import { UtilitiesService } from 'src/app/services/utilities.service';
 
 @Component({
   selector: 'app-principal',
@@ -29,29 +30,37 @@ export class PrincipalPage implements OnInit {
     private router: Router,
     private activatedRoute: ActivatedRoute,
     private dataUserService: DataUserService,
+    public utilidades: UtilitiesService
   ) { }
 
-  /* Inicializa los atributos a utilizar */
   async ngOnInit() {
-    console.log('MAC: ', this.dataUserService.getMAC());
+  }
+  /* Inicializa los atributos a utilizar */
+  async ionViewWillEnter()  {
+    // crea un alert de espera
+    this.utilidades.loading('Cargando informacion del edificio');
     await this.inicializarAtributos();
-    // this.dataService.listarECAs();
-    this.dataService.consultarObjetosRelacionados();
+    this.dataService.listarECAs();
+    // se cierra el alert
+    this.utilidades.pararLoading();
   }
   /* Cuando se requiere traer los elementos filtrados o sin filtrar iguala el atributo filtro
     al filtro escogido y carga los elementos para el filtro*/
-  segmentButtonClicked(event) {
-    const segEscogido = event.detail.value;
-    this.filtro = this.habitaciones[segEscogido][0];
-    this.ambiente = this.habitaciones[segEscogido][1];
-    this.dataService.getListaElementosPorHabitacion(this.argumento, this.filtro);
+  async segmentButtonClicked(event) {
+     // crea un alert de espera
+    this.utilidades.loading('Cargando elementos de la habitacion');
+    let segEscogido = event.detail.value;
+    segEscogido = segEscogido.split(',');
+    this.filtro = segEscogido[0];
+    this.ambiente = segEscogido[1];
+    await this.dataService.getListaElementosPorHabitacion(this.argumento, this.filtro);
     this.cargarListaElementosPorHabitacion();
-  }
+     // se cierra el alert
+    this.utilidades.pararLoading();
+    }
 
    cargarListaElementosPorHabitacion() {
     this.elementos =  this.dataUserService.getListaElementosPorHabitacion();
-    console.log(this.elementos);
-
   }
 
    cargarListaEdificios() {
@@ -64,31 +73,31 @@ export class PrincipalPage implements OnInit {
 
   /* Inicializa el argumento, el ambiente, y el filtro */
   /* Importante el orden de los llamados */
-   inicializarAtributos() {
+   async inicializarAtributos() {
+    this.dataService.capturarDatosUsuario();
     this.notificaciones = ['Daniel ha llegado a casa', 'Forero salio de casa', 'Daniel Gomez ha llegado a casa', 'Vanesa salió de casa'];
 
-    this.dataService.getListaEdificios();
+    await this.dataService.getListaEdificios();
     this.cargarListaEdificios();
     this.cargarEdificio();
 
-    this.dataService.getListaHabitaciones(this.argumento);
+    await this.dataService.getListaHabitaciones(this.argumento);
     this.cargarListaHabitaciones();
 
     this.cargarFiltro();
     this.cargarAmbiente();
 
-    this.dataService.getListaElementosPorHabitacion(this.argumento, this.filtro);
+    await this.dataService.getListaElementosPorHabitacion(this.argumento, this.filtro);
     this.cargarListaElementosPorHabitacion();
   }
 
   cargarEdificio() {
     if (this.activatedRoute.snapshot.paramMap.get('edificio') === null) { // obtiene el parametro edifcio enviado por la ruta
       if (this.edificios) {
-        console.log('p1', this.edificios);
         if (this.edificios[0]) {
           this.argumento = this.edificios[0];
+          this.dataUserService.setEdificioActual(this.argumento);
         }
-        console.log('edificio: ', this.argumento);
       }
     } else {
       this.argumento = this.activatedRoute.snapshot.paramMap.get('edificio');
@@ -101,7 +110,6 @@ export class PrincipalPage implements OnInit {
         this.filtro = this.habitaciones[0][0];
       }
     }
-    console.log('filtro: ', this.filtro);
   }
 
   cargarAmbiente() {
@@ -110,7 +118,6 @@ export class PrincipalPage implements OnInit {
         this.ambiente = this.habitaciones[0][1];
       }
     }
-    console.log('ambiente: ', this.ambiente);
   }
 
   /* Carga todos los edificios en un popover y obtiene la respuesta del popover */
@@ -125,10 +132,10 @@ export class PrincipalPage implements OnInit {
     await popover.present();
     const { data } = await popover.onWillDismiss();
     if (data) {
-      console.log(data);
       if (data.edificio === 'nuevo') {
         this.router.navigate(['crear-edificio']);
       } else {
+        this.dataUserService.setEdificioActual(data.edificio);
         this.router.navigate(['/principal', data.edificio]);
       }
     }
@@ -137,11 +144,9 @@ export class PrincipalPage implements OnInit {
   /* elimina un item de la lista de notificaciones */
   delete(item) {
     const index = this.notificaciones.indexOf(item);
-    console.log('index: ', index);
     if (index > -1) {
       this.notificaciones.splice(index, 1);
     }
-    console.log(this.notificaciones);
     this.comprobarNotificaciones();
   }
 
@@ -156,7 +161,6 @@ export class PrincipalPage implements OnInit {
   }
 
   pushElemento(elemento, i) {
-    this.ambiente = this.habitaciones[i][1];
     this.router.navigate(['dispositivos-elemento/', elemento, this.argumento, this.ambiente, this.filtro]);
   }
 

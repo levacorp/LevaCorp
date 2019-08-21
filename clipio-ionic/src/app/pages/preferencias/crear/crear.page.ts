@@ -69,7 +69,6 @@ export class CrearPage implements OnInit {
   async guardarDireccionEvento(dir: string) {
     /* Si la direccion leída no contiene los siguientes caracteres se considera inválida */
     if (dir.indexOf('/Identificator?osid=') === -1) {
-      console.log('Direccion no válida');
       const alert = await this.alertController.create({
         header: 'Atención!',
         message: 'El QR leído no contiene una direccion válida',
@@ -85,7 +84,6 @@ export class CrearPage implements OnInit {
   async guardarDireccionAccion(dir: string) {
     /* Si la direccion leída no contiene los siguientes caracteres se considera inválida */
     if (dir.indexOf('/Identificator?osid=') === -1) {
-      console.log('Direccion no válida');
       const alert = await this.alertController.create({
         header: 'Atención!',
         message: 'El QR leído no contiene una direccion válida',
@@ -200,7 +198,6 @@ export class CrearPage implements OnInit {
     await this.dataService.crearECA(xmlCreacion)
     .then(async data => {
         codigo = await this.utilidades.alertEspecifica( "Registro Preferencia: ", data);
-        console.log("Código" + codigo);
         if (codigo === '1028') {
           this.router.navigate(['/login']);
         }

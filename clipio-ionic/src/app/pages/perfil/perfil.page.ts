@@ -2,10 +2,8 @@ import { Component, OnInit } from '@angular/core';
 import { DataService } from 'src/app/services/data.service';
 import { FormBuilder, FormGroupName, Validators, FormGroup, FormControl } from '@angular/forms';
 import { NavController, AlertController } from '@ionic/angular';
-import { EnviarXMLService } from 'src/app/services/enviar-xml.service';
 import { GenerateXMLService } from 'src/app/services/generate-xml.service';
 import { UtilitiesService } from 'src/app/services/utilities.service';
-import { AuthenticationService } from 'src/app/services/authentication.service';
 @Component({
   selector: 'app-perfil',
   templateUrl: './perfil.page.html',
@@ -30,7 +28,7 @@ export class PerfilPage implements OnInit {
       celular: ['', Validators.compose([Validators.minLength(8), Validators.maxLength(10), Validators.pattern('[0-9]*')])],
       genero: ['', Validators.compose([Validators.maxLength(10)])],
       email: '',
-      fechaNacimiento: ['', Validators.compose([Validators.maxLength(10)])],
+      fechaNacimiento: [''],
       lugarNacimiento: ['', Validators.compose([Validators.maxLength(20)])],
       facebook: ['', Validators.compose([Validators.maxLength(45)])]
 
@@ -41,7 +39,6 @@ export class PerfilPage implements OnInit {
   async ngOnInit() {
     await this.dataservice.getPerfilUsuario().then(res => {
       this.perfil = res;
-      console.log(this.perfil);
       this.myform.get('nombre').setValue(this.perfil[0]);
       this.myform.get('apellido').setValue(this.perfil[1]);
       this.myform.get('celular').setValue(this.perfil[2]);
@@ -56,17 +53,11 @@ export class PerfilPage implements OnInit {
   async saveData() {
     let codigo;
     this.xmlRegistrarUsuario = this.generarXML.setXMLPerfil(this.myform);
-    // if (this.myform.valid) {
     await this.dataservice.modificarPerfil(this.xmlRegistrarUsuario, this.myform.value.email)
       .then(async data => {
         codigo = await this.utilidades.alertEspecifica('Perfil', data);
-        console.log(codigo);
         if (codigo === '1028' || codigo === '1044') {
         }
       });
-
-    //}
-
   }
-
 }

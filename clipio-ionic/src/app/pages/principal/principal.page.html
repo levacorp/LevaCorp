@@ -92,7 +92,7 @@
     <div class="barraSegmento">
       <!--Carga todas las haticaciones, ionsegment en modo ios-->
       <ion-segment color="danger" mode="ios" (ionChange)="segmentButtonClicked($event)" scrollable>
-        <ion-segment-button value="{{ habitacion[0] }}" *ngFor="let habitacion of habitaciones">
+        <ion-segment-button value="{{ habitacion}}" *ngFor="let habitacion of habitaciones">
           <ion-label>{{ habitacion[0] }}</ion-label>
         </ion-segment-button>
       </ion-segment>

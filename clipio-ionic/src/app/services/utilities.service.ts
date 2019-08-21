@@ -1,5 +1,5 @@
 import { Injectable } from '@angular/core';
-import { AlertController } from '@ionic/angular';
+import { AlertController, LoadingController } from '@ionic/angular';
 
 @Injectable({
   providedIn: 'root'
@@ -7,8 +7,23 @@ import { AlertController } from '@ionic/angular';
 export class UtilitiesService {
 
   constructor(
-    public alertController: AlertController
+    public alertController: AlertController,
+    public loadingController: LoadingController
+
   ) { }
+
+  async loading(mensaje)  {
+     // crea un alert de espera
+     const loading = await this.loadingController.create({
+      spinner: null,
+      message: mensaje,
+      translucent: true,
+    });
+     await loading.present();
+  }
+  pararLoading()  {
+    this.loadingController.dismiss();
+  }
 
   async alert(mensaje) {
     const alert = await this.alertController.create({
@@ -20,7 +35,6 @@ export class UtilitiesService {
   }
 
   async alertEspecifica(mensaje, respuesta) {
-    console.log(respuesta);
     const nombre = respuesta.Objects.Object[0].InfoItem[0].$.name;
     const codigo = respuesta.Objects.Object[0].InfoItem[0].value[0]._;
 

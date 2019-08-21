@@ -15,7 +15,6 @@ export class PopoverEdificiosInicioComponent implements OnInit {
 
   ngOnInit() {
     this.listaEdificios = this.dataUserService.getListaEdificios();
-    console.log(this.listaEdificios);
   }
 
   /* Manda el valor que se obtuvo del popover a a clase que lo llamó */

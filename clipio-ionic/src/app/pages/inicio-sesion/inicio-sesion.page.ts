@@ -1,6 +1,6 @@
-import { Component, OnInit, ViewChild } from '@angular/core';
+import { Component, OnInit } from '@angular/core';
 import { AuthenticationService } from '../../services/authentication.service';
-import { FormControl, FormBuilder, FormGroup, Validators } from '@angular/forms';
+import { FormBuilder, FormGroup, Validators } from '@angular/forms';
 import { Router } from '@angular/router';
 import { EncryptService } from '../../services/encrypt.service';
 import { DataService } from '../../services/data.service';
@@ -36,17 +36,18 @@ export class InicioSesionPage implements OnInit {
   async login() {
     this.dataUserService.setIP(this.myform.value.dirIp);
     this.dataUserService.setEmail(this.myform.value.email);
-    this.dataService.capturarDatosUsuario();
     this.myform.value.contrasena = btoa(this.encryptService.encrypt(this.myform.value.contrasena));
+    this.dataService.capturarDatosUsuario();
     await this.dataService.getVerificarUsuario(this.myform.value.email, this.myform.value.contrasena)
     .then(res => {
-      if (res) {
-        this.dataUserService.setIP(this.myform.value.dirIp);
-        this.dataUserService.setEmail(this.myform.value.email);
-        this.dataService.capturarDatosUsuario();
-        this.authServices.login();
+      if (res === 1) {
+        //this.dataUserService.setIP(this.myform.value.dirIp);
+        //this.dataUserService.setEmail(this.myform.value.email);
+        this.authServices.login(this.myform.value.dirIp, this.myform.value.email);
       } else {
-        alert('E-mail o contraseña incorrecta');
+        if(res === 0) {
+          alert('E-mail o contraseña incorrecta');
+        }
       }
     });
   }

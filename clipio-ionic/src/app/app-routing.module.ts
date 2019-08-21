@@ -29,7 +29,6 @@ const routes: Routes = [
    { path: 'crear-dispositivo/:edificio/:ambiente/:habitacion/:dir',
    loadChildren: './pages/crear-dispositivo/crear-dispositivo.module#CrearDispositivoPageModule' },
    { path: 'inicio-sesion', loadChildren: './pages/inicio-sesion/inicio-sesion.module#InicioSesionPageModule' },
-  { path: 'registro', loadChildren: './pages/registro/registro.module#RegistroPageModule' },
   { path: 'crear-habitacion/:edificio/:ambiente', loadChildren: './pages/crear-habitacion/crear-habitacion.module#CrearHabitacionPageModule' },
   { path: 'ambiente-edificio/:edificio', loadChildren: './pages/ambiente-edificio/ambiente-edificio.module#AmbienteEdificioPageModule' }
 

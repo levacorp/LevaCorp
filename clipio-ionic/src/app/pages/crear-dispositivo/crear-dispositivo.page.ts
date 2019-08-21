@@ -110,7 +110,7 @@ export class CrearDispositivoPage implements OnInit {
         // se hace la peticion al servidor de añadir dispositivo
         await this.dataService.asociarDispositivo(xml)
           .then(async data => {
-            const codigo = await this.utilidades.alertEspecifica( 'Registro Dispositivo', data);
+             await this.utilidades.alertEspecifica( 'Registro Dispositivo', data);
           });
         // retorna a la pagina anterior
         if (this.tipoAsociacion === 'dispositivoHabitacion' ) {

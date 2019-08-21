@@ -18,7 +18,6 @@ export class PreferenciasPage implements OnInit {
 
   ngOnInit() {
     this.listaECAs = this.dataUserService.getListaECA();
-    console.log(this.listaECAs);
   }
 
   pushMostrar(nombre) {

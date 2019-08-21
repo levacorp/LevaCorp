@@ -40,7 +40,6 @@ export class AppComponent {
       if (this.dataUserService.getMAC() !== null) {
         /* Al iniciar la aplicacion se comprueba si esta autenticado */
         this.authService.authenticationState.subscribe(state => {
-          console.log('Sesion Iniciada: ', state); /* Imprime el estado actual. True=Autenticado, False=No autenticado; */
           if (state) {
             this.router.navigate(['principal']); /* Si esta autenticado se redirige a la pagina principal por defecto */
           } else {

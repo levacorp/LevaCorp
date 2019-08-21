@@ -5,7 +5,6 @@ import { FormsModule } from '@angular/forms';
 import { IonicModule } from '@ionic/angular';
 import { Router } from '@angular/router';
 import { AuthenticationService } from '../../services/authentication.service';
-import { DataService } from 'src/app/services/data.service';
 import { DataUserService } from '../../services/data-user.service';
 
 @NgModule({
@@ -23,6 +22,7 @@ export class AppRoutingModule { }
 })
 export class MenusliderComponent implements OnInit {
   perfil: string;
+  edificioActual = null;
 
   constructor(
     private router: Router,
@@ -40,14 +40,14 @@ export class MenusliderComponent implements OnInit {
     this.router.navigate(['/edificio']);
   }
   pushInicio() {
-    this.router.navigate(['/principal']);
+    this.edificioActual = this.dataUserService.getEdificioActual();
+    this.router.navigate(['/principal', this.edificioActual]);
   }
   pushPreferencia() {
     this.router.navigate(['/preferencias']);
   }
   pushCerrarSesion() {
     this.authService.logout();
-    //this.router.navigate(['/inicio-sesion']);
   }
 
 }
