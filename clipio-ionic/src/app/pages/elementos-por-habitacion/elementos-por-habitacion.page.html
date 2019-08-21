@@ -44,14 +44,23 @@
                               <!--Si el elemento es vivo se mostraran los campos extras Tipo vivo,especie y comida-->
                         <div *ngIf="elemento.InfoItem[1].value[0]._ === 'Living_Thing'">
                             <ion-item>
-                                <strong>Tipo:</strong><p>{{ elemento.InfoItem[2].value[0]._ }}</p>
+                                <strong>Tipo:</strong>
                             </ion-item>
+                            <ion-row >
+                                {{ elemento.InfoItem[2].value[0]._ }}
+                            </ion-row>
                             <ion-item>
-                                <strong>Especie:</strong><p>{{ elemento.InfoItem[4].value[0]._ }}</p>
+                                  <strong>Especie:</strong>
                             </ion-item>
+                            <ion-row class="ma">
+                                  {{ elemento.InfoItem[4].value[0]._ }}
+                            </ion-row>
                             <ion-item>
-                                <strong>Comida:</strong><p>{{ elemento.InfoItem[3].value[0]._ }}</p>
+                                      <strong>Comida:</strong>
                             </ion-item>
+                            <ion-row>
+                                      {{ elemento.InfoItem[3].value[0]._ }}
+                            </ion-row>
                           </div>  
                       </ion-card-content>
                       </ion-card>

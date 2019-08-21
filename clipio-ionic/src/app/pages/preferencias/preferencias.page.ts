@@ -17,6 +17,8 @@ export class PreferenciasPage implements OnInit {
     private dataUserService: DataUserService, private xmlService: GenerateXMLService, private dataService: DataService) { }
 
   ngOnInit() {
+  }
+  ionViewWillEnter(){
     this.listaECAs = this.dataUserService.getListaECA();
   }
 
