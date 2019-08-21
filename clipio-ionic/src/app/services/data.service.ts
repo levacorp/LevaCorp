@@ -360,7 +360,7 @@ export class DataService implements OnInit {
       });
 
     // Actualizar lista de Preferencias
-    this.listarECAs();
+    await this.listarECAs();
   }
   // obtiene todos los ecas
   async listarECAs() {

@@ -34,7 +34,7 @@ export class PreferenciasPage implements OnInit {
     this.guardarDatos(index, 'on');
   }
 
-  private guardarDatos(index: number, opcion: string) {
+  async guardarDatos(index: number, opcion: string) {
     const xmlModificacion = this.xmlService.crearECA({
       /* Informacion General del ECA */
       nombreECA: this.listaECAs[index].nombreECA,
@@ -63,6 +63,6 @@ export class PreferenciasPage implements OnInit {
       significado: this.listaECAs[index].significadoAccion,
     });
 
-    this.dataService.modificarECA(xmlModificacion);
+    await this.dataService.modificarECA(xmlModificacion);
   }
 }
