@@ -32,7 +32,7 @@
           </ion-item>
 
           <ion-item text-center>
-            <ion-input id="contrasena" type="password" placeholder="Contraseña" formControlName="contrasena"
+            <ion-input [(ngModel)]="password" (keyup)="checkPass()" id="contrasena" type="password" placeholder="Contraseña" formControlName="contrasena"
               [class.invalid]="!myform.controls.contrasena.valid && myform.controls.contrasena.dirty"></ion-input>
           </ion-item>
           <ion-item class="error-message" *ngIf="!myform.controls.contrasena.valid && myform.controls.contrasena.dirty">

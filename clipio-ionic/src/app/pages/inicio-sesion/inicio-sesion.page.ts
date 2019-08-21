@@ -41,11 +41,9 @@ export class InicioSesionPage implements OnInit {
     await this.dataService.getVerificarUsuario(this.myform.value.email, this.myform.value.contrasena)
     .then(res => {
       if (res === 1) {
-        //this.dataUserService.setIP(this.myform.value.dirIp);
-        //this.dataUserService.setEmail(this.myform.value.email);
         this.authServices.login(this.myform.value.dirIp, this.myform.value.email);
       } else {
-        if(res === 0) {
+        if (res === 0) {
           alert('E-mail o contraseña incorrecta');
         }
       }

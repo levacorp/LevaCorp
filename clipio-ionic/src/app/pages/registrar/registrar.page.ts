@@ -19,7 +19,7 @@ export class RegistrarPage implements OnInit {
   myform: FormGroup;
   matching_passwords_group: FormGroup;
   xmlRegistrarUsuario = null;
-
+  password = '';
   constructor(
     private dataservice: DataService,
     public formBuilder: FormBuilder,
@@ -66,19 +66,17 @@ export class RegistrarPage implements OnInit {
 
   checkPass() {
     // Store the password field objects into variables ...
-    const objPass1 = <HTMLInputElement>document.getElementById('contrasena');
     const objPass2 = <HTMLInputElement>document.getElementById('confirmacionContrasena');
-    const pass1 = (objPass1).value;
     const pass2 = (objPass2).value;
-    //Store the Confimation Message Object ...
+    // Store the Confimation Message Object ...
     let message = document.getElementById('confirmMessage');
-    //Set the colors we will be using ...
-    let mensaje="";
+    // Set the colors we will be using ...
     let goodColor = "#66cc66";
     let badColor = "#ff6666";
-    //Compare the values in the password field 
-    //and the confirmation field
-    if (pass1 === pass2 && (pass1 !== "" || pass2 !=="")) {
+    // Compare the values in the password field 
+    // and the confirmation field
+
+    if (this.password === pass2 && (this.password !== "" || pass2 !=="")) {
       //The passwords match. 
       //Set the color to the good color and inform
       //the user that they have entered the correct password 

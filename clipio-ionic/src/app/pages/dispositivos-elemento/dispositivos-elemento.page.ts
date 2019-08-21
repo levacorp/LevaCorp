@@ -54,7 +54,13 @@ export class DispositivosElementoPage implements OnInit {
      this.router.navigate(['dispositivo', this.dataUser.getIP(), id]);
    }
    // se encarga de dirgir a la asociacion de un dispositivo
-   pushCrearDispositivo(dir: string) {
-    this.router.navigate(['crear-dispositivo', this.elemento, this.edificio, this.ambiente, this.habitacion , dir]);
+   async pushCrearDispositivo(dir: string) {
+     /* Si la direccion leída no contiene los siguientes caracteres se considera inválida */
+    if (dir.indexOf('/Identificator?osid=') === -1) {
+      alert('Direccion no valida');
+    } else {
+      // redirige a la creacion
+      this.router.navigate(['crear-dispositivo', this.elemento, this.edificio, this.ambiente, this.habitacion , dir]);
+    }
   }
 }

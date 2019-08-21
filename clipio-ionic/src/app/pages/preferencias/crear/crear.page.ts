@@ -199,7 +199,7 @@ export class CrearPage implements OnInit {
     .then(async data => {
         codigo = await this.utilidades.alertEspecifica( "Registro Preferencia: ", data);
         if (codigo === '1028') {
-          this.router.navigate(['/login']);
+          this.router.navigate(['/preferencias']);
         }
     });
   }

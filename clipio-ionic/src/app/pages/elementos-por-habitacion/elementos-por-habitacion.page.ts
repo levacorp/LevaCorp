@@ -67,7 +67,13 @@ export class ElementosPorHabitacionPage implements OnInit {
     if (this.segment === 'dispositivos') {
       // si esta en dispositivos se abre el scanner y redirige a la pagina crearDispositio
       const dir = await this.scanner.leerCodigo();
-      this.router.navigate(['crear-dispositivo', this.edificio, this.ambiente, this.habitacion , dir]);
+      /* Si la direccion leída no contiene los siguientes caracteres se considera inválida */
+      if (dir.indexOf('/Identificator?osid=') === -1) {
+        alert('Direccion no valida');
+      } else {
+        // redirige a la creacion
+        this.router.navigate(['crear-dispositivo', this.edificio, this.ambiente, this.habitacion , dir]);
+      }
     } else {
       // si esta en elementos redirige a la pagina crearElemento
       this.router.navigate(['crear-elemento', this.edificio, this.ambiente , this.habitacion]);
