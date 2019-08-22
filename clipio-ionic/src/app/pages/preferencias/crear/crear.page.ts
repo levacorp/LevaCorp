@@ -204,7 +204,7 @@ export class CrearPage implements OnInit {
         if (codigo === '1028') {
           let listaEcas: any[];
           listaEcas = await this.dataService.listarECAs();
-          this.dataUserService.setListaECA(listaEcas);
+          await this.dataUserService.setListaECA(listaEcas);
           this.router.navigate(['/preferencias']);
         }
     });
