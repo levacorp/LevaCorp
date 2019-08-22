@@ -344,7 +344,7 @@ export class DataService implements OnInit {
         // Actualizar lista de Preferencias
       }
     });
-    this.listarECAs();
+    await this.listarECAs();
 
     return js;
   }
@@ -409,6 +409,7 @@ export class DataService implements OnInit {
         } else {
         }
         this.dataUserService.setListaECA(lista);
+        return lista;
       }, error => {
         alert(error);
       }

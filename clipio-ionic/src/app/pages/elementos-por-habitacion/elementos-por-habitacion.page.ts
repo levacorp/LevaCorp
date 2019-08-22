@@ -66,8 +66,7 @@ export class ElementosPorHabitacionPage implements OnInit {
     // se averigua en que segment se encuenra actualmente
     if (this.segment === 'dispositivos') {
       // si esta en dispositivos se abre el scanner y redirige a la pagina crearDispositio
-      //const dir = await this.scanner.leerCodigo();
-      const dir = "http://10.0.0.20/Identificator?osid=708637323";
+      const dir = await this.scanner.leerCodigo();
       /* Si la direccion leída no contiene los siguientes caracteres se considera inválida */
       if (dir.indexOf('/Identificator?osid=') === -1) {
         alert('Direccion no valida');
