@@ -5,6 +5,7 @@ import { GenerateXMLService } from 'src/app/services/generate-xml.service';
 import { DataService } from 'src/app/services/data.service';
 import { AlertController } from '@ionic/angular';
 import { UtilitiesService } from 'src/app/services/utilities.service';
+import { DataUserService } from 'src/app/services/data-user.service';
 
 @Component({
   selector: 'app-crear',
@@ -42,7 +43,9 @@ export class CrearPage implements OnInit {
               public alertController: AlertController,
               private xmlService: GenerateXMLService,
               private dataService: DataService,
-              private utilidades: UtilitiesService) {
+              private utilidades: UtilitiesService,
+              private dataUserService: DataUserService
+              ) {
 
     /*Creacion Formulario para Captura de ECA */
     const dataStreamEvento = this.formBuilder.group({
@@ -199,6 +202,9 @@ export class CrearPage implements OnInit {
     .then(async data => {
         codigo = await this.utilidades.alertEspecifica( "Registro Preferencia: ", data);
         if (codigo === '1028') {
+          let listaEcas: any[];
+          listaEcas = await this.dataService.listarECAs();
+          this.dataUserService.setListaECA(listaEcas);
           this.router.navigate(['/preferencias']);
         }
     });

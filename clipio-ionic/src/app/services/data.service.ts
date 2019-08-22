@@ -414,6 +414,7 @@ export class DataService implements OnInit {
         alert(error);
       }
       );
+      return lista;
   }
   // registra un usuario en el servidor
   async registrarUsuario(xml: string, email) {

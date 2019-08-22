@@ -28,7 +28,8 @@
           <ion-grid>
               <ion-row>
                 <!--Acomoda el numero de tarjetas de acuerdo al tamaño de pantalla-->
-                <ion-col *ngFor="let datastream of dataStreams">
+                <ion-col size="12"
+                  *ngFor="let datastream of dataStreams">
                   <!--Carga de los datastreams--> 
                   <ion-card>
                     <ion-card-header  >
@@ -36,12 +37,11 @@
                     </ion-card-header>
                         <ion-card-content>     
                           <ion-item>
-                            <!--                              <ion-icon name="document"></ion-icon>
--->
+                              <ion-icon name="document"></ion-icon>
                               {{ datastream.MetaData[0].InfoItem[3].value[0]._}}
                           </ion-item> 
                           <ion-item>
-                            <!--                              <ion-icon name="information-circle-outline" ></ion-icon>-->
+                              <ion-icon name="information-circle-outline" ></ion-icon>
                               {{ datastream.MetaData[0].InfoItem[7].value[0]._}}
                           </ion-item>                        
                         </ion-card-content>
